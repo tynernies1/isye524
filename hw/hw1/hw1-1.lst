@@ -1,0 +1,143 @@
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/12/23 17:14:12 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1  option limrow=0, limcol=0;
+   2   
+   3  parameters
+   4      obj / "x1" 3, "x2" 4, "x3" -20 /
+   5      a / "x1" 1, "x2" -4, "x3" 2 /
+   6      b / "x1" 3, "x3" 6 /
+   7      c / "x1" 5, "x2" -9 /;
+   8  scalar
+   9      aMax /10/
+  10      bMax /12/
+  11      cMax /-3/;
+  12   
+  13  positive variable x1, x2, x3;
+  14  variable o;
+  15  equation eq_obj, eq_a, eq_b, eq_c;
+  16   
+  17  eq_obj..
+  18      o =e=  obj('x1')*x1 + obj('x2')*x2 + obj('x3')*x3;
+  19  eq_a..
+  20      a('x1')*x1 + a('x2')*x2 + a('x3')*x3 =l= aMax;
+  21  eq_b..
+  22      b('x1')*x1 + b('x2')*x2 + b('x3')*x3 =l= bMax;
+  23  eq_c..
+  24      c('x1')*x1 + c('x2')*x2 + c('x3')*x3 =l= cMax;
+  25   
+  26  model warmup /all/;
+  27   
+  28  solve warmup using lp minimize o;
+  29   
+  30  parameter x1val, x2val, x3val, objval;
+  31   
+  32  * parameterizing variables x1, x2 and x3
+  33  objval = o.l;
+  34  x1val = x1.l;
+  35  x2val = x2.l;
+  36  x3val = x3.l;
+  37   
+  38  display objval, x1val, x2val, x3val;
+
+
+COMPILATION TIME     =        0.000 SECONDS      3 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/12/23 17:14:12 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Range Statistics    SOLVE warmup Using LP From line 28
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 3.000E+00, 1.200E+01] - Zero values observed as well
+Bound     [min, max] : [        NA,        NA] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 2.000E+01]
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/12/23 17:14:12 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE warmup Using LP From line 28
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           4     SINGLE EQUATIONS            4
+BLOCKS OF VARIABLES           4     SINGLE VARIABLES            4
+NON ZERO ELEMENTS            11
+
+
+GENERATION TIME      =        0.219 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/12/23 17:14:12 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE warmup Using LP From line 28
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   warmup              OBJECTIVE  o
+     TYPE    LP                  DIRECTION  MINIMIZE
+     SOLVER  CPLEX               FROM LINE  28
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE              -38.6667
+
+ RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ ITERATION COUNT, LIMIT         0    2147483647
+--- *** This solver runs with a demo license. No commercial use.
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.00 ticks)
+
+
+Optimal solution found
+Objective:          -38.666667
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU eq_obj              .              .              .             1.0000      
+---- EQU eq_a              -INF            2.6667        10.0000          .          
+---- EQU eq_b              -INF           12.0000        12.0000        -3.3333      
+---- EQU eq_c              -INF           -3.0000        -3.0000        -0.4444      
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR x1                  .              .            +INF           15.2222      
+---- VAR x2                  .             0.3333        +INF             .          
+---- VAR x3                  .             2.0000        +INF             .          
+---- VAR o                 -INF          -38.6667        +INF             .          
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/12/23 17:14:12 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+----     38 PARAMETER objval               =      -38.667  
+            PARAMETER x1val                =        0.000  
+            PARAMETER x2val                =        0.333  
+            PARAMETER x3val                =        2.000  
+
+
+EXECUTION TIME       =        0.734 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+
+
+USER: GAMS Demo, for EULA and demo limitations see   G230706/0001CB-GEN
+      https://www.gams.com/latest/docs/UG%5FLicense.html         DC0000
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw1\hw1-1.gms
+Output     C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw1\hw1-1.lst

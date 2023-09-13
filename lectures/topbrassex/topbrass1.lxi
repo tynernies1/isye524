@@ -1,0 +1,18 @@
+B 3 C o m p i l a t i o n
+B 37 Equation Listing    SOLVE topbrass Using LP From line 26
+D 40 profit
+D 45 plaq
+D 50 wood
+B 56 Column Listing      SOLVE topbrass Using LP From line 26
+E 59 f
+E 68 s
+E 77 p
+B 85 Range Statistics    SOLVE topbrass Using LP From line 26
+B 96 Model Statistics    SOLVE topbrass Using LP From line 26
+B 109 Solution Report     SOLVE topbrass Using LP From line 26
+F 142 profit
+F 143 plaq
+F 144 wood
+G 148 f
+G 149 s
+G 150 p

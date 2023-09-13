@@ -1,0 +1,17 @@
+B 3 C o m p i l a t i o n
+B 49 Range Statistics    SOLVE warmup Using LP From line 28
+B 60 Model Statistics    SOLVE warmup Using LP From line 28
+B 73 Solution Report     SOLVE warmup Using LP From line 28
+F 106 eq_obj
+F 107 eq_a
+F 108 eq_b
+F 109 eq_c
+G 113 x1
+G 114 x2
+G 115 x3
+G 116 o
+B 124 E x e c u t i o n
+I 126 objval
+I 127 x1val
+I 128 x2val
+I 129 x3val

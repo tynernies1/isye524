@@ -1,0 +1,172 @@
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/11/23 11:06:21 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1  positive variable f "num football trophies", s "num soccer trophies";
+   2  variable p;
+   3   
+   4  equation profit, plaq, wood;
+   5   
+   6  * objective function
+   7  profit..
+   8      p =e= 12*f + 9*s;
+   9   
+  10  * plaque constraint
+  11  plaq..
+  12      f + s =l= 1750;
+  13   
+  14  * wood constraint
+  15  wood..
+  16     4*f + 2*s =l= 4800;
+  17   
+  18  * run model using all constraints listed above
+  19  model topbrass /all/;
+  20   
+  21  * upper constraint on number of football and soccer trophies
+  22  f.up = 1000;
+  23  s.up = 1500;
+  24   
+  25   
+  26  solve topbrass using lp maximize p;
+
+
+COMPILATION TIME     =        0.000 SECONDS      2 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/11/23 11:06:21 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Equation Listing    SOLVE topbrass Using LP From line 26
+
+
+---- profit  =E=  
+
+profit..  - 12*f - 9*s + p =E= 0 ; (LHS = 0)
+     
+
+---- plaq  =L=  
+
+plaq..  f + s =L= 1750 ; (LHS = 0)
+     
+
+---- wood  =L=  
+
+wood..  4*f + 2*s =L= 4800 ; (LHS = 0)
+     
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/11/23 11:06:21 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Column Listing      SOLVE topbrass Using LP From line 26
+
+
+---- f  num football trophies
+
+f
+                (.LO, .L, .UP, .M = 0, 0, 1000, 0)
+      -12       profit
+        1       plaq
+        4       wood
+
+
+---- s  num soccer trophies
+
+s
+                (.LO, .L, .UP, .M = 0, 0, 1500, 0)
+       -9       profit
+        1       plaq
+        2       wood
+
+
+---- p  
+
+p
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       profit
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/11/23 11:06:21 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Range Statistics    SOLVE topbrass Using LP From line 26
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 1.750E+03, 4.800E+03] - Zero values observed as well
+Bound     [min, max] : [ 1.000E+03, 1.500E+03] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 1.200E+01]
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/11/23 11:06:21 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE topbrass Using LP From line 26
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           3     SINGLE EQUATIONS            3
+BLOCKS OF VARIABLES           3     SINGLE VARIABLES            3
+NON ZERO ELEMENTS             7
+
+
+GENERATION TIME      =        0.344 SECONDS      3 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/11/23 11:06:21 Page 6
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE topbrass Using LP From line 26
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   topbrass            OBJECTIVE  p
+     TYPE    LP                  DIRECTION  MAXIMIZE
+     SOLVER  CPLEX               FROM LINE  26
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE            17700.0000
+
+ RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ ITERATION COUNT, LIMIT         2    2147483647
+--- GAMS/CPLEX licensed for continuous and discrete problems.
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.00 ticks)
+
+
+Optimal solution found
+Objective:        17700.000000
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU profit              .              .              .             1.0000      
+---- EQU plaq              -INF         1750.0000      1750.0000         6.0000      
+---- EQU wood              -INF         4800.0000      4800.0000         1.5000      
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR f                   .           650.0000      1000.0000          .          
+---- VAR s                   .          1100.0000      1500.0000          .          
+---- VAR p                 -INF        17700.0000        +INF             .          
+
+  f  num football trophies
+  s  num soccer trophies
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+
+
+EXECUTION TIME       =        1.125 SECONDS      3 MB  44.3.0 8b8fb1cb WEX-WEI
+
+
+USER: Introduction to Optimization (CS/ISyE/ECE 524) G230906|0002AS-GEN
+      UW-Madison, CS Dept., Fall 2023, Prof. Ferris              DCE850
+      License for teaching and research at degree granting institutions
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\Rocke\OneDrive\Documents\isye524\topbrass1.gms
+Output     C:\Users\Rocke\OneDrive\Documents\isye524\topbrass1.lst

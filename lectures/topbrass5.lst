@@ -1,0 +1,220 @@
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/13/23 10:22:01 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1  * GENERAL MODEL FOR TOPBRASS
+   2   
+   3  * defining a set that includes a collection of strings containing football and soccer {'football', 'soccer'}
+   4  * elements not defined are assigned initial values of 0
+   5  set I / football, soccer /;
+   6   
+   7  * defining a second set that includes the resources needed to make trophies {plaques, wood}
+   8  set R / plaques, wood /;
+   9   
+  10  * using symbolic constraints to make readability and understanding easier
+  11  * parameter: one of 3 ways of representing numbers symbolically, here parameterizing football and soccer info
+  12  * additionally, parameterizing upper limits of each resource used in trophy production
+  13  parameters
+  14      c(I) / "football" 12 , "soccer" 9 /
+  15      b(R) / "plaques" 1750 , "wood" 4800 /
+  16      u(I) / "football" 1000 , "soccer" 1500 /;
+  17   
+  18  * table: another way of representing numbers symbolically; data in table must be two dimensional, similar to a matrix
+  19  table a(R, I) Per-Unit resource requirements
+  20          football    soccer
+  21  plaques   1           1
+  22  wood      4           2;
+  23   
+  24  display c,a;
+  25   
+  26  * one variable for every element in I
+  27  * use x('football') or x('soccer') to define decision variables in code below
+  28  positive variable x(I) trophies;
+  29   
+  30  free variable profit total profit;
+  31   
+  32  equations obj max total profit, resource_con(R) resource constraints;
+  33   
+  34  * objective function
+  35  * summing over all elements of set I (football, soccer)
+  36  obj..
+  37      profit =e= sum(I, c(I)*x(I));
+  38   
+  39  * resource constraint
+  40  * resource_con(R) iterates over all instances of set R to generate all constraints related to resource constraints (1 constraint instead of 2)
+  41  * using parameter b(R) defined above to replace upper constraint for plaques and wood
+  42  resource_con(R)..
+  43      sum(I, a(R, I)*x(I)) =l= b(R);
+  44   
+  45   
+  46  * run model using all constraints listed above
+  47  model topbrass /all/;
+  48   
+  49  * upper constraint on number of football and soccer trophies
+  50  x.up(I) = u(I);
+  51   
+  52   
+  53  solve topbrass using lp maximize profit;
+
+
+COMPILATION TIME     =        0.000 SECONDS      3 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/13/23 10:22:01 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+----     24 PARAMETER c  
+
+football 12.000,    soccer    9.000
+
+
+----     24 PARAMETER a  Per-Unit resource requirements
+
+           football      soccer
+
+plaques       1.000       1.000
+wood          4.000       2.000
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/13/23 10:22:01 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Equation Listing    SOLVE topbrass Using LP From line 53
+
+
+---- obj  =E=  max total profit
+
+obj..  - 12*x(football) - 9*x(soccer) + profit =E= 0 ; (LHS = 0)
+     
+
+---- resource_con  =L=  resource constraints
+
+resource_con(plaques)..  x(football) + x(soccer) =L= 1750 ; (LHS = 0)
+     
+resource_con(wood)..  4*x(football) + 2*x(soccer) =L= 4800 ; (LHS = 0)
+     
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/13/23 10:22:01 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Column Listing      SOLVE topbrass Using LP From line 53
+
+
+---- x  trophies
+
+x(football)
+                (.LO, .L, .UP, .M = 0, 0, 1000, 0)
+      -12       obj
+        1       resource_con(plaques)
+        4       resource_con(wood)
+
+x(soccer)
+                (.LO, .L, .UP, .M = 0, 0, 1500, 0)
+       -9       obj
+        1       resource_con(plaques)
+        2       resource_con(wood)
+
+
+---- profit  total profit
+
+profit
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       obj
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/13/23 10:22:01 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Range Statistics    SOLVE topbrass Using LP From line 53
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 1.750E+03, 4.800E+03] - Zero values observed as well
+Bound     [min, max] : [ 1.000E+03, 1.500E+03] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 1.200E+01]
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/13/23 10:22:01 Page 6
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE topbrass Using LP From line 53
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           2     SINGLE EQUATIONS            3
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES            3
+NON ZERO ELEMENTS             7
+
+
+GENERATION TIME      =        0.204 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/13/23 10:22:01 Page 7
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE topbrass Using LP From line 53
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   topbrass            OBJECTIVE  profit
+     TYPE    LP                  DIRECTION  MAXIMIZE
+     SOLVER  CPLEX               FROM LINE  53
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE            17700.0000
+
+ RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ ITERATION COUNT, LIMIT         2    2147483647
+--- *** This solver runs with a demo license. No commercial use.
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.00 ticks)
+
+
+Optimal solution found
+Objective:        17700.000000
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU obj                 .              .              .             1.0000      
+
+  obj  max total profit
+
+---- EQU resource_con  resource constraints
+
+               LOWER          LEVEL          UPPER         MARGINAL
+
+plaques        -INF         1750.0000      1750.0000         6.0000      
+wood           -INF         4800.0000      4800.0000         1.5000      
+
+---- VAR x  trophies
+
+                LOWER          LEVEL          UPPER         MARGINAL
+
+football          .           650.0000      1000.0000          .          
+soccer            .          1100.0000      1500.0000          .          
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR profit            -INF        17700.0000        +INF             .          
+
+  profit  total profit
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+
+
+EXECUTION TIME       =        0.579 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+
+
+USER: GAMS Demo, for EULA and demo limitations see   G230706/0001CB-GEN
+      https://www.gams.com/latest/docs/UG%5FLicense.html         DC0000
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\Rocke\OneDrive\Documents\isye524\lectures\topbrassex\topbrass5.gms
+Output     C:\Users\Rocke\OneDrive\Documents\isye524\lectures\topbrass5.lst

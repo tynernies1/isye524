@@ -1,0 +1,17 @@
+B 3 C o m p i l a t i o n
+B 64 E x e c u t i o n
+I 64 c
+I 70 a
+B 81 Equation Listing    SOLVE topbrass Using LP From line 53
+D 84 obj
+D 89 resource_con
+B 97 Column Listing      SOLVE topbrass Using LP From line 53
+E 100 x
+E 115 profit
+B 123 Range Statistics    SOLVE topbrass Using LP From line 53
+B 134 Model Statistics    SOLVE topbrass Using LP From line 53
+B 147 Solution Report     SOLVE topbrass Using LP From line 53
+F 180 obj
+F 184 resource_con
+G 191 x
+G 200 profit

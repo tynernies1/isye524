@@ -1,0 +1,11 @@
+B 3 C o m p i l a t i o n
+B 38 Range Statistics    SOLVE softsuds Using LP From line 25
+B 49 Model Statistics    SOLVE softsuds Using LP From line 25
+B 62 Solution Report     SOLVE softsuds Using LP From line 25
+F 95 eq_obj
+F 97 eq_stock
+G 105 quant
+G 114 Profit
+B 122 E x e c u t i o n
+I 124 Profit
+I 125 quant

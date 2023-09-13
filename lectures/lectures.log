@@ -1,0 +1,68 @@
+
+--- Job topbrass5.gms Start 09/13/23 10:22:01 44.3.0 8b8fb1cb WEX-WEI x86 64bit/MS Windows
+--- Applying:
+    C:\GAMS\44\gmsprmNT.txt
+--- GAMS Parameters defined
+    Input C:\Users\Rocke\OneDrive\Documents\isye524\lectures\topbrassex\topbrass5.gms
+    PageSize 0
+    ScrDir C:\Users\Rocke\OneDrive\Documents\isye524\lectures\225a\
+    SysDir C:\GAMS\44\
+    LogOption 3
+    ErrMsg 1
+    ErrorLog 99
+    IDE 1
+    LstTitleLeftAligned 1
+Licensee: GAMS Demo, for EULA and demo limitations see   G230706/0001CB-GEN
+          https://www.gams.com/latest/docs/UG%5FLicense.html         DC0000
+          C:\GAMS\44\gamslice.txt
+          Demo license for demonstration and instructional purposes only
+Processor information: 1 socket(s), 4 core(s), and 8 thread(s) available
+GAMS 44.3.0   Copyright (C) 1987-2023 GAMS Development. All rights reserved
+--- Starting compilation
+--- topbrass5.gms(53) 3 Mb
+--- Starting execution: elapsed 0:00:00.009
+--- topbrass5.gms(50) 4 Mb
+--- Generating LP model topbrass
+--- topbrass5.gms(53) 4 Mb
+---   3 rows  3 columns  7 non-zeroes
+--- Range statistics (absolute non-zero finite values)
+--- RHS       [min, max] : [ 1.750E+03, 4.800E+03] - Zero values observed as well
+--- Bound     [min, max] : [ 1.000E+03, 1.500E+03] - Zero values observed as well
+--- Matrix    [min, max] : [ 1.000E+00, 1.200E+01]
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.222
+
+IBM ILOG CPLEX   44.3.0 8b8fb1cb Sep 1, 2023           WEI x86 64bit/MS Window
+
+--- *** This solver runs with a demo license. No commercial use.
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+Version identifier: 22.1.1.0 | 2022-11-27 | 9160aff4d
+CPXPARAM_Advance                                 0
+CPXPARAM_Simplex_Display                         2
+CPXPARAM_Threads                                 1
+CPXPARAM_MIP_Display                             4
+CPXPARAM_MIP_Pool_Capacity                       0
+CPXPARAM_MIP_Tolerances_AbsMIPGap                0
+Tried aggregator 1 time.
+LP Presolve eliminated 0 rows and 1 columns.
+Reduced LP has 2 rows, 2 columns, and 4 nonzeros.
+Presolve time = 0.00 sec. (0.00 ticks)
+
+Iteration      Dual Objective            In Variable           Out Variable
+     1           18900.000000            x(football)resource_con(wood slack
+     2           17700.000000              x(soccer)resource_con(plaq slack
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.00 ticks)
+
+
+Optimal solution found
+Objective:        17700.000000
+
+--- Reading solution for model topbrass
+*** Status: Normal completion
+--- Job topbrass5.gms Stop 09/13/23 10:22:02 elapsed 0:00:00.586

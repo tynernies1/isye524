@@ -1,0 +1,206 @@
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/11/23 11:43:05 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1  * defining a set that includes a collection of strings containing football and soccer
+   2  * {'football', 'soccer'}
+   3  * elements not defined are assigned initial values of 0
+   4  set I / football, soccer /;
+   5   
+   6  * using symbolic constraints to make readability and understanding easier
+   7  * parameter: one of 3 ways of representing numbers symbolically, here parameterizing football and soccer info
+   8  parameters
+   9      profitMargin(I) / "football" 12 , "soccer" 9 /
+  10      boardFeet(I) / "football" 4 , "soccer" 2 /
+  11      plaques(I) / "football" 1 , "soccer" 1 /;
+  12   
+  13  * another way of representing numbers symbolically, here representing upper limits on plaques and wood
+  14  scalar
+  15      plaquesMax /1750/
+  16      woodMax /4800/;
+  17  * one variable for every element in I
+  18  * use x('football') or x('soccer') to define decision variables in code below
+  19  positive variable x(I) "trophies";
+  20   
+  21  variable p;
+  22   
+  23  equation obj, plaq, wood;
+  24   
+  25  * objective function
+  26  * summing over all elements of set I (football, soccer)
+  27  obj..
+  28      p =e= sum(I, profitMargin(I)*x(I));
+  29   
+  30  * plaque constraint
+  31  * using scalar defined above to replace upper constraint for plaques and wood
+  32  plaq..
+  33      sum(I, plaques(I)*x(I)) =l= plaquesMax;
+  34   
+  35  * wood constraint
+  36  wood..
+  37     sum(I, boardFeet(I)*x(I)) =l= woodMax;
+  38   
+  39  * run model using all constraints listed above
+  40  model topbrass /all/;
+  41   
+  42  * upper constraint on number of football and soccer trophies
+  43  x.up('football') = 1000;
+  44  x.up('soccer') = 1500;
+  45   
+  46   
+  47  solve topbrass using lp maximize p;
+  48   
+  49  * alias: alternative name for set that contains exact same elements
+  50  alias (I,J);
+  51  parameter pct(I);
+  52  pct(I) = 100*x.l(I) / sum(J,x.l(J));
+  53  display pct;
+
+
+COMPILATION TIME     =        0.000 SECONDS      3 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/11/23 11:43:05 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Equation Listing    SOLVE topbrass Using LP From line 47
+
+
+---- obj  =E=  
+
+obj..  - 12*x(football) - 9*x(soccer) + p =E= 0 ; (LHS = 0)
+     
+
+---- plaq  =L=  
+
+plaq..  x(football) + x(soccer) =L= 1750 ; (LHS = 0)
+     
+
+---- wood  =L=  
+
+wood..  4*x(football) + 2*x(soccer) =L= 4800 ; (LHS = 0)
+     
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/11/23 11:43:05 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Column Listing      SOLVE topbrass Using LP From line 47
+
+
+---- x  trophies
+
+x(football)
+                (.LO, .L, .UP, .M = 0, 0, 1000, 0)
+      -12       obj
+        1       plaq
+        4       wood
+
+x(soccer)
+                (.LO, .L, .UP, .M = 0, 0, 1500, 0)
+       -9       obj
+        1       plaq
+        2       wood
+
+
+---- p  
+
+p
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       obj
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/11/23 11:43:05 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Range Statistics    SOLVE topbrass Using LP From line 47
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 1.750E+03, 4.800E+03] - Zero values observed as well
+Bound     [min, max] : [ 1.000E+03, 1.500E+03] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 1.200E+01]
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/11/23 11:43:05 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE topbrass Using LP From line 47
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           3     SINGLE EQUATIONS            3
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES            3
+NON ZERO ELEMENTS             7
+
+
+GENERATION TIME      =        0.016 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/11/23 11:43:05 Page 6
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE topbrass Using LP From line 47
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   topbrass            OBJECTIVE  p
+     TYPE    LP                  DIRECTION  MAXIMIZE
+     SOLVER  CPLEX               FROM LINE  47
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE            17700.0000
+
+ RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ ITERATION COUNT, LIMIT         2    2147483647
+--- *** This solver runs with a demo license. No commercial use.
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.00 ticks)
+
+
+Optimal solution found
+Objective:        17700.000000
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU obj                 .              .              .             1.0000      
+---- EQU plaq              -INF         1750.0000      1750.0000         6.0000      
+---- EQU wood              -INF         4800.0000      4800.0000         1.5000      
+
+---- VAR x  trophies
+
+                LOWER          LEVEL          UPPER         MARGINAL
+
+football          .           650.0000      1000.0000          .          
+soccer            .          1100.0000      1500.0000          .          
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR p                 -INF        17700.0000        +INF             .          
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/11/23 11:43:05 Page 7
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+----     53 PARAMETER pct  
+
+football 37.143,    soccer   62.857
+
+
+
+EXECUTION TIME       =        0.063 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+
+
+USER: GAMS Demo, for EULA and demo limitations see   G230706/0001CB-GEN
+      https://www.gams.com/latest/docs/UG%5FLicense.html         DC0000
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\Rocke\OneDrive\Documents\isye524\lectures\topbrassex\topbrass4.gms
+Output     C:\Users\Rocke\OneDrive\Documents\isye524\lectures\topbrassex\topbrass4.lst

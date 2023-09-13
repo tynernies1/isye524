@@ -1,0 +1,154 @@
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/12/23 18:40:21 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1  option limrow=0, limcol=0;
+   2   
+   3  set P / p1, p2 /;
+   4  set W / w1, w2, w3 /;
+   5   
+   6  parameters
+   7      h(P, W)
+   8      / p1.w1 5, p1.w2 9, p1.w3 7,
+   9        p2.w1 10, p2.w2 2, p2.w3 5 /
+  10      s(P) / p1 108, p2 84 /
+  11      m(P) / p1 10, p2 8 /;
+  12   
+  13  scalar
+  14      hMax /40/
+  15      lCost /5/;
+  16   
+  17  positive variable make(P, W);
+  18  variable Profit;
+  19  equation obj, workshops;
+  20   
+  21  obj..
+  22      Profit =e= sum((P, W), s(P)*make(P, W)) - lCost*sum((P, W), m(P)*make(P, W));
+  23   
+  24  workshops(W)..
+  25      sum(P, h(P, W)*make(P, W)) =l= hMax;
+  26   
+  27  model prodmix /all/;
+  28   
+  29  solve prodmix using lp maximize Profit;
+  30   
+  31  display Profit.l, make.l;
+
+
+COMPILATION TIME     =        0.000 SECONDS      3 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/12/23 18:40:21 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Range Statistics    SOLVE prodmix Using LP From line 29
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 4.000E+01, 4.000E+01] - Zero values observed as well
+Bound     [min, max] : [        NA,        NA] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 5.800E+01]
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/12/23 18:40:21 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE prodmix Using LP From line 29
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           2     SINGLE EQUATIONS            4
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES            7
+NON ZERO ELEMENTS            13
+
+
+GENERATION TIME      =        0.016 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/12/23 18:40:21 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE prodmix Using LP From line 29
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   prodmix             OBJECTIVE  Profit
+     TYPE    LP                  DIRECTION  MAXIMIZE
+     SOLVER  CPLEX               FROM LINE  29
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE             1696.0000
+
+ RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ ITERATION COUNT, LIMIT         0    2147483647
+--- *** This solver runs with a demo license. No commercial use.
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.00 ticks)
+
+
+Optimal solution found
+Objective:         1696.000000
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU obj                 .              .              .             1.0000      
+
+---- EQU workshops  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+w1        -INF           40.0000        40.0000        11.6000      
+w2        -INF           40.0000        40.0000        22.0000      
+w3        -INF           40.0000        40.0000         8.8000      
+
+---- VAR make  
+
+             LOWER          LEVEL          UPPER         MARGINAL
+
+p1.w1          .             8.0000        +INF             .          
+p1.w2          .              .            +INF         -140.0000      
+p1.w3          .              .            +INF           -3.6000      
+p2.w1          .              .            +INF          -72.0000      
+p2.w2          .            20.0000        +INF             .          
+p2.w3          .             8.0000        +INF             .          
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR Profit            -INF         1696.0000        +INF             .          
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/12/23 18:40:21 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+----     31 VARIABLE Profit.L              =     1696.000  
+
+----     31 VARIABLE make.L  
+
+            w1          w2          w3
+
+p1       8.000
+p2                  20.000       8.000
+
+
+
+EXECUTION TIME       =        0.063 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+
+
+USER: GAMS Demo, for EULA and demo limitations see   G230706/0001CB-GEN
+      https://www.gams.com/latest/docs/UG%5FLicense.html         DC0000
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw1\hw1-3.gms
+Output     C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw1\hw1-3.lst

@@ -1,0 +1,11 @@
+B 3 C o m p i l a t i o n
+B 42 Range Statistics    SOLVE prodmix Using LP From line 29
+B 53 Model Statistics    SOLVE prodmix Using LP From line 29
+B 66 Solution Report     SOLVE prodmix Using LP From line 29
+F 99 obj
+F 101 workshops
+G 109 make
+G 122 Profit
+B 130 E x e c u t i o n
+I 132 Profit
+I 133 make
