@@ -1,5 +1,5 @@
 {
-    "file": "topbrassex/topbrass5.gms",
+    "file": "topbrassex/topbrass1.gms",
     "name": "lectures",
     "nodes": [
         {
@@ -76,21 +76,15 @@
         },
         {
             "codecMib": 106,
-            "file": "topbrassex/topbrass5.gms",
-            "name": "topbrass5.gms",
+            "file": "topbrassex/bigtopbrass-1.gms",
+            "name": "bigtopbrass-1.gms",
             "type": "gms"
         },
         {
             "codecMib": 106,
-            "file": "lectures.gsp",
-            "name": "lectures.gsp",
-            "type": "gsp"
-        },
-        {
-            "codecMib": 106,
-            "file": "topbrass5.lst",
-            "name": "topbrass5.lst",
-            "type": "lst"
+            "file": "topbrassex/bigtopbrass-1.inc",
+            "name": "bigtopbrass-1.inc",
+            "type": "gms"
         }
     ],
     "options": [
@@ -98,5 +92,5 @@
     ],
     "path": ".",
     "pf": "",
-    "workDir": "."
+    "workDir": "topbrassex"
 }

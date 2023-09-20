@@ -1,0 +1,192 @@
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/20/23 11:07:08 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1  *$include hw2-3.inc
+   2  option limrow=0, limcol=0;
+   3   
+   4  set S Sites / s1, s2, s3, s4 /;
+   5  set T Tree Types / Pine, Spruce, Walnut, Hardwood /;
+   6   
+   7   
+   8  parameters
+   9  A(S) Area Available / s1 1500, s2 1700, s3 900, s4 600 /
+  10  M(T) Resources Available / Pine 22500, Spruce 9000, Walnut 4800, Hardwood 3500 /
+  11  p(S, T) Profit Margin
+  12  y(S, T) Expected Yield
+  13   
+  14  table
+  15  y(S, T)
+  16      Pine      Spruce      Walnut    Hardwood
+  17  s1    17          14          10           9
+  18  s2    15          16          12          11
+  19  s3    13          12          14           8
+  20  s4    10          11           8           6;
+  21   
+  22  table
+  23  p(S, T)
+  24      Pine      Spruce      Walnut    Hardwood
+  25  s1    16          12          20          18
+  26  s2    14          13          24          20
+  27  s3    17          10          28          20
+  28  s4    12          11          18          17;
+  29   
+  30  positive variable grow(S, T);
+  31  variable profit;
+  32  equation obj, yield_con, area_con;
+  33   
+  34  obj..
+  35  profit =e= sum((S, T), p(S, T)*grow(S, T));
+  36   
+  37  yield_con(T)..
+  38  sum(S, y(S, T)*grow(S, T)) =g= M(T);
+  39   
+  40  area_con(S)..
+  41  sum(T, grow(S, T)) =l= A(S)
+  42   
+  43  model forest /all/;
+  44   
+  45  solve forest using lp maximize profit;
+  46   
+  47  display profit.l, grow.l;
+
+
+COMPILATION TIME     =        0.000 SECONDS      3 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/20/23 11:07:08 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Range Statistics    SOLVE forest Using LP From line 45
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 6.000E+02, 2.250E+04] - Zero values observed as well
+Bound     [min, max] : [        NA,        NA] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 2.800E+01]
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/20/23 11:07:08 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE forest Using LP From line 45
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           3     SINGLE EQUATIONS            9
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES           17
+NON ZERO ELEMENTS            49
+
+
+GENERATION TIME      =        0.015 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/20/23 11:07:08 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE forest Using LP From line 45
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   forest              OBJECTIVE  profit
+     TYPE    LP                  DIRECTION  MAXIMIZE
+     SOLVER  CPLEX               FROM LINE  45
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE            95031.1887
+
+ RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ ITERATION COUNT, LIMIT         5    2147483647
+--- *** This solver runs with a demo license. No commercial use.
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.02 ticks)
+
+
+Optimal solution found
+Objective:        95031.188725
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU obj                 .              .              .             1.0000      
+
+---- EQU yield_con  
+
+                LOWER          LEVEL          UPPER         MARGINAL
+
+Pine         22500.0000     22500.0000        +INF           -0.3309      
+Spruce        9000.0000      9000.0000        +INF           -0.6875      
+Walnut        4800.0000     28240.4412        +INF             .          
+Hardwood      3500.0000      3500.0000        +INF           -0.2604      
+
+---- EQU area_con  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+s1        -INF         1500.0000      1500.0000        21.6250      
+s2        -INF         1700.0000      1700.0000        24.0000      
+s3        -INF          900.0000       900.0000        28.0000      
+s4        -INF          600.0000       600.0000        18.5625      
+
+---- VAR grow  
+
+                   LOWER          LEVEL          UPPER         MARGINAL
+
+s1.Pine              .          1323.5294        +INF             .          
+s1.Spruce            .           176.4706        +INF             .          
+s1.Walnut            .              .            +INF           -1.6250      
+s1.Hardwood          .              .            +INF           -1.2812      
+s2.Pine              .              .            +INF           -5.0368      
+s2.Spruce            .           396.6299        +INF             .          
+s2.Walnut            .          1303.3701        +INF             .          
+s2.Hardwood          .              .            +INF           -1.1354      
+s3.Pine              .              .            +INF           -6.6985      
+s3.Spruce            .              .            +INF           -9.7500      
+s3.Walnut            .           900.0000        +INF             .          
+s3.Hardwood          .              .            +INF           -5.9167      
+s4.Pine              .              .            +INF           -3.2537      
+s4.Spruce            .            16.6667        +INF             .          
+s4.Walnut            .              .            +INF           -0.5625      
+s4.Hardwood          .           583.3333        +INF             .          
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR profit            -INF        95031.1887        +INF             .          
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/20/23 11:07:08 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+----     47 VARIABLE profit.L              =    95031.189  
+
+----     47 VARIABLE grow.L  
+
+          Pine      Spruce      Walnut    Hardwood
+
+s1    1323.529     176.471
+s2                 396.630    1303.370
+s3                             900.000
+s4                  16.667                 583.333
+
+
+
+EXECUTION TIME       =        0.109 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+
+
+USER: GAMS Demo, for EULA and demo limitations see   G230706/0001CB-GEN
+      https://www.gams.com/latest/docs/UG%5FLicense.html         DC0000
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw2\hw2-3.gms
+Output     C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw2\hw2-3.lst

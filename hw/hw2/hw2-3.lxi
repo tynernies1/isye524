@@ -1,0 +1,12 @@
+B 3 C o m p i l a t i o n
+B 58 Range Statistics    SOLVE forest Using LP From line 45
+B 69 Model Statistics    SOLVE forest Using LP From line 45
+B 82 Solution Report     SOLVE forest Using LP From line 45
+F 115 obj
+F 117 yield_con
+F 126 area_con
+G 135 grow
+G 158 profit
+B 166 E x e c u t i o n
+I 168 profit
+I 169 grow

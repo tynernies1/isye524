@@ -1,0 +1,13 @@
+B 3 C o m p i l a t i o n
+B 61 Range Statistics    SOLVE chemmod Using LP From line 40
+B 72 Model Statistics    SOLVE chemmod Using LP From line 40
+B 85 Solution Report     SOLVE chemmod Using LP From line 40
+F 118 obj
+F 120 res_con
+G 128 x
+G 138 blend
+B 146 E x e c u t i o n
+I 148 mstat
+I 149 sstat
+I 150 blend
+I 151 proctime
