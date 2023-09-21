@@ -1,0 +1,186 @@
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/20/23 18:01:10 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1  *$include hw2-1.inc
+   2  option limrow=0, limcol=0, lp=cplex;
+   3   
+   4  set C Chemicals / c1, c2 /;
+   5  set R Requirements / r1, r2, f /;
+   6  set P Processes / p1, p2, p3 /;
+   7   
+   8  parameters
+   9  u(R) Resources Available / r1 200, r2 400, f 1850 /
+  10  b(C) Ratio of Chemicals / c1 [1/5], c2 [1/2] /
+  11  q(P, R) Resource Requirement per Process Unit Time
+  12  o(P, C) Chemical Output per Process Unit Time
+  13   
+  14  table
+  15  q(P, R)
+  16      r1      r2      f
+  17  p1   9       5      50
+  18  p2   6       8      75
+  19  p3   4      11     100;
+  20   
+  21  table
+  22  o(P, C)
+  23      c1      c2
+  24  p1   9       6
+  25  p2   7      10
+  26  p3  10       6;
+  27   
+  28  positive variable x(P);
+  29  variable blend, chem1_prd, chem2_prd;
+  30  equation res_con, chem1_eq, chem2_eq, limit_chem1_eq, limit_chem2_eq;
+  31   
+  32  res_con(R)..
+  33  sum(P, q(P, R)*x(P)) =l= u(R);
+  34   
+  35  * chemicals produced
+  36  chem1_eq..
+  37  chem1_prd =e= sum(P, o(P, 'c1')*x(P));
+  38   
+  39  chem2_eq..
+  40  chem2_prd =e= sum(P, o(P, 'c2')*x(P));
+  41   
+  42  * blending constraint
+  43  limit_chem1_eq..
+  44  blend =l= b('c1')*chem1_prd;
+  45   
+  46  limit_chem2_eq..
+  47  blend =l= b('c2')*chem2_prd;
+  48   
+  49   
+  50  model chemmod / all /;
+  51   
+  52  solve chemmod using lp maximize blend;
+  53   
+  54  scalars mstat, sstat;
+  55  parameter proctime(P);
+  56   
+  57  mstat = chemmod.modelstat;
+  58  sstat = chemmod.solvestat;
+  59  proctime(P) = x.l(P);
+  60   
+  61  display mstat, sstat, blend.l, proctime;
+  62   
+
+
+COMPILATION TIME     =        0.000 SECONDS      3 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/20/23 18:01:10 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Range Statistics    SOLVE chemmod Using LP From line 52
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 2.000E+02, 1.850E+03] - Zero values observed as well
+Bound     [min, max] : [        NA,        NA] - Zero values observed as well
+Matrix    [min, max] : [ 2.000E-01, 1.000E+02]
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/20/23 18:01:10 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE chemmod Using LP From line 52
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           5     SINGLE EQUATIONS            7
+BLOCKS OF VARIABLES           4     SINGLE VARIABLES            6
+NON ZERO ELEMENTS            21
+
+
+GENERATION TIME      =        0.015 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/20/23 18:01:10 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE chemmod Using LP From line 52
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   chemmod             OBJECTIVE  blend
+     TYPE    LP                  DIRECTION  MAXIMIZE
+     SOLVER  CPLEX               FROM LINE  52
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE               51.4000
+
+ RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ ITERATION COUNT, LIMIT         4    2147483647
+--- *** This solver runs with a demo license. No commercial use.
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.02 ticks)
+
+
+Optimal solution found
+Objective:           51.400000
+
+
+---- EQU res_con  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+r1        -INF          200.0000       200.0000         0.1143      
+r2        -INF          194.5000       400.0000          .          
+f         -INF         1850.0000      1850.0000         0.0154      
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU chem1_eq            .              .              .             0.2000      
+---- EQU chem2_eq            .              .              .             EPS         
+---- EQU limit_che~        -INF             .              .             1.0000      
+---- EQU limit_che~        -INF          -31.1000          .              .          
+
+---- VAR x  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+p1          .            18.0000        +INF             .          
+p2          .              .            +INF           -0.4429      
+p3          .             9.5000        +INF             .          
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR blend             -INF           51.4000        +INF             .          
+---- VAR chem1_prd         -INF          257.0000        +INF             .          
+---- VAR chem2_prd         -INF          165.0000        +INF             .          
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/20/23 18:01:10 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+----     61 PARAMETER mstat                =        1.000  
+            PARAMETER sstat                =        1.000  
+            VARIABLE blend.L               =       51.400  
+
+----     61 PARAMETER proctime  
+
+p1 18.000,    p3  9.500
+
+
+
+EXECUTION TIME       =        0.062 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+
+
+USER: GAMS Demo, for EULA and demo limitations see   G230706/0001CB-GEN
+      https://www.gams.com/latest/docs/UG%5FLicense.html         DC0000
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw2\hw2-1.gms
+Output     C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw2\hw2-1.lst

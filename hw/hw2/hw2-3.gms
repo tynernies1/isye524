@@ -1,4 +1,3 @@
-*$include hw2-3.inc
 option limrow=0, limcol=0;
 
 set S Sites / s1, s2, s3, s4 /;

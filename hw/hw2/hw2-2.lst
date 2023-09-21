@@ -1,0 +1,479 @@
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/21/23 10:22:11 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1  option limrow=0, limcol=0;
+   2   
+   3  set I Items for Sale / bookcase, desk, chair, bedframe, coffee_table / ;
+   4  set R Requirements Needed / work, metal, wood /;
+   5  set M Model Variations / '2.1', '2.2', '2.3', '2.4' /;
+   6   
+   7  parameters
+   8  p(I) Profit Margin / bookcase 19, desk 13, chair 12, bedframe 17 /
+   9  u(R) Amount Available Resources / work 225, metal 117, wood 420 /
+  10  n(I, R) Resource Requirement per Process Item ;
+  11   
+  12  table
+  13  n(I, R)
+  14              work      metal      wood
+  15  bookcase       3          1         4
+  16  desk           2          1         3
+  17  chair          1          1         3
+  18  bedframe       2          1         4
+  19  coffee_table   3          1         2;
+  20   
+  21  * insprofit and insres are 2 tables that detail the changes of each variation to refer to in loop below
+  22  table
+  23  insprofit(I, M) Profit Margin Changes by Instance
+  24              '2.1'      '2.2'      '2.3'      '2.4'
+  25  bookcase
+  26  desk                     15         15         15
+  27  chair
+  28  bedframe
+  29  coffee_table ;
+  30   
+  31  table
+  32  insres(R, M) Resource Availability Changes by Instance
+  33              '2.1'      '2.2'      '2.3'      '2.4'
+  34  work
+  35  metal                              125        125
+  36  wood ;
+  37   
+  38  * used as base for referring to in loop below
+  39  parameter savprofit(I) Save Profit Margins, savres(R) Save Resource Availabilities;
+  40  savprofit(I) = p(I);
+  41  savres(R) = u(R);
+  42   
+  43  positive variable produce(I);
+  44  variable Profit;
+  45  equation obj, res_con;
+  46   
+  47  obj..
+  48  Profit =e= sum(I, p(I)*produce(I));
+  49   
+  50  res_con(R)..
+  51  sum(I, n(I, R)*produce(I)) =l= u(R);
+  52   
+  53  model books /all/;
+  54   
+  55  produce.up('coffee_table') = 0;
+  56   
+  57  * initializing empty parameter to save different objective values for different variations
+  58  parameter resprof(*);
+  59  * iterating through all scenarios of M (2.1, 2.2, 2.3, 2.4)
+  60  loop(M,
+  61  * if loop is on the 4th or greater iteration, then change upper limit of coffee tables produced to +INF
+  62      if(ord(M) ge 4,
+  63          produce.up('coffee_table') = INF;);
+  64  * set profit margin and available resources to original/base values
+  65      p(I) = savprofit(I);
+  66      u(R) = savres(R);
+  67  * set p(I) and u(R) to the values in insprofit and insres based on the current iteration of the loop
+  68      p(I)$insprofit(I, M) = insprofit(I, M);
+  69      u(R)$insres(R, M) = insres(R, M);
+  70  * solve each iteration of loop
+  71      solve books using lp maximize Profit;
+  72  * assign each iteration's objective to resprof parameter
+  73      resprof(M) = Profit.l;
+  74  );
+  75   
+  76  display resprof, produce.l;
+
+
+COMPILATION TIME     =        0.000 SECONDS      3 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/21/23 10:22:11 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Range Statistics    SOLVE books Using LP From line 71
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 1.170E+02, 4.200E+02] - Zero values observed as well
+Bound     [min, max] : [        NA,        NA] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 1.900E+01]
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/21/23 10:22:11 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE books Using LP From line 71
+
+
+LOOPS                                    M   2.1
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           2     SINGLE EQUATIONS            4
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES            6
+NON ZERO ELEMENTS            20
+
+
+GENERATION TIME      =        0.234 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+               L O O P S                  M 2.1
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/21/23 10:22:11 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE books Using LP From line 71
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   books               OBJECTIVE  Profit
+     TYPE    LP                  DIRECTION  MAXIMIZE
+     SOLVER  CPLEX               FROM LINE  71
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE             1827.0000
+
+ RESOURCE USAGE, LIMIT          0.015 10000000000.000
+ ITERATION COUNT, LIMIT         3    2147483647
+--- *** This solver runs with a demo license. No commercial use.
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.01sec (det. 0.01 ticks)
+
+
+Optimal solution found
+Objective:         1827.000000
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU obj                 .              .              .             1.0000      
+
+---- EQU res_con  
+
+             LOWER          LEVEL          UPPER         MARGINAL
+
+work         -INF          225.0000       225.0000         2.0000      
+metal        -INF          117.0000       117.0000         1.0000      
+wood         -INF          420.0000       420.0000         3.0000      
+
+---- VAR produce  
+
+                    LOWER          LEVEL          UPPER         MARGINAL
+
+bookcase              .            39.0000        +INF             .          
+desk                  .              .            +INF           -1.0000      
+chair                 .            48.0000        +INF             .          
+bedframe              .            30.0000        +INF             .          
+coffee_table          .              .              .           -13.0000      
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR Profit            -INF         1827.0000        +INF             .          
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/21/23 10:22:11 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Range Statistics    SOLVE books Using LP From line 71
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 1.170E+02, 4.200E+02] - Zero values observed as well
+Bound     [min, max] : [        NA,        NA] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 1.900E+01]
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/21/23 10:22:11 Page 6
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE books Using LP From line 71
+
+
+LOOPS                                    M   2.2
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           2     SINGLE EQUATIONS            4
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES            6
+NON ZERO ELEMENTS            20
+
+
+GENERATION TIME      =        0.000 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+               L O O P S                  M 2.2
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/21/23 10:22:11 Page 7
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE books Using LP From line 71
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   books               OBJECTIVE  Profit
+     TYPE    LP                  DIRECTION  MAXIMIZE
+     SOLVER  CPLEX               FROM LINE  71
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE             1866.0000
+
+ RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ ITERATION COUNT, LIMIT         1    2147483647
+--- *** This solver runs with a demo license. No commercial use.
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.01 ticks)
+
+
+Optimal solution found
+Objective:         1866.000000
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU obj                 .              .              .             1.0000      
+
+---- EQU res_con  
+
+             LOWER          LEVEL          UPPER         MARGINAL
+
+work         -INF          225.0000       225.0000         3.0000      
+metal        -INF          117.0000       117.0000         3.0000      
+wood         -INF          420.0000       420.0000         2.0000      
+
+---- VAR produce  
+
+                    LOWER          LEVEL          UPPER         MARGINAL
+
+bookcase              .              .            +INF           -1.0000      
+desk                  .            39.0000        +INF             .          
+chair                 .             9.0000        +INF             .          
+bedframe              .            69.0000        +INF             .          
+coffee_table          .              .              .           -16.0000      
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR Profit            -INF         1866.0000        +INF             .          
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/21/23 10:22:11 Page 8
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Range Statistics    SOLVE books Using LP From line 71
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 1.250E+02, 4.200E+02] - Zero values observed as well
+Bound     [min, max] : [        NA,        NA] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 1.900E+01]
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/21/23 10:22:11 Page 9
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE books Using LP From line 71
+
+
+LOOPS                                    M   2.3
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           2     SINGLE EQUATIONS            4
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES            6
+NON ZERO ELEMENTS            20
+
+
+GENERATION TIME      =        0.000 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+               L O O P S                  M 2.3
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/21/23 10:22:11 Page 10
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE books Using LP From line 71
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   books               OBJECTIVE  Profit
+     TYPE    LP                  DIRECTION  MAXIMIZE
+     SOLVER  CPLEX               FROM LINE  71
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE             1890.0000
+
+ RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ ITERATION COUNT, LIMIT         0    2147483647
+--- *** This solver runs with a demo license. No commercial use.
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.01 ticks)
+
+
+Optimal solution found
+Objective:         1890.000000
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU obj                 .              .              .             1.0000      
+
+---- EQU res_con  
+
+             LOWER          LEVEL          UPPER         MARGINAL
+
+work         -INF          225.0000       225.0000         3.0000      
+metal        -INF          125.0000       125.0000         3.0000      
+wood         -INF          420.0000       420.0000         2.0000      
+
+---- VAR produce  
+
+                    LOWER          LEVEL          UPPER         MARGINAL
+
+bookcase              .              .            +INF           -1.0000      
+desk                  .            55.0000        +INF             .          
+chair                 .            25.0000        +INF             .          
+bedframe              .            45.0000        +INF             .          
+coffee_table          .              .              .           -16.0000      
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR Profit            -INF         1890.0000        +INF             .          
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/21/23 10:22:11 Page 11
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Range Statistics    SOLVE books Using LP From line 71
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 1.250E+02, 4.200E+02] - Zero values observed as well
+Bound     [min, max] : [        NA,        NA] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 1.900E+01]
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/21/23 10:22:11 Page 12
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE books Using LP From line 71
+
+
+LOOPS                                    M   2.4
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           2     SINGLE EQUATIONS            4
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES            6
+NON ZERO ELEMENTS            20
+
+
+GENERATION TIME      =        0.000 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+               L O O P S                  M 2.4
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/21/23 10:22:11 Page 13
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE books Using LP From line 71
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   books               OBJECTIVE  Profit
+     TYPE    LP                  DIRECTION  MAXIMIZE
+     SOLVER  CPLEX               FROM LINE  71
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE             1890.0000
+
+ RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ ITERATION COUNT, LIMIT         0    2147483647
+--- *** This solver runs with a demo license. No commercial use.
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.01 ticks)
+
+
+Optimal solution found
+Objective:         1890.000000
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU obj                 .              .              .             1.0000      
+
+---- EQU res_con  
+
+             LOWER          LEVEL          UPPER         MARGINAL
+
+work         -INF          225.0000       225.0000         3.0000      
+metal        -INF          125.0000       125.0000         3.0000      
+wood         -INF          420.0000       420.0000         2.0000      
+
+---- VAR produce  
+
+                    LOWER          LEVEL          UPPER         MARGINAL
+
+bookcase              .              .            +INF           -1.0000      
+desk                  .            55.0000        +INF             .          
+chair                 .            25.0000        +INF             .          
+bedframe              .            45.0000        +INF             .          
+coffee_table          .              .            +INF          -16.0000      
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR Profit            -INF         1890.0000        +INF             .          
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/21/23 10:22:11 Page 14
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+----     76 PARAMETER resprof  
+
+2.1 1827.000,    2.2 1866.000,    2.3 1890.000,    2.4 1890.000
+
+
+----     76 VARIABLE produce.L  
+
+desk     55.000,    chair    25.000,    bedframe 45.000
+
+
+
+EXECUTION TIME       =        0.890 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+
+
+USER: GAMS Demo, for EULA and demo limitations see   G230706/0001CB-GEN
+      https://www.gams.com/latest/docs/UG%5FLicense.html         DC0000
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw2\hw2-2.gms
+Output     C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw2\hw2-2.lst

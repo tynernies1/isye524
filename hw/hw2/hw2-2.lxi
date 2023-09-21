@@ -1,0 +1,32 @@
+B 3 C o m p i l a t i o n
+B 87 Range Statistics    SOLVE books Using LP From line 71
+B 98 Model Statistics    SOLVE books Using LP From line 71
+B 116 Solution Report     SOLVE books Using LP From line 71
+F 149 obj
+F 151 res_con
+G 159 produce
+G 171 Profit
+B 179 Range Statistics    SOLVE books Using LP From line 71
+B 190 Model Statistics    SOLVE books Using LP From line 71
+B 208 Solution Report     SOLVE books Using LP From line 71
+F 241 obj
+F 243 res_con
+G 251 produce
+G 263 Profit
+B 271 Range Statistics    SOLVE books Using LP From line 71
+B 282 Model Statistics    SOLVE books Using LP From line 71
+B 300 Solution Report     SOLVE books Using LP From line 71
+F 333 obj
+F 335 res_con
+G 343 produce
+G 355 Profit
+B 363 Range Statistics    SOLVE books Using LP From line 71
+B 374 Model Statistics    SOLVE books Using LP From line 71
+B 392 Solution Report     SOLVE books Using LP From line 71
+F 425 obj
+F 427 res_con
+G 435 produce
+G 447 Profit
+B 455 E x e c u t i o n
+I 455 resprof
+I 461 produce

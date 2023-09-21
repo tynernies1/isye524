@@ -1,0 +1,16 @@
+B 3 C o m p i l a t i o n
+B 132 Equation Listing    SOLVE ratiomodel Using NLP From line 128
+D 135 cals_eaten_eqn
+D 140 vitc_eaten_eqn
+D 145 vita_eaten_eqn
+D 151 limit_vitc_ratio_eqn
+D 157 limit_vita_ratio_eqn
+D 162 min_nutr_eqn
+D 173 beef_eqn
+B 179 Column Listing      SOLVE ratiomodel Using NLP From line 128
+E 182 x
+E 228 total_beef
+E 235 cals_eaten
+E 244 vitc_eaten
+E 252 vita_eaten
+B 261 Model Statistics    SOLVE ratiomodel Using NLP From line 128

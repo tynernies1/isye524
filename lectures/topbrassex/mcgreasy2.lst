@@ -1,0 +1,289 @@
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/20/23 16:24:26 Page 1
+McGreasy Diet Problem
+C o m p i l a t i o n
+
+
+   2   
+      A simple diet model.
+      Data taken from "Optimization Models",
+      Chapter 1, by Robert Fourer.
+   8   
+   9  set food, nutr;
+  10   
+  11  table a(nutr<,food<)  per unit nutrients
+  12          QP  MD  BM  FF  MC  FR  SM  1M   OJ
+  13  Prot    28  24  25  14  31   3  15   9    1
+  14  VitA    15  15   6   2   8   0   4  10    2
+  15  VitC     6  10   2   0  15  15   0   4  120
+  16  Calc    30  20  25  15  15   0  20  30    2
+  17  Iron    20  20  20  10   8   2  15   0    2
+  18  Cals   510 370 500 370 400 220 345 110   80
+  19  Carb    34  33  42  38  42  26  27  12   20;
+  20   
+  21   
+  22   
+  23  parameter min_nutr(nutr) /Prot 55, VitA 100, VitC 100, Calc 100,
+  24      Iron 100, Cals 2000, Carb 350 /;
+  25   
+  26  parameter cost(food) /QP 1.84, MD 2.19, BM 1.84, FF 1.44, MC 2.29,
+  27      FR 0.77, SM 1.29, 1M 0.6, OJ 0.72 /;
+  28   
+  29  free variables
+  30      total_cost  Total Cost of Daily Diet
+  31  ;
+  32   
+  33  positive variables
+  34      x(food)     Number of each type of food to eat
+  35  ;
+  36   
+  37   
+  38  equations
+  39      cost_eqn        Define Objective
+  40      min_nutr_eqn(nutr)    Minimum Daily Requirement
+  41  ;
+  42   
+  43  min_nutr_eqn(nutr)..
+  44      sum(food,a(nutr,food)*x(food)) =G= min_nutr(nutr) ;
+  45   
+  46  cost_eqn..
+  47      total_cost =E= sum(food,cost(food)*x(food)) ;
+  48   
+  49  set beef(food) / QP, MD, BM /;
+  50   
+  51  free variable total_beef;
+  52   
+  53  equations
+  54      beef_eqn    Amount of beef I get to eat
+  55  ;
+  56   
+  57  beef_eqn..
+  58      total_beef =E= sum(beef,x(beef));
+  59   
+  60  set bad_nutr(nutr) / Cals, Carb /;
+  61   
+  62  parameter max_nutr(bad_nutr);
+  63  max_nutr(bad_nutr) = 2 * min_nutr(bad_nutr);
+  64   
+  65  equations
+  66      max_nutr_req(bad_nutr)  Jane doesn't want the insurance money yet
+  67  ;
+  68   
+  69  max_nutr_req(bad_nutr)..
+  70      sum(food,a(bad_nutr,food)*x(food)) =L= max_nutr(bad_nutr);
+  71   
+  72   
+      Some new requirements.  Let's suppose that Jane will allow me to eat
+      as many burgers as a want, but I just can't eat them in "too high" a
+      proportion with the vitamins I get.
+       
+      For example, let's say that ...
+      cals/vitc <= rho
+      cals/vita <= rho
+       
+      Also, I can't eat more than 10,000 calories/day
+       
+  85   
+  86  positive variables
+  87      cals_eaten  Number of calories I ingest
+  88      vitc_eaten  Amount of vitamin C I eat
+  89      vita_eaten  Amount of vitamin A I eat
+  90  ;
+  91   
+  92  equations
+  93      cals_eaten_eqn
+  94      vitc_eaten_eqn
+  95      vita_eaten_eqn
+  96      limit_vitc_ratio_eqn
+  97      limit_vita_ratio_eqn
+  98  ;
+  99   
+ 100  cals_eaten_eqn..
+ 101      cals_eaten =E= sum(food,a("Cals",food) * x(food));
+ 102   
+ 103  vitc_eaten_eqn..
+ 104      vitc_eaten =E= sum(food,a("VitC",food) * x(food));
+ 105   
+ 106  vita_eaten_eqn..
+ 107      vita_eaten =E= sum(food,a("VitA",food) * x(food));
+ 108   
+      limit_vitc_ratio_eqn..
+          cals_eaten - 40*vitc_eaten =L= 0 ;
+       
+      limit_vita_ratio_eqn..
+          cals_eaten - 40*vita_eaten =L= 0 ;
+ 116  limit_vitc_ratio_eqn..
+ 117      cals_eaten / vitc_eaten =L= 40 ;
+ 118   
+ 119  limit_vita_ratio_eqn..
+ 120      cals_eaten / vita_eaten =L= 40 ;
+ 121   
+ 122   
+ 123  cals_eaten.up = 10000;
+ 124   
+ 125  model ratiomodel /  cals_eaten_eqn,  vitc_eaten_eqn,  vita_eaten_eqn,
+ 126          limit_vitc_ratio_eqn, limit_vita_ratio_eqn, min_nutr_eqn, beef_eqn /;
+ 127   
+ 128  solve ratiomodel using nlp maximizing total_beef;
+
+
+COMPILATION TIME     =        0.000 SECONDS      3 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/20/23 16:24:26 Page 2
+McGreasy Diet Problem
+Equation Listing    SOLVE ratiomodel Using NLP From line 128
+
+
+---- cals_eaten_eqn  =E=  
+
+cals_eaten_eqn..  - 510*x(QP) - 370*x(MD) - 500*x(BM) - 370*x(FF) - 400*x(MC) - 220*x(FR) - 345*x(SM) - 110*x(1M) - 80*x(OJ) + cals_eaten =E= 0 ; (LHS = 0)
+     
+
+---- vitc_eaten_eqn  =E=  
+
+vitc_eaten_eqn..  - 6*x(QP) - 10*x(MD) - 2*x(BM) - 15*x(MC) - 15*x(FR) - 4*x(1M) - 120*x(OJ) + vitc_eaten =E= 0 ; (LHS = 0)
+     
+
+---- vita_eaten_eqn  =E=  
+
+vita_eaten_eqn..  - 15*x(QP) - 15*x(MD) - 6*x(BM) - 2*x(FF) - 8*x(MC) - 4*x(SM) - 10*x(1M) - 2*x(OJ) + vita_eaten =E= 0 ; (LHS = 0)
+     
+**** Exec Error at line 116: division by zero (0)
+
+---- limit_vitc_ratio_eqn  =L=  
+
+limit_vitc_ratio_eqn..  (1)*cals_eaten + (1)*vitc_eaten =L= 40 ; (LHS = UNDF)
+     
+**** Exec Error at line 119: division by zero (0)
+
+---- limit_vita_ratio_eqn  =L=  
+
+limit_vita_ratio_eqn..  (1)*cals_eaten + (1)*vita_eaten =L= 40 ; (LHS = UNDF)
+     
+
+---- min_nutr_eqn  =G=  Minimum Daily Requirement
+
+min_nutr_eqn(Prot)..  28*x(QP) + 24*x(MD) + 25*x(BM) + 14*x(FF) + 31*x(MC) + 3*x(FR) + 15*x(SM) + 9*x(1M) + x(OJ) =G= 55 ; (LHS = 0, INFES = 55 ****)
+     
+min_nutr_eqn(VitA)..  15*x(QP) + 15*x(MD) + 6*x(BM) + 2*x(FF) + 8*x(MC) + 4*x(SM) + 10*x(1M) + 2*x(OJ) =G= 100 ; (LHS = 0, INFES = 100 ****)
+     
+min_nutr_eqn(VitC)..  6*x(QP) + 10*x(MD) + 2*x(BM) + 15*x(MC) + 15*x(FR) + 4*x(1M) + 120*x(OJ) =G= 100 ; (LHS = 0, INFES = 100 ****)
+     
+REMAINING 4 ENTRIES SKIPPED
+
+
+---- beef_eqn  =E=  Amount of beef I get to eat
+
+beef_eqn..  - x(QP) - x(MD) - x(BM) + total_beef =E= 0 ; (LHS = 0)
+     
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/20/23 16:24:26 Page 3
+McGreasy Diet Problem
+Column Listing      SOLVE ratiomodel Using NLP From line 128
+
+
+---- x  Number of each type of food to eat
+
+x(QP)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+     -510       cals_eaten_eqn
+       -6       vitc_eaten_eqn
+      -15       vita_eaten_eqn
+       28       min_nutr_eqn(Prot)
+       15       min_nutr_eqn(VitA)
+        6       min_nutr_eqn(VitC)
+       30       min_nutr_eqn(Calc)
+       20       min_nutr_eqn(Iron)
+      510       min_nutr_eqn(Cals)
+       34       min_nutr_eqn(Carb)
+       -1       beef_eqn
+
+x(MD)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+     -370       cals_eaten_eqn
+      -10       vitc_eaten_eqn
+      -15       vita_eaten_eqn
+       24       min_nutr_eqn(Prot)
+       15       min_nutr_eqn(VitA)
+       10       min_nutr_eqn(VitC)
+       20       min_nutr_eqn(Calc)
+       20       min_nutr_eqn(Iron)
+      370       min_nutr_eqn(Cals)
+       33       min_nutr_eqn(Carb)
+       -1       beef_eqn
+
+x(BM)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+     -500       cals_eaten_eqn
+       -2       vitc_eaten_eqn
+       -6       vita_eaten_eqn
+       25       min_nutr_eqn(Prot)
+        6       min_nutr_eqn(VitA)
+        2       min_nutr_eqn(VitC)
+       25       min_nutr_eqn(Calc)
+       20       min_nutr_eqn(Iron)
+      500       min_nutr_eqn(Cals)
+       42       min_nutr_eqn(Carb)
+       -1       beef_eqn
+
+REMAINING 6 ENTRIES SKIPPED
+
+---- total_beef  
+
+total_beef
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       beef_eqn
+
+
+---- cals_eaten  Number of calories I ingest
+
+cals_eaten
+                (.LO, .L, .UP, .M = 0, 0, 10000, 0)
+        1       cals_eaten_eqn
+       (1)      limit_vitc_ratio_eqn
+       (1)      limit_vita_ratio_eqn
+
+
+---- vitc_eaten  Amount of vitamin C I eat
+
+vitc_eaten
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+        1       vitc_eaten_eqn
+       (1)      limit_vitc_ratio_eqn
+
+
+---- vita_eaten  Amount of vitamin A I eat
+
+vita_eaten
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+        1       vita_eaten_eqn
+       (1)      limit_vita_ratio_eqn
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/20/23 16:24:26 Page 4
+McGreasy Diet Problem
+Model Statistics    SOLVE ratiomodel Using NLP From line 128
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           7     SINGLE EQUATIONS           13
+BLOCKS OF VARIABLES           5     SINGLE VARIABLES           13
+NON ZERO ELEMENTS            93     NON LINEAR N-Z              0
+CODE LENGTH                  10     CONSTANT POOL              16
+
+
+GENERATION TIME      =        0.000 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+
+**** SOLVE from line 128 ABORTED, EXECERROR = 2
+
+
+EXECUTION TIME       =        0.000 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+
+
+USER: GAMS Demo, for EULA and demo limitations see   G230706/0001CB-GEN
+      https://www.gams.com/latest/docs/UG%5FLicense.html         DC0000
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\Rocke\OneDrive\Documents\isye524\lectures\topbrassex\mcgreasy2.gms
+Output     C:\Users\Rocke\OneDrive\Documents\isye524\lectures\topbrassex\mcgreasy2.lst
+
+**** USER ERROR(S) ENCOUNTERED
