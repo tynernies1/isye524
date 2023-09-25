@@ -1,0 +1,122 @@
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/24/23 23:44:25 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1  option limrow=0, limcol=0;
+   2   
+   3  set D Dams / A, B /;
+   4  set M Months / March, April /;
+   5   
+   6   
+   7  scalars
+   8  Profit_Normal / 5 /
+   9  Profit_Excess / 3.5 /
+  10  Normal_Capacity / 50000 /;
+  11   
+  12  parameters
+  13  U(D) Storage Capacity / A 2000, B 1500 /
+  14  L(D) Minimum Allowable Level / A 1200, B 800 /
+  15  W(D) Water Power Conversion / A 400, B 200 /
+  16  P(D) Power Plant Capacity / A 60000, B 35000 /
+  17  I(D) Initial Inventory / A 1900, B 850 /;
+  18   
+  19  table
+  20  i(D, M)
+****        $184,194,166
+**** 166  A table must have two or more dimensions - use parameter list
+****         rest of table will be ignored
+**** 184  Domain list redefined
+**** 194  Symbol redefined - a second data statement for the same symbol
+****         or a data statement after an assignment
+****         Hint: You could use $onMulti to merge the data from different
+****               data statements or $onMultiR to replace existing data
+****               with data from a later data statement
+  21            A       B
+  22  March   200      40
+  23  April   130      15;
+  24   
+  25  positive variable
+  26  water(D, M) Amount of Water (in KAF),
+  27  normal_power(D, M) Amount of Power <= 50000 MWH,
+  28  excess_power(D, M) Amount of Power > 50000 MWH,
+  29  outflow(D, M) Outflow of Water (in KAF),
+  30  spill(D, M) Spill Water (in KAF);
+  31   
+  32  variable Profit;
+  33   
+  34  equations
+  35  obj, normal_power_eq, excess_power_eq,bal_cons_A, bal_cons_B,
+  36  plant_cap, dam_cap, dam_min;
+  37   
+  38  obj..
+  39  Profit =e= sum((D, M), Profit_Normal*normal_power(D, M) + Profit_Excess*excess_power(D, M));
+  40   
+  41  normal_power_eq(D, M)..
+  42  normal_power(D, M) =e= W(D)*water(D, M);
+  43   
+  44  excess_power_eq(D, M)..
+  45  excess_power(D, M) =e= W(D)*water(D, M) - Normal_Capacity;
+  46   
+  47  bal_cons_A(M)..
+  48  water('A', M) =e= water('A', (M-1)) + i('A', M) - (outflow('A', M)+spill('A', M));
+****                               $145 $408,409
+**** 145  Set identifier or quoted element expected
+**** 408  Too many ),] or }
+**** 409  Unrecognizable item - skip to find a new statement
+****        looking for a ';' or a key word to get started again
+  49   
+  50  bal_cons_B(M)..
+  51  water('B', M) =e= water('B', (M-1)) + i('B', M) - ((outflow('B', M) - outflow('A', M)) + (spill('B', M)) - spill('A', M));
+****                               $145 $408,409
+**** 145  Set identifier or quoted element expected
+**** 408  Too many ),] or }
+**** 409  Unrecognizable item - skip to find a new statement
+****        looking for a ';' or a key word to get started again
+  52   
+  53  plant_cap(D, M)..
+  54  normal_power(D, M) + excess_power(D, M) =l= P(D);
+  55   
+  56  dam_cap(D, M)..
+  57  water(D, M) =l= U(D);
+  58   
+  59  dam_min(D, M)
+  60  water(D, M) =g= L(D);
+****      $36
+****  36  '=' or '..' or ':=' or '$=' operator expected
+****      rest of statement ignored
+  61   
+  62  model hydro / all /;
+  63   
+  64  normal_power.up('A', 'March') = Normal_Capacity;
+  65  normal_power.up('B', 'April') = Normal_Capacity;
+  66  normal_power.up('A', 'April') = Normal_Capacity;
+  67  normal_power.up('B', 'April') = Normal_Capacity;
+  68   
+  69  solve hydro using lp maximize Profit;
+****                                      $257
+**** 257  Solve statement not checked because of previous errors
+  70   
+  71   
+  72   
+  73   
+  74   
+  75   
+  76   
+
+**** 11 ERROR(S)   0 WARNING(S)
+
+
+COMPILATION TIME     =        0.016 SECONDS      3 MB  44.3.0 8b8fb1cb WEX-WEI
+
+
+USER: GAMS Demo, for EULA and demo limitations see   G230706/0001CB-GEN
+      https://www.gams.com/latest/docs/UG%5FLicense.html         DC0000
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw3\hw3.gms
+Output     C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw3\hw3.lst
+
+**** USER ERROR(S) ENCOUNTERED

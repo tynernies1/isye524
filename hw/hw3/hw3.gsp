@@ -1,17 +1,17 @@
 {
-    "file": "mcgreasy2.gms",
-    "name": "mcgreasy2",
+    "file": "hw3.gms",
+    "name": "hw3",
     "nodes": [
         {
             "codecMib": 106,
-            "file": "mcgreasy2.gms",
-            "name": "mcgreasy2.gms",
+            "file": "hw3.gms",
+            "name": "hw3.gms",
             "type": "gms"
         },
         {
             "codecMib": 106,
-            "file": "mcgreasy2.lst",
-            "name": "mcgreasy2.lst",
+            "file": "hw3.lst",
+            "name": "hw3.lst",
             "type": "lst"
         }
     ],
