@@ -1,0 +1,291 @@
+--- Job shoerun.gms Start 09/27/23 12:54:12 44.3.0 8b8fb1cb WEX-WEI x86 64bit/MS Windows
+--- Applying:
+    C:\GAMS\44\gmsprmNT.txt
+--- GAMS Parameters defined
+    Input C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\shoerun.gms
+    PageSize 0
+    ScrDir C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\225a\
+    SysDir C:\GAMS\44\
+    LogOption 3
+    ErrMsg 1
+    ErrorLog 99
+    IDE 1
+    LstTitleLeftAligned 1
+Licensee: GAMS Demo, for EULA and demo limitations see   G230706/0001CB-GEN
+          https://www.gams.com/latest/docs/UG%5FLicense.html         DC0000
+          C:\GAMS\44\gamslice.txt
+          Demo license for demonstration and instructional purposes only
+Processor information: 1 socket(s), 4 core(s), and 8 thread(s) available
+GAMS 44.3.0   Copyright (C) 1987-2023 GAMS Development. All rights reserved
+--- Starting compilation
+--- shoerun.gms(3) 2 Mb
+--- call gams shoeco s=shoe
+--- Job shoeco Start 09/27/23 12:54:12 44.3.0 8b8fb1cb WEX-WEI x86 64bit/MS Windows
+--- Applying:
+    C:\GAMS\44\gmsprmNT.txt
+--- GAMS Parameters defined
+    Input C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\shoeco.gms
+    Save C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\shoe.g0?
+    ScrDir C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\225b\
+    SysDir C:\GAMS\44\
+Licensee: GAMS Demo, for EULA and demo limitations see   G230706/0001CB-GEN
+          https://www.gams.com/latest/docs/UG%5FLicense.html         DC0000
+          C:\GAMS\44\gamslice.txt
+          Demo license for demonstration and instructional purposes only
+Processor information: 1 socket(s), 4 core(s), and 8 thread(s) available
+GAMS 44.3.0   Copyright (C) 1987-2023 GAMS Development. All rights reserved
+--- Starting compilation
+--- shoeco.gms(150) 3 Mb
+--- Starting execution: elapsed 0:00:00.008
+--- shoeco.gms(103) 4 Mb
+--- Generating LP model shoeco
+--- shoeco.gms(147) 4 Mb
+---   17 rows  25 columns  71 non-zeroes
+--- Range statistics (absolute non-zero finite values)
+--- RHS       [min, max] : [ 1.000E+03, 5.000E+03] - Zero values observed as well
+--- Bound     [min, max] : [        NA,        NA] - Zero values observed as well
+--- Matrix    [min, max] : [ 1.000E+00, 2.000E+03]
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.015
+
+IBM ILOG CPLEX   44.3.0 8b8fb1cb Sep 1, 2023           WEI x86 64bit/MS Window
+
+--- *** This solver runs with a demo license. No commercial use.
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+Version identifier: 22.1.1.0 | 2022-11-27 | 9160aff4d
+CPXPARAM_Advance                                 0
+CPXPARAM_Simplex_Display                         2
+CPXPARAM_Threads                                 1
+CPXPARAM_MIP_Display                             4
+CPXPARAM_MIP_Pool_Capacity                       0
+CPXPARAM_MIP_Tolerances_AbsMIPGap                0
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 4 columns.
+Aggregator did 1 substitutions.
+Reduced LP has 14 rows, 20 columns, and 40 nonzeros.
+Presolve time = 0.00 sec. (0.02 ticks)
+
+Iteration      Dual Objective            In Variable           Out Variable
+     1          120000.000000                 x(Feb)  BalShoe_eq(Feb) artif
+     2          150000.000000                 x(Mar)  BalShoe_eq(Mar) artif
+     3          165000.000000                 x(Apr)  BalShoe_eq(Apr) artif
+     4          180000.000000                 x(Jan) RegLabor_eq(Feb) slack
+     5          456000.000000                 w(Feb) RegLabor_eq(Jan) slack
+     6          572000.000000                 o(Feb)BalPeople_eq(Feb) artif
+     7          596000.000000                 o(Jan)OverLabor_eq(Feb) slack
+     8          623111.111111                 w(Jan)OverLabor_eq(Jan) slack
+     9          756444.444444                 w(Mar)BalPeople_eq(Mar) artif
+    10          800888.888889                 f(Mar)BalPeople_eq(Apr) artif
+    11          850888.888889                 w(Apr) RegLabor_eq(Mar) slack
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.02sec (det. 0.05 ticks)
+
+
+Optimal solution found
+Objective:       850888.888889
+
+--- Reading solution for model shoeco
+--- Executing after solve: elapsed 0:00:00.092
+--- shoeco.gms(149) 4 Mb
+*** Status: Normal completion
+--- Job shoeco.gms Stop 09/27/23 12:54:12 elapsed 0:00:00.095
+--- shoerun.gms(4) 2 Mb
+--- call gams shoeco2
+--- Job shoeco2 Start 09/27/23 12:54:12 44.3.0 8b8fb1cb WEX-WEI x86 64bit/MS Windows
+--- Applying:
+    C:\GAMS\44\gmsprmNT.txt
+--- GAMS Parameters defined
+    Input C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\shoeco2.gms
+    ScrDir C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\225b\
+    SysDir C:\GAMS\44\
+Licensee: GAMS Demo, for EULA and demo limitations see   G230706/0001CB-GEN
+          https://www.gams.com/latest/docs/UG%5FLicense.html         DC0000
+          C:\GAMS\44\gamslice.txt
+          Demo license for demonstration and instructional purposes only
+Processor information: 1 socket(s), 4 core(s), and 8 thread(s) available
+GAMS 44.3.0   Copyright (C) 1987-2023 GAMS Development. All rights reserved
+--- Starting compilation
+--- shoeco2.gms(1) 2 Mb
+--- . shoeco.gms(150) 3 Mb
+--- shoeco2.gms(37) 3 Mb
+--- Starting execution: elapsed 0:00:00.009
+--- shoeco2.gms(104) 4 Mb
+--- Generating LP model shoeco
+--- shoeco2.gms(148) 4 Mb
+---   17 rows  25 columns  71 non-zeroes
+--- Range statistics (absolute non-zero finite values)
+--- RHS       [min, max] : [ 1.000E+03, 5.000E+03] - Zero values observed as well
+--- Bound     [min, max] : [        NA,        NA] - Zero values observed as well
+--- Matrix    [min, max] : [ 1.000E+00, 2.000E+03]
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.025
+
+IBM ILOG CPLEX   44.3.0 8b8fb1cb Sep 1, 2023           WEI x86 64bit/MS Window
+
+--- *** This solver runs with a demo license. No commercial use.
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+Version identifier: 22.1.1.0 | 2022-11-27 | 9160aff4d
+CPXPARAM_Advance                                 0
+CPXPARAM_Simplex_Display                         2
+CPXPARAM_Threads                                 1
+CPXPARAM_MIP_Display                             4
+CPXPARAM_MIP_Pool_Capacity                       0
+CPXPARAM_MIP_Tolerances_AbsMIPGap                0
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 4 columns.
+Aggregator did 1 substitutions.
+Reduced LP has 14 rows, 20 columns, and 40 nonzeros.
+Presolve time = 0.00 sec. (0.02 ticks)
+
+Iteration      Dual Objective            In Variable           Out Variable
+     1          120000.000000                 x(Feb)  BalShoe_eq(Feb) artif
+     2          150000.000000                 x(Mar)  BalShoe_eq(Mar) artif
+     3          165000.000000                 x(Apr)  BalShoe_eq(Apr) artif
+     4          180000.000000                 x(Jan) RegLabor_eq(Feb) slack
+     5          456000.000000                 w(Feb) RegLabor_eq(Jan) slack
+     6          572000.000000                 o(Feb)BalPeople_eq(Feb) artif
+     7          596000.000000                 o(Jan)OverLabor_eq(Feb) slack
+     8          623111.111111                 w(Jan)OverLabor_eq(Jan) slack
+     9          756444.444444                 w(Mar)BalPeople_eq(Mar) artif
+    10          800888.888889                 f(Mar)BalPeople_eq(Apr) artif
+    11          850888.888889                 w(Apr) RegLabor_eq(Mar) slack
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.05 ticks)
+
+
+Optimal solution found
+Objective:       850888.888889
+
+--- Reading solution for model shoeco
+--- Executing after solve: elapsed 0:00:00.109
+--- shoeco2.gms(168) 4 Mb
+--- Generating LP model shoeco_backlog
+--- shoeco2.gms(184) 4 Mb
+---   21 rows  33 columns  87 non-zeroes
+--- Range statistics (absolute non-zero finite values)
+--- RHS       [min, max] : [ 1.000E+03, 5.000E+03] - Zero values observed as well
+--- Bound     [min, max] : [        NA,        NA] - Zero values observed as well
+--- Matrix    [min, max] : [ 1.000E+00, 2.000E+03]
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.113
+
+IBM ILOG CPLEX   44.3.0 8b8fb1cb Sep 1, 2023           WEI x86 64bit/MS Window
+
+--- *** This solver runs with a demo license. No commercial use.
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+Version identifier: 22.1.1.0 | 2022-11-27 | 9160aff4d
+CPXPARAM_Advance                                 2
+CPXPARAM_Simplex_Display                         2
+CPXPARAM_Threads                                 1
+CPXPARAM_MIP_Display                             4
+CPXPARAM_MIP_Pool_Capacity                       0
+CPXPARAM_MIP_Tolerances_AbsMIPGap                0
+Tried aggregator 1 time.
+LP Presolve eliminated 2 rows and 6 columns.
+Aggregator did 3 substitutions.
+Reduced LP has 15 rows, 24 columns, and 48 nonzeros.
+Presolve time = 0.00 sec. (0.03 ticks)
+
+Iteration      Dual Objective            In Variable           Out Variable
+     1          365000.000000                 S(Mar)BacklogDef_eq(Mar artif
+     2          525000.000000                 S(Feb)BacklogDef_eq(Feb artif
+     3          585000.000000                 S(Jan)BacklogDef_eq(Jan artif
+     4          612500.000000                 x(Mar) RegLabor_eq(Apr) slack
+     5          678280.000000                 x(Jan)                 f(Mar)
+     6          767470.588235                 x(Feb)OverLabor_eq(Feb) slack
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.08 ticks)
+
+
+Optimal solution found
+Objective:       767470.588235
+
+--- Reading solution for model shoeco_backlog
+--- Executing after solve: elapsed 0:00:00.217
+--- shoeco2.gms(186) 4 Mb
+*** Status: Normal completion
+--- Job shoeco2.gms Stop 09/27/23 12:54:12 elapsed 0:00:00.217
+--- shoerun.gms(5) 2 Mb
+--- call gams shoeco3 r=shoe
+--- Job shoeco3 Start 09/27/23 12:54:12 44.3.0 8b8fb1cb WEX-WEI x86 64bit/MS Windows
+--- Applying:
+    C:\GAMS\44\gmsprmNT.txt
+--- GAMS Parameters defined
+    Restart C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\shoe.g0?
+    Input C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\shoeco3.gms
+    ScrDir C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\225b\
+    SysDir C:\GAMS\44\
+Licensee: GAMS Demo, for EULA and demo limitations see   G230706/0001CB-GEN
+          https://www.gams.com/latest/docs/UG%5FLicense.html         DC0000
+          C:\GAMS\44\gamslice.txt
+          Demo license for demonstration and instructional purposes only
+Processor information: 1 socket(s), 4 core(s), and 8 thread(s) available
+GAMS 44.3.0   Copyright (C) 1987-2023 GAMS Development. All rights reserved
+--- Starting continued compilation
+--- Workfile was generated under GAMS version WEX443-443
+--- shoeco3.gms(64) 3 Mb
+--- Starting execution: elapsed 0:00:00.009
+--- shoeco3.gms(196) 4 Mb
+--- Generating LP model minimax
+--- shoeco3.gms(213) 4 Mb
+---   39 rows  57 columns  191 non-zeroes
+--- Range statistics (absolute non-zero finite values)
+--- RHS       [min, max] : [ 5.000E+02, 5.000E+03] - Zero values observed as well
+--- Bound     [min, max] : [        NA,        NA] - Zero values observed as well
+--- Matrix    [min, max] : [ 1.000E+00, 2.000E+03]
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.018
+
+IBM ILOG CPLEX   44.3.0 8b8fb1cb Sep 1, 2023           WEI x86 64bit/MS Window
+
+--- *** This solver runs with a demo license. No commercial use.
+--- GMO setup time: 0.00s
+--- GMO memory 0.51 Mb (peak 0.51 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.01 Mb)
+--- Starting Cplex
+
+Version identifier: 22.1.1.0 | 2022-11-27 | 9160aff4d
+CPXPARAM_Advance                                 0
+CPXPARAM_Threads                                 1
+CPXPARAM_MIP_Display                             4
+CPXPARAM_MIP_Pool_Capacity                       0
+CPXPARAM_MIP_Tolerances_AbsMIPGap                0
+Tried aggregator 1 time.
+LP Presolve eliminated 0 rows and 4 columns.
+Aggregator did 12 substitutions.
+Reduced LP has 27 rows, 42 columns, and 170 nonzeros.
+Presolve time = 0.00 sec. (0.07 ticks)
+Initializing dual steep norms . . .
+
+Iteration log . . .
+Iteration:     1   Scaled dual infeas =           499.999999
+Iteration:     3   Dual objective     =          9500.000000
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.02sec (det. 0.16 ticks)
+
+
+Optimal solution found
+Objective:       741676.470588
+
+--- Reading solution for model minimax
+*** Status: Normal completion
+--- Job shoeco3.gms Stop 09/27/23 12:54:13 elapsed 0:00:00.100
+--- Starting execution - empty program
+*** Status: Normal completion
+--- Job shoerun.gms Stop 09/27/23 12:54:13 elapsed 0:00:00.783

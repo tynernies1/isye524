@@ -1,0 +1,33 @@
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/27/23 12:54:12 Page 1
+run all shoeco examples as one
+C o m p i l a t i o n
+
+
+   2   
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/27/23 12:54:12 Page 2
+run all shoeco examples as one
+Include File Summary
+
+
+   SEQ   GLOBAL TYPE      PARENT   LOCAL  FILENAME
+
+     1        1 INPUT          0       0  C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\shoerun.gms
+     2        3 CALL           1       3  gams shoeco s=shoe
+     3        4 CALL           1       4  gams shoeco2
+     4        5 CALL           1       5  gams shoeco3 r=shoe
+
+
+COMPILATION TIME     =        0.766 SECONDS      2 MB  44.3.0 8b8fb1cb WEX-WEI
+
+
+EXECUTION TIME       =        0.000 SECONDS      2 MB  44.3.0 8b8fb1cb WEX-WEI
+
+
+USER: GAMS Demo, for EULA and demo limitations see   G230706/0001CB-GEN
+      https://www.gams.com/latest/docs/UG%5FLicense.html         DC0000
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\shoerun.gms
+Output     C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\shoerun.lst

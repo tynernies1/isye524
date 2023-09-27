@@ -1,0 +1,31 @@
+B 3 C o m p i l a t i o n
+B 158 E x e c u t i o n
+I 158 T
+B 167 Equation Listing    SOLVE shoeco Using LP From line 147
+D 170 cost_eq
+D 175 RegLabor_eq
+D 186 OverLabor_eq
+D 197 BalShoe_eq
+D 208 BalPeople_eq
+B 220 Range Statistics    SOLVE shoeco Using LP From line 147
+B 231 Model Statistics    SOLVE shoeco Using LP From line 147
+B 244 Solution Report     SOLVE shoeco Using LP From line 147
+F 277 cost_eq
+F 279 RegLabor_eq
+F 288 OverLabor_eq
+F 297 BalShoe_eq
+F 306 BalPeople_eq
+G 315 x
+G 324 I
+G 333 w
+G 342 h
+G 351 f
+G 360 o
+G 371 cost
+B 379 E x e c u t i o n
+I 379 x
+I 385 I
+I 390 w
+I 395 h
+I 400 f
+I 405 o

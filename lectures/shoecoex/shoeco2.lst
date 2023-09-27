@@ -1,0 +1,768 @@
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/27/23 12:54:12 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+INCLUDE    C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\shoeco.gms
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/27/23 12:54:12 Page 2
+ShoeCo Aggregate Planning Model.
+C o m p i l a t i o n
+
+
+   3   
+      An aggregate planning model taken (Mostly) from Winston and Albright 4.4)
+       
+      \BI
+      \item Plan production of shoes for next several months
+      \item Meet forecast demands on time
+      \item Hire and/or lay off workers
+      \item Make overtime decisions
+      \item Objective: minimize total cost
+      \EI
+       
+      \BI
+      \item Planning horizon $T = \{1, 2, \ldots |T|\}$.  ($|T| = 4$).
+      \item Meet demand $d_t$ for shoes in period $t \in T$. $d =
+      (3000,5000,2000,1000)$
+      \item Initial Shoe Inventory: ${\cal I}_0 = 500$
+      \item Have ${\cal W}_0 = 100$ workers currently employed
+      \item Workers paid $\$\alpha = 1500$/month for working $H = 160$ hours
+      \item They can work overtime (max of $O = 20$ hours/worker) and get paid
+       $\beta = 13$/hour.
+      \item It take $a = 4$ hours of labor and $\delta = \$15$ in raw
+      material costs to produce a shoe
+      \item Hire-Fire costs: $\eta = 1600$ to hire a worker, $\zeta =
+      \$2000$ to fire a worker.
+      \item Running out of greek letters, $\iota = \$3$ holding cost
+      incurred for each pair of shoes held at the end of the month.
+      \EI
+       
+       
+       
+      \BBR{Decision Variables}
+      \BI
+      \item $x_t$: \# of shoes to produce during month $t$
+      \item $I_t$: Ending inventory in month $t$, $t \in T \cup \{0\}$
+      \item $w_t$: \# of workers available in month $t$, $t \in T
+      \cup\{0\}$.
+      \item $o_t$: \# of overtime hours used in month $t$
+      \item $h_t$: \# workers hired at the beginning of month $t$
+      \item $f_t$: \# workers fired at the beginning of month $t$
+      \EI
+      \EBR
+       
+       
+      FULL (ALGEBRAIC MODEL)
+       
+      \[ \min \sum_{t \in T} \left( \delta x_t + \alpha w_t + \beta o_t +
+      \eta h_t + \zeta f_t + \iota I_t \right) \]
+      \noindent s.t.
+      \begin{eqnarray*}
+      a x_t & \leq & H w_t + o_t \quad \forall t \in T\\
+      o_t & \leq & O w_t \quad \forall t \in T\\
+      I_{t-1} + x_t & = & d_t + I_t \quad \forall t \in T\\
+      I_0 & = & {\cal I}_0\\
+      w_t & = & w_{t-1} + h_t - f_t \quad \forall t \in T\\
+      w_0 & = & {\cal W}_0\\
+      x_t, I_t, w_t, h_t, f_t & \geq & 0 \quad \forall t \in T
+      \end{eqnarray*}
+       
+  63   
+  64  option limrow = 50, limcol = 0 ;
+  65   
+  66  set T;
+  67   
+  68  scalars
+  69      I0      Initial Inventory
+  70      W0      Initial Number of Workers
+  71      alpha   Dollars per month for worker
+  72      beta    Dollars per hour for overtime
+  73      MAXH    max hours per month
+  74      MAXO    max overtime hours per month
+  75      a       labor hours per shoe
+  76      delta   Raw material costs (dollars) per shoe
+  77      eta     hiring cost (dollars) per worker
+  78      zeta    firing cost (dollars) per worker
+  79      iota    inventory cost (dollars) per shoe
+  80  ;
+  81   
+  82   
+  83  parameters
+  84      d(T<)    Demand
+  85  ;
+  86   
+  87  * Don't redefine domain of d here (read it into T as declared before)
+  88  parameter d / Jan 3000, Feb 5000, Mar 2000, Apr 1000/;
+  89   
+  90  I0 = 500;
+  91  W0 = 100;
+  92  alpha = 1500;
+  93  MAXH = 160;
+  94  MAXO = 20;
+  95  beta = 13;
+  96  a = 4;
+  97  delta = 15;
+  98  eta = 1600;
+  99  zeta = 2000;
+ 100  iota = 3;
+ 101   
+ 102   
+ 103   
+ 104  display T;
+ 105   
+ 106  positive variables
+ 107      x(T)    Production in period T
+ 108      I(T)    Ending inventory in period T
+ 109      w(T)    Worker level at end of period T
+ 110      h(T)    Number of workers hired at beginning of T
+ 111      f(T)    Number of workers fired at beginning of T
+ 112      o(T)    Number of overtime hours in period T
+ 113  ;
+ 114   
+ 115  free variable cost;
+ 116   
+ 117  equations
+ 118      cost_eq
+ 119      RegLabor_eq(T)
+ 120      OverLabor_eq(T)
+ 121      BalShoe_eq(T)
+ 122      BalPeople_eq(T)
+ 123  ;
+ 124   
+ 125  cost_eq..
+ 126      cost =E= sum(T, delta*x(T) + alpha * w(T) + beta * o(T) + eta * h(T) +
+ 127                      zeta * f(T) + iota * I(t)) ;
+ 128   
+ 129  RegLabor_eq(T)..
+ 130      a*x(T) =L= MAXH * w(T) + o(T) ;
+ 131   
+ 132  OverLabor_eq(T)..
+ 133      o(T) =L= MAXO*w(T) ;
+ 134   
+ 135  BalShoe_eq(T)..
+ 136    I(T) =E= I(T-1) + x(T) - d(T);
+ 137  *   I(T) =E= I0$(ord(T) eq 1) + I(T-1) + x(T) - d(T) ;
+ 138  *   I(T) =E= I0$sameas(T,'Jan') + I(T-1) + x(T) - d(T) ;
+ 139   
+ 140   
+ 141  BalPeople_eq(T)..
+ 142    W(T) =E= W(T-1) + h(T) - f(T);
+ 143  *  W(T) =E= W0$(ord(T) eq 1) + w(T-1) + h(T) - f(T) ;
+ 144   
+ 145   
+ 146  model shoeco /all/;
+ 147  * d(T) = 2*d(T);
+ 148  solve shoeco minimizing cost using lp;
+ 149   
+ 150  display x.l, I.l, w.l, h.l, f.l, o.l;
+ 151   
+ 152   
+ 153  positive variables
+ 154      L(T)    Leftover inventory in scenario
+ 155      S(T)    Shortage inventory in scenario
+ 156  ;
+ 157   
+ 158   
+ 159  equations
+ 160      BacklogDef_eq(T)
+ 161      BacklogCost_eq
+ 162  ;
+ 163   
+ 164  scalar  theta   Backlog cost /20/;
+ 165   
+ 166  I.lo(T) = -inf;
+ 167  * I.lo(T)$(ord(T)=card(T)) = 0;
+ 168  I.lo(T)$T.last = 0;
+ 169   
+ 170  BacklogCost_eq..
+ 171      cost =E= sum(T, delta*x(T) + alpha * w(T) + beta * o(T) + eta * h(T) +
+ 172                      zeta * f(T) + iota * L(T) + theta * S(T) ) ;
+ 173   
+ 174  BacklogDef_eq(T)..
+ 175      I(T) =E= L(T) - S(T);
+ 176   
+ 177  *model shoeco_backlog / RegLabor_eq, OverLabor_eq,
+ 178  *    BalShoe_eq, BalPeople_eq, BacklogDef_eq,
+ 179  *    BacklogCost_eq /;
+ 180   
+ 181  * Start with shoeco, remove cost_eq, add others
+ 182  model shoeco_backlog / shoeco - cost_eq, BacklogDef_eq, BacklogCost_eq /;
+ 183   
+ 184  solve shoeco_backlog minimizing cost using lp;
+ 185   
+ 186  display x.l, I.l, w.l, h.l, f.l, o.l, L.l, S.l;
+ 187   
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/27/23 12:54:12 Page 3
+ShoeCo Aggregate Planning Model.
+Include File Summary
+
+
+   SEQ   GLOBAL TYPE      PARENT   LOCAL  FILENAME
+
+     1        1 INPUT          0       0  C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\shoeco2.gms
+     2        1 INCLUDE        1       1  .C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\shoeco.gms
+
+
+COMPILATION TIME     =        0.000 SECONDS      3 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/27/23 12:54:12 Page 4
+ShoeCo Aggregate Planning Model.
+E x e c u t i o n
+
+
+----    104 SET T  
+
+Jan,    Feb,    Mar,    Apr
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/27/23 12:54:12 Page 5
+ShoeCo Aggregate Planning Model.
+Equation Listing    SOLVE shoeco Using LP From line 148
+
+
+---- cost_eq  =E=  
+
+cost_eq..  - 15*x(Jan) - 15*x(Feb) - 15*x(Mar) - 15*x(Apr) - 3*I(Jan) - 3*I(Feb) - 3*I(Mar) - 3*I(Apr) - 1500*w(Jan) - 1500*w(Feb) - 1500*w(Mar) - 1500*w(Apr) - 1600*h(Jan) - 1600*h(Feb) - 1600*h(Mar) - 1600*h(Apr) - 2000*f(Jan) - 2000*f(Feb) - 2000*f(Mar) - 2000*f(Apr) - 13*o(Jan) - 13*o(Feb) - 13*o(Mar) - 13*o(Apr) + cost =E= 0 ; (LHS = 0)
+     
+
+---- RegLabor_eq  =L=  
+
+RegLabor_eq(Jan)..  4*x(Jan) - 160*w(Jan) - o(Jan) =L= 0 ; (LHS = 0)
+     
+RegLabor_eq(Feb)..  4*x(Feb) - 160*w(Feb) - o(Feb) =L= 0 ; (LHS = 0)
+     
+RegLabor_eq(Mar)..  4*x(Mar) - 160*w(Mar) - o(Mar) =L= 0 ; (LHS = 0)
+     
+RegLabor_eq(Apr)..  4*x(Apr) - 160*w(Apr) - o(Apr) =L= 0 ; (LHS = 0)
+     
+
+---- OverLabor_eq  =L=  
+
+OverLabor_eq(Jan)..  - 20*w(Jan) + o(Jan) =L= 0 ; (LHS = 0)
+     
+OverLabor_eq(Feb)..  - 20*w(Feb) + o(Feb) =L= 0 ; (LHS = 0)
+     
+OverLabor_eq(Mar)..  - 20*w(Mar) + o(Mar) =L= 0 ; (LHS = 0)
+     
+OverLabor_eq(Apr)..  - 20*w(Apr) + o(Apr) =L= 0 ; (LHS = 0)
+     
+
+---- BalShoe_eq  =E=  
+
+BalShoe_eq(Jan)..  - x(Jan) + I(Jan) =E= -3000 ; (LHS = 0, INFES = 3000 ****)
+     
+BalShoe_eq(Feb)..  - x(Feb) - I(Jan) + I(Feb) =E= -5000 ; (LHS = 0, INFES = 5000 ****)
+     
+BalShoe_eq(Mar)..  - x(Mar) - I(Feb) + I(Mar) =E= -2000 ; (LHS = 0, INFES = 2000 ****)
+     
+BalShoe_eq(Apr)..  - x(Apr) - I(Mar) + I(Apr) =E= -1000 ; (LHS = 0, INFES = 1000 ****)
+     
+
+---- BalPeople_eq  =E=  
+
+BalPeople_eq(Jan)..  w(Jan) - h(Jan) + f(Jan) =E= 0 ; (LHS = 0)
+     
+BalPeople_eq(Feb)..  - w(Jan) + w(Feb) - h(Feb) + f(Feb) =E= 0 ; (LHS = 0)
+     
+BalPeople_eq(Mar)..  - w(Feb) + w(Mar) - h(Mar) + f(Mar) =E= 0 ; (LHS = 0)
+     
+BalPeople_eq(Apr)..  - w(Mar) + w(Apr) - h(Apr) + f(Apr) =E= 0 ; (LHS = 0)
+     
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/27/23 12:54:12 Page 6
+ShoeCo Aggregate Planning Model.
+Range Statistics    SOLVE shoeco Using LP From line 148
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 1.000E+03, 5.000E+03] - Zero values observed as well
+Bound     [min, max] : [        NA,        NA] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 2.000E+03]
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/27/23 12:54:12 Page 7
+ShoeCo Aggregate Planning Model.
+Model Statistics    SOLVE shoeco Using LP From line 148
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           5     SINGLE EQUATIONS           17
+BLOCKS OF VARIABLES           7     SINGLE VARIABLES           25
+NON ZERO ELEMENTS            71
+
+
+GENERATION TIME      =        0.016 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/27/23 12:54:12 Page 8
+ShoeCo Aggregate Planning Model.
+Solution Report     SOLVE shoeco Using LP From line 148
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   shoeco              OBJECTIVE  cost
+     TYPE    LP                  DIRECTION  MINIMIZE
+     SOLVER  CPLEX               FROM LINE  148
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE           850888.8889
+
+ RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ ITERATION COUNT, LIMIT        11    2147483647
+--- *** This solver runs with a demo license. No commercial use.
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.05 ticks)
+
+
+Optimal solution found
+Objective:       850888.888889
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU cost_eq             .              .              .             1.0000      
+
+---- EQU RegLabor_eq  
+
+           LOWER          LEVEL          UPPER         MARGINAL
+
+Jan        -INF             .              .           -19.4028      
+Feb        -INF             .              .           -20.1528      
+Mar        -INF             .              .            -6.2500      
+Apr        -INF        -4000.0000          .              .          
+
+---- EQU OverLabor_eq  
+
+           LOWER          LEVEL          UPPER         MARGINAL
+
+Jan        -INF             .              .            -6.4028      
+Feb        -INF             .              .            -7.1528      
+Mar        -INF        -1000.0000          .              .          
+Apr        -INF        -1000.0000          .              .          
+
+---- EQU BalShoe_eq  
+
+           LOWER          LEVEL          UPPER         MARGINAL
+
+Jan     -3000.0000     -3000.0000     -3000.0000       -92.6111      
+Feb     -5000.0000     -5000.0000     -5000.0000       -95.6111      
+Mar     -2000.0000     -2000.0000     -2000.0000       -40.0000      
+Apr     -1000.0000     -1000.0000     -1000.0000       -15.0000      
+
+---- EQU BalPeople_eq  
+
+           LOWER          LEVEL          UPPER         MARGINAL
+
+Jan          .              .              .         -1600.0000      
+Feb          .              .              .           132.5000      
+Mar          .              .              .          2000.0000      
+Apr          .              .              .          1500.0000      
+
+---- VAR x  Production in period T
+
+           LOWER          LEVEL          UPPER         MARGINAL
+
+Jan          .          4000.0000        +INF             .          
+Feb          .          4000.0000        +INF             .          
+Mar          .          2000.0000        +INF             .          
+Apr          .          1000.0000        +INF             .          
+
+---- VAR I  Ending inventory in period T
+
+           LOWER          LEVEL          UPPER         MARGINAL
+
+Jan          .          1000.0000        +INF             .          
+Feb          .              .            +INF           58.6111      
+Mar          .              .            +INF           28.0000      
+Apr          .              .            +INF           18.0000      
+
+---- VAR w  Worker level at end of period T
+
+           LOWER          LEVEL          UPPER         MARGINAL
+
+Jan          .            88.8889        +INF             .          
+Feb          .            88.8889        +INF             .          
+Mar          .            50.0000        +INF             .          
+Apr          .            50.0000        +INF             .          
+
+---- VAR h  Number of workers hired at beginning of T
+
+           LOWER          LEVEL          UPPER         MARGINAL
+
+Jan          .            88.8889        +INF             .          
+Feb          .              .            +INF         1732.5000      
+Mar          .              .            +INF         3600.0000      
+Apr          .              .            +INF         3100.0000      
+
+---- VAR f  Number of workers fired at beginning of T
+
+           LOWER          LEVEL          UPPER         MARGINAL
+
+Jan          .              .            +INF         3600.0000      
+Feb          .              .            +INF         1867.5000      
+Mar          .            38.8889        +INF             .          
+Apr          .              .            +INF          500.0000      
+
+---- VAR o  Number of overtime hours in period T
+
+           LOWER          LEVEL          UPPER         MARGINAL
+
+Jan          .          1777.7778        +INF             .          
+Feb          .          1777.7778        +INF             .          
+Mar          .              .            +INF            6.7500      
+Apr          .              .            +INF           13.0000      
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR cost              -INF       850888.8889        +INF             .          
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/27/23 12:54:12 Page 9
+ShoeCo Aggregate Planning Model.
+E x e c u t i o n
+
+
+----    150 VARIABLE x.L  Production in period T
+
+Jan 4000.000,    Feb 4000.000,    Mar 2000.000,    Apr 1000.000
+
+
+----    150 VARIABLE I.L  Ending inventory in period T
+
+Jan 1000.000
+
+
+----    150 VARIABLE w.L  Worker level at end of period T
+
+Jan 88.889,    Feb 88.889,    Mar 50.000,    Apr 50.000
+
+
+----    150 VARIABLE h.L  Number of workers hired at beginning of T
+
+Jan 88.889
+
+
+----    150 VARIABLE f.L  Number of workers fired at beginning of T
+
+Mar 38.889
+
+
+----    150 VARIABLE o.L  Number of overtime hours in period T
+
+Jan 1777.778,    Feb 1777.778
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/27/23 12:54:12 Page 10
+ShoeCo Aggregate Planning Model.
+Equation Listing    SOLVE shoeco_backlog Using LP From line 184
+
+
+---- RegLabor_eq  =L=  
+
+RegLabor_eq(Jan)..  4*x(Jan) - 160*w(Jan) - o(Jan) =L= 0 ; (LHS = 0)
+     
+RegLabor_eq(Feb)..  4*x(Feb) - 160*w(Feb) - o(Feb) =L= 0 ; (LHS = 0)
+     
+RegLabor_eq(Mar)..  4*x(Mar) - 160*w(Mar) - o(Mar) =L= 0 ; (LHS = 0)
+     
+RegLabor_eq(Apr)..  4*x(Apr) - 160*w(Apr) - o(Apr) =L= 0 ; (LHS = -4000)
+     
+
+---- OverLabor_eq  =L=  
+
+OverLabor_eq(Jan)..  - 20*w(Jan) + o(Jan) =L= 0 ; (LHS = 0)
+     
+OverLabor_eq(Feb)..  - 20*w(Feb) + o(Feb) =L= 0 ; (LHS = 0)
+     
+OverLabor_eq(Mar)..  - 20*w(Mar) + o(Mar) =L= 0 ; (LHS = -1000)
+     
+OverLabor_eq(Apr)..  - 20*w(Apr) + o(Apr) =L= 0 ; (LHS = -1000)
+     
+
+---- BalShoe_eq  =E=  
+
+BalShoe_eq(Jan)..  - x(Jan) + I(Jan) =E= -3000 ; (LHS = -3000)
+     
+BalShoe_eq(Feb)..  - x(Feb) - I(Jan) + I(Feb) =E= -5000 ; (LHS = -5000)
+     
+BalShoe_eq(Mar)..  - x(Mar) - I(Feb) + I(Mar) =E= -2000 ; (LHS = -2000)
+     
+BalShoe_eq(Apr)..  - x(Apr) - I(Mar) + I(Apr) =E= -1000 ; (LHS = -1000)
+     
+
+---- BalPeople_eq  =E=  
+
+BalPeople_eq(Jan)..  w(Jan) - h(Jan) + f(Jan) =E= 0 ; (LHS = 0)
+     
+BalPeople_eq(Feb)..  - w(Jan) + w(Feb) - h(Feb) + f(Feb) =E= 0 ; (LHS = 0)
+     
+BalPeople_eq(Mar)..  - w(Feb) + w(Mar) - h(Mar) + f(Mar) =E= 0 ; (LHS = 0)
+     
+BalPeople_eq(Apr)..  - w(Mar) + w(Apr) - h(Apr) + f(Apr) =E= 0 ; (LHS = 0)
+     
+
+---- BacklogDef_eq  =E=  
+
+BacklogDef_eq(Jan)..  I(Jan) - L(Jan) + S(Jan) =E= 0 ; (LHS = 1000, INFES = 1000 ****)
+     
+BacklogDef_eq(Feb)..  I(Feb) - L(Feb) + S(Feb) =E= 0 ; (LHS = 0)
+     
+BacklogDef_eq(Mar)..  I(Mar) - L(Mar) + S(Mar) =E= 0 ; (LHS = 0)
+     
+BacklogDef_eq(Apr)..  I(Apr) - L(Apr) + S(Apr) =E= 0 ; (LHS = 0)
+     
+
+---- BacklogCost_eq  =E=  
+
+BacklogCost_eq..  - 15*x(Jan) - 15*x(Feb) - 15*x(Mar) - 15*x(Apr) - 1500*w(Jan) - 1500*w(Feb) - 1500*w(Mar) - 1500*w(Apr) - 1600*h(Jan) - 1600*h(Feb) - 1600*h(Mar) - 1600*h(Apr) - 2000*f(Jan) - 2000*f(Feb) - 2000*f(Mar) - 2000*f(Apr) - 13*o(Jan) - 13*o(Feb) - 13*o(Mar) - 13*o(Apr) + cost - 3*L(Jan) - 3*L(Feb) - 3*L(Mar) - 3*L(Apr) - 20*S(Jan) - 20*S(Feb) - 20*S(Mar) - 20*S(Apr) =E= 0 ; (LHS = 3000, INFES = 3000 ****)
+     
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/27/23 12:54:12 Page 11
+ShoeCo Aggregate Planning Model.
+Range Statistics    SOLVE shoeco_backlog Using LP From line 184
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 1.000E+03, 5.000E+03] - Zero values observed as well
+Bound     [min, max] : [        NA,        NA] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 2.000E+03]
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/27/23 12:54:12 Page 12
+ShoeCo Aggregate Planning Model.
+Model Statistics    SOLVE shoeco_backlog Using LP From line 184
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           6     SINGLE EQUATIONS           21
+BLOCKS OF VARIABLES           9     SINGLE VARIABLES           33
+NON ZERO ELEMENTS            87
+
+
+GENERATION TIME      =        0.016 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/27/23 12:54:12 Page 13
+ShoeCo Aggregate Planning Model.
+Solution Report     SOLVE shoeco_backlog Using LP From line 184
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   shoeco_backlog      OBJECTIVE  cost
+     TYPE    LP                  DIRECTION  MINIMIZE
+     SOLVER  CPLEX               FROM LINE  184
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE           767470.5882
+
+ RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ ITERATION COUNT, LIMIT         6    2147483647
+--- *** This solver runs with a demo license. No commercial use.
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.08 ticks)
+
+
+Optimal solution found
+Objective:       767470.588235
+
+
+---- EQU RegLabor_eq  
+
+           LOWER          LEVEL          UPPER         MARGINAL
+
+Jan        -INF             .              .           -19.1471      
+Feb        -INF             .              .           -14.1471      
+Mar        -INF             .              .            -9.1471      
+Apr        -INF             .              .            -4.1471      
+
+---- EQU OverLabor_eq  
+
+           LOWER          LEVEL          UPPER         MARGINAL
+
+Jan        -INF             .              .            -6.1471      
+Feb        -INF             .              .            -1.1471      
+Mar        -INF        -1294.1176          .              .          
+Apr        -INF        -1294.1176          .              .          
+
+---- EQU BalShoe_eq  
+
+           LOWER          LEVEL          UPPER         MARGINAL
+
+Jan     -3000.0000     -3000.0000     -3000.0000       -91.5882      
+Feb     -5000.0000     -5000.0000     -5000.0000       -71.5882      
+Mar     -2000.0000     -2000.0000     -2000.0000       -51.5882      
+Apr     -1000.0000     -1000.0000     -1000.0000       -31.5882      
+
+---- EQU BalPeople_eq  
+
+           LOWER          LEVEL          UPPER         MARGINAL
+
+Jan          .              .              .         -1600.0000      
+Feb          .              .              .            86.4706      
+Mar          .              .              .           872.9412      
+Apr          .              .              .           836.4706      
+
+---- EQU BacklogDef_eq  
+
+           LOWER          LEVEL          UPPER         MARGINAL
+
+Jan          .              .              .            20.0000      
+Feb          .              .              .            20.0000      
+Mar          .              .              .            20.0000      
+Apr          .              .              .            -3.0000      
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU BacklogCo~          .              .              .             1.0000      
+
+---- VAR x  Production in period T
+
+           LOWER          LEVEL          UPPER         MARGINAL
+
+Jan          .          2911.7647        +INF             .          
+Feb          .          2911.7647        +INF             .          
+Mar          .          2588.2353        +INF             .          
+Apr          .          2588.2353        +INF             .          
+
+---- VAR I  Ending inventory in period T
+
+           LOWER          LEVEL          UPPER         MARGINAL
+
+Jan        -INF          -88.2353        +INF             .          
+Feb        -INF        -2176.4706        +INF             .          
+Mar        -INF        -1588.2353        +INF             .          
+Apr          .              .            +INF           34.5882      
+
+---- VAR w  Worker level at end of period T
+
+           LOWER          LEVEL          UPPER         MARGINAL
+
+Jan          .            64.7059        +INF             .          
+Feb          .            64.7059        +INF             .          
+Mar          .            64.7059        +INF             .          
+Apr          .            64.7059        +INF             .          
+
+---- VAR h  Number of workers hired at beginning of T
+
+           LOWER          LEVEL          UPPER         MARGINAL
+
+Jan          .            64.7059        +INF             .          
+Feb          .              .            +INF         1686.4706      
+Mar          .              .            +INF         2472.9412      
+Apr          .              .            +INF         2436.4706      
+
+---- VAR f  Number of workers fired at beginning of T
+
+           LOWER          LEVEL          UPPER         MARGINAL
+
+Jan          .              .            +INF         3600.0000      
+Feb          .              .            +INF         1913.5294      
+Mar          .              .            +INF         1127.0588      
+Apr          .              .            +INF         1163.5294      
+
+---- VAR o  Number of overtime hours in period T
+
+           LOWER          LEVEL          UPPER         MARGINAL
+
+Jan          .          1294.1176        +INF             .          
+Feb          .          1294.1176        +INF             .          
+Mar          .              .            +INF            3.8529      
+Apr          .              .            +INF            8.8529      
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR cost              -INF       767470.5882        +INF             .          
+
+---- VAR L  Leftover inventory in scenario
+
+           LOWER          LEVEL          UPPER         MARGINAL
+
+Jan          .              .            +INF           23.0000      
+Feb          .              .            +INF           23.0000      
+Mar          .              .            +INF           23.0000      
+Apr          .              .            +INF             .          
+
+---- VAR S  Shortage inventory in scenario
+
+           LOWER          LEVEL          UPPER         MARGINAL
+
+Jan          .            88.2353        +INF             .          
+Feb          .          2176.4706        +INF             .          
+Mar          .          1588.2353        +INF             .          
+Apr          .              .            +INF           23.0000      
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/27/23 12:54:12 Page 14
+ShoeCo Aggregate Planning Model.
+E x e c u t i o n
+
+
+----    186 VARIABLE x.L  Production in period T
+
+Jan 2911.765,    Feb 2911.765,    Mar 2588.235,    Apr 2588.235
+
+
+----    186 VARIABLE I.L  Ending inventory in period T
+
+Jan   -88.235,    Feb -2176.471,    Mar -1588.235
+
+
+----    186 VARIABLE w.L  Worker level at end of period T
+
+Jan 64.706,    Feb 64.706,    Mar 64.706,    Apr 64.706
+
+
+----    186 VARIABLE h.L  Number of workers hired at beginning of T
+
+Jan 64.706
+
+
+----    186 VARIABLE f.L  Number of workers fired at beginning of T
+
+                      ( ALL       0.000 )
+
+
+----    186 VARIABLE o.L  Number of overtime hours in period T
+
+Jan 1294.118,    Feb 1294.118
+
+
+----    186 VARIABLE L.L  Leftover inventory in scenario
+
+                      ( ALL       0.000 )
+
+
+----    186 VARIABLE S.L  Shortage inventory in scenario
+
+Jan   88.235,    Feb 2176.471,    Mar 1588.235
+
+
+
+EXECUTION TIME       =        0.203 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+
+
+USER: GAMS Demo, for EULA and demo limitations see   G230706/0001CB-GEN
+      https://www.gams.com/latest/docs/UG%5FLicense.html         DC0000
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\shoeco2.gms
+Output     C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\shoeco2.lst

@@ -1,0 +1,82 @@
+
+--- Job shoeco3.gms Start 09/27/23 12:03:40 44.3.0 8b8fb1cb WEX-WEI x86 64bit/MS Windows
+--- Applying:
+    C:\GAMS\44\gmsprmNT.txt
+--- GAMS Parameters defined
+    Input C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\shoeco3.gms
+    PageSize 0
+    ScrDir C:\Users\Rocke\OneDrive\Documents\isye524\lectures\225a\
+    SysDir C:\GAMS\44\
+    LogOption 3
+    ErrMsg 1
+    ErrorLog 99
+    IDE 1
+    LstTitleLeftAligned 1
+Licensee: GAMS Demo, for EULA and demo limitations see   G230706/0001CB-GEN
+          https://www.gams.com/latest/docs/UG%5FLicense.html         DC0000
+          C:\GAMS\44\gamslice.txt
+          Demo license for demonstration and instructional purposes only
+Processor information: 1 socket(s), 4 core(s), and 8 thread(s) available
+GAMS 44.3.0   Copyright (C) 1987-2023 GAMS Development. All rights reserved
+--- Starting compilation
+--- shoeco3.gms(15) 2 Mb 3 Errors
+*** Error 140 in C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\shoeco3.gms
+    Unknown symbol
+*** Error  36 in C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\shoeco3.gms
+    '=' or '..' or ':=' or '$=' operator expected
+    rest of statement ignored
+*** Error 409 in C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\shoeco3.gms
+    Unrecognizable item - skip to find a new statement
+      looking for a ';' or a key word to get started again
+--- shoeco3.gms(18) 3 Mb 4 Errors
+*** Error 120 in C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\shoeco3.gms
+    Unknown identifier entered as set
+--- shoeco3.gms(46) 3 Mb 5 Errors
+*** Error 353 in C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\shoeco3.gms
+    The domain for this index position is unknown and the element
+       cannot be checked at this point. Missing data statement.
+--- shoeco3.gms(49) 3 Mb 16 Errors
+*** Error 140 in C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\shoeco3.gms
+    Unknown symbol
+*** Error 140 in C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\shoeco3.gms
+    Unknown symbol
+*** Error 140 in C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\shoeco3.gms
+    Unknown symbol
+*** Error 140 in C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\shoeco3.gms
+    Unknown symbol
+*** Error   7 in C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\shoeco3.gms
+    '(' expected
+*** Error 203 in C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\shoeco3.gms
+    Too few arguments for function
+*** Error   8 in C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\shoeco3.gms
+    ')' expected
+*** Error 140 in C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\shoeco3.gms
+    Unknown symbol
+*** Error 140 in C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\shoeco3.gms
+    Unknown symbol
+*** Error 300 in C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\shoeco3.gms
+    Remaining errors not printed for this line
+--- shoeco3.gms(50) 3 Mb 19 Errors
+*** Error 140 in C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\shoeco3.gms
+    Unknown symbol
+*** Error 140 in C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\shoeco3.gms
+    Unknown symbol
+*** Error 140 in C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\shoeco3.gms
+    Unknown symbol
+--- shoeco3.gms(57) 3 Mb 20 Errors
+*** Error 140 in C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\shoeco3.gms
+    Unknown symbol
+--- shoeco3.gms(59) 3 Mb 22 Errors
+*** Error 140 in C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\shoeco3.gms
+    Unknown symbol
+*** Error 140 in C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\shoeco3.gms
+    Unknown symbol
+--- shoeco3.gms(60) 3 Mb 23 Errors
+*** Error 140 in C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\shoeco3.gms
+    Unknown symbol
+--- shoeco3.gms(63) 3 Mb 24 Errors
+*** Error 257 in C:\Users\Rocke\OneDrive\Documents\isye524\lectures\shoecoex\shoeco3.gms
+    Solve statement not checked because of previous errors
+--- shoeco3.gms(64) 3 Mb 24 Errors
+*** Status: Compilation error(s)
+--- Job shoeco3.gms Stop 09/27/23 12:03:40 elapsed 0:00:00.013
