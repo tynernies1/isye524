@@ -1,4 +1,4 @@
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/24/23 23:44:25 Page 1
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/26/23 16:37:29 Page 1
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
@@ -22,92 +22,230 @@ C o m p i l a t i o n
   17  I(D) Initial Inventory / A 1900, B 850 /;
   18   
   19  table
-  20  i(D, M)
-****        $184,194,166
-**** 166  A table must have two or more dimensions - use parameter list
-****         rest of table will be ignored
-**** 184  Domain list redefined
-**** 194  Symbol redefined - a second data statement for the same symbol
-****         or a data statement after an assignment
-****         Hint: You could use $onMulti to merge the data from different
-****               data statements or $onMultiR to replace existing data
-****               with data from a later data statement
-  21            A       B
-  22  March   200      40
-  23  April   130      15;
+  20  inflow(D, M)
+  21          March       April
+  22  A         200         130
+  23  B          40          15;
   24   
   25  positive variable
   26  water(D, M) Amount of Water (in KAF),
   27  normal_power(D, M) Amount of Power <= 50000 MWH,
   28  excess_power(D, M) Amount of Power > 50000 MWH,
   29  outflow(D, M) Outflow of Water (in KAF),
-  30  spill(D, M) Spill Water (in KAF);
-  31   
-  32  variable Profit;
-  33   
-  34  equations
-  35  obj, normal_power_eq, excess_power_eq,bal_cons_A, bal_cons_B,
-  36  plant_cap, dam_cap, dam_min;
+  30  spill(D, M) Spill Water (in KAF),
+  31  total_power(D, M) Total Power (in MWH);
+  32   
+  33  variable Profit;
+  34   
+  35  equations
+  36  obj, power_eq, water_bal_cons, total_power_bal_cons, plant_cap;
   37   
   38  obj..
   39  Profit =e= sum((D, M), Profit_Normal*normal_power(D, M) + Profit_Excess*excess_power(D, M));
   40   
-  41  normal_power_eq(D, M)..
-  42  normal_power(D, M) =e= W(D)*water(D, M);
+  41  power_eq(D, M)..
+  42  total_power(D, M) =e= W(D)*outflow(D, M);
   43   
-  44  excess_power_eq(D, M)..
-  45  excess_power(D, M) =e= W(D)*water(D, M) - Normal_Capacity;
+  44  total_power_bal_cons(D, M)..
+  45  total_power(D, M) =e= normal_power(D, M) + excess_power(D, M);
   46   
-  47  bal_cons_A(M)..
-  48  water('A', M) =e= water('A', (M-1)) + i('A', M) - (outflow('A', M)+spill('A', M));
-****                               $145 $408,409
-**** 145  Set identifier or quoted element expected
-**** 408  Too many ),] or }
-**** 409  Unrecognizable item - skip to find a new statement
-****        looking for a ';' or a key word to get started again
+  47  water_bal_cons(D, M)..
+  48  water(D, M) =e= I(D)$(ord(M)=1) + water(D, M-1) + inflow(D, M) - ((outflow(D, M) - outflow(D-1, M)) + spill(D, M) - spill(D-1, M));
   49   
-  50  bal_cons_B(M)..
-  51  water('B', M) =e= water('B', (M-1)) + i('B', M) - ((outflow('B', M) - outflow('A', M)) + (spill('B', M)) - spill('A', M));
-****                               $145 $408,409
-**** 145  Set identifier or quoted element expected
-**** 408  Too many ),] or }
-**** 409  Unrecognizable item - skip to find a new statement
-****        looking for a ';' or a key word to get started again
+  50  plant_cap(D, M)..
+  51  total_power(D, M) =l= P(D);
   52   
-  53  plant_cap(D, M)..
-  54  normal_power(D, M) + excess_power(D, M) =l= P(D);
-  55   
-  56  dam_cap(D, M)..
-  57  water(D, M) =l= U(D);
+  53  model hydro / all /;
+  54   
+  55  water.up(D, M) = U(D);
+  56  water.lo(D, M) = L(D);
+  57  normal_power.up(D, M) = Normal_Capacity;
   58   
-  59  dam_min(D, M)
-  60  water(D, M) =g= L(D);
-****      $36
-****  36  '=' or '..' or ':=' or '$=' operator expected
-****      rest of statement ignored
-  61   
-  62  model hydro / all /;
+  59  solve hydro using lp maximize Profit;
+  60   
+  61  display spill.l;
+  62   
   63   
-  64  normal_power.up('A', 'March') = Normal_Capacity;
-  65  normal_power.up('B', 'April') = Normal_Capacity;
-  66  normal_power.up('A', 'April') = Normal_Capacity;
-  67  normal_power.up('B', 'April') = Normal_Capacity;
-  68   
-  69  solve hydro using lp maximize Profit;
-****                                      $257
-**** 257  Solve statement not checked because of previous errors
-  70   
-  71   
-  72   
-  73   
-  74   
-  75   
-  76   
-
-**** 11 ERROR(S)   0 WARNING(S)
+  64   
+  65   
+  66   
 
 
 COMPILATION TIME     =        0.016 SECONDS      3 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/26/23 16:37:29 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Range Statistics    SOLVE hydro Using LP From line 59
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 1.500E+01, 6.000E+04] - Zero values observed as well
+Bound     [min, max] : [ 8.000E+02, 5.000E+04] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 4.000E+02]
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/26/23 16:37:29 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE hydro Using LP From line 59
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           5     SINGLE EQUATIONS           17
+BLOCKS OF VARIABLES           7     SINGLE VARIABLES           25  4 projected
+NON ZERO ELEMENTS            51
+
+
+GENERATION TIME      =        0.000 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/26/23 16:37:29 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE hydro Using LP From line 59
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   hydro               OBJECTIVE  Profit
+     TYPE    LP                  DIRECTION  MAXIMIZE
+     SOLVER  CPLEX               FROM LINE  59
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE           920000.0000
+
+ RESOURCE USAGE, LIMIT          0.016 10000000000.000
+ ITERATION COUNT, LIMIT         5    2147483647
+--- *** This solver runs with a demo license. No commercial use.
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.04 ticks)
+
+
+Optimal solution found
+Objective:       920000.000000
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU obj                 .              .              .             1.0000      
+
+---- EQU power_eq  
+
+               LOWER          LEVEL          UPPER         MARGINAL
+
+A.March          .              .              .             EPS         
+A.April          .              .              .             EPS         
+B.March          .              .              .             EPS         
+B.April          .              .              .             EPS         
+
+---- EQU water_bal_cons  
+
+               LOWER          LEVEL          UPPER         MARGINAL
+
+A.March      2100.0000      2100.0000      2100.0000         EPS         
+A.April       130.0000       130.0000       130.0000         EPS         
+B.March       890.0000       890.0000       890.0000         EPS         
+B.April        15.0000        15.0000        15.0000         EPS         
+
+---- EQU total_power_bal_cons  
+
+               LOWER          LEVEL          UPPER         MARGINAL
+
+A.March          .              .              .            -3.5000      
+A.April          .              .              .            -3.5000      
+B.March          .              .              .            -5.0000      
+B.April          .              .              .            -5.0000      
+
+---- EQU plant_cap  
+
+               LOWER          LEVEL          UPPER         MARGINAL
+
+A.March        -INF        60000.0000     60000.0000         3.5000      
+A.April        -INF        60000.0000     60000.0000         3.5000      
+B.March        -INF        35000.0000     35000.0000         5.0000      
+B.April        -INF        35000.0000     35000.0000         5.0000      
+
+---- VAR water  Amount of Water (in KAF)
+
+               LOWER          LEVEL          UPPER         MARGINAL
+
+A.March      1200.0000      1950.0000      2000.0000          .          
+A.April      1200.0000      1920.0000      2000.0000          .          
+B.March       800.0000       800.0000      1500.0000         EPS         
+B.April       800.0000       800.0000      1500.0000         EPS         
+
+---- VAR normal_power  Amount of Power <= 50000 MWH
+
+               LOWER          LEVEL          UPPER         MARGINAL
+
+A.March          .         50000.0000     50000.0000         1.5000      
+A.April          .         50000.0000     50000.0000         1.5000      
+B.March          .         35000.0000     50000.0000          .          
+B.April          .         35000.0000     50000.0000          .          
+
+---- VAR excess_power  Amount of Power > 50000 MWH
+
+               LOWER          LEVEL          UPPER         MARGINAL
+
+A.March          .         10000.0000        +INF             .          
+A.April          .         10000.0000        +INF             .          
+B.March          .              .            +INF           -1.5000      
+B.April          .              .            +INF           -1.5000      
+
+---- VAR outflow  Outflow of Water (in KAF)
+
+               LOWER          LEVEL          UPPER         MARGINAL
+
+A.March          .           150.0000        +INF             .          
+A.April          .           150.0000        +INF             .          
+B.March          .           175.0000        +INF             .          
+B.April          .           175.0000        +INF             .          
+
+---- VAR spill  Spill Water (in KAF)
+
+               LOWER          LEVEL          UPPER         MARGINAL
+
+A.March          .              .            +INF            EPS         
+A.April          .            10.0000        +INF             .          
+B.March          .            65.0000        +INF             .          
+B.April          .              .            +INF            EPS         
+
+---- VAR total_power  Total Power (in MWH)
+
+               LOWER          LEVEL          UPPER         MARGINAL
+
+A.March          .         60000.0000        +INF             .          
+A.April          .         60000.0000        +INF             .          
+B.March          .         35000.0000        +INF             .          
+B.April          .         35000.0000        +INF             .          
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR Profit            -INF       920000.0000        +INF             .          
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/26/23 16:37:29 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+----     61 VARIABLE spill.L  Spill Water (in KAF)
+
+        March       April
+
+A                  10.000
+B      65.000
+
+
+
+EXECUTION TIME       =        0.047 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
 
 
 USER: GAMS Demo, for EULA and demo limitations see   G230706/0001CB-GEN
@@ -118,5 +256,3 @@ USER: GAMS Demo, for EULA and demo limitations see   G230706/0001CB-GEN
 
 Input      C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw3\hw3.gms
 Output     C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw3\hw3.lst
-
-**** USER ERROR(S) ENCOUNTERED
