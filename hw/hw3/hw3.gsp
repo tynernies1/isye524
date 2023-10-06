@@ -1,5 +1,5 @@
 {
-    "file": "hw3-1.gms",
+    "file": "hw3-2.gms",
     "name": "hw3",
     "nodes": [
         {
@@ -7,6 +7,12 @@
             "file": "hw3-1.gms",
             "name": "hw3-1.gms",
             "type": "gms"
+        },
+        {
+            "codecMib": 106,
+            "file": "hw3-1.lst",
+            "name": "hw3-1.lst",
+            "type": "lst"
         },
         {
             "codecMib": 106,
@@ -28,8 +34,8 @@
         },
         {
             "codecMib": 106,
-            "file": "hw3.lst",
-            "name": "hw3.lst",
+            "file": "hw3-3.lst",
+            "name": "hw3-3.lst",
             "type": "lst"
         }
     ],

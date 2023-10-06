@@ -1,0 +1,129 @@
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/27/23 13:15:18 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1  option limrow=0, limcol=0, solprint=off;
+   2   
+   3  set T Investment Types / 1, 2, 3, 4 /;
+   4  set M Months / January, February, March, April, May /;
+   5  alias(M,J);
+   6   
+   7  scalar
+   8  C0 Initial Cash / 400 /;
+   9   
+  10  parameters
+  11  I(M) Income Received / January 600, February 800, March 250, April 300, May 0 /
+  12  B(M) Bills Paid / January 700, February 500, March 600, April 250, May 0 /
+  13  R(T) Interest Rate / 1 0.0025, 2 0.0035, 3 0.004, 4 0.006 /;
+  14   
+  15  positive variable
+  16  invest(M, T) Amount Invested,
+  17  cash(M) Cash on Hand;
+  18   
+  19  variable
+  20  end_cash Cash in May;
+  21   
+  22  equations
+  23  obj, bal_cons;
+  24   
+  25  obj..
+  26  cash('May') =e= end_cash;
+  27   
+  28  bal_cons(M)..
+  29  cash(M) =e= C0$(ord(M)=1) + cash(M-1) + I(M) - (B(M) + sum(T, invest(M, T))) + sum((J, T)$(ord(J)+ord(T)=ord(M)),((1+R(T))**ord(T))*invest(J, T));
+  30   
+  31  model finco / all /;
+  32   
+  33  solve finco using lp maximize end_cash;
+  34  display invest.l;
+
+
+COMPILATION TIME     =        0.000 SECONDS      3 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/27/23 13:15:18 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Range Statistics    SOLVE finco Using LP From line 33
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 5.000E+01, 3.500E+02] - Zero values observed as well
+Bound     [min, max] : [        NA,        NA] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 1.024E+00]
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/27/23 13:15:18 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE finco Using LP From line 33
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           2     SINGLE EQUATIONS            6
+BLOCKS OF VARIABLES           3     SINGLE VARIABLES           26
+NON ZERO ELEMENTS            41
+
+
+GENERATION TIME      =        0.016 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/27/23 13:15:18 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE finco Using LP From line 33
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   finco               OBJECTIVE  end_cash
+     TYPE    LP                  DIRECTION  MAXIMIZE
+     SOLVER  CPLEX               FROM LINE  33
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE              307.2986
+
+ RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ ITERATION COUNT, LIMIT         2    2147483647
+--- *** This solver runs with a demo license. No commercial use.
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.02 ticks)
+
+
+Optimal solution found
+Objective:          307.298633
+
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/27/23 13:15:18 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+----     34 VARIABLE invest.L  Amount Invested
+
+                   1           2           4
+
+January                   48.907     251.093
+February     300.000
+April         50.000
+
+
+
+EXECUTION TIME       =        0.063 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+
+
+USER: GAMS Demo, for EULA and demo limitations see   G230706/0001CB-GEN
+      https://www.gams.com/latest/docs/UG%5FLicense.html         DC0000
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw3\hw3-1.gms
+Output     C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw3\hw3-1.lst

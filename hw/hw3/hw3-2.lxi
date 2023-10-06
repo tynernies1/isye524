@@ -2,18 +2,7 @@ B 3 C o m p i l a t i o n
 B 78 Range Statistics    SOLVE hydro Using LP From line 60
 B 89 Model Statistics    SOLVE hydro Using LP From line 60
 B 102 Solution Report     SOLVE hydro Using LP From line 60
-F 135 obj
-F 137 power_eq
-F 146 water_bal_cons
-F 155 total_power_bal_cons
-F 162 plant_cap
-G 171 water
-G 180 normal_power
-G 187 excess_power
-G 194 outflow
-G 203 total_power
-G 214 Profit
-B 222 E x e c u t i o n
-I 224 spill
-I 228 total_power
-I 236 excess_power
+B 139 E x e c u t i o n
+I 139 spill
+I 148 total_power
+I 156 excess_power

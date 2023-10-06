@@ -1,9 +1,9 @@
 
---- Job hw3-3-2.gms Start 09/27/23 13:01:21 44.3.0 8b8fb1cb WEX-WEI x86 64bit/MS Windows
+--- Job hw3-2.gms Start 09/27/23 13:50:37 44.3.0 8b8fb1cb WEX-WEI x86 64bit/MS Windows
 --- Applying:
     C:\GAMS\44\gmsprmNT.txt
 --- GAMS Parameters defined
-    Input C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw3\hw3-3-2.gms
+    Input C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw3\hw3-2.gms
     PageSize 0
     ScrDir C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw3\225a\
     SysDir C:\GAMS\44\
@@ -19,16 +19,17 @@ Licensee: GAMS Demo, for EULA and demo limitations see   G230706/0001CB-GEN
 Processor information: 1 socket(s), 4 core(s), and 8 thread(s) available
 GAMS 44.3.0   Copyright (C) 1987-2023 GAMS Development. All rights reserved
 --- Starting compilation
---- hw3-3-2.gms(64) 3 Mb
---- Starting execution: elapsed 0:00:00.012
---- Generating LP model abs_err_tot
---- hw3-3-2.gms(44) 4 Mb
----   13 rows  23 columns  57 non-zeroes
+--- hw3-2.gms(67) 3 Mb
+--- Starting execution: elapsed 0:00:00.010
+--- hw3-2.gms(58) 4 Mb
+--- Generating LP model hydro
+--- hw3-2.gms(60) 4 Mb
+---   15 rows  21 columns  43 non-zeroes
 --- Range statistics (absolute non-zero finite values)
---- RHS       [min, max] : [ 6.000E+00, 1.700E+01] - Zero values observed as well
---- Bound     [min, max] : [        NA,        NA] - Zero values observed as well
---- Matrix    [min, max] : [ 1.000E+00, 9.000E+00]
---- Executing CPLEX (Solvelink=2): elapsed 0:00:00.020
+--- RHS       [min, max] : [ 1.500E+01, 6.000E+04] - Zero values observed as well
+--- Bound     [min, max] : [ 8.000E+02, 5.000E+04] - Zero values observed as well
+--- Matrix    [min, max] : [ 1.000E+00, 4.000E+02]
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.017
 
 IBM ILOG CPLEX   44.3.0 8b8fb1cb Sep 1, 2023           WEI x86 64bit/MS Window
 
@@ -47,72 +48,32 @@ CPXPARAM_MIP_Display                             4
 CPXPARAM_MIP_Pool_Capacity                       0
 CPXPARAM_MIP_Tolerances_AbsMIPGap                0
 Tried aggregator 1 time.
-LP Presolve eliminated 0 rows and 7 columns.
-Aggregator did 10 substitutions.
-Reduced LP has 2 rows, 6 columns, and 12 nonzeros.
+LP Presolve eliminated 4 rows and 2 columns.
+Aggregator did 4 substitutions.
+Reduced LP has 6 rows, 15 columns, and 25 nonzeros.
 Presolve time = 0.00 sec. (0.02 ticks)
+Initializing dual steep norms . . .
 
 Iteration      Dual Objective            In Variable           Out Variable
-     1               5.807692         abs_err_neg(5)    abs_err_eq(4) artif
-     2               8.730539         abs_err_pos(6)    abs_err_eq(2) artif
+     1 sI         2687.999999    excess_power(March)total_power_bal_c artif
+     2 sI         2491.999998   total_power(B,March)         spill(B,March)
+     3 sI         1791.999998         spill(A,March)         water(A,March)
+     4 sI         1791.999998       outflow(A,April)total_power_bal_c artif
+     5 sI          895.999997    excess_power(April)       outflow(A,April)
+     6 sI            0.000000   total_power(B,April)         spill(B,April)
+     7         1364500.000000         water(A,March)   total_power(B,March)
+     8          815000.000000         water(A,April)   total_power(B,April)
+     9          815000.000000         spill(B,March)         spill(A,March)
 
 --- LP status (1): optimal.
 --- Cplex Time: 0.00sec (det. 0.03 ticks)
 
 
 Optimal solution found
-Objective:            8.730539
+Objective:       815000.000000
 
---- Reading solution for model abs_err_tot
---- Executing after solve: elapsed 0:00:00.100
---- hw3-3-2.gms(51) 4 Mb
---- Generating LP model minmax
---- hw3-3-2.gms(55) 4 Mb
----   18 rows  23 columns  62 non-zeroes
---- Range statistics (absolute non-zero finite values)
---- RHS       [min, max] : [ 6.000E+00, 1.700E+01] - Zero values observed as well
---- Bound     [min, max] : [        NA,        NA] - Zero values observed as well
---- Matrix    [min, max] : [ 1.000E+00, 9.000E+00]
---- Executing CPLEX (Solvelink=2): elapsed 0:00:00.106
-
-IBM ILOG CPLEX   44.3.0 8b8fb1cb Sep 1, 2023           WEI x86 64bit/MS Window
-
---- *** This solver runs with a demo license. No commercial use.
---- GMO setup time: 0.00s
---- GMO memory 0.50 Mb (peak 0.50 Mb)
---- Dictionary memory 0.00 Mb
---- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
---- Starting Cplex
-
-Version identifier: 22.1.1.0 | 2022-11-27 | 9160aff4d
-CPXPARAM_Advance                                 2
-CPXPARAM_Simplex_Display                         2
-CPXPARAM_Threads                                 1
-CPXPARAM_MIP_Display                             4
-CPXPARAM_MIP_Pool_Capacity                       0
-CPXPARAM_MIP_Tolerances_AbsMIPGap                0
-Tried aggregator 1 time.
-LP Presolve eliminated 0 rows and 1 columns.
-Aggregator did 11 substitutions.
-Reduced LP has 7 rows, 12 columns, and 38 nonzeros.
-Presolve time = 0.00 sec. (0.03 ticks)
-
-Iteration      Dual Objective            In Variable           Out Variable
-     1               0.000000         abs_err_neg(5)         abs_err_neg(2)
-     2               0.000000         abs_err_neg(2)         abs_err_pos(3)
-     3               0.000000         abs_err_neg(4)         abs_err_pos(5)
-     4               3.318681         abs_err_pos(1)         abs_err_pos(4)
-     5               3.615925         abs_err_neg(6)         abs_err_neg(2)
-
---- LP status (1): optimal.
---- Cplex Time: 0.00sec (det. 0.07 ticks)
-
-
-Optimal solution found
-Objective:            3.615925
-
---- Reading solution for model minmax
---- Executing after solve: elapsed 0:00:00.683
---- hw3-3-2.gms(61) 4 Mb
+--- Reading solution for model hydro
+--- Executing after solve: elapsed 0:00:00.093
+--- hw3-2.gms(62) 4 Mb
 *** Status: Normal completion
---- Job hw3-3-2.gms Stop 09/27/23 13:01:22 elapsed 0:00:00.684
+--- Job hw3-2.gms Stop 09/27/23 13:50:38 elapsed 0:00:00.095

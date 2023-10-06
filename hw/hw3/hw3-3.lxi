@@ -1,0 +1,12 @@
+B 3 C o m p i l a t i o n
+B 77 Range Statistics    SOLVE abs_err_tot Using LP From line 46
+B 88 Model Statistics    SOLVE abs_err_tot Using LP From line 46
+B 101 Solution Report     SOLVE abs_err_tot Using LP From line 46
+B 138 E x e c u t i o n
+I 140 TotalDevSmall
+I 141 xValSmall
+B 149 Range Statistics    SOLVE minmax Using LP From line 57
+B 160 Model Statistics    SOLVE minmax Using LP From line 57
+B 173 Solution Report     SOLVE minmax Using LP From line 57
+B 210 E x e c u t i o n
+I 212 MinMaxDevSmall

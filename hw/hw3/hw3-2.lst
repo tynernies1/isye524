@@ -1,9 +1,9 @@
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/26/23 18:00:22 Page 1
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/27/23 13:50:37 Page 1
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
 
-   1  option limrow=0, limcol=0;
+   1  option limrow=0, limcol=0, solprint=off;
    2   
    3  set D Dams / A, B /;
    4  set M Months / March, April /;
@@ -51,7 +51,7 @@ C o m p i l a t i o n
   46  sum(D, total_power(D, M)) =e= normal_power(M) + excess_power(M);
   47   
   48  water_bal_cons(D, M)..
-  49  water(D, M) =e= I(D)$(ord(M)=1) + water(D, M-1) + inflow(D, M) - ((outflow(D, M) - outflow(D-1, M)) + spill(D-1, M) - spill(D-1, M));
+  49  water(D, M) =e= I(D)$(ord(M)=1) + water(D, M-1) + inflow(D, M) - (outflow(D, M) - outflow(D-1, M) + spill(D, M) - spill(D-1, M));
   50   
   51  plant_cap(D, M)..
   52  total_power(D, M) =l= P(D);
@@ -73,7 +73,7 @@ C o m p i l a t i o n
 
 
 COMPILATION TIME     =        0.000 SECONDS      3 MB  44.3.0 8b8fb1cb WEX-WEI
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/26/23 18:00:22 Page 2
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/27/23 13:50:37 Page 2
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Range Statistics    SOLVE hydro Using LP From line 60
 
@@ -84,7 +84,7 @@ RHS       [min, max] : [ 1.500E+01, 6.000E+04] - Zero values observed as well
 Bound     [min, max] : [ 8.000E+02, 5.000E+04] - Zero values observed as well
 Matrix    [min, max] : [ 1.000E+00, 4.000E+02]
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/26/23 18:00:22 Page 3
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/27/23 13:50:37 Page 3
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Model Statistics    SOLVE hydro Using LP From line 60
 
@@ -92,12 +92,12 @@ Model Statistics    SOLVE hydro Using LP From line 60
 MODEL STATISTICS
 
 BLOCKS OF EQUATIONS           5     SINGLE EQUATIONS           15
-BLOCKS OF VARIABLES           7     SINGLE VARIABLES           17  4 projected
-NON ZERO ELEMENTS            37
+BLOCKS OF VARIABLES           7     SINGLE VARIABLES           21  4 projected
+NON ZERO ELEMENTS            43
 
 
 GENERATION TIME      =        0.016 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/26/23 18:00:22 Page 4
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/27/23 13:50:37 Page 4
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Solution Report     SOLVE hydro Using LP From line 60
 
@@ -113,7 +113,7 @@ Solution Report     SOLVE hydro Using LP From line 60
 **** OBJECTIVE VALUE           815000.0000
 
  RESOURCE USAGE, LIMIT          0.000 10000000000.000
- ITERATION COUNT, LIMIT         0    2147483647
+ ITERATION COUNT, LIMIT         9    2147483647
 --- *** This solver runs with a demo license. No commercial use.
 --- GMO setup time: 0.00s
 --- GMO memory 0.50 Mb (peak 0.50 Mb)
@@ -123,108 +123,28 @@ Solution Report     SOLVE hydro Using LP From line 60
 
 
 --- LP status (1): optimal.
---- Cplex Time: 0.00sec (det. 0.02 ticks)
+--- Cplex Time: 0.00sec (det. 0.03 ticks)
 
 
 Optimal solution found
 Objective:       815000.000000
 
 
-                           LOWER          LEVEL          UPPER         MARGINAL
-
----- EQU obj                 .              .              .             1.0000      
-
----- EQU power_eq  
-
-               LOWER          LEVEL          UPPER         MARGINAL
-
-A.March          .              .              .             EPS         
-A.April          .              .              .             EPS         
-B.March          .              .              .             EPS         
-B.April          .              .              .             EPS         
-
----- EQU water_bal_cons  
-
-               LOWER          LEVEL          UPPER         MARGINAL
-
-A.March      2100.0000      2100.0000      2100.0000         EPS         
-A.April       130.0000       130.0000       130.0000         EPS         
-B.March       890.0000       890.0000       890.0000         EPS         
-B.April        15.0000        15.0000        15.0000         EPS         
-
----- EQU total_power_bal_cons  
-
-             LOWER          LEVEL          UPPER         MARGINAL
-
-March          .              .              .            -3.5000      
-April          .              .              .            -3.5000      
-
----- EQU plant_cap  
-
-               LOWER          LEVEL          UPPER         MARGINAL
-
-A.March        -INF        60000.0000     60000.0000         3.5000      
-A.April        -INF        60000.0000     60000.0000         3.5000      
-B.March        -INF        35000.0000     35000.0000         3.5000      
-B.April        -INF        35000.0000     35000.0000         3.5000      
-
----- VAR water  Amount of Water (in KAF)
-
-               LOWER          LEVEL          UPPER         MARGINAL
-
-A.March      1200.0000      1950.0000      2000.0000          .          
-A.April      1200.0000      1930.0000      2000.0000          .          
-B.March       800.0000       865.0000      1500.0000          .          
-B.April       800.0000       855.0000      1500.0000          .          
-
----- VAR normal_power  Amount of Power <= 50000 MWH
-
-             LOWER          LEVEL          UPPER         MARGINAL
-
-March          .         50000.0000     50000.0000         1.5000      
-April          .         50000.0000     50000.0000         1.5000      
-
----- VAR excess_power  Amount of Power > 50000 MWH
-
-             LOWER          LEVEL          UPPER         MARGINAL
-
-March          .         45000.0000        +INF             .          
-April          .         45000.0000        +INF             .          
-
----- VAR outflow  Outflow of Water (in KAF)
-
-               LOWER          LEVEL          UPPER         MARGINAL
-
-A.March          .           150.0000        +INF             .          
-A.April          .           150.0000        +INF             .          
-B.March          .           175.0000        +INF             .          
-B.April          .           175.0000        +INF             .          
-
----- VAR total_power  Total Power (in MWH)
-
-               LOWER          LEVEL          UPPER         MARGINAL
-
-A.March          .         60000.0000        +INF             .          
-A.April          .         60000.0000        +INF             .          
-B.March          .         35000.0000        +INF             .          
-B.April          .         35000.0000        +INF             .          
-
-                           LOWER          LEVEL          UPPER         MARGINAL
-
----- VAR Profit            -INF       815000.0000        +INF             .          
-
 
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/26/23 18:00:22 Page 5
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/27/23 13:50:37 Page 5
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 E x e c u t i o n
 
 
 ----     62 VARIABLE spill.L  Spill Water (in KAF)
 
-                      ( ALL       0.000 )
+        March       April
+
+A                  10.000
+B      65.000
 
 
 ----     62 VARIABLE total_power.L  Total Power (in MWH)
@@ -241,7 +161,7 @@ March 45000.000,    April 45000.000
 
 
 
-EXECUTION TIME       =        0.109 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+EXECUTION TIME       =        0.094 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
 
 
 USER: GAMS Demo, for EULA and demo limitations see   G230706/0001CB-GEN

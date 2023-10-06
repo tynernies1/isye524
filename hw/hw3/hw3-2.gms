@@ -1,4 +1,4 @@
-option limrow=0, limcol=0;
+option limrow=0, limcol=0, solprint=off;
 
 set D Dams / A, B /;
 set M Months / March, April /;
@@ -46,7 +46,7 @@ total_power_bal_cons(M)..
 sum(D, total_power(D, M)) =e= normal_power(M) + excess_power(M);
 
 water_bal_cons(D, M)..
-water(D, M) =e= I(D)$(ord(M)=1) + water(D, M-1) + inflow(D, M) - ((outflow(D, M) - outflow(D-1, M)) + spill(D-1, M) - spill(D-1, M));
+water(D, M) =e= I(D)$(ord(M)=1) + water(D, M-1) + inflow(D, M) - (outflow(D, M) - outflow(D-1, M) + spill(D, M) - spill(D-1, M));
 
 plant_cap(D, M)..
 total_power(D, M) =l= P(D);

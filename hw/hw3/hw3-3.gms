@@ -1,3 +1,5 @@
+option limrow=0, limcol=0, solprint=off;
+
 set I Equations / 1*6 /;
 set J Variables / x1*x4 /;
 

@@ -1,4 +1,4 @@
-option limrow=0, limcol=0;
+option limrow=0, limcol=0, solprint=off;
 
 set T Investment Types / 1, 2, 3, 4 /;
 set M Months / January, February, March, April, May /;
