@@ -1,0 +1,953 @@
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 13:10:12 Page 1
+Min-Cost Network Flow (Williams, p.82) (modified)
+C o m p i l a t i o n
+
+
+   2  * introduced upper bound on some arcs
+   3   
+   4  option limrow=0, limcol=0, solprint=off;
+   5   
+   6  set node /0*7/;
+   7  parameter supply(node) /0 10, 1 15, 5 -9, 6 -10, 7 -6/;
+   8  parameter cost(node,node) /
+   9        0.2   5,    1.3   4,
+  10        2.3   2,    2.4   6,
+  11        2.5   5,    3.4   1,
+  12        3.7   2,    4.2   4,
+  13        4.5   6,    4.6   3,
+  14        7.6   4 /;
+  15  parameter capacity(node,node);
+  16   
+  17  alias (node,i,j,k);
+  18   
+  19  * define a dynamic set that indicates the "legal" arcs
+  20  set arc(node,node);
+  21  arc(i,j) = yes$(cost(i,j) > 0);
+  22  display arc;
+  23  * assign capacities
+  24  capacity(arc) = uniform(10,15);
+  25  *capacity('3','4') = 5; capacity('4','6') = 5;
+  26   
+  27  positive variable x(node,node) flow;
+  28  variable totalcost;
+  29   
+  30  equations balance(node), objective;
+  31   
+  32  balance(i)..
+  33    sum(arc(i,k), x(arc)) - sum(arc(j,i), x(arc)) =e= supply(i);
+  34   
+  35  objective..
+  36    totalcost =e= sum(arc, cost(arc)*x(arc));
+  37   
+  38  * apply capacity constraints
+  39  x.up(arc) = capacity(arc);
+  40   
+  41  model mcf /balance, objective/;
+  42  mcf.optfile = 1;
+  43   
+  44  solve mcf using lp minimizing totalcost;
+  45   
+  46  option x:0:0:2; display x.l;
+  47   
+  48  set iter /iter1*iter10/;
+  49  parameter result(iter,*);
+  50  option seed = 101;
+  51  loop(iter,
+  52    capacity(arc) = uniform(3,15);
+  53    capacity('1','3') = 15 ;
+  54    capacity('0','2') = 10 ;
+  55    x.up(arc) = capacity(arc);
+  56    solve mcf using lp minimizing totalcost;
+  57    result(iter,'modelstat') = mcf.modelstat;
+  58    if (mcf.modelstat eq 1,
+  59      result(iter,'obj') = totalcost.l;
+  60    );
+  61  );
+  62  display result;
+  63   
+
+
+COMPILATION TIME     =        0.000 SECONDS      3 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 13:10:12 Page 2
+Min-Cost Network Flow (Williams, p.82) (modified)
+E x e c u t i o n
+
+
+----     22 SET arc  
+
+            2           3           4           5           6           7
+
+0         YES
+1                     YES
+2                     YES         YES         YES
+3                                 YES                                 YES
+4         YES                                 YES         YES
+7                                                         YES
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 13:10:12 Page 3
+Min-Cost Network Flow (Williams, p.82) (modified)
+Range Statistics    SOLVE mcf Using LP From line 44
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 6.000E+00, 1.500E+01] - Zero values observed as well
+Bound     [min, max] : [ 1.034E+01, 1.499E+01] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 6.000E+00]
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 13:10:12 Page 4
+Min-Cost Network Flow (Williams, p.82) (modified)
+Model Statistics    SOLVE mcf Using LP From line 44
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           2     SINGLE EQUATIONS            9
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES           12
+NON ZERO ELEMENTS            34
+
+
+GENERATION TIME      =        0.015 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 13:10:12 Page 5
+Min-Cost Network Flow (Williams, p.82) (modified)
+Solution Report     SOLVE mcf Using LP From line 44
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   mcf                 OBJECTIVE  totalcost
+     TYPE    LP                  DIRECTION  MINIMIZE
+     SOLVER  CPLEX               FROM LINE  44
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      4 Infeasible
+**** OBJECTIVE VALUE              211.3510
+
+ RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ ITERATION COUNT, LIMIT         0    2147483647
+--- GAMS/CPLEX licensed for continuous and discrete problems.
+
+Reading parameter(s) from "C:\Users\Rocke\OneDrive\Documents\isye524\lectures\cplex.opt"
+>>  lpmethod 3
+>>  netfind 2
+>>  preind 0
+>>  names no
+Finished reading from "C:\Users\Rocke\OneDrive\Documents\isye524\lectures\cplex.opt"
+
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- LP status (3): infeasible.
+--- Cplex Time: 0.00sec (det. 0.00 ticks)
+
+
+Model has been proven infeasible
+
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             2 INFEASIBLE (INFES)
+                    SUM          1.5673
+                    MAX          0.7837
+                    MEAN         0.7837
+                             0  UNBOUNDED
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 13:10:12 Page 6
+Min-Cost Network Flow (Williams, p.82) (modified)
+E x e c u t i o n
+
+
+----     46 VARIABLE x.L  flow
+
+0.2 11,    1.3 14
+2.3  2,    2.5  9
+3.4 10,    3.7  6
+4.6 10
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 13:10:12 Page 7
+Min-Cost Network Flow (Williams, p.82) (modified)
+Range Statistics    SOLVE mcf Using LP From line 56
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 6.000E+00, 1.500E+01] - Zero values observed as well
+Bound     [min, max] : [ 3.334E+00, 1.500E+01] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 6.000E+00]
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 13:10:12 Page 8
+Min-Cost Network Flow (Williams, p.82) (modified)
+Model Statistics    SOLVE mcf Using LP From line 56
+
+
+LOOPS                                 iter   iter1
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           2     SINGLE EQUATIONS            9
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES           12  4 projected
+NON ZERO ELEMENTS            34
+
+
+GENERATION TIME      =        0.000 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+               L O O P S               iter iter1
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 13:10:12 Page 9
+Min-Cost Network Flow (Williams, p.82) (modified)
+Solution Report     SOLVE mcf Using LP From line 56
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   mcf                 OBJECTIVE  totalcost
+     TYPE    LP                  DIRECTION  MINIMIZE
+     SOLVER  CPLEX               FROM LINE  56
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE              222.5632
+
+ RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ ITERATION COUNT, LIMIT         0    2147483647
+--- GAMS/CPLEX licensed for continuous and discrete problems.
+
+Reading parameter(s) from "C:\Users\Rocke\OneDrive\Documents\isye524\lectures\cplex.opt"
+>>  lpmethod 3
+>>  netfind 2
+>>  preind 0
+>>  names no
+Finished reading from "C:\Users\Rocke\OneDrive\Documents\isye524\lectures\cplex.opt"
+
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.00 ticks)
+
+
+Optimal solution found
+Objective:          222.563248
+
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 13:10:12 Page 10
+Min-Cost Network Flow (Williams, p.82) (modified)
+Range Statistics    SOLVE mcf Using LP From line 56
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 6.000E+00, 1.500E+01] - Zero values observed as well
+Bound     [min, max] : [ 4.336E+00, 1.500E+01] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 6.000E+00]
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 13:10:12 Page 11
+Min-Cost Network Flow (Williams, p.82) (modified)
+Model Statistics    SOLVE mcf Using LP From line 56
+
+
+LOOPS                                 iter   iter2
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           2     SINGLE EQUATIONS            9
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES           12
+NON ZERO ELEMENTS            34
+
+
+GENERATION TIME      =        0.016 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+               L O O P S               iter iter2
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 13:10:12 Page 12
+Min-Cost Network Flow (Williams, p.82) (modified)
+Solution Report     SOLVE mcf Using LP From line 56
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   mcf                 OBJECTIVE  totalcost
+     TYPE    LP                  DIRECTION  MINIMIZE
+     SOLVER  CPLEX               FROM LINE  56
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE              218.1486
+
+ RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ ITERATION COUNT, LIMIT         0    2147483647
+--- GAMS/CPLEX licensed for continuous and discrete problems.
+
+Reading parameter(s) from "C:\Users\Rocke\OneDrive\Documents\isye524\lectures\cplex.opt"
+>>  lpmethod 3
+>>  netfind 2
+>>  preind 0
+>>  names no
+Finished reading from "C:\Users\Rocke\OneDrive\Documents\isye524\lectures\cplex.opt"
+
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.00 ticks)
+
+
+Optimal solution found
+Objective:          218.148630
+
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 13:10:12 Page 13
+Min-Cost Network Flow (Williams, p.82) (modified)
+Range Statistics    SOLVE mcf Using LP From line 56
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 6.000E+00, 1.500E+01] - Zero values observed as well
+Bound     [min, max] : [ 3.181E+00, 1.500E+01] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 6.000E+00]
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 13:10:12 Page 14
+Min-Cost Network Flow (Williams, p.82) (modified)
+Model Statistics    SOLVE mcf Using LP From line 56
+
+
+LOOPS                                 iter   iter3
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           2     SINGLE EQUATIONS            9
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES           12  1 projected
+NON ZERO ELEMENTS            34
+
+
+GENERATION TIME      =        0.000 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+               L O O P S               iter iter3
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 13:10:12 Page 15
+Min-Cost Network Flow (Williams, p.82) (modified)
+Solution Report     SOLVE mcf Using LP From line 56
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   mcf                 OBJECTIVE  totalcost
+     TYPE    LP                  DIRECTION  MINIMIZE
+     SOLVER  CPLEX               FROM LINE  56
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      4 Infeasible
+**** OBJECTIVE VALUE              233.2551
+
+ RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ ITERATION COUNT, LIMIT         4    2147483647
+--- GAMS/CPLEX licensed for continuous and discrete problems.
+
+Reading parameter(s) from "C:\Users\Rocke\OneDrive\Documents\isye524\lectures\cplex.opt"
+>>  lpmethod 3
+>>  netfind 2
+>>  preind 0
+>>  names no
+Finished reading from "C:\Users\Rocke\OneDrive\Documents\isye524\lectures\cplex.opt"
+
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- LP status (3): infeasible.
+--- Cplex Time: 0.00sec (det. 0.01 ticks)
+
+
+Model has been proven infeasible
+
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             2 INFEASIBLE (INFES)
+                    SUM          0.5805
+                    MAX          0.2934
+                    MEAN         0.2902
+                             0  UNBOUNDED
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 13:10:12 Page 16
+Min-Cost Network Flow (Williams, p.82) (modified)
+Range Statistics    SOLVE mcf Using LP From line 56
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 6.000E+00, 1.500E+01] - Zero values observed as well
+Bound     [min, max] : [ 3.054E+00, 1.500E+01] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 6.000E+00]
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 13:10:12 Page 17
+Min-Cost Network Flow (Williams, p.82) (modified)
+Model Statistics    SOLVE mcf Using LP From line 56
+
+
+LOOPS                                 iter   iter4
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           2     SINGLE EQUATIONS            9
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES           12
+NON ZERO ELEMENTS            34
+
+
+GENERATION TIME      =        0.016 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+               L O O P S               iter iter4
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 13:10:12 Page 18
+Min-Cost Network Flow (Williams, p.82) (modified)
+Solution Report     SOLVE mcf Using LP From line 56
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   mcf                 OBJECTIVE  totalcost
+     TYPE    LP                  DIRECTION  MINIMIZE
+     SOLVER  CPLEX               FROM LINE  56
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE              218.6604
+
+ RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ ITERATION COUNT, LIMIT         0    2147483647
+--- GAMS/CPLEX licensed for continuous and discrete problems.
+
+Reading parameter(s) from "C:\Users\Rocke\OneDrive\Documents\isye524\lectures\cplex.opt"
+>>  lpmethod 3
+>>  netfind 2
+>>  preind 0
+>>  names no
+Finished reading from "C:\Users\Rocke\OneDrive\Documents\isye524\lectures\cplex.opt"
+
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.00 ticks)
+
+
+Optimal solution found
+Objective:          218.660440
+
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 13:10:12 Page 19
+Min-Cost Network Flow (Williams, p.82) (modified)
+Range Statistics    SOLVE mcf Using LP From line 56
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 6.000E+00, 1.500E+01] - Zero values observed as well
+Bound     [min, max] : [ 3.570E+00, 1.500E+01] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 6.000E+00]
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 13:10:12 Page 20
+Min-Cost Network Flow (Williams, p.82) (modified)
+Model Statistics    SOLVE mcf Using LP From line 56
+
+
+LOOPS                                 iter   iter5
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           2     SINGLE EQUATIONS            9
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES           12  2 projected
+NON ZERO ELEMENTS            34
+
+
+GENERATION TIME      =        0.000 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+               L O O P S               iter iter5
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 13:10:12 Page 21
+Min-Cost Network Flow (Williams, p.82) (modified)
+Solution Report     SOLVE mcf Using LP From line 56
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   mcf                 OBJECTIVE  totalcost
+     TYPE    LP                  DIRECTION  MINIMIZE
+     SOLVER  CPLEX               FROM LINE  56
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      4 Infeasible
+**** OBJECTIVE VALUE              217.8153
+
+ RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ ITERATION COUNT, LIMIT         2    2147483647
+--- GAMS/CPLEX licensed for continuous and discrete problems.
+
+Reading parameter(s) from "C:\Users\Rocke\OneDrive\Documents\isye524\lectures\cplex.opt"
+>>  lpmethod 3
+>>  netfind 2
+>>  preind 0
+>>  names no
+Finished reading from "C:\Users\Rocke\OneDrive\Documents\isye524\lectures\cplex.opt"
+
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- LP status (3): infeasible.
+--- Cplex Time: 0.00sec (det. 0.01 ticks)
+
+
+Model has been proven infeasible
+
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             2 INFEASIBLE (INFES)
+                    SUM          5.9881
+                    MAX          3.5583
+                    MEAN         2.9940
+                             0  UNBOUNDED
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 13:10:12 Page 22
+Min-Cost Network Flow (Williams, p.82) (modified)
+Range Statistics    SOLVE mcf Using LP From line 56
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 6.000E+00, 1.500E+01] - Zero values observed as well
+Bound     [min, max] : [ 3.773E+00, 1.500E+01] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 6.000E+00]
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 13:10:12 Page 23
+Min-Cost Network Flow (Williams, p.82) (modified)
+Model Statistics    SOLVE mcf Using LP From line 56
+
+
+LOOPS                                 iter   iter6
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           2     SINGLE EQUATIONS            9
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES           12  4 projected
+NON ZERO ELEMENTS            34
+
+
+GENERATION TIME      =        0.000 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+               L O O P S               iter iter6
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 13:10:12 Page 24
+Min-Cost Network Flow (Williams, p.82) (modified)
+Solution Report     SOLVE mcf Using LP From line 56
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   mcf                 OBJECTIVE  totalcost
+     TYPE    LP                  DIRECTION  MINIMIZE
+     SOLVER  CPLEX               FROM LINE  56
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      4 Infeasible
+**** OBJECTIVE VALUE              236.1717
+
+ RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ ITERATION COUNT, LIMIT         0    2147483647
+--- GAMS/CPLEX licensed for continuous and discrete problems.
+
+Reading parameter(s) from "C:\Users\Rocke\OneDrive\Documents\isye524\lectures\cplex.opt"
+>>  lpmethod 3
+>>  netfind 2
+>>  preind 0
+>>  names no
+Finished reading from "C:\Users\Rocke\OneDrive\Documents\isye524\lectures\cplex.opt"
+
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- LP status (3): infeasible.
+--- Cplex Time: 0.00sec (det. 0.00 ticks)
+
+
+Model has been proven infeasible
+
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             1 INFEASIBLE (INFES)
+                    SUM          4.9476
+                    MAX          4.9476
+                    MEAN         4.9476
+                             0  UNBOUNDED
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 13:10:12 Page 25
+Min-Cost Network Flow (Williams, p.82) (modified)
+Range Statistics    SOLVE mcf Using LP From line 56
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 6.000E+00, 1.500E+01] - Zero values observed as well
+Bound     [min, max] : [ 7.096E+00, 1.500E+01] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 6.000E+00]
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 13:10:12 Page 26
+Min-Cost Network Flow (Williams, p.82) (modified)
+Model Statistics    SOLVE mcf Using LP From line 56
+
+
+LOOPS                                 iter   iter7
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           2     SINGLE EQUATIONS            9
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES           12  1 projected
+NON ZERO ELEMENTS            34
+
+
+GENERATION TIME      =        0.016 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+               L O O P S               iter iter7
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 13:10:12 Page 27
+Min-Cost Network Flow (Williams, p.82) (modified)
+Solution Report     SOLVE mcf Using LP From line 56
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   mcf                 OBJECTIVE  totalcost
+     TYPE    LP                  DIRECTION  MINIMIZE
+     SOLVER  CPLEX               FROM LINE  56
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE              220.4382
+
+ RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ ITERATION COUNT, LIMIT         0    2147483647
+--- GAMS/CPLEX licensed for continuous and discrete problems.
+
+Reading parameter(s) from "C:\Users\Rocke\OneDrive\Documents\isye524\lectures\cplex.opt"
+>>  lpmethod 3
+>>  netfind 2
+>>  preind 0
+>>  names no
+Finished reading from "C:\Users\Rocke\OneDrive\Documents\isye524\lectures\cplex.opt"
+
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.00 ticks)
+
+
+Optimal solution found
+Objective:          220.438153
+
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 13:10:12 Page 28
+Min-Cost Network Flow (Williams, p.82) (modified)
+Range Statistics    SOLVE mcf Using LP From line 56
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 6.000E+00, 1.500E+01] - Zero values observed as well
+Bound     [min, max] : [ 4.377E+00, 1.500E+01] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 6.000E+00]
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 13:10:12 Page 29
+Min-Cost Network Flow (Williams, p.82) (modified)
+Model Statistics    SOLVE mcf Using LP From line 56
+
+
+LOOPS                                 iter   iter8
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           2     SINGLE EQUATIONS            9
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES           12  3 projected
+NON ZERO ELEMENTS            34
+
+
+GENERATION TIME      =        0.000 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+               L O O P S               iter iter8
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 13:10:12 Page 30
+Min-Cost Network Flow (Williams, p.82) (modified)
+Solution Report     SOLVE mcf Using LP From line 56
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   mcf                 OBJECTIVE  totalcost
+     TYPE    LP                  DIRECTION  MINIMIZE
+     SOLVER  CPLEX               FROM LINE  56
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      4 Infeasible
+**** OBJECTIVE VALUE              228.1428
+
+ RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ ITERATION COUNT, LIMIT         3    2147483647
+--- GAMS/CPLEX licensed for continuous and discrete problems.
+
+Reading parameter(s) from "C:\Users\Rocke\OneDrive\Documents\isye524\lectures\cplex.opt"
+>>  lpmethod 3
+>>  netfind 2
+>>  preind 0
+>>  names no
+Finished reading from "C:\Users\Rocke\OneDrive\Documents\isye524\lectures\cplex.opt"
+
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- LP status (3): infeasible.
+--- Cplex Time: 0.00sec (det. 0.01 ticks)
+
+
+Model has been proven infeasible
+
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             2 INFEASIBLE (INFES)
+                    SUM          3.6300
+                    MAX          2.4096
+                    MEAN         1.8150
+                             0  UNBOUNDED
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 13:10:12 Page 31
+Min-Cost Network Flow (Williams, p.82) (modified)
+Range Statistics    SOLVE mcf Using LP From line 56
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 6.000E+00, 1.500E+01] - Zero values observed as well
+Bound     [min, max] : [ 3.397E+00, 1.500E+01] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 6.000E+00]
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 13:10:12 Page 32
+Min-Cost Network Flow (Williams, p.82) (modified)
+Model Statistics    SOLVE mcf Using LP From line 56
+
+
+LOOPS                                 iter   iter9
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           2     SINGLE EQUATIONS            9
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES           12  3 projected
+NON ZERO ELEMENTS            34
+
+
+GENERATION TIME      =        0.000 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+               L O O P S               iter iter9
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 13:10:12 Page 33
+Min-Cost Network Flow (Williams, p.82) (modified)
+Solution Report     SOLVE mcf Using LP From line 56
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   mcf                 OBJECTIVE  totalcost
+     TYPE    LP                  DIRECTION  MINIMIZE
+     SOLVER  CPLEX               FROM LINE  56
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      4 Infeasible
+**** OBJECTIVE VALUE              240.6887
+
+ RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ ITERATION COUNT, LIMIT         0    2147483647
+--- GAMS/CPLEX licensed for continuous and discrete problems.
+
+Reading parameter(s) from "C:\Users\Rocke\OneDrive\Documents\isye524\lectures\cplex.opt"
+>>  lpmethod 3
+>>  netfind 2
+>>  preind 0
+>>  names no
+Finished reading from "C:\Users\Rocke\OneDrive\Documents\isye524\lectures\cplex.opt"
+
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- LP status (3): infeasible.
+--- Cplex Time: 0.00sec (det. 0.00 ticks)
+
+
+Model has been proven infeasible
+
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             1 INFEASIBLE (INFES)
+                    SUM          2.5637
+                    MAX          2.5637
+                    MEAN         2.5637
+                             0  UNBOUNDED
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 13:10:12 Page 34
+Min-Cost Network Flow (Williams, p.82) (modified)
+Range Statistics    SOLVE mcf Using LP From line 56
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 6.000E+00, 1.500E+01] - Zero values observed as well
+Bound     [min, max] : [ 5.015E+00, 1.500E+01] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 6.000E+00]
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 13:10:12 Page 35
+Min-Cost Network Flow (Williams, p.82) (modified)
+Model Statistics    SOLVE mcf Using LP From line 56
+
+
+LOOPS                                 iter   iter10
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           2     SINGLE EQUATIONS            9
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES           12  2 projected
+NON ZERO ELEMENTS            34
+
+
+GENERATION TIME      =        0.000 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+               L O O P S               iter iter10
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 13:10:12 Page 36
+Min-Cost Network Flow (Williams, p.82) (modified)
+Solution Report     SOLVE mcf Using LP From line 56
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   mcf                 OBJECTIVE  totalcost
+     TYPE    LP                  DIRECTION  MINIMIZE
+     SOLVER  CPLEX               FROM LINE  56
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE              218.9708
+
+ RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ ITERATION COUNT, LIMIT         0    2147483647
+--- GAMS/CPLEX licensed for continuous and discrete problems.
+
+Reading parameter(s) from "C:\Users\Rocke\OneDrive\Documents\isye524\lectures\cplex.opt"
+>>  lpmethod 3
+>>  netfind 2
+>>  preind 0
+>>  names no
+Finished reading from "C:\Users\Rocke\OneDrive\Documents\isye524\lectures\cplex.opt"
+
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.00 ticks)
+
+
+Optimal solution found
+Objective:          218.970827
+
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 13:10:12 Page 37
+Min-Cost Network Flow (Williams, p.82) (modified)
+E x e c u t i o n
+
+
+----     62 PARAMETER result  
+
+         modelstat         obj
+
+iter1        1.000     222.563
+iter2        1.000     218.149
+iter3        4.000
+iter4        1.000     218.660
+iter5        4.000
+iter6        4.000
+iter7        1.000     220.438
+iter8        4.000
+iter9        4.000
+iter10       1.000     218.971
+
+
+
+EXECUTION TIME       =        0.422 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+
+
+USER: Introduction to Optimization (CS/ISyE/ECE 524) G230906|0002AS-GEN
+      UW-Madison, CS Dept., Fall 2023, Prof. Ferris              DCE850
+      License for teaching and research at degree granting institutions
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\Rocke\OneDrive\Documents\isye524\lectures\mincostex\mincost2.gms
+Output     C:\Users\Rocke\OneDrive\Documents\isye524\lectures\mincost2.lst

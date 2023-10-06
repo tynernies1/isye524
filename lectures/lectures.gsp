@@ -1,5 +1,5 @@
 {
-    "file": "shoecoex/shoeco3.gms",
+    "file": "randomex/assignprefs.gms",
     "name": "lectures",
     "nodes": [
         {
@@ -115,6 +115,18 @@
             "file": "randomex/absaslp.gms",
             "name": "absaslp.gms",
             "type": "gms"
+        },
+        {
+            "codecMib": 106,
+            "file": "randomex/bigassign.gms",
+            "name": "bigassign.gms",
+            "type": "gms"
+        },
+        {
+            "codecMib": 106,
+            "file": "randomex/bigassign.lst",
+            "name": "bigassign.lst",
+            "type": "lst"
         },
         {
             "codecMib": 106,
@@ -264,24 +276,6 @@
             "codecMib": 106,
             "file": "topbrassex/topbrass1.lst",
             "name": "topbrass1.lst",
-            "type": "lst"
-        },
-        {
-            "codecMib": 106,
-            "file": "lectures.gsp",
-            "name": "lectures.gsp",
-            "type": "gsp"
-        },
-        {
-            "codecMib": 106,
-            "file": "shoeco.lst",
-            "name": "shoeco.lst",
-            "type": "lst"
-        },
-        {
-            "codecMib": 106,
-            "file": "shoeco3.lst",
-            "name": "shoeco3.lst",
             "type": "lst"
         }
     ],

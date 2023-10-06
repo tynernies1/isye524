@@ -1,0 +1,84 @@
+--- Job bigassign.gms Start 10/03/23 18:36:09 44.3.0 8b8fb1cb WEX-WEI x86 64bit/MS Windows
+--- Applying:
+    C:\GAMS\44\gmsprmNT.txt
+--- GAMS Parameters defined
+    Input C:\Users\Rocke\OneDrive\Documents\isye524\lectures\randomex\bigassign.gms
+    PageSize 0
+    ScrDir C:\Users\Rocke\OneDrive\Documents\isye524\lectures\randomex\225a\
+    SysDir C:\GAMS\44\
+    LogOption 3
+    ErrMsg 1
+    ErrorLog 99
+    IDE 1
+    LstTitleLeftAligned 1
+Licensee: Introduction to Optimization (CS/ISyE/ECE 524) G230906|0002AS-GEN
+          UW-Madison, CS Dept., Fall 2023, Prof. Ferris              DCE850
+          C:\GAMS\44\gamslice.txt
+          License Admin: Michael C. Ferris, ferris@cs.wisc.edu             
+          Course license for use within the course and related course work
+Processor information: 1 socket(s), 4 core(s), and 8 thread(s) available
+GAMS 44.3.0   Copyright (C) 1987-2023 GAMS Development. All rights reserved
+--- Starting compilation
+--- bigassign.gms(89) 3 Mb
+--- Starting execution: elapsed 0:00:00.013
+--- bigassign.gms(80) 397 Mb
+--- Generating LP model hookup_dense
+--- bigassign.gms(74) 1730 Mb  5 secs
+--- bigassign.gms(77) 1768 Mb  10 secs
+--- bigassign.gms(84) 1768 Mb  3 secs
+---   5,001 rows  6,250,001 columns  13,436,965 non-zeroes
+--- Range statistics (absolute non-zero finite values)
+--- RHS       [min, max] : [ 1.000E+00, 1.000E+00] - Zero values observed as well
+--- Bound     [min, max] : [        NA,        NA] - Zero values observed as well
+--- Matrix    [min, max] : [ 3.660E-05, 1.000E+02]
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:23.481
+
+IBM ILOG CPLEX   44.3.0 8b8fb1cb Sep 1, 2023           WEI x86 64bit/MS Window
+
+--- GAMS/CPLEX licensed for continuous and discrete problems.
+--- GMO setup time: 0.00s
+--- Space for names approximately 131.97 Mb
+--- Use option 'names no' to turn use of names off
+--- GMO memory 1355.15 Mb (peak 1402.83 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 119.27 Mb (peak 513.50 Mb)
+--- Starting Cplex
+
+Version identifier: 22.1.1.0 | 2022-11-27 | 9160aff4d
+CPXPARAM_Advance                                 0
+CPXPARAM_Threads                                 1
+CPXPARAM_MIP_Display                             4
+CPXPARAM_MIP_Pool_Capacity                       0
+CPXPARAM_MIP_Tolerances_AbsMIPGap                0
+Tried aggregator 1 time.
+LP Presolve eliminated 0 rows and 5313037 columns.
+Reduced LP has 5000 rows, 936964 columns, and 1873928 nonzeros.
+Presolve time = 4.62 sec. (1906.77 ticks)
+
+Iteration log . . .
+Iteration:     1   Dual objective     =      47310148.033260
+Iteration:  1276   Dual objective     =      22778725.438998
+Iteration:  2564   Dual objective     =        249344.793975
+Iteration:  3561   Dual objective     =        249167.049120
+Iteration:  4490   Dual objective     =        249053.491862
+Iteration:  5293   Dual objective     =        248996.926600
+Iteration:  6019   Dual objective     =        248964.169344
+Iteration:  6632   Dual objective     =        248944.732517
+Iteration:  7198   Dual objective     =        248930.740752
+Iteration:  7655   Dual objective     =        248920.188605
+Iteration:  8045   Dual objective     =        248914.026346
+Iteration:  8393   Dual objective     =        248910.976082
+
+--- LP status (1): optimal.
+--- Cplex Time: 12.48sec (det. 7100.17 ticks)
+
+
+Optimal solution found
+Objective:       248910.436979
+
+--- Reading solution for model hookup_dense
+--- bigassign.gms(84) 1768 Mb  28 secs
+--- Executing after solve: elapsed 0:00:49.031
+--- bigassign.gms(87) 1768 Mb
+*** Status: Normal completion
+--- Job bigassign.gms Stop 10/03/23 18:36:58 elapsed 0:00:49.038

@@ -19,7 +19,7 @@ alias (node,i,j,k);
 * define a dynamic set that indicates the "legal" arcs
 set arc(node,node);
 arc(i,j) = yes$(cost(i,j) > 0);
-
+display arc;
 * assign capacities
 capacity(arc) = uniform(10,15);
 *capacity('3','4') = 5; capacity('4','6') = 5;

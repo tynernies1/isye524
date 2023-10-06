@@ -1,0 +1,186 @@
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 18:36:09 Page 1
+bigassign
+C o m p i l a t i o n
+
+
+   2  option limrow = 0, limcol = 0;
+   3  option solprint=off;
+   4  * option solvelink=2;
+   5   
+      Build some large random assignment problems and see difference in
+      solution times
+       
+      Demonstrates:
+        How to set the random seed.
+       
+        How to use option files
+       
+        How to do things in a 'sparse' way in gams
+       
+        How to do conditional processing using the gams dolla'
+       
+  20   
+  21  option seed=42
+  22  *option seed = %gams.user1%;
+  23  * This is how you change seed using time
+  24  *execseed = 1 + gmillisec(jnow);
+  25   
+  26   
+  27  set
+  28     Boys /b1*b2500/
+  29     Girls /g1*g2500/
+  30  ;
+  31   
+  32  alias(I,Boys,B,B2);
+  33  alias(J,Girls,G,G2);
+  34   
+  35  set ARCS(I,J);
+  36   
+  37   
+  38  scalar
+  39      density /0.15/
+  40  ;
+  41   
+  42  parameters
+  43    c(I,J)
+  44  ;
+  45   
+  46  * following are not much different in exec time
+  47  arcs(I,J)$(uniform(0,1) < density) = yes;
+  48  * arcs(I,J) = yes$(uniform(0,1) < density);
+  49  * display arcs  ;
+  50   
+  51  c(ARCS) = uniform(0,100) ;
+  52  * Same as
+  53  * c(I,J)$(ARCS(I,J)) = uniform(0,100) ;
+  54   
+  55  * $exit
+  56   
+  57  positive variables
+  58    x(I,J)
+  59  ;
+  60   
+  61  free variable hookup_score;
+  62   
+  63  * This dense model is the WRONG way to do it.
+  64   
+  65  equations
+  66    hookup_boys_dense(Boys)
+  67    hookup_girls_dense(Girls)
+  68    def_hookup_score_dense
+  69  ;
+  70   
+  71  hookup_boys_dense(I)..
+  72    sum(J, x(I,J)) =L= 1;
+  73   
+  74  hookup_girls_dense(J)..
+  75    - sum(I, x(I,J)) =G= -1;
+  76   
+  77  def_hookup_score_dense..
+  78    sum((I,J), c(I,J) * x(I,J)) =E= hookup_score ;
+  79   
+  80  x.UP(I,J)$(not ARCS(I,J)) = 0.0;
+  81  model hookup_dense /hookup_boys_dense, hookup_girls_dense,
+  82        def_hookup_score_dense /;
+  83   
+  84  solve hookup_dense using lp maximizing hookup_score;
+  85  parameter dense_var;
+  86  dense_var = hookup_dense.numvar;
+  87  display dense_var;
+  88   
+EXIT C:\Users\Rocke\OneDrive\Documents\isye524\lectures\randomex\bigassign.gms
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 18:36:09 Page 2
+bigassign
+Include File Summary
+
+
+   SEQ   GLOBAL TYPE      PARENT   LOCAL  FILENAME
+
+     1        1 INPUT          0       0  C:\Users\Rocke\OneDrive\Documents\isye524\lectures\randomex\bigassign.gms
+     2       89 EXIT           1      89  C:\Users\Rocke\OneDrive\Documents\isye524\lectures\randomex\bigassign.gms
+
+
+COMPILATION TIME     =        0.000 SECONDS      3 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 18:36:09 Page 3
+bigassign
+Range Statistics    SOLVE hookup_dense Using LP From line 84
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 1.000E+00, 1.000E+00] - Zero values observed as well
+Bound     [min, max] : [        NA,        NA] - Zero values observed as well
+Matrix    [min, max] : [ 3.660E-05, 1.000E+02]
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 18:36:09 Page 4
+bigassign
+Model Statistics    SOLVE hookup_dense Using LP From line 84
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           3     SINGLE EQUATIONS        5,001
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES    6,250,001
+NON ZERO ELEMENTS    13,436,965
+
+
+GENERATION TIME      =       21.266 SECONDS  1,768 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 18:36:09 Page 5
+bigassign
+Solution Report     SOLVE hookup_dense Using LP From line 84
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   hookup_dense        OBJECTIVE  hookup_score
+     TYPE    LP                  DIRECTION  MAXIMIZE
+     SOLVER  CPLEX               FROM LINE  84
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE           248910.4370
+
+ RESOURCE USAGE, LIMIT         12.641 10000000000.000
+ ITERATION COUNT, LIMIT      8519    2147483647
+--- GAMS/CPLEX licensed for continuous and discrete problems.
+--- GMO setup time: 0.00s
+--- Space for names approximately 131.97 Mb
+--- Use option 'names no' to turn use of names off
+--- GMO memory 1355.15 Mb (peak 1402.83 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 119.27 Mb (peak 513.50 Mb)
+--- Starting Cplex
+
+
+--- LP status (1): optimal.
+--- Cplex Time: 12.48sec (det. 7100.17 ticks)
+
+
+Optimal solution found
+Objective:       248910.436979
+
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/03/23 18:36:09 Page 6
+bigassign
+E x e c u t i o n
+
+
+----     87 PARAMETER dense_var            =  6250001.000  
+
+
+EXECUTION TIME       =       49.031 SECONDS  1,768 MB  44.3.0 8b8fb1cb WEX-WEI
+
+
+USER: Introduction to Optimization (CS/ISyE/ECE 524) G230906|0002AS-GEN
+      UW-Madison, CS Dept., Fall 2023, Prof. Ferris              DCE850
+      License for teaching and research at degree granting institutions
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\Rocke\OneDrive\Documents\isye524\lectures\randomex\bigassign.gms
+Output     C:\Users\Rocke\OneDrive\Documents\isye524\lectures\randomex\bigassign.lst
