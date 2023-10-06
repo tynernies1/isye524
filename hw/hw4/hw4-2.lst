@@ -1,0 +1,430 @@
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/04/23 10:54:43 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1  set node Locations /1*10/;
+   2  alias(node, i, j, P);
+   3   
+   4  parameter
+   5  require(node) Required Brooms / 1 10, 2 6, 3 8, 4 11, 5 9, 6 7, 7 15, 8 7, 9 9, 10 12 /,
+   6  current(node) Current Brooms / 1 8, 2 13, 3 4, 4 8, 5 12, 6 2, 7 14, 8 11, 9 15, 10 7 /,
+   7  x(node) x-coordinates / 1 0, 2 20, 3 18, 4 30, 5 35, 6 33, 7 5, 8 5, 9 11, 10 2 /,
+   8  y(node) y-coordinates / 1 0, 2 20, 3 10, 4 12, 5 0, 6 25, 7 27, 8 10, 9 0, 10 15 /
+   9  d(node, node);
+  10   
+  11  scalar
+  12  trns_cost / [1/2] /;
+  13   
+  14  * Calculating distance matrix for all arcs (x, y) in A
+  15  loop
+  16  ((i, j),
+  17      d(i, j) = sqrt(sqr(x(j)-x(i)) + sqr(y(j)-y(i)));
+  18  );
+  19   
+  20  * Defining dynamic set arc for bringing in "legal" arcs (distances) -- all legal except distances between same node (i.e. d(1, 1) = 0)
+  21  set arc(node, node);
+  22  arc(i, j) = yes$(d(i, j) > 0);
+  23  display arc;
+  24  positive variable
+  25  flow(node, node);
+  26   
+  27  variable
+  28  cost;
+  29   
+  30  equations
+  31  obj, flow_bal, restrict;
+  32   
+  33  obj..
+  34  cost =e= sum(arc, trns_cost*d(arc)*flow(arc));
+  35   
+  36  flow_bal(i)..
+  37  sum(arc(i, j), flow(arc))- sum(arc(j, i), flow(arc)) + current(i) =e= require(i);
+  38   
+  39  restrict(i)..
+  40  sum(arc(j, i), flow(arc)) =l= current(i);
+  41   
+  42  model brooms / all /;
+  43   
+  44  solve brooms using lp minimize cost;
+  45   
+  46  parameter transportCost ;
+  47  transportCost = cost.L;
+  48  display transportCost;
+  49   
+  50  set
+  51  not_min_distance(node, node),
+  52  test(node, node),
+  53  extra_brooms(node),
+  54  not_from_closest(P);
+  55   
+  56  parameter min_distance(node);
+  57   
+  58   
+  59  min_distance(i) = smin(j$arc(i,j), d(i, j));
+  60  not_min_distance(i, j)$(arc(i,j) and d(i, j) ne min_distance(i)) = yes;
+  61   
+  62  extra_brooms(i) = yes$(sum(j$not_min_distance(j, i), flow.L(j, i) > 0));
+  63   
+  64  option not_from_closest:0:0:1;
+  65  display extra_brooms, flow.l, not_min_distance;
+  66   
+  67   
+  68   
+  69   
+  70   
+  71   
+  72   
+  73   
+  74   
+  75   
+  76   
+  77   
+  78   
+  79   
+  80   
+  81   
+  82   
+  83   
+  84   
+  85   
+  86   
+  87   
+
+
+COMPILATION TIME     =        0.000 SECONDS      3 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/04/23 10:54:43 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+----     23 SET arc  
+
+             1           2           3           4           5           6           7           8           9          10
+
+1                      YES         YES         YES         YES         YES         YES         YES         YES         YES
+2          YES                     YES         YES         YES         YES         YES         YES         YES         YES
+3          YES         YES                     YES         YES         YES         YES         YES         YES         YES
+4          YES         YES         YES                     YES         YES         YES         YES         YES         YES
+5          YES         YES         YES         YES                     YES         YES         YES         YES         YES
+6          YES         YES         YES         YES         YES                     YES         YES         YES         YES
+7          YES         YES         YES         YES         YES         YES                     YES         YES         YES
+8          YES         YES         YES         YES         YES         YES         YES                     YES         YES
+9          YES         YES         YES         YES         YES         YES         YES         YES                     YES
+10         YES         YES         YES         YES         YES         YES         YES         YES         YES
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/04/23 10:54:43 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Equation Listing    SOLVE brooms Using LP From line 44
+
+
+---- obj  =E=  
+
+obj..  - 14.142135623731*flow(1,2) - 10.295630140987*flow(1,3) - 16.1554944214035*flow(1,4) - 17.5*flow(1,5) - 20.7002415444845*flow(1,6) - 13.729530217746*flow(1,7) - 5.59016994374947*flow(1,8) - 5.5*flow(1,9) - 7.56637297521078*flow(1,10) - 14.142135623731*flow(2,1) - 5.09901951359278*flow(2,3) - 6.40312423743285*flow(2,4) - 12.5*flow(2,5) - 6.96419413859206*flow(2,6) - 8.27647267862342*flow(2,7) - 9.01387818865997*flow(2,8) - 10.9658560997307*flow(2,9) - 9.3407708461347*flow(2,10) - 10.295630140987*flow(3,1) - 5.09901951359278*flow(3,2) - 6.08276253029822*flow(3,4) - 9.86154146165801*flow(3,5) - 10.6066017177982*flow(3,6) - 10.7004672795163*flow(3,7) - 6.5*flow(3,8) - 6.10327780786685*flow(3,9) - 8.38152730712011*flow(3,10) - 16.1554944214035*flow(4,1) - 6.40312423743285*flow(4,2) - 6.08276253029822*flow(4,3) - 6.5*flow(4,5) - 6.67083203206317*flow(4,6) - 14.5773797371133*flow(4,7) - 12.5399362039845*flow(4,8) - 11.2361025271221*flow(4,9) - 14.0801278403287*flow(4,10) - 17.5*flow(5,1) - 12.5*flow(5,2) - 9.86154146165801*flow(5,3) - 6.5*flow(5,4) - 12.5399362039845*flow(5,6) - 20.1804360706106*flow(5,7) - 15.8113883008419*flow(5,8) - 12*flow(5,9) - 18.1245689603919*flow(5,10) - 20.7002415444845*flow(6,1) - 6.96419413859206*flow(6,2) - 10.6066017177982*flow(6,3) - 6.67083203206317*flow(6,4) - 12.5399362039845*flow(6,5) - 14.0356688476182*flow(6,7) - 15.8823801742686*flow(6,8) - 16.6508258053467*flow(6,9) - 16.2864974749023*flow(6,10) - 13.729530217746*flow(7,1) - 8.27647267862342*flow(7,2) - 10.7004672795163*flow(7,3) - 14.5773797371133*flow(7,4) - 20.1804360706106*flow(7,5) - 14.0356688476182*flow(7,6) - 8.5*flow(7,8) - 13.8293166859393*flow(7,9) - 6.18465843842649*flow(7,10) - 5.59016994374947*flow(8,1) - 9.01387818865997*flow(8,2) - 6.5*flow(8,3) - 12.5399362039845*flow(8,4) - 15.8113883008419*flow(8,5) - 15.8823801742686*flow(8,6) - 8.5*flow(8,7) - 5.8309518948453*flow(8,9) - 2.91547594742265*flow(8,10) - 5.5*flow(9,1) - 10.9658560997307*flow(9,2) - 6.10327780786685*flow(9,3) - 11.2361025271221*flow(9,4) - 12*flow(9,5) - 16.6508258053467*flow(9,6) - 13.8293166859393*flow(9,7) - 5.8309518948453*flow(9,8) - 8.74642784226795*flow(9,10) - 7.56637297521078*flow(10,1) - 9.3407708461347*flow(10,2) - 8.38152730712011*flow(10,3) - 14.0801278403287*flow(10,4) - 18.1245689603919*flow(10,5) - 16.2864974749023*flow(10,6) - 6.18465843842649*flow(10,7) - 2.91547594742265*flow(10,8) - 8.74642784226795*flow(10,9) + cost =E= 0 ; (LHS = 0)
+     
+
+---- flow_bal  =E=  
+
+flow_bal(1)..  flow(1,2) + flow(1,3) + flow(1,4) + flow(1,5) + flow(1,6) + flow(1,7) + flow(1,8) + flow(1,9) + flow(1,10) - flow(2,1) - flow(3,1) - flow(4,1) - flow(5,1) - flow(6,1) - flow(7,1) - flow(8,1) - flow(9,1) - flow(10,1) =E= 2 ; (LHS = 0, INFES = 2 ****)
+     
+flow_bal(2)..  - flow(1,2) + flow(2,1) + flow(2,3) + flow(2,4) + flow(2,5) + flow(2,6) + flow(2,7) + flow(2,8) + flow(2,9) + flow(2,10) - flow(3,2) - flow(4,2) - flow(5,2) - flow(6,2) - flow(7,2) - flow(8,2) - flow(9,2) - flow(10,2) =E= -7 ; (LHS = 0, INFES = 7 ****)
+     
+flow_bal(3)..  - flow(1,3) - flow(2,3) + flow(3,1) + flow(3,2) + flow(3,4) + flow(3,5) + flow(3,6) + flow(3,7) + flow(3,8) + flow(3,9) + flow(3,10) - flow(4,3) - flow(5,3) - flow(6,3) - flow(7,3) - flow(8,3) - flow(9,3) - flow(10,3) =E= 4 ; (LHS = 0, INFES = 4 ****)
+     
+REMAINING 7 ENTRIES SKIPPED
+
+
+---- restrict  =L=  
+
+restrict(1)..  flow(2,1) + flow(3,1) + flow(4,1) + flow(5,1) + flow(6,1) + flow(7,1) + flow(8,1) + flow(9,1) + flow(10,1) =L= 8 ; (LHS = 0)
+     
+restrict(2)..  flow(1,2) + flow(3,2) + flow(4,2) + flow(5,2) + flow(6,2) + flow(7,2) + flow(8,2) + flow(9,2) + flow(10,2) =L= 13 ; (LHS = 0)
+     
+restrict(3)..  flow(1,3) + flow(2,3) + flow(4,3) + flow(5,3) + flow(6,3) + flow(7,3) + flow(8,3) + flow(9,3) + flow(10,3) =L= 4 ; (LHS = 0)
+     
+REMAINING 7 ENTRIES SKIPPED
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/04/23 10:54:43 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Column Listing      SOLVE brooms Using LP From line 44
+
+
+---- flow  
+
+flow(1,2)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+      -14.1421  obj
+        1       flow_bal(1)
+       -1       flow_bal(2)
+        1       restrict(2)
+
+flow(1,3)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+      -10.2956  obj
+        1       flow_bal(1)
+       -1       flow_bal(3)
+        1       restrict(3)
+
+flow(1,4)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+      -16.1555  obj
+        1       flow_bal(1)
+       -1       flow_bal(4)
+        1       restrict(4)
+
+REMAINING 87 ENTRIES SKIPPED
+
+---- cost  
+
+cost
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       obj
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/04/23 10:54:43 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Range Statistics    SOLVE brooms Using LP From line 44
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 1.000E+00, 1.500E+01] - Zero values observed as well
+Bound     [min, max] : [        NA,        NA] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 2.070E+01]
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/04/23 10:54:43 Page 6
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE brooms Using LP From line 44
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           3     SINGLE EQUATIONS           21
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES           91
+NON ZERO ELEMENTS           361
+
+
+GENERATION TIME      =        0.000 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/04/23 10:54:43 Page 7
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE brooms Using LP From line 44
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   brooms              OBJECTIVE  cost
+     TYPE    LP                  DIRECTION  MINIMIZE
+     SOLVER  CPLEX               FROM LINE  44
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE              117.4146
+
+ RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ ITERATION COUNT, LIMIT         9    2147483647
+--- GAMS/CPLEX licensed for continuous and discrete problems.
+--- GMO setup time: 0.00s
+--- GMO memory 0.51 Mb (peak 0.51 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.01 Mb)
+--- Starting Cplex
+
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.09 ticks)
+
+
+Optimal solution found
+Objective:          117.414628
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU obj                 .              .              .             1.0000      
+
+---- EQU flow_bal  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1          2.0000         2.0000         2.0000        -0.6033      
+2         -7.0000        -7.0000        -7.0000        -5.0990      
+3          4.0000         4.0000         4.0000          .          
+4          3.0000         3.0000         3.0000         1.3041      
+5         -3.0000        -3.0000        -3.0000        -5.1959      
+6          5.0000         5.0000         5.0000         1.8652      
+7          1.0000         1.0000         1.0000         3.1775      
+8         -4.0000        -4.0000        -4.0000        -0.2723      
+9         -6.0000        -6.0000        -6.0000        -6.1033      
+10         5.0000         5.0000         5.0000         2.6432      
+
+---- EQU restrict  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1         -INF             .             8.0000          .          
+2         -INF            7.0000        13.0000          .          
+3         -INF             .             4.0000          .          
+4         -INF             .             8.0000          .          
+5         -INF            3.0000        12.0000          .          
+6         -INF             .             2.0000          .          
+7         -INF             .            14.0000          .          
+8         -INF            5.0000        11.0000          .          
+9         -INF            6.0000        15.0000          .          
+10        -INF             .             7.0000          .          
+
+---- VAR flow  
+
+             LOWER          LEVEL          UPPER         MARGINAL
+
+1 .2           .              .            +INF            9.6464      
+1 .3           .              .            +INF           10.8989      
+1 .4           .              .            +INF           18.0629      
+1 .5           .              .            +INF           12.9074      
+1 .6           .              .            +INF           23.1687      
+1 .7           .              .            +INF           17.5103      
+1 .8           .              .            +INF            5.9211      
+1 .9           .             2.0000        +INF             .          
+1 .10          .              .            +INF           10.8128      
+2 .1           .              .            +INF           18.6379      
+2 .3           .              .            +INF           10.1980      
+2 .4           .              .            +INF           12.8062      
+2 .5           .              .            +INF           12.4031      
+2 .6           .              .            +INF           13.9284      
+2 .7           .              .            +INF           16.5529      
+2 .8           .              .            +INF           13.8406      
+2 .9           .              .            +INF            9.9616      
+2 .10          .              .            +INF           17.0829      
+3 .1           .              .            +INF            9.6924      
+3 .2           .             1.0000        +INF             .          
+3 .4           .              .            +INF            7.3869      
+3 .5           .              .            +INF            4.6656      
+3 .6           .              .            +INF           12.4718      
+3 .7           .              .            +INF           13.8779      
+3 .8           .              .            +INF            6.2277      
+3 .9           .             3.0000        +INF             .          
+3 .10          .              .            +INF           11.0247      
+4 .1           .              .            +INF           14.2481      
+4 .2           .              .            +INF             .          
+4 .3           .              .            +INF            4.7787      
+4 .5           .             3.0000        +INF             .          
+4 .6           .              .            +INF            7.2319      
+4 .7           .              .            +INF           16.4507      
+4 .8           .              .            +INF           10.9635      
+4 .9           .              .            +INF            3.8287      
+4 .10          .              .            +INF           15.4192      
+5 .1           .              .            +INF           22.0926      
+5 .2           .              .            +INF           12.5969      
+5 .3           .              .            +INF           15.0574      
+5 .4           .              .            +INF           13.0000      
+5 .6           .              .            +INF           19.6010      
+5 .7           .              .            +INF           28.5538      
+5 .8           .              .            +INF           20.7350      
+5 .9           .              .            +INF           11.0926      
+5 .10          .              .            +INF           25.9636      
+6 .1           .              .            +INF           18.2318      
+6 .2           .             5.0000        +INF             .          
+6 .3           .              .            +INF            8.7414      
+6 .4           .              .            +INF            6.1098      
+6 .5           .              .            +INF            5.4789      
+6 .7           .              .            +INF           15.3479      
+6 .8           .              .            +INF           13.7449      
+6 .9           .              .            +INF            8.6824      
+6 .10          .              .            +INF           17.0645      
+7 .1           .              .            +INF            9.9488      
+7 .2           .             1.0000        +INF             .          
+7 .3           .              .            +INF            7.5230      
+7 .4           .              .            +INF           12.7040      
+7 .5           .              .            +INF           11.8071      
+7 .6           .              .            +INF           12.7234      
+7 .8           .              .            +INF            5.0502      
+7 .9           .              .            +INF            4.5486      
+7 .10          .              .            +INF            5.6504      
+8 .1           .              .            +INF            5.2592      
+8 .2           .              .            +INF            4.1872      
+8 .3           .              .            +INF            6.7723      
+8 .4           .              .            +INF           14.1164      
+8 .5           .              .            +INF           10.8878      
+8 .6           .              .            +INF           18.0199      
+8 .7           .              .            +INF           11.9498      
+8 .9           .             1.0000        +INF             .          
+8 .10          .              .            +INF            5.8310      
+9 .1           .              .            +INF           11.0000      
+9 .2           .              .            +INF           11.9701      
+9 .3           .              .            +INF           12.2066      
+9 .4           .              .            +INF           18.6435      
+9 .5           .              .            +INF           12.9074      
+9 .6           .              .            +INF           24.6193      
+9 .7           .              .            +INF           23.1100      
+9 .8           .              .            +INF           11.6619      
+9 .10          .              .            +INF           17.4929      
+10.1           .              .            +INF            4.3199      
+10.2           .              .            +INF            1.5986      
+10.3           .              .            +INF            5.7384      
+10.4           .              .            +INF           12.7411      
+10.5           .              .            +INF           10.2855      
+10.6           .              .            +INF           15.5085      
+10.7           .              .            +INF            6.7190      
+10.8           .             5.0000        +INF             .          
+10.9           .              .            +INF      -8.88178E-16      
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR cost              -INF          117.4146        +INF             .          
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/04/23 10:54:43 Page 8
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+----     48 PARAMETER transportCost        =      117.415  
+
+----     65 SET extra_brooms  
+
+2,    5,    9
+
+
+----     65 VARIABLE flow.L  
+
+             2           5           8           9
+
+1                                            2.000
+3        1.000                               3.000
+4                    3.000
+6        5.000
+7        1.000
+8                                            1.000
+10                               5.000
+
+
+----     65 SET not_min_distance  
+
+             1           2           3           4           5           6           7           8           9          10
+
+1                      YES         YES         YES         YES         YES         YES         YES                     YES
+2          YES                                 YES         YES         YES         YES         YES         YES         YES
+3          YES                                 YES         YES         YES         YES         YES         YES         YES
+4          YES         YES                                 YES         YES         YES         YES         YES         YES
+5          YES         YES         YES                                 YES         YES         YES         YES         YES
+6          YES         YES         YES                     YES                     YES         YES         YES         YES
+7          YES         YES         YES         YES         YES         YES                     YES         YES
+8          YES         YES         YES         YES         YES         YES         YES                     YES
+9                      YES         YES         YES         YES         YES         YES         YES                     YES
+10         YES         YES         YES         YES         YES         YES         YES                     YES
+
+
+
+EXECUTION TIME       =        0.062 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+
+
+USER: Introduction to Optimization (CS/ISyE/ECE 524) G230906|0002AS-GEN
+      UW-Madison, CS Dept., Fall 2023, Prof. Ferris              DCE850
+      License for teaching and research at degree granting institutions
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw4\hw4-2.gms
+Output     C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw4\hw4-2.lst

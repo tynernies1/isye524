@@ -1,0 +1,88 @@
+
+--- Job hw4-1.gms Start 10/05/23 11:40:03 44.3.0 8b8fb1cb WEX-WEI x86 64bit/MS Windows
+--- Applying:
+    C:\GAMS\44\gmsprmNT.txt
+--- GAMS Parameters defined
+    Input C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw4\hw4-1.gms
+    PageSize 0
+    ScrDir C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw4\225a\
+    SysDir C:\GAMS\44\
+    LogOption 3
+    ErrMsg 1
+    ErrorLog 99
+    IDE 1
+    LstTitleLeftAligned 1
+Licensee: Introduction to Optimization (CS/ISyE/ECE 524) G230906|0002AS-GEN
+          UW-Madison, CS Dept., Fall 2023, Prof. Ferris              DCE850
+          C:\GAMS\44\gamslice.txt
+          License Admin: Michael C. Ferris, ferris@cs.wisc.edu             
+          Course license for use within the course and related course work
+Processor information: 1 socket(s), 4 core(s), and 8 thread(s) available
+GAMS 44.3.0   Copyright (C) 1987-2023 GAMS Development. All rights reserved
+--- Starting compilation
+--- hw4-1.gms(4) 3 Mb
+--- GDXin=C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw4\wine.gdx
+--- GDX File ($gdxIn) C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw4\wine.gdx
+--- hw4-1.gms(31) 3 Mb
+--- Starting execution: elapsed 0:00:00.009
+--- hw4-1.gms(18) 4 Mb
+--- Generating RMIP model assign
+--- hw4-1.gms(31) 5 Mb
+---   121 rows  3,601 columns  10,801 non-zeroes
+---   3,600 discrete-columns
+--- Range statistics (absolute non-zero finite values)
+--- RHS       [min, max] : [ 1.000E+00, 1.000E+00] - Zero values observed as well
+--- Bound     [min, max] : [        NA,        NA] - Zero values observed as well
+--- Matrix    [min, max] : [ 1.000E+00, 2.372E+06]
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.051
+
+IBM ILOG CPLEX   44.3.0 8b8fb1cb Sep 1, 2023           WEI x86 64bit/MS Window
+
+--- GAMS/CPLEX licensed for continuous and discrete problems.
+--- GMO setup time: 0.00s
+--- Space for names approximately 0.06 Mb
+--- Use option 'names no' to turn use of names off
+--- GMO memory 0.94 Mb (peak 0.97 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.07 Mb (peak 0.28 Mb)
+--- Starting Cplex
+
+Version identifier: 22.1.1.0 | 2022-11-27 | 9160aff4d
+CPXPARAM_Advance                                 0
+CPXPARAM_Threads                                 1
+CPXPARAM_MIP_Display                             4
+CPXPARAM_MIP_Pool_Capacity                       0
+CPXPARAM_MIP_Tolerances_AbsMIPGap                0
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Reduced LP has 119 rows, 3600 columns, and 7140 nonzeros.
+Presolve time = 0.00 sec. (3.32 ticks)
+Initializing dual steep norms . . .
+
+Iteration log . . .
+Iteration:     1   Dual infeasibility =       9439115.000000
+Iteration:    71   Dual objective     =      46079351.000000
+Iteration:   153   Dual objective     =      42909987.000000
+Iteration:   224   Dual objective     =      40447384.000000
+Iteration:   308   Dual objective     =      37872403.000000
+Iteration:   387   Dual objective     =      35878960.000000
+Iteration:   473   Dual objective     =      33915154.000000
+Iteration:   560   Dual objective     =      32485454.000000
+Iteration:   647   Dual objective     =      31230292.000000
+Iteration:   737   Dual objective     =      30394467.000000
+Iteration:   827   Dual objective     =      29754255.000000
+Iteration:   899   Dual objective     =      29433192.000000
+Iteration:   982   Dual objective     =      29139977.000000
+Iteration:  1070   Dual objective     =      28936397.000000
+Iteration:  1162   Dual objective     =      28791513.000000
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.02sec (det. 49.32 ticks)
+
+
+Optimal solution found
+Objective:     28771499.000000
+
+--- Reading solution for model assign
+*** Status: Normal completion
+--- Job hw4-1.gms Stop 10/05/23 11:40:03 elapsed 0:00:00.139

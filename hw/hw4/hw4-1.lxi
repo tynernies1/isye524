@@ -1,0 +1,20 @@
+B 3 C o m p i l a t i o n
+B 42 Include File Summary
+B 54 Equation Listing    SOLVE assign Using RMIP From line 31
+D 57 obj
+D 66 bottles
+D 77 weeks
+B 89 Column Listing      SOLVE assign Using RMIP From line 31
+E 92 x
+E 114 pleasure
+B 122 Range Statistics    SOLVE assign Using RMIP From line 31
+B 133 Model Statistics    SOLVE assign Using RMIP From line 31
+B 146 Solution Report     SOLVE assign Using RMIP From line 31
+F 181 obj
+F 183 bottles
+F 248 weeks
+G 313 x
+G 3920 pleasure
+B 3928 E x e c u t i o n
+I 3928 x
+I 3964 pleasure
