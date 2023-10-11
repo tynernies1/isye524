@@ -1,4 +1,4 @@
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/05/23 11:41:09 Page 1
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/10/23 16:19:35 Page 1
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
@@ -37,7 +37,7 @@ GDXIN   C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw4\wine.gdx
   33  option x:0:0:2;
   34   
   35  display x.l, pleasure.l;
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/05/23 11:41:09 Page 2
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/10/23 16:19:35 Page 2
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Include File Summary
 
@@ -48,8 +48,8 @@ Include File Summary
      2        4 GDXIN          1       4  C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw4\wine.gdx
 
 
-COMPILATION TIME     =        0.000 SECONDS      3 MB  44.3.0 8b8fb1cb WEX-WEI
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/05/23 11:41:09 Page 3
+COMPILATION TIME     =        0.063 SECONDS      3 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/10/23 16:19:35 Page 3
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Equation Listing    SOLVE assign Using RMIP From line 31
 
@@ -84,7 +84,7 @@ weeks(t2)..  x(1,t2) + x(2,t2) + x(3,t2) + x(4,t2) + x(5,t2) + x(6,t2) + x(7,t2)
      
 REMAINING 57 ENTRIES SKIPPED
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/05/23 11:41:09 Page 4
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/10/23 16:19:35 Page 4
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Column Listing      SOLVE assign Using RMIP From line 31
 
@@ -117,7 +117,7 @@ pleasure
                 (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
         1       obj
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/05/23 11:41:09 Page 5
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/10/23 16:19:35 Page 5
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Range Statistics    SOLVE assign Using RMIP From line 31
 
@@ -128,7 +128,7 @@ RHS       [min, max] : [ 1.000E+00, 1.000E+00] - Zero values observed as well
 Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 Matrix    [min, max] : [ 1.000E+00, 2.372E+06]
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/05/23 11:41:09 Page 6
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/10/23 16:19:35 Page 6
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Model Statistics    SOLVE assign Using RMIP From line 31
 
@@ -140,8 +140,8 @@ BLOCKS OF VARIABLES           2     SINGLE VARIABLES        3,601
 NON ZERO ELEMENTS        10,801     DISCRETE VARIABLES      3,600
 
 
-GENERATION TIME      =        0.031 SECONDS      5 MB  44.3.0 8b8fb1cb WEX-WEI
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/05/23 11:41:09 Page 7
+GENERATION TIME      =        0.250 SECONDS      5 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/10/23 16:19:35 Page 7
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Solution Report     SOLVE assign Using RMIP From line 31
 
@@ -3923,7 +3923,7 @@ t59         1.0000         1.0000         1.0000   1394793.0000
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/05/23 11:41:09 Page 8
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/10/23 16:19:35 Page 8
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 E x e c u t i o n
 
@@ -3965,7 +3965,7 @@ E x e c u t i o n
 ----     35 VARIABLE pleasure.L            =  2.877150E+7  
 
 
-EXECUTION TIME       =        0.141 SECONDS      5 MB  44.3.0 8b8fb1cb WEX-WEI
+EXECUTION TIME       =        0.750 SECONDS      5 MB  44.3.0 8b8fb1cb WEX-WEI
 
 
 USER: Introduction to Optimization (CS/ISyE/ECE 524) G230906|0002AS-GEN

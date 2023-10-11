@@ -1,5 +1,5 @@
 {
-    "file": "hw4-1.gms",
+    "file": "hw4-3.gms",
     "name": "hw4",
     "nodes": [
         {
@@ -24,6 +24,18 @@
             "codecMib": 106,
             "file": "hw4-2.lst",
             "name": "hw4-2.lst",
+            "type": "lst"
+        },
+        {
+            "codecMib": 106,
+            "file": "hw4-3.gms",
+            "name": "hw4-3.gms",
+            "type": "gms"
+        },
+        {
+            "codecMib": 106,
+            "file": "hw4-3.lst",
+            "name": "hw4-3.lst",
             "type": "lst"
         },
         {

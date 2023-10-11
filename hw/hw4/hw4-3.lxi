@@ -1,0 +1,71 @@
+B 3 C o m p i l a t i o n
+B 106 Equation Listing    SOLVE flights Using LP From line 49
+D 109 obj
+D 114 balance
+B 126 Column Listing      SOLVE flights Using LP From line 49
+E 129 flow
+E 150 time
+B 158 Range Statistics    SOLVE flights Using LP From line 49
+B 169 Model Statistics    SOLVE flights Using LP From line 49
+B 182 Solution Report     SOLVE flights Using LP From line 49
+F 215 obj
+F 217 balance
+G 228 flow
+G 240 time
+B 248 Equation Listing    SOLVE flights Using LP From line 58
+D 251 obj
+D 256 balance
+B 268 Column Listing      SOLVE flights Using LP From line 58
+E 271 flow
+E 292 time
+B 300 Range Statistics    SOLVE flights Using LP From line 58
+B 311 Model Statistics    SOLVE flights Using LP From line 58
+B 324 Solution Report     SOLVE flights Using LP From line 58
+F 357 obj
+F 359 balance
+G 370 flow
+G 382 time
+B 390 Equation Listing    SOLVE flights Using LP From line 67
+D 393 obj
+D 398 balance
+B 410 Column Listing      SOLVE flights Using LP From line 67
+E 413 flow
+E 434 time
+B 442 Range Statistics    SOLVE flights Using LP From line 67
+B 453 Model Statistics    SOLVE flights Using LP From line 67
+B 466 Solution Report     SOLVE flights Using LP From line 67
+F 499 obj
+F 501 balance
+G 512 flow
+G 524 time
+B 532 Equation Listing    SOLVE flights Using LP From line 77
+D 535 obj
+D 540 balance
+B 552 Column Listing      SOLVE flights Using LP From line 77
+E 555 flow
+E 575 time
+B 583 Range Statistics    SOLVE flights Using LP From line 77
+B 594 Model Statistics    SOLVE flights Using LP From line 77
+B 607 Solution Report     SOLVE flights Using LP From line 77
+F 640 obj
+F 642 balance
+G 654 flow
+G 671 time
+B 679 E x e c u t i o n
+I 679 arc
+I 690 flight_time
+B 702 Equation Listing    SOLVE flights Using LP From line 91
+D 705 obj
+D 710 balance
+B 722 Column Listing      SOLVE flights Using LP From line 91
+E 725 flow
+E 744 time
+B 752 Range Statistics    SOLVE flights Using LP From line 91
+B 763 Model Statistics    SOLVE flights Using LP From line 91
+B 776 Solution Report     SOLVE flights Using LP From line 91
+F 809 obj
+F 811 balance
+G 824 flow
+G 846 time
+B 854 E x e c u t i o n
+I 854 times

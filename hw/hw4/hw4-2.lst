@@ -1,4 +1,4 @@
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/04/23 10:54:43 Page 1
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/10/23 17:48:31 Page 1
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
@@ -92,8 +92,8 @@ C o m p i l a t i o n
   87   
 
 
-COMPILATION TIME     =        0.000 SECONDS      3 MB  44.3.0 8b8fb1cb WEX-WEI
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/04/23 10:54:43 Page 2
+COMPILATION TIME     =        0.015 SECONDS      3 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/10/23 17:48:31 Page 2
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 E x e c u t i o n
 
@@ -113,7 +113,7 @@ E x e c u t i o n
 9          YES         YES         YES         YES         YES         YES         YES         YES                     YES
 10         YES         YES         YES         YES         YES         YES         YES         YES         YES
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/04/23 10:54:43 Page 3
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/10/23 17:48:31 Page 3
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Equation Listing    SOLVE brooms Using LP From line 44
 
@@ -144,7 +144,7 @@ restrict(3)..  flow(1,3) + flow(2,3) + flow(4,3) + flow(5,3) + flow(6,3) + flow(
      
 REMAINING 7 ENTRIES SKIPPED
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/04/23 10:54:43 Page 4
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/10/23 17:48:31 Page 4
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Column Listing      SOLVE brooms Using LP From line 44
 
@@ -180,7 +180,7 @@ cost
                 (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
         1       obj
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/04/23 10:54:43 Page 5
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/10/23 17:48:31 Page 5
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Range Statistics    SOLVE brooms Using LP From line 44
 
@@ -191,7 +191,7 @@ RHS       [min, max] : [ 1.000E+00, 1.500E+01] - Zero values observed as well
 Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 Matrix    [min, max] : [ 1.000E+00, 2.070E+01]
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/04/23 10:54:43 Page 6
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/10/23 17:48:31 Page 6
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Model Statistics    SOLVE brooms Using LP From line 44
 
@@ -203,8 +203,8 @@ BLOCKS OF VARIABLES           2     SINGLE VARIABLES           91
 NON ZERO ELEMENTS           361
 
 
-GENERATION TIME      =        0.000 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/04/23 10:54:43 Page 7
+GENERATION TIME      =        0.031 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/10/23 17:48:31 Page 7
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Solution Report     SOLVE brooms Using LP From line 44
 
@@ -374,7 +374,7 @@ Objective:          117.414628
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/04/23 10:54:43 Page 8
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/10/23 17:48:31 Page 8
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 E x e c u t i o n
 
@@ -416,7 +416,7 @@ E x e c u t i o n
 
 
 
-EXECUTION TIME       =        0.062 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+EXECUTION TIME       =        0.203 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
 
 
 USER: Introduction to Optimization (CS/ISyE/ECE 524) G230906|0002AS-GEN
