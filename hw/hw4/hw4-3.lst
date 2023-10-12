@@ -1,114 +1,91 @@
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 17:58:32 Page 1
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 1
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
 
-   1  set node Locations / MSN, ORD, MSP, DTW, SFO, IAH, DCA, MCO /
-   2  hub(node)
-   3  destination(node) / SFO, IAH, DCA, MCO /
-   4  origin(node) / MSN /;
-   5  alias(node, i, j);
+   1  set node Airports / MSN, ORD, MSP, DTW, SFO, IAH, DCA, MCO /
+   2  destination(node) Destination Airports / SFO, IAH, DCA, MCO /
+   3  origin(node) Origin Airport / MSN /
+   4  hub(node) Hub Airports / ORD, MSP, DTW /;
+   5  alias(node, i, j, k);
    6   
    7  parameter
-   8  supply(node) / MSN 12, ORD 0, MSP 0, DTW 0, SFO -3, IAH -3, DCA -3, MCO -3 /
-   9  delay(node);
-  10   
-  11  delay('ORD') = uniform(0, 180);
-  12  delay('MSP') = uniform(0, 120);
-  13  delay('DTW') = uniform(0, 90);
+   8  supply(node) Supply at node / MSN 12, ORD 0, MSP 0, DTW 0, SFO -3, IAH -3, DCA -3, MCO -3 /,
+   9   
+  10  flight_time(node, node) Flight Times / MSN.ORD 22, MSN.DTW 65, MSN.MSP 46,
+  11  MSP.SFO 213, MSP.IAH 139, MSP.DCA 125, MSP.MCO 176,
+  12  ORD.SFO 247, ORD.IAH 124, ORD.DCA 82, ORD.MCO 135,
+  13  DTW.SFO 280, DTW.IAH 147, DTW.DCA 53, DTW.MCO 130 /,
   14   
-  15  table
-  16  flight_time(node, node)
-  17       MSN    SFO     IAH     DCA     MCO
-  18  MSP  46     213     139     125     176
-  19  ORD  22     247     124      82     135
-  20  DTW  65     280     147      53     130
-  21  ;
+  15  delay(node) Delay;
+  16   
+  17  delay('ORD') = 180;
+  18  delay('MSP') = 120;
+  19  delay('DTW') = 90;
+  20   
+  21  set arc(node, node) Arcs;
   22   
-  23  set arc(node, node);
-  24   
-  25  positive variable
-  26  flow(node, node);
-  27   
-  28  variable
-  29  time;
+  23  positive variable
+  24  flow(node, node) Flow;
+  25   
+  26  variable
+  27  time;
+  28   
+  29  equations obj, balance(node);
   30   
-  31  equations obj, balance;
-  32   
+  31  obj..
+  32  time =e= sum(arc(i, j), (flight_time(arc) + delay(i))*flow(arc));
   33   
-  34  obj..
-  35  time =e= sum(arc(i, j), flight_time(arc) + delay(i)*flow(arc));
+  34  balance(i)..
+  35  sum(arc(i, j), flow(arc)) - sum(arc(k, i), flow(arc)) =e= supply(i);
   36   
-  37  balance(i)..
-  38  sum(arc(i, j), flow(arc)) - sum(arc(j, i), flow(arc)) =e= supply(i);
-  39   
-  40  model flights / all /;
-  41   
-  42  parameter times(*);
-  43   
-  44  hub('ORD') = yes;
-  45  arc(i, j) = no;
-  46  arc(i, j)$(origin(i) and hub(j)) = yes;
-  47  arc(i, j)$(hub(i) and destination(j)) = yes;
-  48   
-  49  solve flights using lp minimize time;
-  50  times('United') = time.l;
-  51   
-  52  hub(node) = no;
-  53  hub('MSP') = yes;
-  54  arc(i, j) = no;
-  55  arc(i, j)$(origin(i) and hub(j)) = yes;
-  56  arc(i, j)$(hub(i) and destination(j)) = yes;
-  57   
-  58  solve flights using lp minimize time;
-  59  times('Delta_MSP') = time.l;
-  60   
-  61  hub(node) = no;
-  62  hub('DTW') = yes;
-  63  arc(i, j) = no;
-  64  arc(i, j)$(origin(i) and hub(j)) = yes;
-  65  arc(i, j)$(hub(i) and destination(j)) = yes;
-  66   
-  67  solve flights using lp minimize time;
-  68  times('Delta_DTW') = time.l;
-  69   
-  70  hub(node) = no;
-  71  hub('MSP') = yes;
-  72  hub('DTW') = yes;
-  73  arc(i, j) = no;
-  74  arc(i, j)$(origin(i) and hub(j)) = yes;
-  75  arc(i, j)$(hub(i) and destination(j)) = yes;
-  76   
-  77  solve flights using lp minimize time;
-  78  times('Delta_All') = time.l;
-  79   
-  80  hub(node) = no;
-  81  hub('ORD') = yes;
-  82  hub('MSP') = yes;
-  83  hub('DTW') = yes;
-  84  arc(i, j) = no;
-  85  arc(i, j)$(origin(i) and hub(j)) = yes;
-  86  arc(i, j)$(hub(i) and destination(j)) = yes;
-  87   
-  88   
-  89  display arc, flight_time;
-  90   
-  91  solve flights using lp minimize time;
-  92  times('All') = time.l;
-  93   
-  94  display times;
-  95   
+  37  model flights / all /;
+  38  set A Airlines / United, Delta_MSP, Delta_DTW, Delta_All, All /;
+  39  parameter times(*);
+  40   
+  41  loop(A,
+  42      hub(node) = no;
+  43      arc(i, j) = no;
+  44   
+  45      if(ord(A) = 1,
+  46          hub('ORD') = yes;);
+  47      if(ord(A) = 2,
+  48          hub('MSP') = yes;);
+  49      if(ord(A) = 3,
+  50          hub('DTW') = yes;);
+  51      if(ord(A) = 4,
+  52          hub('DTW') = yes;
+  53          hub('MSP') = yes;);
+  54      if(ord(A) = 5,
+  55          hub('DTW') = yes;
+  56          hub('MSP') = yes;
+  57          hub('ORD') = yes;);
+  58      arc(i, j)$(origin(i) and hub(j)) = yes;
+  59      arc(i, j)$(hub(i) and destination(j)) = yes;
+  60      solve flights using lp minimize time;
+  61      times(A) = time.l;
+  62  );
+  63  display times, flow.l;
+  64   
+      Question 4.1:
+      Professor Wright should switch to Delta because the flights using United takes 
+       
+       
+       
+       
+       
+       
 
 
 COMPILATION TIME     =        0.000 SECONDS      3 MB  44.3.0 8b8fb1cb WEX-WEI
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 17:58:32 Page 2
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 2
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Equation Listing    SOLVE flights Using LP From line 49
+Equation Listing    SOLVE flights Using LP From line 60
 
 
 ---- obj  =E=  
 
-obj..  - 30.91448376*flow(ORD,SFO) - 30.91448376*flow(ORD,IAH) - 30.91448376*flow(ORD,DCA) - 30.91448376*flow(ORD,MCO) + time =E= 588 ; (LHS = 0, INFES = 588 ****)
+obj..  - 22*flow(MSN,ORD) - 427*flow(ORD,SFO) - 304*flow(ORD,IAH) - 262*flow(ORD,DCA) - 315*flow(ORD,MCO) + time =E= 0 ; (LHS = 0)
      
 
 ---- balance  =E=  
@@ -121,27 +98,28 @@ balance(SFO)..  - flow(ORD,SFO) =E= -3 ; (LHS = 0, INFES = 3 ****)
      
 REMAINING 3 ENTRIES SKIPPED
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 17:58:32 Page 3
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 3
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Column Listing      SOLVE flights Using LP From line 49
+Column Listing      SOLVE flights Using LP From line 60
 
 
----- flow  
+---- flow  Flow
 
 flow(MSN,ORD)
                 (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+      -22       obj
         1       balance(MSN)
        -1       balance(ORD)
 
 flow(ORD,SFO)
                 (.LO, .L, .UP, .M = 0, 0, +INF, 0)
-      -30.9145  obj
+     -427       obj
         1       balance(ORD)
        -1       balance(SFO)
 
 flow(ORD,IAH)
                 (.LO, .L, .UP, .M = 0, 0, +INF, 0)
-      -30.9145  obj
+     -304       obj
         1       balance(ORD)
        -1       balance(IAH)
 
@@ -153,44 +131,49 @@ time
                 (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
         1       obj
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 17:58:32 Page 4
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 4
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Range Statistics    SOLVE flights Using LP From line 49
+Range Statistics    SOLVE flights Using LP From line 60
 
 
 RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
 
-RHS       [min, max] : [ 3.000E+00, 5.880E+02] - Zero values observed as well
+RHS       [min, max] : [ 3.000E+00, 1.200E+01] - Zero values observed as well
 Bound     [min, max] : [        NA,        NA] - Zero values observed as well
-Matrix    [min, max] : [ 1.000E+00, 3.091E+01]
+Matrix    [min, max] : [ 1.000E+00, 4.270E+02]
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 17:58:32 Page 5
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 5
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Model Statistics    SOLVE flights Using LP From line 49
+Model Statistics    SOLVE flights Using LP From line 60
+
+
+LOOPS                                    A   United
 
 
 MODEL STATISTICS
 
 BLOCKS OF EQUATIONS           2     SINGLE EQUATIONS            7
 BLOCKS OF VARIABLES           2     SINGLE VARIABLES            6
-NON ZERO ELEMENTS            15
+NON ZERO ELEMENTS            16
 
 
-GENERATION TIME      =        0.016 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 17:58:32 Page 6
+GENERATION TIME      =        0.015 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+               L O O P S                  A United
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 6
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Solution Report     SOLVE flights Using LP From line 49
+Solution Report     SOLVE flights Using LP From line 60
 
 
                S O L V E      S U M M A R Y
 
      MODEL   flights             OBJECTIVE  time
      TYPE    LP                  DIRECTION  MINIMIZE
-     SOLVER  CPLEX               FROM LINE  49
+     SOLVER  CPLEX               FROM LINE  60
 
 **** SOLVER STATUS     1 Normal Completion
 **** MODEL STATUS      1 Optimal
-**** OBJECTIVE VALUE              958.9738
+**** OBJECTIVE VALUE             4188.0000
 
  RESOURCE USAGE, LIMIT          0.000 10000000000.000
  ITERATION COUNT, LIMIT         0    2147483647
@@ -207,25 +190,25 @@ Solution Report     SOLVE flights Using LP From line 49
 
 
 Optimal solution found
-Objective:          958.973805
+Objective:         4188.000000
 
 
                            LOWER          LEVEL          UPPER         MARGINAL
 
----- EQU obj              588.0000       588.0000       588.0000         1.0000      
+---- EQU obj                 .              .              .             1.0000      
 
 ---- EQU balance  
 
            LOWER          LEVEL          UPPER         MARGINAL
 
-MSN        12.0000        12.0000        12.0000         EPS         
+MSN        12.0000        12.0000        12.0000        22.0000      
 ORD          .              .              .              .          
-SFO        -3.0000        -3.0000        -3.0000       -30.9145      
-IAH        -3.0000        -3.0000        -3.0000       -30.9145      
-DCA        -3.0000        -3.0000        -3.0000       -30.9145      
-MCO        -3.0000        -3.0000        -3.0000       -30.9145      
+SFO        -3.0000        -3.0000        -3.0000      -427.0000      
+IAH        -3.0000        -3.0000        -3.0000      -304.0000      
+DCA        -3.0000        -3.0000        -3.0000      -262.0000      
+MCO        -3.0000        -3.0000        -3.0000      -315.0000      
 
----- VAR flow  
+---- VAR flow  Flow
 
                LOWER          LEVEL          UPPER         MARGINAL
 
@@ -237,20 +220,20 @@ ORD.MCO          .             3.0000        +INF             .
 
                            LOWER          LEVEL          UPPER         MARGINAL
 
----- VAR time              -INF          958.9738        +INF             .          
+---- VAR time              -INF         4188.0000        +INF             .          
 
 
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 17:58:32 Page 7
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 7
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Equation Listing    SOLVE flights Using LP From line 58
+Equation Listing    SOLVE flights Using LP From line 60
 
 
 ---- obj  =E=  
 
-obj..  - 101.19200496*flow(MSP,SFO) - 101.19200496*flow(MSP,IAH) - 101.19200496*flow(MSP,DCA) - 101.19200496*flow(MSP,MCO) + time =E= 653 ; (LHS = 958.97380512, INFES = 305.97380512 ****)
+obj..  - 46*flow(MSN,MSP) - 333*flow(MSP,SFO) - 259*flow(MSP,IAH) - 245*flow(MSP,DCA) - 296*flow(MSP,MCO) + time =E= 0 ; (LHS = 4188, INFES = 4188 ****)
      
 
 ---- balance  =E=  
@@ -263,27 +246,28 @@ balance(SFO)..  - flow(MSP,SFO) =E= -3 ; (LHS = 0, INFES = 3 ****)
      
 REMAINING 3 ENTRIES SKIPPED
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 17:58:32 Page 8
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 8
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Column Listing      SOLVE flights Using LP From line 58
+Column Listing      SOLVE flights Using LP From line 60
 
 
----- flow  
+---- flow  Flow
 
 flow(MSN,MSP)
                 (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+      -46       obj
         1       balance(MSN)
        -1       balance(MSP)
 
 flow(MSP,SFO)
                 (.LO, .L, .UP, .M = 0, 0, +INF, 0)
-     -101.192   obj
+     -333       obj
         1       balance(MSP)
        -1       balance(SFO)
 
 flow(MSP,IAH)
                 (.LO, .L, .UP, .M = 0, 0, +INF, 0)
-     -101.192   obj
+     -259       obj
         1       balance(MSP)
        -1       balance(IAH)
 
@@ -292,47 +276,52 @@ REMAINING 2 ENTRIES SKIPPED
 ---- time  
 
 time
-                (.LO, .L, .UP, .M = -INF, 958.97380512, +INF, 0)
+                (.LO, .L, .UP, .M = -INF, 4188, +INF, 0)
         1       obj
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 17:58:32 Page 9
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 9
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Range Statistics    SOLVE flights Using LP From line 58
+Range Statistics    SOLVE flights Using LP From line 60
 
 
 RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
 
-RHS       [min, max] : [ 3.000E+00, 6.530E+02] - Zero values observed as well
+RHS       [min, max] : [ 3.000E+00, 1.200E+01] - Zero values observed as well
 Bound     [min, max] : [        NA,        NA] - Zero values observed as well
-Matrix    [min, max] : [ 1.000E+00, 1.012E+02]
+Matrix    [min, max] : [ 1.000E+00, 3.330E+02]
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 17:58:32 Page 10
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 10
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Model Statistics    SOLVE flights Using LP From line 58
+Model Statistics    SOLVE flights Using LP From line 60
+
+
+LOOPS                                    A   Delta_MSP
 
 
 MODEL STATISTICS
 
 BLOCKS OF EQUATIONS           2     SINGLE EQUATIONS            7
 BLOCKS OF VARIABLES           2     SINGLE VARIABLES            6
-NON ZERO ELEMENTS            15
+NON ZERO ELEMENTS            16
 
 
-GENERATION TIME      =        0.000 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 17:58:32 Page 11
+GENERATION TIME      =        0.015 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+               L O O P S                  A Delta_MSP
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 11
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Solution Report     SOLVE flights Using LP From line 58
+Solution Report     SOLVE flights Using LP From line 60
 
 
                S O L V E      S U M M A R Y
 
      MODEL   flights             OBJECTIVE  time
      TYPE    LP                  DIRECTION  MINIMIZE
-     SOLVER  CPLEX               FROM LINE  58
+     SOLVER  CPLEX               FROM LINE  60
 
 **** SOLVER STATUS     1 Normal Completion
 **** MODEL STATUS      1 Optimal
-**** OBJECTIVE VALUE             1867.3041
+**** OBJECTIVE VALUE             3951.0000
 
  RESOURCE USAGE, LIMIT          0.000 10000000000.000
  ITERATION COUNT, LIMIT         0    2147483647
@@ -349,25 +338,25 @@ Solution Report     SOLVE flights Using LP From line 58
 
 
 Optimal solution found
-Objective:         1867.304060
+Objective:         3951.000000
 
 
                            LOWER          LEVEL          UPPER         MARGINAL
 
----- EQU obj              653.0000       653.0000       653.0000         1.0000      
+---- EQU obj                 .              .              .             1.0000      
 
 ---- EQU balance  
 
            LOWER          LEVEL          UPPER         MARGINAL
 
-MSN        12.0000        12.0000        12.0000         EPS         
+MSN        12.0000        12.0000        12.0000        46.0000      
 MSP          .              .              .              .          
-SFO        -3.0000        -3.0000        -3.0000      -101.1920      
-IAH        -3.0000        -3.0000        -3.0000      -101.1920      
-DCA        -3.0000        -3.0000        -3.0000      -101.1920      
-MCO        -3.0000        -3.0000        -3.0000      -101.1920      
+SFO        -3.0000        -3.0000        -3.0000      -333.0000      
+IAH        -3.0000        -3.0000        -3.0000      -259.0000      
+DCA        -3.0000        -3.0000        -3.0000      -245.0000      
+MCO        -3.0000        -3.0000        -3.0000      -296.0000      
 
----- VAR flow  
+---- VAR flow  Flow
 
                LOWER          LEVEL          UPPER         MARGINAL
 
@@ -379,20 +368,20 @@ MSP.MCO          .             3.0000        +INF             .
 
                            LOWER          LEVEL          UPPER         MARGINAL
 
----- VAR time              -INF         1867.3041        +INF             .          
+---- VAR time              -INF         3951.0000        +INF             .          
 
 
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 17:58:32 Page 12
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 12
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Equation Listing    SOLVE flights Using LP From line 67
+Equation Listing    SOLVE flights Using LP From line 60
 
 
 ---- obj  =E=  
 
-obj..  - 49.53378204*flow(DTW,SFO) - 49.53378204*flow(DTW,IAH) - 49.53378204*flow(DTW,DCA) - 49.53378204*flow(DTW,MCO) + time =E= 610 ; (LHS = 1867.30405952, INFES = 1257.30405952 ****)
+obj..  - 65*flow(MSN,DTW) - 370*flow(DTW,SFO) - 237*flow(DTW,IAH) - 143*flow(DTW,DCA) - 220*flow(DTW,MCO) + time =E= 0 ; (LHS = 3951, INFES = 3951 ****)
      
 
 ---- balance  =E=  
@@ -405,27 +394,28 @@ balance(SFO)..  - flow(DTW,SFO) =E= -3 ; (LHS = 0, INFES = 3 ****)
      
 REMAINING 3 ENTRIES SKIPPED
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 17:58:32 Page 13
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 13
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Column Listing      SOLVE flights Using LP From line 67
+Column Listing      SOLVE flights Using LP From line 60
 
 
----- flow  
+---- flow  Flow
 
 flow(MSN,DTW)
                 (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+      -65       obj
         1       balance(MSN)
        -1       balance(DTW)
 
 flow(DTW,SFO)
                 (.LO, .L, .UP, .M = 0, 0, +INF, 0)
-      -49.5338  obj
+     -370       obj
         1       balance(DTW)
        -1       balance(SFO)
 
 flow(DTW,IAH)
                 (.LO, .L, .UP, .M = 0, 0, +INF, 0)
-      -49.5338  obj
+     -237       obj
         1       balance(DTW)
        -1       balance(IAH)
 
@@ -434,47 +424,52 @@ REMAINING 2 ENTRIES SKIPPED
 ---- time  
 
 time
-                (.LO, .L, .UP, .M = -INF, 1867.30405952, +INF, 0)
+                (.LO, .L, .UP, .M = -INF, 3951, +INF, 0)
         1       obj
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 17:58:32 Page 14
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 14
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Range Statistics    SOLVE flights Using LP From line 67
+Range Statistics    SOLVE flights Using LP From line 60
 
 
 RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
 
-RHS       [min, max] : [ 3.000E+00, 6.100E+02] - Zero values observed as well
+RHS       [min, max] : [ 3.000E+00, 1.200E+01] - Zero values observed as well
 Bound     [min, max] : [        NA,        NA] - Zero values observed as well
-Matrix    [min, max] : [ 1.000E+00, 4.953E+01]
+Matrix    [min, max] : [ 1.000E+00, 3.700E+02]
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 17:58:32 Page 15
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 15
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Model Statistics    SOLVE flights Using LP From line 67
+Model Statistics    SOLVE flights Using LP From line 60
+
+
+LOOPS                                    A   Delta_DTW
 
 
 MODEL STATISTICS
 
 BLOCKS OF EQUATIONS           2     SINGLE EQUATIONS            7
 BLOCKS OF VARIABLES           2     SINGLE VARIABLES            6
-NON ZERO ELEMENTS            15
+NON ZERO ELEMENTS            16
 
 
 GENERATION TIME      =        0.000 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 17:58:32 Page 16
+               L O O P S                  A Delta_DTW
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 16
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Solution Report     SOLVE flights Using LP From line 67
+Solution Report     SOLVE flights Using LP From line 60
 
 
                S O L V E      S U M M A R Y
 
      MODEL   flights             OBJECTIVE  time
      TYPE    LP                  DIRECTION  MINIMIZE
-     SOLVER  CPLEX               FROM LINE  67
+     SOLVER  CPLEX               FROM LINE  60
 
 **** SOLVER STATUS     1 Normal Completion
 **** MODEL STATUS      1 Optimal
-**** OBJECTIVE VALUE             1204.4054
+**** OBJECTIVE VALUE             3690.0000
 
  RESOURCE USAGE, LIMIT          0.000 10000000000.000
  ITERATION COUNT, LIMIT         0    2147483647
@@ -491,25 +486,25 @@ Solution Report     SOLVE flights Using LP From line 67
 
 
 Optimal solution found
-Objective:         1204.405384
+Objective:         3690.000000
 
 
                            LOWER          LEVEL          UPPER         MARGINAL
 
----- EQU obj              610.0000       610.0000       610.0000         1.0000      
+---- EQU obj                 .              .              .             1.0000      
 
 ---- EQU balance  
 
            LOWER          LEVEL          UPPER         MARGINAL
 
-MSN        12.0000        12.0000        12.0000         EPS         
+MSN        12.0000        12.0000        12.0000        65.0000      
 DTW          .              .              .              .          
-SFO        -3.0000        -3.0000        -3.0000       -49.5338      
-IAH        -3.0000        -3.0000        -3.0000       -49.5338      
-DCA        -3.0000        -3.0000        -3.0000       -49.5338      
-MCO        -3.0000        -3.0000        -3.0000       -49.5338      
+SFO        -3.0000        -3.0000        -3.0000      -370.0000      
+IAH        -3.0000        -3.0000        -3.0000      -237.0000      
+DCA        -3.0000        -3.0000        -3.0000      -143.0000      
+MCO        -3.0000        -3.0000        -3.0000      -220.0000      
 
----- VAR flow  
+---- VAR flow  Flow
 
                LOWER          LEVEL          UPPER         MARGINAL
 
@@ -521,20 +516,20 @@ DTW.MCO          .             3.0000        +INF             .
 
                            LOWER          LEVEL          UPPER         MARGINAL
 
----- VAR time              -INF         1204.4054        +INF             .          
+---- VAR time              -INF         3690.0000        +INF             .          
 
 
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 17:58:32 Page 17
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 17
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Equation Listing    SOLVE flights Using LP From line 77
+Equation Listing    SOLVE flights Using LP From line 60
 
 
 ---- obj  =E=  
 
-obj..  - 101.19200496*flow(MSP,SFO) - 101.19200496*flow(MSP,IAH) - 101.19200496*flow(MSP,DCA) - 101.19200496*flow(MSP,MCO) - 49.53378204*flow(DTW,SFO) - 49.53378204*flow(DTW,IAH) - 49.53378204*flow(DTW,DCA) - 49.53378204*flow(DTW,MCO) + time =E= 1263 ; (LHS = -604.30405952, INFES = 1867.30405952 ****)
+obj..  - 46*flow(MSN,MSP) - 65*flow(MSN,DTW) - 333*flow(MSP,SFO) - 259*flow(MSP,IAH) - 245*flow(MSP,DCA) - 296*flow(MSP,MCO) - 370*flow(DTW,SFO) - 237*flow(DTW,IAH) - 143*flow(DTW,DCA) - 220*flow(DTW,MCO) + time =E= 0 ; (LHS = -3951, INFES = 3951 ****)
      
 
 ---- balance  =E=  
@@ -547,26 +542,28 @@ balance(DTW)..  - flow(MSN,DTW) + flow(DTW,SFO) + flow(DTW,IAH) + flow(DTW,DCA) 
      
 REMAINING 4 ENTRIES SKIPPED
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 17:58:32 Page 18
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 18
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Column Listing      SOLVE flights Using LP From line 77
+Column Listing      SOLVE flights Using LP From line 60
 
 
----- flow  
+---- flow  Flow
 
 flow(MSN,MSP)
                 (.LO, .L, .UP, .M = 0, 12, +INF, 0)
+      -46       obj
         1       balance(MSN)
        -1       balance(MSP)
 
 flow(MSN,DTW)
                 (.LO, .L, .UP, .M = 0, 12, +INF, 0)
+      -65       obj
         1       balance(MSN)
        -1       balance(DTW)
 
 flow(MSP,SFO)
                 (.LO, .L, .UP, .M = 0, 3, +INF, 0)
-     -101.192   obj
+     -333       obj
         1       balance(MSP)
        -1       balance(SFO)
 
@@ -575,47 +572,52 @@ REMAINING 7 ENTRIES SKIPPED
 ---- time  
 
 time
-                (.LO, .L, .UP, .M = -INF, 1204.40538448, +INF, 0)
+                (.LO, .L, .UP, .M = -INF, 3690, +INF, 0)
         1       obj
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 17:58:32 Page 19
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 19
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Range Statistics    SOLVE flights Using LP From line 77
+Range Statistics    SOLVE flights Using LP From line 60
 
 
 RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
 
-RHS       [min, max] : [ 3.000E+00, 1.263E+03] - Zero values observed as well
+RHS       [min, max] : [ 3.000E+00, 1.200E+01] - Zero values observed as well
 Bound     [min, max] : [        NA,        NA] - Zero values observed as well
-Matrix    [min, max] : [ 1.000E+00, 1.012E+02]
+Matrix    [min, max] : [ 1.000E+00, 3.700E+02]
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 17:58:32 Page 20
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 20
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Model Statistics    SOLVE flights Using LP From line 77
+Model Statistics    SOLVE flights Using LP From line 60
+
+
+LOOPS                                    A   Delta_All
 
 
 MODEL STATISTICS
 
 BLOCKS OF EQUATIONS           2     SINGLE EQUATIONS            8
 BLOCKS OF VARIABLES           2     SINGLE VARIABLES           11
-NON ZERO ELEMENTS            29
+NON ZERO ELEMENTS            31
 
 
 GENERATION TIME      =        0.000 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 17:58:32 Page 21
+               L O O P S                  A Delta_All
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 21
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Solution Report     SOLVE flights Using LP From line 77
+Solution Report     SOLVE flights Using LP From line 60
 
 
                S O L V E      S U M M A R Y
 
      MODEL   flights             OBJECTIVE  time
      TYPE    LP                  DIRECTION  MINIMIZE
-     SOLVER  CPLEX               FROM LINE  77
+     SOLVER  CPLEX               FROM LINE  60
 
 **** SOLVER STATUS     1 Normal Completion
 **** MODEL STATUS      1 Optimal
-**** OBJECTIVE VALUE             1857.4054
+**** OBJECTIVE VALUE             3522.0000
 
  RESOURCE USAGE, LIMIT          0.000 10000000000.000
  ITERATION COUNT, LIMIT         0    2147483647
@@ -632,79 +634,56 @@ Solution Report     SOLVE flights Using LP From line 77
 
 
 Optimal solution found
-Objective:         1857.405384
+Objective:         3522.000000
 
 
                            LOWER          LEVEL          UPPER         MARGINAL
 
----- EQU obj             1263.0000      1263.0000      1263.0000         1.0000      
+---- EQU obj                 .              .              .             1.0000      
 
 ---- EQU balance  
 
            LOWER          LEVEL          UPPER         MARGINAL
 
-MSN        12.0000        12.0000        12.0000         EPS         
-MSP          .              .              .             EPS         
+MSN        12.0000        12.0000        12.0000        65.0000      
+MSP          .              .              .            19.0000      
 DTW          .              .              .              .          
-SFO        -3.0000        -3.0000        -3.0000       -49.5338      
-IAH        -3.0000        -3.0000        -3.0000       -49.5338      
-DCA        -3.0000        -3.0000        -3.0000       -49.5338      
-MCO        -3.0000        -3.0000        -3.0000       -49.5338      
+SFO        -3.0000        -3.0000        -3.0000      -314.0000      
+IAH        -3.0000        -3.0000        -3.0000      -237.0000      
+DCA        -3.0000        -3.0000        -3.0000      -143.0000      
+MCO        -3.0000        -3.0000        -3.0000      -220.0000      
 
----- VAR flow  
+---- VAR flow  Flow
 
                LOWER          LEVEL          UPPER         MARGINAL
 
-MSN.MSP          .              .            +INF             .          
-MSN.DTW          .            12.0000        +INF             .          
-MSP.SFO          .              .            +INF           51.6582      
-MSP.IAH          .              .            +INF           51.6582      
-MSP.DCA          .              .            +INF           51.6582      
-MSP.MCO          .              .            +INF           51.6582      
-DTW.SFO          .             3.0000        +INF             .          
+MSN.MSP          .             3.0000        +INF             .          
+MSN.DTW          .             9.0000        +INF             .          
+MSP.SFO          .             3.0000        +INF             .          
+MSP.IAH          .              .            +INF            3.0000      
+MSP.DCA          .              .            +INF           83.0000      
+MSP.MCO          .              .            +INF           57.0000      
+DTW.SFO          .              .            +INF           56.0000      
 DTW.IAH          .             3.0000        +INF             .          
 DTW.DCA          .             3.0000        +INF             .          
 DTW.MCO          .             3.0000        +INF             .          
 
                            LOWER          LEVEL          UPPER         MARGINAL
 
----- VAR time              -INF         1857.4054        +INF             .          
+---- VAR time              -INF         3522.0000        +INF             .          
 
 
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 17:58:32 Page 22
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 22
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-E x e c u t i o n
-
-
-----     89 SET arc  
-
-            ORD         MSP         DTW         SFO         IAH         DCA         MCO
-
-MSN         YES         YES         YES
-ORD                                             YES         YES         YES         YES
-MSP                                             YES         YES         YES         YES
-DTW                                             YES         YES         YES         YES
-
-
-----     89 PARAMETER flight_time  
-
-            MSN         SFO         IAH         DCA         MCO
-
-ORD      22.000     247.000     124.000      82.000     135.000
-MSP      46.000     213.000     139.000     125.000     176.000
-DTW      65.000     280.000     147.000      53.000     130.000
-
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 17:58:32 Page 23
-G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Equation Listing    SOLVE flights Using LP From line 91
+Equation Listing    SOLVE flights Using LP From line 60
 
 
 ---- obj  =E=  
 
-obj..  - 30.91448376*flow(ORD,SFO) - 30.91448376*flow(ORD,IAH) - 30.91448376*flow(ORD,DCA) - 30.91448376*flow(ORD,MCO) - 101.19200496*flow(MSP,SFO) - 101.19200496*flow(MSP,IAH) - 101.19200496*flow(MSP,DCA) - 101.19200496*flow(MSP,MCO) - 49.53378204*flow(DTW,SFO) - 49.53378204*flow(DTW,IAH) - 49.53378204*flow(DTW,DCA) - 49.53378204*flow(DTW,MCO) + time =E= 1851 ; (LHS = 892.02619488, INFES = 958.97380512 ****)
+obj..  - 22*flow(MSN,ORD) - 46*flow(MSN,MSP) - 65*flow(MSN,DTW) - 427*flow(ORD,SFO) - 304*flow(ORD,IAH) - 262*flow(ORD,DCA) - 315*flow(ORD,MCO) - 333*flow(MSP,SFO) - 259*flow(MSP,IAH) - 245*flow(MSP,DCA) - 296*flow(MSP,MCO) - 370*flow(DTW,SFO) - 237*flow(DTW,IAH) - 143*flow(DTW,DCA) - 220*flow(DTW,MCO) + time =E= 0 ; (LHS = -4188, INFES = 4188 ****)
      
 
 ---- balance  =E=  
@@ -717,25 +696,28 @@ balance(MSP)..  - flow(MSN,MSP) + flow(MSP,SFO) + flow(MSP,IAH) + flow(MSP,DCA) 
      
 REMAINING 5 ENTRIES SKIPPED
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 17:58:32 Page 24
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 23
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Column Listing      SOLVE flights Using LP From line 91
+Column Listing      SOLVE flights Using LP From line 60
 
 
----- flow  
+---- flow  Flow
 
 flow(MSN,ORD)
                 (.LO, .L, .UP, .M = 0, 12, +INF, 0)
+      -22       obj
         1       balance(MSN)
        -1       balance(ORD)
 
 flow(MSN,MSP)
-                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+                (.LO, .L, .UP, .M = 0, 3, +INF, 0)
+      -46       obj
         1       balance(MSN)
        -1       balance(MSP)
 
 flow(MSN,DTW)
-                (.LO, .L, .UP, .M = 0, 12, +INF, 0)
+                (.LO, .L, .UP, .M = 0, 9, +INF, 0)
+      -65       obj
         1       balance(MSN)
        -1       balance(DTW)
 
@@ -744,49 +726,54 @@ REMAINING 12 ENTRIES SKIPPED
 ---- time  
 
 time
-                (.LO, .L, .UP, .M = -INF, 1857.40538448, +INF, 0)
+                (.LO, .L, .UP, .M = -INF, 3522, +INF, 0)
         1       obj
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 17:58:32 Page 25
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 24
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Range Statistics    SOLVE flights Using LP From line 91
+Range Statistics    SOLVE flights Using LP From line 60
 
 
 RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
 
-RHS       [min, max] : [ 3.000E+00, 1.851E+03] - Zero values observed as well
+RHS       [min, max] : [ 3.000E+00, 1.200E+01] - Zero values observed as well
 Bound     [min, max] : [        NA,        NA] - Zero values observed as well
-Matrix    [min, max] : [ 1.000E+00, 1.012E+02]
+Matrix    [min, max] : [ 1.000E+00, 4.270E+02]
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 17:58:32 Page 26
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 25
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Model Statistics    SOLVE flights Using LP From line 91
+Model Statistics    SOLVE flights Using LP From line 60
+
+
+LOOPS                                    A   All
 
 
 MODEL STATISTICS
 
 BLOCKS OF EQUATIONS           2     SINGLE EQUATIONS            9
 BLOCKS OF VARIABLES           2     SINGLE VARIABLES           16
-NON ZERO ELEMENTS            43
+NON ZERO ELEMENTS            46
 
 
-GENERATION TIME      =        0.000 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 17:58:32 Page 27
+GENERATION TIME      =        0.016 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+               L O O P S                  A All
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 26
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Solution Report     SOLVE flights Using LP From line 91
+Solution Report     SOLVE flights Using LP From line 60
 
 
                S O L V E      S U M M A R Y
 
      MODEL   flights             OBJECTIVE  time
      TYPE    LP                  DIRECTION  MINIMIZE
-     SOLVER  CPLEX               FROM LINE  91
+     SOLVER  CPLEX               FROM LINE  60
 
 **** SOLVER STATUS     1 Normal Completion
 **** MODEL STATUS      1 Optimal
-**** OBJECTIVE VALUE             2221.9738
+**** OBJECTIVE VALUE             3522.0000
 
- RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ RESOURCE USAGE, LIMIT          0.016 10000000000.000
  ITERATION COUNT, LIMIT         0    2147483647
 --- GAMS/CPLEX licensed for continuous and discrete problems.
 --- GMO setup time: 0.00s
@@ -797,70 +784,79 @@ Solution Report     SOLVE flights Using LP From line 91
 
 
 --- LP status (1): optimal.
---- Cplex Time: 0.00sec (det. 0.02 ticks)
+--- Cplex Time: 0.02sec (det. 0.02 ticks)
 
 
 Optimal solution found
-Objective:         2221.973805
+Objective:         3522.000000
 
 
                            LOWER          LEVEL          UPPER         MARGINAL
 
----- EQU obj             1851.0000      1851.0000      1851.0000         1.0000      
+---- EQU obj                 .              .              .             1.0000      
 
 ---- EQU balance  
 
            LOWER          LEVEL          UPPER         MARGINAL
 
 MSN        12.0000        12.0000        12.0000          .          
-ORD          .              .              .             EPS         
-MSP          .              .              .             EPS         
-DTW          .              .              .             EPS         
-SFO        -3.0000        -3.0000        -3.0000       -30.9145      
-IAH        -3.0000        -3.0000        -3.0000       -30.9145      
-DCA        -3.0000        -3.0000        -3.0000       -30.9145      
-MCO        -3.0000        -3.0000        -3.0000       -30.9145      
+ORD          .              .              .           -22.0000      
+MSP          .              .              .           -46.0000      
+DTW          .              .              .           -65.0000      
+SFO        -3.0000        -3.0000        -3.0000      -379.0000      
+IAH        -3.0000        -3.0000        -3.0000      -302.0000      
+DCA        -3.0000        -3.0000        -3.0000      -208.0000      
+MCO        -3.0000        -3.0000        -3.0000      -285.0000      
 
----- VAR flow  
+---- VAR flow  Flow
 
                LOWER          LEVEL          UPPER         MARGINAL
 
-MSN.ORD          .            12.0000        +INF             .          
-MSN.MSP          .              .            +INF             .          
-MSN.DTW          .              .            +INF             .          
-ORD.SFO          .             3.0000        +INF             .          
-ORD.IAH          .             3.0000        +INF             .          
-ORD.DCA          .             3.0000        +INF             .          
-ORD.MCO          .             3.0000        +INF             .          
-MSP.SFO          .              .            +INF           70.2775      
-MSP.IAH          .              .            +INF           70.2775      
-MSP.DCA          .              .            +INF           70.2775      
-MSP.MCO          .              .            +INF           70.2775      
-DTW.SFO          .              .            +INF           18.6193      
-DTW.IAH          .              .            +INF           18.6193      
-DTW.DCA          .              .            +INF           18.6193      
-DTW.MCO          .              .            +INF           18.6193      
+MSN.ORD          .              .            +INF             .          
+MSN.MSP          .             3.0000        +INF             .          
+MSN.DTW          .             9.0000        +INF             .          
+ORD.SFO          .              .            +INF           70.0000      
+ORD.IAH          .              .            +INF           24.0000      
+ORD.DCA          .              .            +INF           76.0000      
+ORD.MCO          .              .            +INF           52.0000      
+MSP.SFO          .             3.0000        +INF             .          
+MSP.IAH          .              .            +INF            3.0000      
+MSP.DCA          .              .            +INF           83.0000      
+MSP.MCO          .              .            +INF           57.0000      
+DTW.SFO          .              .            +INF           56.0000      
+DTW.IAH          .             3.0000        +INF             .          
+DTW.DCA          .             3.0000        +INF             .          
+DTW.MCO          .             3.0000        +INF             .          
 
                            LOWER          LEVEL          UPPER         MARGINAL
 
----- VAR time              -INF         2221.9738        +INF             .          
+---- VAR time              -INF         3522.0000        +INF             .          
 
 
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 17:58:32 Page 28
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 27
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 E x e c u t i o n
 
 
-----     94 PARAMETER times  
+----     63 PARAMETER times  
 
-United     958.974,    Delta_MSP 1867.304,    Delta_DTW 1204.405,    Delta_All 1857.405,    All       2221.974
+United    4188.000,    Delta_MSP 3951.000,    Delta_DTW 3690.000,    Delta_All 3522.000,    All       3522.000
+
+
+----     63 VARIABLE flow.L  Flow
+
+            MSP         DTW         SFO         IAH         DCA         MCO
+
+MSN       3.000       9.000
+MSP                               3.000
+DTW                                           3.000       3.000       3.000
 
 
 
-EXECUTION TIME       =        0.344 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+EXECUTION TIME       =        0.390 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
 
 
 USER: Introduction to Optimization (CS/ISyE/ECE 524) G230906|0002AS-GEN

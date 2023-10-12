@@ -1,4 +1,4 @@
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/10/23 17:48:31 Page 1
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 14:25:02 Page 1
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
@@ -55,19 +55,19 @@ C o m p i l a t i o n
   50  set
   51  not_min_distance(node, node),
   52  test(node, node),
-  53  extra_brooms(node),
-  54  not_from_closest(P);
-  55   
-  56  parameter min_distance(node);
+  53  extra_brooms(node);
+  54   
+  55  parameter min_distance(node);
+  56   
   57   
-  58   
-  59  min_distance(i) = smin(j$arc(i,j), d(i, j));
-  60  not_min_distance(i, j)$(arc(i,j) and d(i, j) ne min_distance(i)) = yes;
-  61   
-  62  extra_brooms(i) = yes$(sum(j$not_min_distance(j, i), flow.L(j, i) > 0));
-  63   
-  64  option not_from_closest:0:0:1;
-  65  display extra_brooms, flow.l, not_min_distance;
+  58  min_distance(i) = smin(j$arc(i,j), d(i, j));
+  59  not_min_distance(i, j)$(arc(i,j) and d(i, j) ne min_distance(i)) = yes;
+  60   
+  61  extra_brooms(i) = yes$(sum(j$not_min_distance(j, i), flow.L(j, i) > 0));
+  62   
+  63  option extra_brooms:0:0:1;
+  64  display extra_brooms, flow.l, not_min_distance, min_distance;
+  65   
   66   
   67   
   68   
@@ -89,11 +89,10 @@ C o m p i l a t i o n
   84   
   85   
   86   
-  87   
 
 
-COMPILATION TIME     =        0.015 SECONDS      3 MB  44.3.0 8b8fb1cb WEX-WEI
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/10/23 17:48:31 Page 2
+COMPILATION TIME     =        0.000 SECONDS      3 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 14:25:02 Page 2
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 E x e c u t i o n
 
@@ -113,7 +112,7 @@ E x e c u t i o n
 9          YES         YES         YES         YES         YES         YES         YES         YES                     YES
 10         YES         YES         YES         YES         YES         YES         YES         YES         YES
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/10/23 17:48:31 Page 3
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 14:25:02 Page 3
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Equation Listing    SOLVE brooms Using LP From line 44
 
@@ -144,7 +143,7 @@ restrict(3)..  flow(1,3) + flow(2,3) + flow(4,3) + flow(5,3) + flow(6,3) + flow(
      
 REMAINING 7 ENTRIES SKIPPED
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/10/23 17:48:31 Page 4
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 14:25:02 Page 4
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Column Listing      SOLVE brooms Using LP From line 44
 
@@ -180,7 +179,7 @@ cost
                 (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
         1       obj
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/10/23 17:48:31 Page 5
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 14:25:02 Page 5
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Range Statistics    SOLVE brooms Using LP From line 44
 
@@ -191,7 +190,7 @@ RHS       [min, max] : [ 1.000E+00, 1.500E+01] - Zero values observed as well
 Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 Matrix    [min, max] : [ 1.000E+00, 2.070E+01]
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/10/23 17:48:31 Page 6
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 14:25:02 Page 6
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Model Statistics    SOLVE brooms Using LP From line 44
 
@@ -203,8 +202,8 @@ BLOCKS OF VARIABLES           2     SINGLE VARIABLES           91
 NON ZERO ELEMENTS           361
 
 
-GENERATION TIME      =        0.031 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/10/23 17:48:31 Page 7
+GENERATION TIME      =        0.016 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 14:25:02 Page 7
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Solution Report     SOLVE brooms Using LP From line 44
 
@@ -374,19 +373,21 @@ Objective:          117.414628
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/10/23 17:48:31 Page 8
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 14:25:02 Page 8
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 E x e c u t i o n
 
 
 ----     48 PARAMETER transportCost        =      117.415  
 
-----     65 SET extra_brooms  
+----     64 SET extra_brooms  
 
-2,    5,    9
+2
+5
+9
 
 
-----     65 VARIABLE flow.L  
+----     64 VARIABLE flow.L  
 
              2           5           8           9
 
@@ -399,7 +400,7 @@ E x e c u t i o n
 10                               5.000
 
 
-----     65 SET not_min_distance  
+----     64 SET not_min_distance  
 
              1           2           3           4           5           6           7           8           9          10
 
@@ -415,8 +416,13 @@ E x e c u t i o n
 10         YES         YES         YES         YES         YES         YES         YES                     YES
 
 
+----     64 PARAMETER min_distance  
 
-EXECUTION TIME       =        0.203 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+1  11.000,    2  10.198,    3  10.198,    4  12.166,    5  13.000,    6  13.342,    7  12.369,    8   5.831,    9  11.000,    10  5.831
+
+
+
+EXECUTION TIME       =        0.047 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
 
 
 USER: Introduction to Optimization (CS/ISyE/ECE 524) G230906|0002AS-GEN

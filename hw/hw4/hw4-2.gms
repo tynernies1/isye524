@@ -50,8 +50,7 @@ display transportCost;
 set
 not_min_distance(node, node),
 test(node, node),
-extra_brooms(node),
-not_from_closest(P);
+extra_brooms(node);
 
 parameter min_distance(node);
 
@@ -61,8 +60,8 @@ not_min_distance(i, j)$(arc(i,j) and d(i, j) ne min_distance(i)) = yes;
 
 extra_brooms(i) = yes$(sum(j$not_min_distance(j, i), flow.L(j, i) > 0));
 
-option not_from_closest:0:0:1;
-display extra_brooms, flow.l, not_min_distance;
+option extra_brooms:0:0:1;
+display extra_brooms, flow.l, not_min_distance, min_distance;
 
 
 

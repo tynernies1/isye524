@@ -1,5 +1,5 @@
 
---- Job hw4-3.gms Start 10/11/23 17:54:36 44.3.0 8b8fb1cb WEX-WEI x86 64bit/MS Windows
+--- Job hw4-3.gms Start 10/12/23 15:00:48 44.3.0 8b8fb1cb WEX-WEI x86 64bit/MS Windows
 --- Applying:
     C:\GAMS\44\gmsprmNT.txt
 --- GAMS Parameters defined
@@ -20,17 +20,18 @@ Licensee: Introduction to Optimization (CS/ISyE/ECE 524) G230906|0002AS-GEN
 Processor information: 1 socket(s), 4 core(s), and 8 thread(s) available
 GAMS 44.3.0   Copyright (C) 1987-2023 GAMS Development. All rights reserved
 --- Starting compilation
---- hw4-3.gms(94) 3 Mb
+--- hw4-3.gms(63) 3 Mb
 --- Starting execution: elapsed 0:00:00.011
---- hw4-3.gms(47) 4 Mb
+--- hw4-3.gms(41) 4 Mb
 --- Generating LP model flights
---- hw4-3.gms(49) 4 Mb
----   7 rows  6 columns  15 non-zeroes
+--- hw4-3.gms(60) 4 Mb
+--- LOOPS A = United
+---   7 rows  6 columns  16 non-zeroes
 --- Range statistics (absolute non-zero finite values)
---- RHS       [min, max] : [ 3.000E+00, 5.880E+02] - Zero values observed as well
+--- RHS       [min, max] : [ 1.000E+00, 4.000E+00] - Zero values observed as well
 --- Bound     [min, max] : [        NA,        NA] - Zero values observed as well
---- Matrix    [min, max] : [ 1.000E+00, 3.091E+01]
---- Executing CPLEX (Solvelink=2): elapsed 0:00:00.020
+--- Matrix    [min, max] : [ 1.000E+00, 4.270E+02]
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.021
 
 IBM ILOG CPLEX   44.3.0 8b8fb1cb Sep 1, 2023           WEI x86 64bit/MS Window
 
@@ -58,19 +59,20 @@ Presolve time = 0.00 sec. (0.00 ticks)
 
 
 Optimal solution found
-Objective:          958.973805
+Objective:         1396.000000
 
 --- Reading solution for model flights
---- Executing after solve: elapsed 0:00:00.094
---- hw4-3.gms(56) 4 Mb
+--- Executing after solve: elapsed 0:00:00.105
+--- hw4-3.gms(41) 4 Mb
 --- Generating LP model flights
---- hw4-3.gms(58) 4 Mb
----   7 rows  6 columns  15 non-zeroes
+--- hw4-3.gms(60) 4 Mb
+--- LOOPS A = Delta_MSP
+---   7 rows  6 columns  16 non-zeroes
 --- Range statistics (absolute non-zero finite values)
---- RHS       [min, max] : [ 3.000E+00, 6.530E+02] - Zero values observed as well
+--- RHS       [min, max] : [ 1.000E+00, 4.000E+00] - Zero values observed as well
 --- Bound     [min, max] : [        NA,        NA] - Zero values observed as well
---- Matrix    [min, max] : [ 1.000E+00, 1.012E+02]
---- Executing CPLEX (Solvelink=2): elapsed 0:00:00.097
+--- Matrix    [min, max] : [ 1.000E+00, 3.330E+02]
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.108
 
 IBM ILOG CPLEX   44.3.0 8b8fb1cb Sep 1, 2023           WEI x86 64bit/MS Window
 
@@ -94,23 +96,24 @@ All rows and columns eliminated.
 Presolve time = 0.00 sec. (0.00 ticks)
 
 --- LP status (1): optimal.
---- Cplex Time: 0.02sec (det. 0.01 ticks)
+--- Cplex Time: 0.00sec (det. 0.01 ticks)
 
 
 Optimal solution found
-Objective:         1867.304060
+Objective:         1317.000000
 
 --- Reading solution for model flights
 --- Executing after solve: elapsed 0:00:00.174
---- hw4-3.gms(67) 4 Mb
+--- hw4-3.gms(41) 4 Mb
 --- Generating LP model flights
---- hw4-3.gms(69) 4 Mb
----   7 rows  6 columns  15 non-zeroes
+--- hw4-3.gms(60) 4 Mb
+--- LOOPS A = Delta_DTW
+---   7 rows  6 columns  16 non-zeroes
 --- Range statistics (absolute non-zero finite values)
---- RHS       [min, max] : [ 3.000E+00, 6.100E+02] - Zero values observed as well
+--- RHS       [min, max] : [ 1.000E+00, 4.000E+00] - Zero values observed as well
 --- Bound     [min, max] : [        NA,        NA] - Zero values observed as well
---- Matrix    [min, max] : [ 1.000E+00, 4.953E+01]
---- Executing CPLEX (Solvelink=2): elapsed 0:00:00.178
+--- Matrix    [min, max] : [ 1.000E+00, 3.700E+02]
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.177
 
 IBM ILOG CPLEX   44.3.0 8b8fb1cb Sep 1, 2023           WEI x86 64bit/MS Window
 
@@ -134,23 +137,24 @@ All rows and columns eliminated.
 Presolve time = 0.00 sec. (0.00 ticks)
 
 --- LP status (1): optimal.
---- Cplex Time: 0.02sec (det. 0.01 ticks)
+--- Cplex Time: 0.00sec (det. 0.01 ticks)
 
 
 Optimal solution found
-Objective:         1204.405384
+Objective:         1230.000000
 
 --- Reading solution for model flights
---- Executing after solve: elapsed 0:00:00.248
---- hw4-3.gms(77) 4 Mb
+--- Executing after solve: elapsed 0:00:00.242
+--- hw4-3.gms(41) 4 Mb
 --- Generating LP model flights
---- hw4-3.gms(79) 4 Mb
----   8 rows  11 columns  29 non-zeroes
+--- hw4-3.gms(60) 4 Mb
+--- LOOPS A = Delta_All
+---   8 rows  11 columns  31 non-zeroes
 --- Range statistics (absolute non-zero finite values)
---- RHS       [min, max] : [ 3.000E+00, 1.263E+03] - Zero values observed as well
+--- RHS       [min, max] : [ 1.000E+00, 4.000E+00] - Zero values observed as well
 --- Bound     [min, max] : [        NA,        NA] - Zero values observed as well
---- Matrix    [min, max] : [ 1.000E+00, 1.012E+02]
---- Executing CPLEX (Solvelink=2): elapsed 0:00:00.252
+--- Matrix    [min, max] : [ 1.000E+00, 3.700E+02]
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.245
 
 IBM ILOG CPLEX   44.3.0 8b8fb1cb Sep 1, 2023           WEI x86 64bit/MS Window
 
@@ -175,23 +179,24 @@ All rows and columns eliminated.
 Presolve time = 0.00 sec. (0.00 ticks)
 
 --- LP status (1): optimal.
---- Cplex Time: 0.00sec (det. 0.01 ticks)
+--- Cplex Time: 0.02sec (det. 0.01 ticks)
 
 
 Optimal solution found
-Objective:         1857.405384
+Objective:         1174.000000
 
 --- Reading solution for model flights
---- Executing after solve: elapsed 0:00:00.321
---- hw4-3.gms(88) 4 Mb
+--- Executing after solve: elapsed 0:00:00.326
+--- hw4-3.gms(41) 4 Mb
 --- Generating LP model flights
---- hw4-3.gms(90) 4 Mb
----   9 rows  16 columns  43 non-zeroes
+--- hw4-3.gms(60) 4 Mb
+--- LOOPS A = All
+---   9 rows  16 columns  46 non-zeroes
 --- Range statistics (absolute non-zero finite values)
---- RHS       [min, max] : [ 3.000E+00, 1.851E+03] - Zero values observed as well
+--- RHS       [min, max] : [ 1.000E+00, 4.000E+00] - Zero values observed as well
 --- Bound     [min, max] : [        NA,        NA] - Zero values observed as well
---- Matrix    [min, max] : [ 1.000E+00, 1.012E+02]
---- Executing CPLEX (Solvelink=2): elapsed 0:00:00.326
+--- Matrix    [min, max] : [ 1.000E+00, 4.270E+02]
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.332
 
 IBM ILOG CPLEX   44.3.0 8b8fb1cb Sep 1, 2023           WEI x86 64bit/MS Window
 
@@ -220,10 +225,10 @@ Presolve time = 0.00 sec. (0.01 ticks)
 
 
 Optimal solution found
-Objective:         2221.973805
+Objective:         1174.000000
 
 --- Reading solution for model flights
---- Executing after solve: elapsed 0:00:00.397
---- hw4-3.gms(93) 4 Mb
+--- Executing after solve: elapsed 0:00:00.407
+--- hw4-3.gms(63) 4 Mb
 *** Status: Normal completion
---- Job hw4-3.gms Stop 10/11/23 17:54:36 elapsed 0:00:00.398
+--- Job hw4-3.gms Stop 10/12/23 15:00:49 elapsed 0:00:00.409
