@@ -1,9 +1,9 @@
 
---- Job hw4-3.gms Start 10/12/23 15:00:33 44.3.0 8b8fb1cb WEX-WEI x86 64bit/MS Windows
+--- Job hw4-2.gms Start 10/12/23 16:08:36 44.3.0 8b8fb1cb WEX-WEI x86 64bit/MS Windows
 --- Applying:
     C:\GAMS\44\gmsprmNT.txt
 --- GAMS Parameters defined
-    Input C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw4\hw4-3.gms
+    Input C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw4\hw4-2.gms
     PageSize 0
     ScrDir C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw4\225a\
     SysDir C:\GAMS\44\
@@ -20,20 +20,20 @@ Licensee: Introduction to Optimization (CS/ISyE/ECE 524) G230906|0002AS-GEN
 Processor information: 1 socket(s), 4 core(s), and 8 thread(s) available
 GAMS 44.3.0   Copyright (C) 1987-2023 GAMS Development. All rights reserved
 --- Starting compilation
---- hw4-3.gms(62) 3 Mb 3 Errors
-*** Error 171 in C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw4\hw4-3.gms
-    Domain violation for set
-*** Error 171 in C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw4\hw4-3.gms
-    Domain violation for set
-*** Error 148 in C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw4\hw4-3.gms
-    Dimension different - The symbol is referenced with more/less
-       indices as declared
---- hw4-3.gms(64) 3 Mb 5 Errors
-*** Error 170 in C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw4\hw4-3.gms
-    Domain violation for element
-*** Error 148 in C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw4\hw4-3.gms
-    Dimension different - The symbol is referenced with more/less
-       indices as declared
---- hw4-3.gms(65) 3 Mb 5 Errors
+--- hw4-2.gms(60) 3 Mb 3 Errors
+*** Error 149 in C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw4\hw4-2.gms
+    Uncontrolled set entered as constant
+*** Error 143 in C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw4\hw4-2.gms
+    A suffix is missing
+*** Error 149 in C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw4\hw4-2.gms
+    Uncontrolled set entered as constant
+--- hw4-2.gms(61) 3 Mb 4 Errors
+*** Error 145 in C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw4\hw4-2.gms
+    Set identifier or quoted element expected
+--- hw4-2.gms(63) 3 Mb 5 Errors
+*** Error  36 in C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw4\hw4-2.gms
+    '=' or '..' or ':=' or '$=' operator expected
+    rest of statement ignored
+--- hw4-2.gms(86) 3 Mb 5 Errors
 *** Status: Compilation error(s)
---- Job hw4-3.gms Stop 10/12/23 15:00:33 elapsed 0:00:00.011
+--- Job hw4-2.gms Stop 10/12/23 16:08:36 elapsed 0:00:00.015

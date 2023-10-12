@@ -1,4 +1,4 @@
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 1
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:26:24 Page 1
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
@@ -65,20 +65,22 @@ C o m p i l a t i o n
   60      solve flights using lp minimize time;
   61      times(A) = time.l;
   62  );
-  63  display times, flow.l;
-  64   
-      Question 4.1:
-      Professor Wright should switch to Delta because the flights using United takes 
+  63   
+      Question 3.1:
+      Professor Wright should switch to Delta because the flights using United takes 4188 minutes and the flights using Delta takes 3522 minutes.
+      I deal with the uncertainties in the delays at the hubs by choosing to use the worst case scenario, meaning I choose the highest possible delay time at each hub (180 for ORD, 120 for MSP, and 90 for DTW).
        
+      Question 3.2:
+      If we add the constraint that Professor Wright must always use the same hub, he would still choose to fly Delta because using United takes 4188 minutes and using Delta from hub DTW takes 3690 minutes.
        
-       
-       
-       
-       
+      Question 3.3:
+      If Professor Wright chooses to use both United and Delta, he should still fly only Delta going through MSP and DTW. He will fly to SFO through MSP will fly to MCO, IAH, DCA through DTW.
+  75   
+  76  display times, flow.l;
 
 
 COMPILATION TIME     =        0.000 SECONDS      3 MB  44.3.0 8b8fb1cb WEX-WEI
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 2
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:26:24 Page 2
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Equation Listing    SOLVE flights Using LP From line 60
 
@@ -98,7 +100,7 @@ balance(SFO)..  - flow(ORD,SFO) =E= -3 ; (LHS = 0, INFES = 3 ****)
      
 REMAINING 3 ENTRIES SKIPPED
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 3
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:26:24 Page 3
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Column Listing      SOLVE flights Using LP From line 60
 
@@ -131,7 +133,7 @@ time
                 (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
         1       obj
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 4
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:26:24 Page 4
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Range Statistics    SOLVE flights Using LP From line 60
 
@@ -142,7 +144,7 @@ RHS       [min, max] : [ 3.000E+00, 1.200E+01] - Zero values observed as well
 Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 Matrix    [min, max] : [ 1.000E+00, 4.270E+02]
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 5
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:26:24 Page 5
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Model Statistics    SOLVE flights Using LP From line 60
 
@@ -157,10 +159,10 @@ BLOCKS OF VARIABLES           2     SINGLE VARIABLES            6
 NON ZERO ELEMENTS            16
 
 
-GENERATION TIME      =        0.015 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+GENERATION TIME      =        0.016 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
                L O O P S                  A United
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 6
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:26:24 Page 6
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Solution Report     SOLVE flights Using LP From line 60
 
@@ -226,7 +228,7 @@ ORD.MCO          .             3.0000        +INF             .
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 7
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:26:24 Page 7
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Equation Listing    SOLVE flights Using LP From line 60
 
@@ -246,7 +248,7 @@ balance(SFO)..  - flow(MSP,SFO) =E= -3 ; (LHS = 0, INFES = 3 ****)
      
 REMAINING 3 ENTRIES SKIPPED
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 8
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:26:24 Page 8
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Column Listing      SOLVE flights Using LP From line 60
 
@@ -279,7 +281,7 @@ time
                 (.LO, .L, .UP, .M = -INF, 4188, +INF, 0)
         1       obj
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 9
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:26:24 Page 9
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Range Statistics    SOLVE flights Using LP From line 60
 
@@ -290,7 +292,7 @@ RHS       [min, max] : [ 3.000E+00, 1.200E+01] - Zero values observed as well
 Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 Matrix    [min, max] : [ 1.000E+00, 3.330E+02]
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 10
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:26:24 Page 10
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Model Statistics    SOLVE flights Using LP From line 60
 
@@ -305,10 +307,10 @@ BLOCKS OF VARIABLES           2     SINGLE VARIABLES            6
 NON ZERO ELEMENTS            16
 
 
-GENERATION TIME      =        0.015 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+GENERATION TIME      =        0.000 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
                L O O P S                  A Delta_MSP
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 11
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:26:24 Page 11
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Solution Report     SOLVE flights Using LP From line 60
 
@@ -374,7 +376,7 @@ MSP.MCO          .             3.0000        +INF             .
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 12
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:26:24 Page 12
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Equation Listing    SOLVE flights Using LP From line 60
 
@@ -394,7 +396,7 @@ balance(SFO)..  - flow(DTW,SFO) =E= -3 ; (LHS = 0, INFES = 3 ****)
      
 REMAINING 3 ENTRIES SKIPPED
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 13
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:26:24 Page 13
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Column Listing      SOLVE flights Using LP From line 60
 
@@ -427,7 +429,7 @@ time
                 (.LO, .L, .UP, .M = -INF, 3951, +INF, 0)
         1       obj
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 14
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:26:24 Page 14
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Range Statistics    SOLVE flights Using LP From line 60
 
@@ -438,7 +440,7 @@ RHS       [min, max] : [ 3.000E+00, 1.200E+01] - Zero values observed as well
 Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 Matrix    [min, max] : [ 1.000E+00, 3.700E+02]
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 15
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:26:24 Page 15
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Model Statistics    SOLVE flights Using LP From line 60
 
@@ -456,7 +458,7 @@ NON ZERO ELEMENTS            16
 GENERATION TIME      =        0.000 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
                L O O P S                  A Delta_DTW
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 16
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:26:24 Page 16
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Solution Report     SOLVE flights Using LP From line 60
 
@@ -522,7 +524,7 @@ DTW.MCO          .             3.0000        +INF             .
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 17
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:26:24 Page 17
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Equation Listing    SOLVE flights Using LP From line 60
 
@@ -542,7 +544,7 @@ balance(DTW)..  - flow(MSN,DTW) + flow(DTW,SFO) + flow(DTW,IAH) + flow(DTW,DCA) 
      
 REMAINING 4 ENTRIES SKIPPED
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 18
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:26:24 Page 18
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Column Listing      SOLVE flights Using LP From line 60
 
@@ -575,7 +577,7 @@ time
                 (.LO, .L, .UP, .M = -INF, 3690, +INF, 0)
         1       obj
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 19
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:26:24 Page 19
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Range Statistics    SOLVE flights Using LP From line 60
 
@@ -586,7 +588,7 @@ RHS       [min, max] : [ 3.000E+00, 1.200E+01] - Zero values observed as well
 Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 Matrix    [min, max] : [ 1.000E+00, 3.700E+02]
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 20
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:26:24 Page 20
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Model Statistics    SOLVE flights Using LP From line 60
 
@@ -601,10 +603,10 @@ BLOCKS OF VARIABLES           2     SINGLE VARIABLES           11
 NON ZERO ELEMENTS            31
 
 
-GENERATION TIME      =        0.000 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+GENERATION TIME      =        0.015 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
                L O O P S                  A Delta_All
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 21
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:26:24 Page 21
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Solution Report     SOLVE flights Using LP From line 60
 
@@ -676,7 +678,7 @@ DTW.MCO          .             3.0000        +INF             .
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 22
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:26:24 Page 22
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Equation Listing    SOLVE flights Using LP From line 60
 
@@ -696,7 +698,7 @@ balance(MSP)..  - flow(MSN,MSP) + flow(MSP,SFO) + flow(MSP,IAH) + flow(MSP,DCA) 
      
 REMAINING 5 ENTRIES SKIPPED
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 23
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:26:24 Page 23
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Column Listing      SOLVE flights Using LP From line 60
 
@@ -729,7 +731,7 @@ time
                 (.LO, .L, .UP, .M = -INF, 3522, +INF, 0)
         1       obj
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 24
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:26:24 Page 24
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Range Statistics    SOLVE flights Using LP From line 60
 
@@ -740,7 +742,7 @@ RHS       [min, max] : [ 3.000E+00, 1.200E+01] - Zero values observed as well
 Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 Matrix    [min, max] : [ 1.000E+00, 4.270E+02]
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 25
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:26:24 Page 25
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Model Statistics    SOLVE flights Using LP From line 60
 
@@ -758,7 +760,7 @@ NON ZERO ELEMENTS            46
 GENERATION TIME      =        0.016 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
                L O O P S                  A All
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 26
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:26:24 Page 26
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Solution Report     SOLVE flights Using LP From line 60
 
@@ -773,7 +775,7 @@ Solution Report     SOLVE flights Using LP From line 60
 **** MODEL STATUS      1 Optimal
 **** OBJECTIVE VALUE             3522.0000
 
- RESOURCE USAGE, LIMIT          0.016 10000000000.000
+ RESOURCE USAGE, LIMIT          0.000 10000000000.000
  ITERATION COUNT, LIMIT         0    2147483647
 --- GAMS/CPLEX licensed for continuous and discrete problems.
 --- GMO setup time: 0.00s
@@ -784,7 +786,7 @@ Solution Report     SOLVE flights Using LP From line 60
 
 
 --- LP status (1): optimal.
---- Cplex Time: 0.02sec (det. 0.02 ticks)
+--- Cplex Time: 0.00sec (det. 0.02 ticks)
 
 
 Optimal solution found
@@ -836,17 +838,17 @@ DTW.MCO          .             3.0000        +INF             .
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:04:48 Page 27
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/12/23 15:26:24 Page 27
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 E x e c u t i o n
 
 
-----     63 PARAMETER times  
+----     76 PARAMETER times  
 
 United    4188.000,    Delta_MSP 3951.000,    Delta_DTW 3690.000,    Delta_All 3522.000,    All       3522.000
 
 
-----     63 VARIABLE flow.L  Flow
+----     76 VARIABLE flow.L  Flow
 
             MSP         DTW         SFO         IAH         DCA         MCO
 
@@ -856,7 +858,7 @@ DTW                                           3.000       3.000       3.000
 
 
 
-EXECUTION TIME       =        0.390 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+EXECUTION TIME       =        0.453 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
 
 
 USER: Introduction to Optimization (CS/ISyE/ECE 524) G230906|0002AS-GEN

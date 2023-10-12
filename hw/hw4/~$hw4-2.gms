@@ -60,7 +60,10 @@ min_distances(i, j)$(arc(i,j) and d(i, j) = min_distance(i)) = yes;
 not_from_closest(j)$(current(j)<require(j)) = yes$(sum(i$min_distances(j, i), flow.L(j, i) = 0));
 
 option not_from_closest:0:0:1;
-display not_from_closest, flow.l, min_distances, min_distance;
+display flow.l, not_from_closest;
+
+*Locations that require brooms that do not come from the closest location include Shell Cottage, Ollivander's, Zonko's Joke Shop
+
 
 
 

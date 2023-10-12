@@ -1,24 +1,24 @@
 B 3 C o m p i l a t i o n
-B 97 E x e c u t i o n
-I 97 arc
-B 117 Equation Listing    SOLVE brooms Using LP From line 44
-D 120 obj
-D 125 flow_bal
-D 136 restrict
-B 148 Column Listing      SOLVE brooms Using LP From line 44
-E 151 flow
-E 176 cost
-B 184 Range Statistics    SOLVE brooms Using LP From line 44
-B 195 Model Statistics    SOLVE brooms Using LP From line 44
-B 208 Solution Report     SOLVE brooms Using LP From line 44
-F 241 obj
-F 243 flow_bal
-F 258 restrict
-G 273 flow
-G 370 cost
-B 378 E x e c u t i o n
-I 380 transportCost
-I 381 extra_brooms
-I 388 flow
-I 401 not_min_distance
-I 417 min_distance
+B 96 E x e c u t i o n
+I 96 arc
+B 116 Equation Listing    SOLVE brooms Using LP From line 44
+D 119 obj
+D 124 flow_bal
+D 135 restrict
+B 147 Column Listing      SOLVE brooms Using LP From line 44
+E 150 flow
+E 175 cost
+B 183 Range Statistics    SOLVE brooms Using LP From line 44
+B 194 Model Statistics    SOLVE brooms Using LP From line 44
+B 207 Solution Report     SOLVE brooms Using LP From line 44
+F 240 obj
+F 242 flow_bal
+F 257 restrict
+G 272 flow
+G 369 cost
+B 377 E x e c u t i o n
+I 379 transportCost
+I 380 not_from_closest
+I 387 flow
+I 400 min_distances
+I 416 min_distance
