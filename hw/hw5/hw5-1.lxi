@@ -1,0 +1,35 @@
+B 3 C o m p i l a t i o n
+B 97 E x e c u t i o n
+I 97 arcs
+I 112 u
+B 129 Equation Listing    SOLVE construction_max Using LP From line 47
+D 132 obj
+D 137 balance
+B 149 Column Listing      SOLVE construction_max Using LP From line 47
+E 152 flow
+E 177 totflow
+B 185 Range Statistics    SOLVE construction_max Using LP From line 47
+B 196 Model Statistics    SOLVE construction_max Using LP From line 47
+B 209 Solution Report     SOLVE construction_max Using LP From line 47
+F 242 obj
+F 244 balance
+G 265 flow
+G 281 totflow
+B 289 E x e c u t i o n
+I 289 flow
+B 303 Equation Listing    SOLVE construction_dual Using LP From line 67
+D 306 dual_obj_eq
+D 311 dual_cons
+B 323 Column Listing      SOLVE construction_dual Using LP From line 67
+E 326 dualobj
+E 333 pi
+B 361 Range Statistics    SOLVE construction_dual Using LP From line 67
+B 372 Model Statistics    SOLVE construction_dual Using LP From line 67
+B 385 Solution Report     SOLVE construction_dual Using LP From line 67
+F 418 dual_obj_eq
+F 420 dual_cons
+G 443 dualobj
+G 445 pi
+B 481 E x e c u t i o n
+I 483 dualobj
+I 484 pi

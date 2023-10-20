@@ -1,0 +1,21 @@
+B 3 C o m p i l a t i o n
+B 90 Equation Listing    SOLVE pflow Using LP From line 67
+D 93 defobj
+D 98 linkb
+B 124 Range Statistics    SOLVE pflow Using LP From line 67
+B 135 Model Statistics    SOLVE pflow Using LP From line 67
+B 148 Solution Report     SOLVE pflow Using LP From line 67
+F 181 defobj
+F 183 linkb
+G 212 f
+G 235 totgo
+B 245 Equation Listing    SOLVE dualflow Using LP From line 83
+D 248 def_dualobj
+D 253 dualcons
+B 279 Range Statistics    SOLVE dualflow Using LP From line 83
+B 290 Model Statistics    SOLVE dualflow Using LP From line 83
+B 303 Solution Report     SOLVE dualflow Using LP From line 83
+F 336 def_dualobj
+F 338 dualcons
+G 361 dualobj
+G 363 pi

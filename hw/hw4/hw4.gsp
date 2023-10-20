@@ -28,12 +28,6 @@
         },
         {
             "codecMib": 106,
-            "file": "hw4-3.gdx",
-            "name": "hw4-3.gdx",
-            "type": "gdx"
-        },
-        {
-            "codecMib": 106,
             "file": "hw4-3.gms",
             "name": "hw4-3.gms",
             "type": "gms"

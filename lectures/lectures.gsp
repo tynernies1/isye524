@@ -1,5 +1,5 @@
 {
-    "file": "randomex/assignprefs.gms",
+    "file": "randomex/widgetco.gms",
     "name": "lectures",
     "nodes": [
         {
@@ -127,6 +127,18 @@
             "file": "randomex/bigassign.lst",
             "name": "bigassign.lst",
             "type": "lst"
+        },
+        {
+            "codecMib": 106,
+            "file": "randomex/short1.gms",
+            "name": "short1.gms",
+            "type": "gms"
+        },
+        {
+            "codecMib": 106,
+            "file": "randomex/widgetco.gms",
+            "name": "widgetco.gms",
+            "type": "gms"
         },
         {
             "codecMib": 106,
@@ -276,6 +288,12 @@
             "codecMib": 106,
             "file": "topbrassex/topbrass1.lst",
             "name": "topbrass1.lst",
+            "type": "lst"
+        },
+        {
+            "codecMib": 106,
+            "file": "widgetco.lst",
+            "name": "widgetco.lst",
             "type": "lst"
         }
     ],

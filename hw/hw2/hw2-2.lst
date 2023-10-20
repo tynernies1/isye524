@@ -1,4 +1,4 @@
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/21/23 10:22:11 Page 1
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 19:34:35 Page 1
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
@@ -82,7 +82,7 @@ C o m p i l a t i o n
 
 
 COMPILATION TIME     =        0.000 SECONDS      3 MB  44.3.0 8b8fb1cb WEX-WEI
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/21/23 10:22:11 Page 2
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 19:34:35 Page 2
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Range Statistics    SOLVE books Using LP From line 71
 
@@ -93,7 +93,7 @@ RHS       [min, max] : [ 1.170E+02, 4.200E+02] - Zero values observed as well
 Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 Matrix    [min, max] : [ 1.000E+00, 1.900E+01]
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/21/23 10:22:11 Page 3
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 19:34:35 Page 3
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Model Statistics    SOLVE books Using LP From line 71
 
@@ -108,10 +108,10 @@ BLOCKS OF VARIABLES           2     SINGLE VARIABLES            6
 NON ZERO ELEMENTS            20
 
 
-GENERATION TIME      =        0.234 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+GENERATION TIME      =        0.015 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
                L O O P S                  M 2.1
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/21/23 10:22:11 Page 4
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 19:34:35 Page 4
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Solution Report     SOLVE books Using LP From line 71
 
@@ -128,7 +128,7 @@ Solution Report     SOLVE books Using LP From line 71
 
  RESOURCE USAGE, LIMIT          0.015 10000000000.000
  ITERATION COUNT, LIMIT         3    2147483647
---- *** This solver runs with a demo license. No commercial use.
+--- GAMS/CPLEX licensed for continuous and discrete problems.
 --- GMO setup time: 0.00s
 --- GMO memory 0.50 Mb (peak 0.50 Mb)
 --- Dictionary memory 0.00 Mb
@@ -137,7 +137,7 @@ Solution Report     SOLVE books Using LP From line 71
 
 
 --- LP status (1): optimal.
---- Cplex Time: 0.01sec (det. 0.01 ticks)
+--- Cplex Time: 0.02sec (det. 0.01 ticks)
 
 
 Optimal solution found
@@ -174,7 +174,7 @@ coffee_table          .              .              .           -13.0000
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/21/23 10:22:11 Page 5
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 19:34:35 Page 5
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Range Statistics    SOLVE books Using LP From line 71
 
@@ -185,7 +185,7 @@ RHS       [min, max] : [ 1.170E+02, 4.200E+02] - Zero values observed as well
 Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 Matrix    [min, max] : [ 1.000E+00, 1.900E+01]
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/21/23 10:22:11 Page 6
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 19:34:35 Page 6
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Model Statistics    SOLVE books Using LP From line 71
 
@@ -203,7 +203,7 @@ NON ZERO ELEMENTS            20
 GENERATION TIME      =        0.000 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
                L O O P S                  M 2.2
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/21/23 10:22:11 Page 7
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 19:34:35 Page 7
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Solution Report     SOLVE books Using LP From line 71
 
@@ -218,9 +218,9 @@ Solution Report     SOLVE books Using LP From line 71
 **** MODEL STATUS      1 Optimal
 **** OBJECTIVE VALUE             1866.0000
 
- RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ RESOURCE USAGE, LIMIT          0.016 10000000000.000
  ITERATION COUNT, LIMIT         1    2147483647
---- *** This solver runs with a demo license. No commercial use.
+--- GAMS/CPLEX licensed for continuous and discrete problems.
 --- GMO setup time: 0.00s
 --- GMO memory 0.50 Mb (peak 0.50 Mb)
 --- Dictionary memory 0.00 Mb
@@ -229,7 +229,7 @@ Solution Report     SOLVE books Using LP From line 71
 
 
 --- LP status (1): optimal.
---- Cplex Time: 0.00sec (det. 0.01 ticks)
+--- Cplex Time: 0.02sec (det. 0.01 ticks)
 
 
 Optimal solution found
@@ -266,7 +266,7 @@ coffee_table          .              .              .           -16.0000
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/21/23 10:22:11 Page 8
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 19:34:35 Page 8
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Range Statistics    SOLVE books Using LP From line 71
 
@@ -277,7 +277,7 @@ RHS       [min, max] : [ 1.250E+02, 4.200E+02] - Zero values observed as well
 Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 Matrix    [min, max] : [ 1.000E+00, 1.900E+01]
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/21/23 10:22:11 Page 9
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 19:34:35 Page 9
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Model Statistics    SOLVE books Using LP From line 71
 
@@ -292,10 +292,10 @@ BLOCKS OF VARIABLES           2     SINGLE VARIABLES            6
 NON ZERO ELEMENTS            20
 
 
-GENERATION TIME      =        0.000 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+GENERATION TIME      =        0.016 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
                L O O P S                  M 2.3
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/21/23 10:22:11 Page 10
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 19:34:35 Page 10
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Solution Report     SOLVE books Using LP From line 71
 
@@ -312,7 +312,7 @@ Solution Report     SOLVE books Using LP From line 71
 
  RESOURCE USAGE, LIMIT          0.000 10000000000.000
  ITERATION COUNT, LIMIT         0    2147483647
---- *** This solver runs with a demo license. No commercial use.
+--- GAMS/CPLEX licensed for continuous and discrete problems.
 --- GMO setup time: 0.00s
 --- GMO memory 0.50 Mb (peak 0.50 Mb)
 --- Dictionary memory 0.00 Mb
@@ -358,7 +358,7 @@ coffee_table          .              .              .           -16.0000
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/21/23 10:22:11 Page 11
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 19:34:35 Page 11
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Range Statistics    SOLVE books Using LP From line 71
 
@@ -369,7 +369,7 @@ RHS       [min, max] : [ 1.250E+02, 4.200E+02] - Zero values observed as well
 Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 Matrix    [min, max] : [ 1.000E+00, 1.900E+01]
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/21/23 10:22:11 Page 12
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 19:34:35 Page 12
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Model Statistics    SOLVE books Using LP From line 71
 
@@ -387,7 +387,7 @@ NON ZERO ELEMENTS            20
 GENERATION TIME      =        0.000 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
                L O O P S                  M 2.4
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/21/23 10:22:11 Page 13
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 19:34:35 Page 13
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Solution Report     SOLVE books Using LP From line 71
 
@@ -404,7 +404,7 @@ Solution Report     SOLVE books Using LP From line 71
 
  RESOURCE USAGE, LIMIT          0.000 10000000000.000
  ITERATION COUNT, LIMIT         0    2147483647
---- *** This solver runs with a demo license. No commercial use.
+--- GAMS/CPLEX licensed for continuous and discrete problems.
 --- GMO setup time: 0.00s
 --- GMO memory 0.50 Mb (peak 0.50 Mb)
 --- Dictionary memory 0.00 Mb
@@ -450,7 +450,7 @@ coffee_table          .              .            +INF          -16.0000
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 09/21/23 10:22:11 Page 14
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/11/23 19:34:35 Page 14
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 E x e c u t i o n
 
@@ -466,11 +466,12 @@ desk     55.000,    chair    25.000,    bedframe 45.000
 
 
 
-EXECUTION TIME       =        0.890 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+EXECUTION TIME       =        0.375 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
 
 
-USER: GAMS Demo, for EULA and demo limitations see   G230706/0001CB-GEN
-      https://www.gams.com/latest/docs/UG%5FLicense.html         DC0000
+USER: Introduction to Optimization (CS/ISyE/ECE 524) G230906|0002AS-GEN
+      UW-Madison, CS Dept., Fall 2023, Prof. Ferris              DCE850
+      License for teaching and research at degree granting institutions
 
 
 **** FILE SUMMARY

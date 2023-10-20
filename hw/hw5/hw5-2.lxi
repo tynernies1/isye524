@@ -1,0 +1,19 @@
+B 3 C o m p i l a t i o n
+B 84 E x e c u t i o n
+I 84 nodes
+I 97 arcs
+B 189 Equation Listing    SOLVE short Using LP From line 52
+D 192 obj
+D 197 balance
+B 209 Column Listing      SOLVE short Using LP From line 52
+E 212 flow
+E 232 totcost
+B 240 Range Statistics    SOLVE short Using LP From line 52
+B 251 Model Statistics    SOLVE short Using LP From line 52
+B 264 Solution Report     SOLVE short Using LP From line 52
+F 297 obj
+F 299 balance
+G 327 flow
+G 400 totcost
+B 408 E x e c u t i o n
+I 408 flow

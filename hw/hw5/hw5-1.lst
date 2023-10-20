@@ -1,0 +1,508 @@
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/16/23 20:31:23 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1  set nodes / s, m1*m4, p1*p3, t /
+   2  projects(nodes) / p1*p3 /
+   3  months(nodes) / m1*m4 /;
+   4   
+   5  alias(nodes, i, j, k);
+   6   
+   7  parameters
+   8  worker_months(projects) / p1 8, p2 10, p3 12 /
+   9  months_done(projects) / p1 3, p2 4, p3 2 /;
+  10   
+  11  scalars
+  12  workers_available / 8 /
+  13  job_workers / 6 /;
+  14   
+  15  set arcs(nodes, nodes);
+  16  arcs('s', months) = yes;
+  17  arcs(months, projects) = yes$(ord(months) le months_done(projects));
+  18  arcs(projects, 't') = yes;
+  19   
+  20  parameter
+  21  u(i, j);
+  22  u('s', months) = workers_available;
+  23  u(months, projects)$arcs(months, projects) = job_workers;
+  24  u(projects, 't') = worker_months(projects);
+  25   
+  26  display arcs, u;
+  27   
+  28  positive variable
+  29  flow(nodes, nodes);
+  30   
+  31  variable
+  32  totflow;
+  33   
+  34  equations
+  35  obj, balance;
+  36   
+  37  obj..
+  38  totflow =e= sum(arcs(months, projects), flow(arcs));
+  39   
+  40  balance(i, j)$(arcs(i, j))..
+  41  flow(i, j)$((not sameas(i, 's')) and (not sameas(j, 't')))
+  42  + sum(k$arcs(j, k), flow(j, k))$sameas(i, 's')
+  43  + sum(k$arcs(k, i), flow(k, i))$sameas(j, 't') =l= u(i, j);
+  44   
+  45  model construction_max / obj, balance /;
+  46   
+  47  solve construction_max using lp max totflow;
+  48  option flow:0:1:1;
+  49  display flow.l;
+  50   
+  51  variable dualobj;
+  52   
+  53  positive variable
+  54  pi(i, j);
+  55   
+  56  equations
+  57  dual_obj_eq, dual_cons;
+  58   
+  59  dual_obj_eq..
+  60  dualobj =e= sum(arcs(i, j), u(i, j)*pi(i, j));
+  61   
+  62  dual_cons(i, j)$(arcs(i, j))..
+  63  pi('s', i) + pi(i, j) + pi(j, 't') =g= 1;
+  64   
+  65  model construction_dual / dual_obj_eq, dual_cons /;
+  66   
+  67  solve construction_dual using lp min dualobj;
+  68  option pi:2:0:1;
+  69  display dualobj.l, pi.l;
+  70   
+  71   
+  72   
+  73   
+  74   
+  75   
+  76   
+  77   
+  78   
+  79   
+  80   
+  81   
+  82   
+  83   
+  84   
+  85   
+  86   
+
+
+COMPILATION TIME     =        0.000 SECONDS      3 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/16/23 20:31:23 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+----     26 SET arcs  
+
+            m1          m2          m3          m4          p1          p2          p3           t
+
+s          YES         YES         YES         YES
+m1                                                         YES         YES         YES
+m2                                                         YES         YES         YES
+m3                                                         YES         YES
+m4                                                                     YES
+p1                                                                                             YES
+p2                                                                                             YES
+p3                                                                                             YES
+
+
+----     26 PARAMETER u  
+
+            m1          m2          m3          m4          p1          p2          p3           t
+
+s        8.000       8.000       8.000       8.000
+m1                                                       6.000       6.000       6.000
+m2                                                       6.000       6.000       6.000
+m3                                                       6.000       6.000
+m4                                                                   6.000
+p1                                                                                           8.000
+p2                                                                                          10.000
+p3                                                                                          12.000
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/16/23 20:31:23 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Equation Listing    SOLVE construction_max Using LP From line 47
+
+
+---- obj  =E=  
+
+obj..  - flow(m1,p1) - flow(m1,p2) - flow(m1,p3) - flow(m2,p1) - flow(m2,p2) - flow(m2,p3) - flow(m3,p1) - flow(m3,p2) - flow(m4,p2) + totflow =E= 0 ; (LHS = 0)
+     
+
+---- balance  =L=  
+
+balance(s,m1)..  flow(m1,p1) + flow(m1,p2) + flow(m1,p3) =L= 8 ; (LHS = 0)
+     
+balance(s,m2)..  flow(m2,p1) + flow(m2,p2) + flow(m2,p3) =L= 8 ; (LHS = 0)
+     
+balance(s,m3)..  flow(m3,p1) + flow(m3,p2) =L= 8 ; (LHS = 0)
+     
+REMAINING 13 ENTRIES SKIPPED
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/16/23 20:31:23 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Column Listing      SOLVE construction_max Using LP From line 47
+
+
+---- flow  
+
+flow(m1,p1)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       -1       obj
+        1       balance(s,m1)
+        1       balance(m1,p1)
+        1       balance(p1,t)
+
+flow(m1,p2)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       -1       obj
+        1       balance(s,m1)
+        1       balance(m1,p2)
+        1       balance(p2,t)
+
+flow(m1,p3)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       -1       obj
+        1       balance(s,m1)
+        1       balance(m1,p3)
+        1       balance(p3,t)
+
+REMAINING 6 ENTRIES SKIPPED
+
+---- totflow  
+
+totflow
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       obj
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/16/23 20:31:23 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Range Statistics    SOLVE construction_max Using LP From line 47
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 6.000E+00, 1.200E+01] - Zero values observed as well
+Bound     [min, max] : [        NA,        NA] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 1.000E+00]
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/16/23 20:31:23 Page 6
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE construction_max Using LP From line 47
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           2     SINGLE EQUATIONS           17
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES           10
+NON ZERO ELEMENTS            37
+
+
+GENERATION TIME      =        0.016 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/16/23 20:31:23 Page 7
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE construction_max Using LP From line 47
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   construction_max    OBJECTIVE  totflow
+     TYPE    LP                  DIRECTION  MAXIMIZE
+     SOLVER  CPLEX               FROM LINE  47
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE               30.0000
+
+ RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ ITERATION COUNT, LIMIT         4    2147483647
+--- GAMS/CPLEX licensed for continuous and discrete problems.
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.02 ticks)
+
+
+Optimal solution found
+Objective:           30.000000
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU obj                 .              .              .             1.0000      
+
+---- EQU balance  
+
+             LOWER          LEVEL          UPPER         MARGINAL
+
+s .m1        -INF            8.0000         8.0000         1.0000      
+s .m2        -INF            8.0000         8.0000         1.0000      
+s .m3        -INF            8.0000         8.0000         1.0000      
+s .m4        -INF            6.0000         8.0000          .          
+m1.p1        -INF            2.0000         6.0000          .          
+m1.p2        -INF             .             6.0000          .          
+m1.p3        -INF            6.0000         6.0000         EPS         
+m2.p1        -INF             .             6.0000          .          
+m2.p2        -INF            2.0000         6.0000          .          
+m2.p3        -INF            6.0000         6.0000         EPS         
+m3.p1        -INF            6.0000         6.0000         EPS         
+m3.p2        -INF            2.0000         6.0000          .          
+m4.p2        -INF            6.0000         6.0000         1.0000      
+p1.t         -INF            8.0000         8.0000         EPS         
+p2.t         -INF           10.0000        10.0000          .          
+p3.t         -INF           12.0000        12.0000          .          
+
+---- VAR flow  
+
+             LOWER          LEVEL          UPPER         MARGINAL
+
+m1.p1          .             2.0000        +INF             .          
+m1.p2          .              .            +INF            EPS         
+m1.p3          .             6.0000        +INF             .          
+m2.p1          .              .            +INF             .          
+m2.p2          .             2.0000        +INF             .          
+m2.p3          .             6.0000        +INF             .          
+m3.p1          .             6.0000        +INF             .          
+m3.p2          .             2.0000        +INF             .          
+m4.p2          .             6.0000        +INF             .          
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR totflow           -INF           30.0000        +INF             .          
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/16/23 20:31:23 Page 8
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+----     49 VARIABLE flow.L  
+
+            p1          p2          p3
+
+m1           2                       6
+m2                       2           6
+m3           6           2
+m4                       6
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/16/23 20:31:23 Page 9
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Equation Listing    SOLVE construction_dual Using LP From line 67
+
+
+---- dual_obj_eq  =E=  
+
+dual_obj_eq..  dualobj - 8*pi(s,m1) - 8*pi(s,m2) - 8*pi(s,m3) - 8*pi(s,m4) - 6*pi(m1,p1) - 6*pi(m1,p2) - 6*pi(m1,p3) - 6*pi(m2,p1) - 6*pi(m2,p2) - 6*pi(m2,p3) - 6*pi(m3,p1) - 6*pi(m3,p2) - 6*pi(m4,p2) - 8*pi(p1,t) - 10*pi(p2,t) - 12*pi(p3,t) =E= 0 ; (LHS = 0)
+     
+
+---- dual_cons  =G=  
+
+dual_cons(s,m1)..  pi(s,s) + pi(s,m1) + pi(m1,t) =G= 1 ; (LHS = 0, INFES = 1 ****)
+     
+dual_cons(s,m2)..  pi(s,s) + pi(s,m2) + pi(m2,t) =G= 1 ; (LHS = 0, INFES = 1 ****)
+     
+dual_cons(s,m3)..  pi(s,s) + pi(s,m3) + pi(m3,t) =G= 1 ; (LHS = 0, INFES = 1 ****)
+     
+REMAINING 13 ENTRIES SKIPPED
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/16/23 20:31:23 Page 10
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Column Listing      SOLVE construction_dual Using LP From line 67
+
+
+---- dualobj  
+
+dualobj
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       dual_obj_eq
+
+
+---- pi  
+
+pi(s,s)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+        1       dual_cons(s,m1)
+        1       dual_cons(s,m2)
+        1       dual_cons(s,m3)
+        1       dual_cons(s,m4)
+
+pi(s,m1)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       -8       dual_obj_eq
+        1       dual_cons(s,m1)
+        1       dual_cons(m1,p1)
+        1       dual_cons(m1,p2)
+        1       dual_cons(m1,p3)
+
+pi(s,m2)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       -8       dual_obj_eq
+        1       dual_cons(s,m2)
+        1       dual_cons(m2,p1)
+        1       dual_cons(m2,p2)
+        1       dual_cons(m2,p3)
+
+REMAINING 22 ENTRIES SKIPPED
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/16/23 20:31:23 Page 11
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Range Statistics    SOLVE construction_dual Using LP From line 67
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 1.000E+00, 1.000E+00] - Zero values observed as well
+Bound     [min, max] : [        NA,        NA] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 1.200E+01]
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/16/23 20:31:23 Page 12
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE construction_dual Using LP From line 67
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           2     SINGLE EQUATIONS           17
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES           26
+NON ZERO ELEMENTS            65
+
+
+GENERATION TIME      =        0.016 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/16/23 20:31:23 Page 13
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE construction_dual Using LP From line 67
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   construction_dual   OBJECTIVE  dualobj
+     TYPE    LP                  DIRECTION  MINIMIZE
+     SOLVER  CPLEX               FROM LINE  67
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE               30.0000
+
+ RESOURCE USAGE, LIMIT          0.015 10000000000.000
+ ITERATION COUNT, LIMIT         7    2147483647
+--- GAMS/CPLEX licensed for continuous and discrete problems.
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.01sec (det. 0.04 ticks)
+
+
+Optimal solution found
+Objective:           30.000000
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU dual_obj_~          .              .              .             1.0000      
+
+---- EQU dual_cons  
+
+             LOWER          LEVEL          UPPER         MARGINAL
+
+s .m1         1.0000         1.0000        +INF             .          
+s .m2         1.0000         1.0000        +INF             .          
+s .m3         1.0000         1.0000        +INF             .          
+s .m4         1.0000         1.0000        +INF            EPS         
+m1.p1         1.0000         1.0000        +INF            2.0000      
+m1.p2         1.0000         1.0000        +INF             .          
+m1.p3         1.0000         1.0000        +INF            6.0000      
+m2.p1         1.0000         1.0000        +INF            2.0000      
+m2.p2         1.0000         1.0000        +INF             .          
+m2.p3         1.0000         1.0000        +INF            6.0000      
+m3.p1         1.0000         1.0000        +INF            4.0000      
+m3.p2         1.0000         1.0000        +INF            4.0000      
+m4.p2         1.0000         1.0000        +INF            6.0000      
+p1.t          1.0000         1.0000        +INF             .          
+p2.t          1.0000         1.0000        +INF             .          
+p3.t          1.0000         1.0000        +INF            EPS         
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR dualobj           -INF           30.0000        +INF             .          
+
+---- VAR pi  
+
+             LOWER          LEVEL          UPPER         MARGINAL
+
+s .s           .             1.0000        +INF             .          
+s .m1          .              .            +INF            EPS         
+s .m2          .              .            +INF             .          
+s .m3          .              .            +INF             .          
+s .m4          .              .            +INF            2.0000      
+s .p1          .              .            +INF            EPS         
+s .p2          .              .            +INF            EPS         
+s .p3          .             1.0000        +INF             .          
+m1.p1          .              .            +INF            4.0000      
+m1.p2          .              .            +INF            6.0000      
+m1.p3          .             1.0000        +INF             .          
+m1.t           .              .            +INF            EPS         
+m2.p1          .              .            +INF            4.0000      
+m2.p2          .              .            +INF            6.0000      
+m2.p3          .             1.0000        +INF             .          
+m2.t           .              .            +INF            EPS         
+m3.p1          .              .            +INF            2.0000      
+m3.p2          .              .            +INF            2.0000      
+m3.t           .              .            +INF            EPS         
+m4.p2          .              .            +INF             .          
+m4.t           .              .            +INF            EPS         
+p1.t           .             1.0000        +INF             .          
+p2.t           .             1.0000        +INF             .          
+p3.t           .              .            +INF            EPS         
+t .t           .              .            +INF            EPS         
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/16/23 20:31:23 Page 14
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+----     69 VARIABLE dualobj.L             =       30.000  
+
+----     69 VARIABLE pi.L  
+
+s .s  1.00
+s .p3 1.00
+m1.p3 1.00
+m2.p3 1.00
+p1.t  1.00
+p2.t  1.00
+
+
+
+EXECUTION TIME       =        0.094 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+
+
+USER: Introduction to Optimization (CS/ISyE/ECE 524) G230906|0002AS-GEN
+      UW-Madison, CS Dept., Fall 2023, Prof. Ferris              DCE850
+      License for teaching and research at degree granting institutions
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw5\hw5-1.gms
+Output     C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw5\hw5-1.lst

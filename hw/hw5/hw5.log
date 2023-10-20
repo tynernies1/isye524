@@ -1,0 +1,137 @@
+
+--- Job hw5-1.gms Start 10/16/23 20:31:23 44.3.0 8b8fb1cb WEX-WEI x86 64bit/MS Windows
+--- Applying:
+    C:\GAMS\44\gmsprmNT.txt
+--- GAMS Parameters defined
+    Input C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw5\hw5-1.gms
+    PageSize 0
+    ScrDir C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw5\225a\
+    SysDir C:\GAMS\44\
+    LogOption 3
+    ErrMsg 1
+    ErrorLog 99
+    IDE 1
+    LstTitleLeftAligned 1
+Licensee: Introduction to Optimization (CS/ISyE/ECE 524) G230906|0002AS-GEN
+          UW-Madison, CS Dept., Fall 2023, Prof. Ferris              DCE850
+          C:\GAMS\44\gamslice.txt
+          License Admin: Michael C. Ferris, ferris@cs.wisc.edu             
+          Course license for use within the course and related course work
+Processor information: 1 socket(s), 4 core(s), and 8 thread(s) available
+GAMS 44.3.0   Copyright (C) 1987-2023 GAMS Development. All rights reserved
+--- Starting compilation
+--- hw5-1.gms(86) 3 Mb
+--- Starting execution: elapsed 0:00:00.008
+--- hw5-1.gms(26) 4 Mb
+--- Generating LP model construction_max
+--- hw5-1.gms(47) 4 Mb
+---   17 rows  10 columns  37 non-zeroes
+--- Range statistics (absolute non-zero finite values)
+--- RHS       [min, max] : [ 6.000E+00, 1.200E+01] - Zero values observed as well
+--- Bound     [min, max] : [        NA,        NA] - Zero values observed as well
+--- Matrix    [min, max] : [ 1.000E+00, 1.000E+00]
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.022
+
+IBM ILOG CPLEX   44.3.0 8b8fb1cb Sep 1, 2023           WEI x86 64bit/MS Window
+
+--- GAMS/CPLEX licensed for continuous and discrete problems.
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+Version identifier: 22.1.1.0 | 2022-11-27 | 9160aff4d
+CPXPARAM_Advance                                 0
+CPXPARAM_Simplex_Display                         2
+CPXPARAM_Threads                                 1
+CPXPARAM_MIP_Display                             4
+CPXPARAM_MIP_Pool_Capacity                       0
+CPXPARAM_MIP_Tolerances_AbsMIPGap                0
+Tried aggregator 1 time.
+LP Presolve eliminated 11 rows and 1 columns.
+Reduced LP has 5 rows, 9 columns, and 15 nonzeros.
+Presolve time = 0.00 sec. (0.01 ticks)
+Symmetry aggregator did 4 additional substitutions.
+
+Iteration      Dual Objective            In Variable           Out Variable
+     1              34.000000            flow(m2,p3)    balance(s,m2) slack
+     2              34.000000            flow(m2,p1)    balance(p1,t) slack
+     3              30.000000            flow(m3,p2)    balance(s,m3) slack
+     4              30.000000            flow(m2,p2)            flow(m2,p3)
+
+Dual crossover.
+  Dual:  Fixed no variables.
+  Primal:  Fixing 1 variable.
+        0 PMoves:  Infeasibility  0.00000000e+00  Objective  3.00000000e+01
+  Primal:  Pushed 1, exchanged 0.
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.02 ticks)
+
+
+Optimal solution found
+Objective:           30.000000
+
+--- Reading solution for model construction_max
+--- Executing after solve: elapsed 0:00:00.060
+--- hw5-1.gms(49) 4 Mb
+--- Generating LP model construction_dual
+--- hw5-1.gms(67) 4 Mb
+---   17 rows  26 columns  65 non-zeroes
+--- Range statistics (absolute non-zero finite values)
+--- RHS       [min, max] : [ 1.000E+00, 1.000E+00] - Zero values observed as well
+--- Bound     [min, max] : [        NA,        NA] - Zero values observed as well
+--- Matrix    [min, max] : [ 1.000E+00, 1.200E+01]
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.063
+
+IBM ILOG CPLEX   44.3.0 8b8fb1cb Sep 1, 2023           WEI x86 64bit/MS Window
+
+--- GAMS/CPLEX licensed for continuous and discrete problems.
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+Version identifier: 22.1.1.0 | 2022-11-27 | 9160aff4d
+CPXPARAM_Advance                                 0
+CPXPARAM_Simplex_Display                         2
+CPXPARAM_Threads                                 1
+CPXPARAM_MIP_Display                             4
+CPXPARAM_MIP_Pool_Capacity                       0
+CPXPARAM_MIP_Tolerances_AbsMIPGap                0
+Tried aggregator 1 time.
+LP Presolve eliminated 7 rows and 11 columns.
+Reduced LP has 9 rows, 15 columns, and 26 nonzeros.
+Presolve time = 0.00 sec. (0.02 ticks)
+Symmetry aggregator did 7 additional substitutions.
+
+Iteration      Dual Objective            In Variable           Out Variable
+     1               8.000000               pi(p1,t) dual_cons(m2,p1) slack
+     2              16.000000               pi(s,m2) dual_cons(m2,p2) slack
+     3              18.000000               pi(p2,t) dual_cons(m3,p2) slack
+     4              22.000000              pi(m3,p2) dual_cons(m2,p3) slack
+     5              24.000000               pi(s,m3) dual_cons(m3,p1) slack
+     6              28.000000 dual_cons(m2,p2) slack dual_cons(m4,p2) slack
+     7              30.000000              pi(m2,p3)              pi(m3,p2)
+
+Dual crossover.
+  Dual:  Fixing 3 variables.
+        2 DMoves:  Infeasibility  0.00000000e+00  Objective  3.00000000e+01
+        0 DMoves:  Infeasibility  0.00000000e+00  Objective  3.00000000e+01
+  Dual:  Pushed 0, exchanged 3.
+  Primal:  Fixed no variables.
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.01sec (det. 0.04 ticks)
+
+
+Optimal solution found
+Objective:           30.000000
+
+--- Reading solution for model construction_dual
+--- Executing after solve: elapsed 0:00:00.107
+--- hw5-1.gms(69) 4 Mb
+*** Status: Normal completion
+--- Job hw5-1.gms Stop 10/16/23 20:31:23 elapsed 0:00:00.108

@@ -1,0 +1,54 @@
+B 3 C o m p i l a t i o n
+B 89 E x e c u t i o n
+I 89 pred
+B 105 Equation Listing    SOLVE cpm Using LP From line 44
+D 108 incidence
+D 119 endtime
+B 131 Column Listing      SOLVE cpm Using LP From line 44
+E 134 tottime
+E 150 t
+B 176 Range Statistics    SOLVE cpm Using LP From line 44
+B 187 Model Statistics    SOLVE cpm Using LP From line 44
+B 200 Solution Report     SOLVE cpm Using LP From line 44
+F 231 incidence
+F 246 endtime
+G 263 tottime
+G 265 t
+B 286 E x e c u t i o n
+I 286 critical
+B 295 Equation Listing    SOLVE eventtimes Using LP From line 66
+D 298 timeopt
+D 303 incidence
+D 314 endtime
+B 326 Column Listing      SOLVE eventtimes Using LP From line 66
+E 329 tottime
+E 345 t
+E 373 obj
+B 381 Range Statistics    SOLVE eventtimes Using LP From line 66
+B 392 Model Statistics    SOLVE eventtimes Using LP From line 66
+B 405 Solution Report     SOLVE eventtimes Using LP From line 66
+F 438 timeopt
+F 440 incidence
+F 455 endtime
+G 472 tottime
+G 474 t
+G 491 obj
+B 499 Equation Listing    SOLVE eventtimes Using LP From line 69
+D 502 timeopt
+D 507 incidence
+D 518 endtime
+B 530 Column Listing      SOLVE eventtimes Using LP From line 69
+E 533 tottime
+E 549 t
+E 577 obj
+B 585 Range Statistics    SOLVE eventtimes Using LP From line 69
+B 596 Model Statistics    SOLVE eventtimes Using LP From line 69
+B 609 Solution Report     SOLVE eventtimes Using LP From line 69
+F 642 timeopt
+F 644 incidence
+F 659 endtime
+G 676 tottime
+G 678 t
+G 695 obj
+B 703 E x e c u t i o n
+I 703 critical

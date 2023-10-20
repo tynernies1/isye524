@@ -1,0 +1,434 @@
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/20/23 00:45:50 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1  set P Personnel / 2*7 /
+   2  M Months / Feb, Mar, Apr, May, Jun, Jul, Aug, Sep /
+   3  nodes(P, M) Nodes;
+   4   
+   5  alias(P, Q), (M, N), (nodes, I, J);
+   6   
+   7  parameters
+   8  supply(P, M) / 3.Feb 1, 3.Sep -1 /
+   9  require(M) / Feb 3, Mar 4, Apr 6, May 7, Jun 4, Jul 6, Aug 2, Sep 3  /
+  10  low_nodes(M) / Feb 3, Mar 3, Apr 5, May 6, Jun 3, Jul 5, Aug 2, Sep 3 /
+  11  high_nodes(M) / Feb 3, Mar 7, Apr 7, May 7, Jun 6, Jul 7, Aug 5, Sep 3 /
+  12  ;
+  13   
+  14  scalar
+  15  ot_pct / [1/4] /
+  16  max_loss / [1/3] /
+  17  hire_cost / 100 /
+  18  redeploy_cost / 160 /
+  19  shortage_surplus_cost / 200 /;
+  20   
+  21  nodes(P, M) = yes$(ord(P)+1 le high_nodes(M) and ord(P)+1 ge low_nodes(M));
+  22   
+  23  set arcs(P, M, Q, N);
+  24   
+  25  arcs(P, M, Q, N) = yes$((ord(M) + 1 = ord(N)) and nodes(P, M) and nodes(P, N));
+  26   
+  27  display nodes, arcs;
+  28   
+  29  parameter
+  30  cost(P, M, Q, N);
+  31   
+  32  cost(P, M, Q, N) = hire_cost*(ord(Q)-ord(P))$(ord(P) lt ord(Q))
+  33                      + redeploy_cost*(ord(P) - ord(Q))$(ord(P) gt ord(Q))
+  34                      + shortage_surplus_cost*(abs(ord(Q)+1 - require(N)))$(ord(Q)+1 ne require(N));
+  35  positive variable
+  36  flow(P, M, Q, N);
+  37   
+  38  variable
+  39  totcost;
+  40   
+  41  equations
+  42  obj, balance(P, M);
+  43   
+  44  obj..
+  45  totcost =e= sum(arcs, cost(arcs)*flow(arcs));
+  46   
+  47  balance(I)..
+  48  sum(arcs(I, J), flow(I, J)) - sum(arcs(J, I), flow(J, I)) =e= supply(I);
+  49   
+  50  model short / all /;
+  51   
+  52  solve short using lp min totcost;
+  53   
+  54  option flow:0:0:1;
+  55  display flow.l;
+  56   
+  57  parameter workers(M) 'Number of workers in each month';
+  58   
+  59  *workers(M) = flow.l();
+  60   
+  61  *display workers;
+  62   
+  68  short.optfile = 1;
+  69   
+  70   
+  71   
+  72   
+  73   
+  74   
+  75   
+  76   
+  77   
+  78   
+
+
+COMPILATION TIME     =        0.000 SECONDS      3 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/20/23 00:45:50 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+----     27 SET nodes  Nodes
+
+          Feb         Mar         Apr         May         Jun         Jul         Aug         Sep
+
+2                                                                                 YES
+3         YES         YES                                 YES                     YES         YES
+4                     YES                                 YES                     YES
+5                     YES         YES                     YES         YES         YES
+6                     YES         YES         YES         YES         YES
+7                     YES         YES         YES                     YES
+
+
+----     27 SET arcs  
+
+INDEX 1 = 3
+
+              Mar         Sep
+
+Feb.2         YES
+Feb.3         YES
+Feb.4         YES
+Feb.5         YES
+Feb.6         YES
+Feb.7         YES
+Aug.2                     YES
+Aug.3                     YES
+Aug.4                     YES
+Aug.5                     YES
+Aug.6                     YES
+Aug.7                     YES
+
+INDEX 1 = 5
+
+              Apr         Jul         Aug
+
+Mar.2         YES
+Mar.3         YES
+Mar.4         YES
+Mar.5         YES
+Mar.6         YES
+Mar.7         YES
+Jun.2                     YES
+Jun.3                     YES
+Jun.4                     YES
+Jun.5                     YES
+Jun.6                     YES
+Jun.7                     YES
+Jul.2                                 YES
+Jul.3                                 YES
+Jul.4                                 YES
+Jul.5                                 YES
+Jul.6                                 YES
+Jul.7                                 YES
+
+INDEX 1 = 6
+
+              Apr         May         Jun         Jul
+
+Mar.2         YES
+Mar.3         YES
+Mar.4         YES
+Mar.5         YES
+Mar.6         YES
+Mar.7         YES
+Apr.2                     YES
+Apr.3                     YES
+Apr.4                     YES
+Apr.5                     YES
+Apr.6                     YES
+Apr.7                     YES
+May.2                                 YES
+May.3                                 YES
+May.4                                 YES
+May.5                                 YES
+May.6                                 YES
+May.7                                 YES
+Jun.2                                             YES
+Jun.3                                             YES
+Jun.4                                             YES
+Jun.5                                             YES
+Jun.6                                             YES
+Jun.7                                             YES
+
+INDEX 1 = 7
+
+              Apr         May
+
+Mar.2         YES
+Mar.3         YES
+Mar.4         YES
+Mar.5         YES
+Mar.6         YES
+Mar.7         YES
+Apr.2                     YES
+Apr.3                     YES
+Apr.4                     YES
+Apr.5                     YES
+Apr.6                     YES
+Apr.7                     YES
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/20/23 00:45:50 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Equation Listing    SOLVE short Using LP From line 52
+
+
+---- obj  =E=  
+
+obj..  - 560*flow(3,Feb,2,Mar) - 200*flow(3,Feb,3,Mar) - 100*flow(3,Feb,4,Mar) - 400*flow(3,Feb,5,Mar) - 700*flow(3,Feb,6,Mar) - 1000*flow(3,Feb,7,Mar) - 360*flow(3,Aug,2,Sep) - 300*flow(3,Aug,4,Sep) - 600*flow(3,Aug,5,Sep) - 900*flow(3,Aug,6,Sep) - 1200*flow(3,Aug,7,Sep) - 1280*flow(5,Mar,2,Apr) - 920*flow(5,Mar,3,Apr) - 560*flow(5,Mar,4,Apr) - 200*flow(5,Mar,5,Apr) - 100*flow(5,Mar,6,Apr) - 400*flow(5,Mar,7,Apr) - 1280*flow(5,Jun,2,Jul) - 920*flow(5,Jun,3,Jul) - 560*flow(5,Jun,4,Jul) - 200*flow(5,Jun,5,Jul) - 100*flow(5,Jun,6,Jul) - 400*flow(5,Jun,7,Jul) - 480*flow(5,Jul,2,Aug) - 520*flow(5,Jul,3,Aug) - 560*flow(5,Jul,4,Aug) - 600*flow(5,Jul,5,Aug) - 900*flow(5,Jul,6,Aug) - 1200*flow(5,Jul,7,Aug) - 1440*flow(6,Mar,2,Apr) - 1080*flow(6,Mar,3,Apr) - 720*flow(6,Mar,4,Apr) - 360*flow(6,Mar,5,Apr) - 300*flow(6,Mar,7,Apr) - 1640*flow(6,Apr,2,May) - 1280*flow(6,Apr,3,May) - 920*flow(6,Apr,4,May) - 560*flow(6,Apr,5,May) - 200*flow(6,Apr,6,May) - 100*flow(6,Apr,7,May) - 1040*flow(6,May,2,Jun) - 680*flow(6,May,3,Jun) - 320*flow(6,May,4,Jun) - 360*flow(6,May,5,Jun) - 400*flow(6,May,6,Jun) - 700*flow(6,May,7,Jun) - 1440*flow(6,Jun,2,Jul) - 1080*flow(6,Jun,3,Jul) - 720*flow(6,Jun,4,Jul) - 360*flow(6,Jun,5,Jul) - 300*flow(6,Jun,7,Jul) - 1600*flow(7,Mar,2,Apr) - 1240*flow(7,Mar,3,Apr) - 880*flow(7,Mar,4,Apr) - 520*flow(7,Mar,5,Apr) - 160*flow(7,Mar,6,Apr) - 200*flow(7,Mar,7,Apr) - 1800*flow(7,Apr,2,May) - 1440*flow(7,Apr,3,May) - 1080*flow(7,Apr,4,May) - 720*flow(7,Apr,5,May) - 360*flow(7,Apr,6,May) + totcost =E= 0 ; (LHS = 0)
+     
+
+---- balance  =E=  
+
+balance(2,Aug)..  - flow(5,Jul,2,Aug) =E= 0 ; (LHS = 0)
+     
+balance(3,Feb)..  flow(3,Feb,3,Mar) + flow(3,Feb,4,Mar) + flow(3,Feb,5,Mar) + flow(3,Feb,6,Mar) + flow(3,Feb,7,Mar) =E= 1 ; (LHS = 0, INFES = 1 ****)
+     
+balance(3,Mar)..  - flow(3,Feb,3,Mar) =E= 0 ; (LHS = 0)
+     
+REMAINING 20 ENTRIES SKIPPED
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/20/23 00:45:50 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Column Listing      SOLVE short Using LP From line 52
+
+
+---- flow  
+
+flow(3,Feb,2,Mar)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+     -560       obj
+
+flow(3,Feb,3,Mar)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+     -200       obj
+        1       balance(3,Feb)
+       -1       balance(3,Mar)
+
+flow(3,Feb,4,Mar)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+     -100       obj
+        1       balance(3,Feb)
+       -1       balance(4,Mar)
+
+REMAINING 63 ENTRIES SKIPPED
+
+---- totcost  
+
+totcost
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       obj
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/20/23 00:45:50 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Range Statistics    SOLVE short Using LP From line 52
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 1.000E+00, 1.000E+00] - Zero values observed as well
+Bound     [min, max] : [        NA,        NA] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 1.800E+03]
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/20/23 00:45:50 Page 6
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE short Using LP From line 52
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           2     SINGLE EQUATIONS           24
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES           67
+NON ZERO ELEMENTS           129
+
+
+GENERATION TIME      =        0.016 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/20/23 00:45:50 Page 7
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE short Using LP From line 52
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   short               OBJECTIVE  totcost
+     TYPE    LP                  DIRECTION  MINIMIZE
+     SOLVER  CPLEX               FROM LINE  52
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE             1780.0000
+
+ RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ ITERATION COUNT, LIMIT         0    2147483647
+--- GAMS/CPLEX licensed for continuous and discrete problems.
+--- GMO setup time: 0.00s
+--- GMO memory 0.51 Mb (peak 0.51 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.01 Mb)
+--- Starting Cplex
+
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.03 ticks)
+
+
+Optimal solution found
+Objective:         1780.000000
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU obj                 .              .              .             1.0000      
+
+---- EQU balance  
+
+             LOWER          LEVEL          UPPER         MARGINAL
+
+2.Aug          .              .              .              .          
+3.Feb         1.0000         1.0000         1.0000       700.0000      
+3.Mar          .              .              .           500.0000      
+3.Jun          .              .              .              .          
+3.Aug          .              .              .         -1080.0000      
+3.Sep        -1.0000        -1.0000        -1.0000     -1080.0000      
+4.Mar          .              .              .           600.0000      
+4.Jun          .              .              .              .          
+4.Aug          .              .              .              .          
+5.Mar          .              .              .           300.0000      
+5.Apr          .              .              .           100.0000      
+5.Jun          .              .              .          -360.0000      
+5.Jul          .              .              .          -560.0000      
+5.Aug          .              .              .              .          
+6.Mar          .              .              .             EPS         
+6.Apr          .              .              .           200.0000      
+6.May          .              .              .              .          
+6.Jun          .              .              .          -400.0000      
+6.Jul          .              .              .              .          
+7.Mar          .              .              .          -300.0000      
+7.Apr          .              .              .           360.0000      
+7.May          .              .              .           360.0000      
+7.Jul          .              .              .              .          
+
+---- VAR flow  
+
+                   LOWER          LEVEL          UPPER         MARGINAL
+
+3.Feb.2.Mar          .              .            +INF          560.0000      
+3.Feb.3.Mar          .              .            +INF             .          
+3.Feb.4.Mar          .              .            +INF             .          
+3.Feb.5.Mar          .             1.0000        +INF             .          
+3.Feb.6.Mar          .              .            +INF             .          
+3.Feb.7.Mar          .              .            +INF             .          
+3.Aug.2.Sep          .              .            +INF          360.0000      
+3.Aug.3.Sep          .             1.0000        +INF             .          
+3.Aug.4.Sep          .              .            +INF          300.0000      
+3.Aug.5.Sep          .              .            +INF          600.0000      
+3.Aug.6.Sep          .              .            +INF          900.0000      
+3.Aug.7.Sep          .              .            +INF         1200.0000      
+5.Mar.2.Apr          .              .            +INF         1280.0000      
+5.Mar.3.Apr          .              .            +INF          920.0000      
+5.Mar.4.Apr          .              .            +INF          560.0000      
+5.Mar.5.Apr          .              .            +INF             .          
+5.Mar.6.Apr          .             1.0000        +INF             .          
+5.Mar.7.Apr          .              .            +INF          460.0000      
+5.Jun.2.Jul          .              .            +INF         1280.0000      
+5.Jun.3.Jul          .              .            +INF          920.0000      
+5.Jun.4.Jul          .              .            +INF          560.0000      
+5.Jun.5.Jul          .             1.0000        +INF             .          
+5.Jun.6.Jul          .              .            +INF          460.0000      
+5.Jun.7.Jul          .              .            +INF          760.0000      
+5.Jul.2.Aug          .              .            +INF         1040.0000      
+5.Jul.3.Aug          .             1.0000        +INF             .          
+5.Jul.4.Aug          .              .            +INF         1120.0000      
+5.Jul.5.Aug          .              .            +INF         1160.0000      
+5.Jul.6.Aug          .              .            +INF          900.0000      
+5.Jul.7.Aug          .              .            +INF         1200.0000      
+6.Mar.2.Apr          .              .            +INF         1440.0000      
+6.Mar.3.Apr          .              .            +INF         1080.0000      
+6.Mar.4.Apr          .              .            +INF          720.0000      
+6.Mar.5.Apr          .              .            +INF          460.0000      
+6.Mar.6.Apr          .              .            +INF          200.0000      
+6.Mar.7.Apr          .              .            +INF          660.0000      
+6.Apr.2.May          .              .            +INF         1640.0000      
+6.Apr.3.May          .              .            +INF         1280.0000      
+6.Apr.4.May          .              .            +INF          920.0000      
+6.Apr.5.May          .              .            +INF          560.0000      
+6.Apr.6.May          .             1.0000        +INF             .          
+6.Apr.7.May          .              .            +INF          260.0000      
+6.May.2.Jun          .              .            +INF         1040.0000      
+6.May.3.Jun          .              .            +INF          680.0000      
+6.May.4.Jun          .              .            +INF          320.0000      
+6.May.5.Jun          .             1.0000        +INF             .          
+6.May.6.Jun          .              .            +INF             .          
+6.May.7.Jun          .              .            +INF          700.0000      
+6.Jun.2.Jul          .              .            +INF         1440.0000      
+6.Jun.3.Jul          .              .            +INF         1080.0000      
+6.Jun.4.Jul          .              .            +INF          720.0000      
+6.Jun.5.Jul          .              .            +INF          200.0000      
+6.Jun.6.Jul          .              .            +INF          400.0000      
+6.Jun.7.Jul          .              .            +INF          700.0000      
+7.Mar.2.Apr          .              .            +INF         1600.0000      
+7.Mar.3.Apr          .              .            +INF         1240.0000      
+7.Mar.4.Apr          .              .            +INF          880.0000      
+7.Mar.5.Apr          .              .            +INF          920.0000      
+7.Mar.6.Apr          .              .            +INF          660.0000      
+7.Mar.7.Apr          .              .            +INF          860.0000      
+7.Apr.2.May          .              .            +INF         1800.0000      
+7.Apr.3.May          .              .            +INF         1440.0000      
+7.Apr.4.May          .              .            +INF         1080.0000      
+7.Apr.5.May          .              .            +INF          720.0000      
+7.Apr.6.May          .              .            +INF             .          
+7.Apr.7.May          .              .            +INF             .          
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR totcost           -INF         1780.0000        +INF             .          
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/20/23 00:45:50 Page 8
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+----     55 VARIABLE flow.L  
+
+3.Feb.5.Mar 1
+3.Aug.3.Sep 1
+5.Mar.6.Apr 1
+5.Jun.5.Jul 1
+5.Jul.3.Aug 1
+6.Apr.6.May 1
+6.May.5.Jun 1
+
+
+
+EXECUTION TIME       =        0.094 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+
+
+USER: Introduction to Optimization (CS/ISyE/ECE 524) G230906|0002AS-GEN
+      UW-Madison, CS Dept., Fall 2023, Prof. Ferris              DCE850
+      License for teaching and research at degree granting institutions
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw5\hw5-2.gms
+Output     C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw5\hw5-2.lst

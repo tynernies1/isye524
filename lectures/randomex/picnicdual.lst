@@ -1,0 +1,470 @@
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/16/23 18:10:57 Page 1
+max flow problem
+C o m p i l a t i o n
+
+
+   2   
+      The Hatfields, Montagues, McCoys and Capulets are going on their annual
+      family picnic.  Four cars are available to transport the families to
+      the picnic.  The cars can carry the following numbers of people:
+      car 1, 4; car 2, 3; car 3, 3; car 4, 4.
+      There are four people in each family, and no car can carry more than two
+      people from any one family.  Determine the maximum number of people that 
+      can be transported to the picnic.
+  12   
+  13  *** DATA SECTION
+  14   
+  15  set nodes /s,hatfield,montague,mccoy,capulet,car1*car4,t/;
+  16  alias(i,j,k,nodes);
+  17  set family(nodes) /hatfield,montague,mccoy,capulet/;
+  18  set car(nodes) /car1*car4/;
+  19   
+  20  set arcs(i,j);
+  21  arcs('s',family) = yes;
+  22  arcs(family,car) = yes;
+  23  arcs(car,'t') = yes;
+  24   
+  25  parameter cap(car) /car1 4, car2 3, car3 3, car4 4/;
+  26  parameter famsize(family);
+  27  famsize(family) = 4;
+  28  * famsize('hatfield') = 1;  famsize('capulet') = 2;
+  29  parameter perFam(family);
+  30  perFam(family) = 2;
+  31   
+  32  parameter u(i,j);
+  33  u('s',family) = famsize(family);
+  34  u(family,car) = perFam(family);
+  35  u(car,'t') = cap(car);
+  36   
+  37  *** MODEL SECTION
+  38   
+  39  positive variables
+  40      x(i,j)    Number of people from family in car;
+  41   
+  42  variable totgo total people going to picnic;
+  43   
+  44  equations
+  45      defobj, balance(i);
+  46   
+  47  defobj..
+  48    totgo =e= sum(j$arcs('s',j), x('s',j));
+  49   
+  50  balance(i)$(not (sameas(i,'s') or sameas(i,'t')))..
+  51      sum(k$arcs(i,k), x(i,k))
+  52      - sum(j$arcs(j,i), x(j,i)) =E= 0;
+  53   
+  54  model maxflow /defobj,balance/;
+  55   
+  56  x.up(arcs) = u(arcs);
+  57   
+  58  * use network simplex method (in option file)
+  64  maxflow.optfile = 1;
+  65   
+  66  solve maxflow using lp max totgo;
+  67   
+  68  * Set up standard dual problem (see later)
+  69  * Assumes that pi(family,car) are duals on capacities
+  70   
+  71  variable dualobj;
+  72  positive variables pi(i,j);
+  73  variables phi(i);
+  74  equation def_dualobj, dualcons(i,j);
+  75   
+  76  def_dualobj..
+  77    dualobj =e= sum((i,j)$arcs(i,j), u(i,j)*pi(i,j));
+  78   
+  79  dualcons(i,j)$arcs(i,j)..
+  80    phi(i)$(not sameas(i,'s'))
+  81    + pi(i,j)
+  82    - phi(j)$(not sameas(j,'t')) =g= 1$sameas(i,'s');
+  83   
+  84  model dualflow /def_dualobj, dualcons/;
+  85  option limrow = 100, limcol=0;
+  86  solve dualflow using lp min dualobj;
+
+
+COMPILATION TIME     =        0.000 SECONDS      3 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/16/23 18:10:57 Page 2
+max flow problem
+Equation Listing    SOLVE maxflow Using LP From line 66
+
+
+---- defobj  =E=  
+
+defobj..  - x(s,hatfield) - x(s,montague) - x(s,mccoy) - x(s,capulet) + totgo =E= 0 ; (LHS = 0)
+     
+
+---- balance  =E=  
+
+balance(hatfield)..  - x(s,hatfield) + x(hatfield,car1) + x(hatfield,car2) + x(hatfield,car3) + x(hatfield,car4) =E= 0 ; (LHS = 0)
+     
+balance(montague)..  - x(s,montague) + x(montague,car1) + x(montague,car2) + x(montague,car3) + x(montague,car4) =E= 0 ; (LHS = 0)
+     
+balance(mccoy)..  - x(s,mccoy) + x(mccoy,car1) + x(mccoy,car2) + x(mccoy,car3) + x(mccoy,car4) =E= 0 ; (LHS = 0)
+     
+REMAINING 5 ENTRIES SKIPPED
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/16/23 18:10:57 Page 3
+max flow problem
+Column Listing      SOLVE maxflow Using LP From line 66
+
+
+---- x  Number of people from family in car
+
+x(s,hatfield)
+                (.LO, .L, .UP, .M = 0, 0, 4, 0)
+       -1       defobj
+       -1       balance(hatfield)
+
+x(s,montague)
+                (.LO, .L, .UP, .M = 0, 0, 4, 0)
+       -1       defobj
+       -1       balance(montague)
+
+x(s,mccoy)
+                (.LO, .L, .UP, .M = 0, 0, 4, 0)
+       -1       defobj
+       -1       balance(mccoy)
+
+REMAINING 21 ENTRIES SKIPPED
+
+---- totgo  total people going to picnic
+
+totgo
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       defobj
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/16/23 18:10:57 Page 4
+max flow problem
+Range Statistics    SOLVE maxflow Using LP From line 66
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [        NA,        NA] - Zero values observed as well
+Bound     [min, max] : [ 2.000E+00, 4.000E+00] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 1.000E+00]
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/16/23 18:10:57 Page 5
+max flow problem
+Model Statistics    SOLVE maxflow Using LP From line 66
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           2     SINGLE EQUATIONS            9
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES           25
+NON ZERO ELEMENTS            45
+
+
+GENERATION TIME      =        0.000 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/16/23 18:10:57 Page 6
+max flow problem
+Solution Report     SOLVE maxflow Using LP From line 66
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   maxflow             OBJECTIVE  totgo
+     TYPE    LP                  DIRECTION  MAXIMIZE
+     SOLVER  CPLEX               FROM LINE  66
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE               14.0000
+
+ RESOURCE USAGE, LIMIT          0.016 10000000000.000
+ ITERATION COUNT, LIMIT         0    2147483647
+--- GAMS/CPLEX licensed for continuous and discrete problems.
+
+Reading parameter(s) from "C:\Users\Rocke\OneDrive\Documents\isye524\lectures\randomex\cplex.opt"
+>>  lpmethod 3
+>>  netfind 2
+>>  preind 0
+Finished reading from "C:\Users\Rocke\OneDrive\Documents\isye524\lectures\randomex\cplex.opt"
+
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.02sec (det. 0.01 ticks)
+
+
+Optimal solution found
+Objective:           14.000000
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU defobj              .              .              .             1.0000      
+
+---- EQU balance  
+
+                LOWER          LEVEL          UPPER         MARGINAL
+
+hatfield          .              .              .            -1.0000      
+montague          .              .              .            -1.0000      
+mccoy             .              .              .            -1.0000      
+capulet           .              .              .            -1.0000      
+car1              .              .              .            -1.0000      
+car2              .              .              .            -1.0000      
+car3              .              .              .            -1.0000      
+car4              .              .              .            -1.0000      
+
+---- VAR x  Number of people from family in car
+
+                         LOWER          LEVEL          UPPER         MARGINAL
+
+s       .hatfield          .             4.0000         4.0000          .          
+s       .montague          .             2.0000         4.0000          .          
+s       .mccoy             .             4.0000         4.0000         EPS         
+s       .capulet           .             4.0000         4.0000         EPS         
+hatfield.car1              .             2.0000         2.0000         EPS         
+hatfield.car2              .              .             2.0000         EPS         
+hatfield.car3              .             2.0000         2.0000         EPS         
+hatfield.car4              .              .             2.0000         EPS         
+montague.car1              .             2.0000         2.0000         EPS         
+montague.car2              .              .             2.0000         EPS         
+montague.car3              .              .             2.0000          .          
+montague.car4              .              .             2.0000          .          
+mccoy   .car1              .              .             2.0000          .          
+mccoy   .car2              .             2.0000         2.0000         EPS         
+mccoy   .car3              .              .             2.0000          .          
+mccoy   .car4              .             2.0000         2.0000         EPS         
+capulet .car1              .              .             2.0000         EPS         
+capulet .car2              .             1.0000         2.0000          .          
+capulet .car3              .             1.0000         2.0000          .          
+capulet .car4              .             2.0000         2.0000         EPS         
+car1    .t                 .             4.0000         4.0000         1.0000      
+car2    .t                 .             3.0000         3.0000         1.0000      
+car3    .t                 .             3.0000         3.0000         1.0000      
+car4    .t                 .             4.0000         4.0000         1.0000      
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR totgo             -INF           14.0000        +INF             .          
+
+  totgo  total people going to picnic
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/16/23 18:10:57 Page 7
+max flow problem
+Equation Listing    SOLVE dualflow Using LP From line 86
+
+
+---- def_dualobj  =E=  
+
+def_dualobj..  dualobj - 4*pi(s,hatfield) - 4*pi(s,montague) - 4*pi(s,mccoy) - 4*pi(s,capulet) - 2*pi(hatfield,car1) - 2*pi(hatfield,car2) - 2*pi(hatfield,car3) - 2*pi(hatfield,car4) - 2*pi(montague,car1) - 2*pi(montague,car2) - 2*pi(montague,car3) - 2*pi(montague,car4) - 2*pi(mccoy,car1) - 2*pi(mccoy,car2) - 2*pi(mccoy,car3) - 2*pi(mccoy,car4) - 2*pi(capulet,car1) - 2*pi(capulet,car2) - 2*pi(capulet,car3) - 2*pi(capulet,car4) - 4*pi(car1,t) - 3*pi(car2,t) - 3*pi(car3,t) - 4*pi(car4,t) =E= 0 ; (LHS = 0)
+     
+
+---- dualcons  =G=  
+
+dualcons(s,hatfield)..  pi(s,hatfield) - phi(hatfield) =G= 1 ; (LHS = 0, INFES = 1 ****)
+     
+dualcons(s,montague)..  pi(s,montague) - phi(montague) =G= 1 ; (LHS = 0, INFES = 1 ****)
+     
+dualcons(s,mccoy)..  pi(s,mccoy) - phi(mccoy) =G= 1 ; (LHS = 0, INFES = 1 ****)
+     
+dualcons(s,capulet)..  pi(s,capulet) - phi(capulet) =G= 1 ; (LHS = 0, INFES = 1 ****)
+     
+dualcons(hatfield,car1)..  pi(hatfield,car1) + phi(hatfield) - phi(car1) =G= 0 ; (LHS = 0)
+     
+dualcons(hatfield,car2)..  pi(hatfield,car2) + phi(hatfield) - phi(car2) =G= 0 ; (LHS = 0)
+     
+dualcons(hatfield,car3)..  pi(hatfield,car3) + phi(hatfield) - phi(car3) =G= 0 ; (LHS = 0)
+     
+dualcons(hatfield,car4)..  pi(hatfield,car4) + phi(hatfield) - phi(car4) =G= 0 ; (LHS = 0)
+     
+dualcons(montague,car1)..  pi(montague,car1) + phi(montague) - phi(car1) =G= 0 ; (LHS = 0)
+     
+dualcons(montague,car2)..  pi(montague,car2) + phi(montague) - phi(car2) =G= 0 ; (LHS = 0)
+     
+dualcons(montague,car3)..  pi(montague,car3) + phi(montague) - phi(car3) =G= 0 ; (LHS = 0)
+     
+dualcons(montague,car4)..  pi(montague,car4) + phi(montague) - phi(car4) =G= 0 ; (LHS = 0)
+     
+dualcons(mccoy,car1)..  pi(mccoy,car1) + phi(mccoy) - phi(car1) =G= 0 ; (LHS = 0)
+     
+dualcons(mccoy,car2)..  pi(mccoy,car2) + phi(mccoy) - phi(car2) =G= 0 ; (LHS = 0)
+     
+dualcons(mccoy,car3)..  pi(mccoy,car3) + phi(mccoy) - phi(car3) =G= 0 ; (LHS = 0)
+     
+dualcons(mccoy,car4)..  pi(mccoy,car4) + phi(mccoy) - phi(car4) =G= 0 ; (LHS = 0)
+     
+dualcons(capulet,car1)..  pi(capulet,car1) + phi(capulet) - phi(car1) =G= 0 ; (LHS = 0)
+     
+dualcons(capulet,car2)..  pi(capulet,car2) + phi(capulet) - phi(car2) =G= 0 ; (LHS = 0)
+     
+dualcons(capulet,car3)..  pi(capulet,car3) + phi(capulet) - phi(car3) =G= 0 ; (LHS = 0)
+     
+dualcons(capulet,car4)..  pi(capulet,car4) + phi(capulet) - phi(car4) =G= 0 ; (LHS = 0)
+     
+dualcons(car1,t)..  pi(car1,t) + phi(car1) =G= 0 ; (LHS = 0)
+     
+dualcons(car2,t)..  pi(car2,t) + phi(car2) =G= 0 ; (LHS = 0)
+     
+dualcons(car3,t)..  pi(car3,t) + phi(car3) =G= 0 ; (LHS = 0)
+     
+dualcons(car4,t)..  pi(car4,t) + phi(car4) =G= 0 ; (LHS = 0)
+     
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/16/23 18:10:57 Page 8
+max flow problem
+Range Statistics    SOLVE dualflow Using LP From line 86
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 1.000E+00, 1.000E+00] - Zero values observed as well
+Bound     [min, max] : [        NA,        NA] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 4.000E+00]
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/16/23 18:10:57 Page 9
+max flow problem
+Model Statistics    SOLVE dualflow Using LP From line 86
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           2     SINGLE EQUATIONS           25
+BLOCKS OF VARIABLES           3     SINGLE VARIABLES           33
+NON ZERO ELEMENTS            89
+
+
+GENERATION TIME      =        0.000 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/16/23 18:10:57 Page 10
+max flow problem
+Solution Report     SOLVE dualflow Using LP From line 86
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   dualflow            OBJECTIVE  dualobj
+     TYPE    LP                  DIRECTION  MINIMIZE
+     SOLVER  CPLEX               FROM LINE  86
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE               14.0000
+
+ RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ ITERATION COUNT, LIMIT         2    2147483647
+--- GAMS/CPLEX licensed for continuous and discrete problems.
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.06 ticks)
+
+
+Optimal solution found
+Objective:           14.000000
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU def_dualo~          .              .              .             1.0000      
+
+---- EQU dualcons  
+
+                         LOWER          LEVEL          UPPER         MARGINAL
+
+s       .hatfield         1.0000         1.0000        +INF            4.0000      
+s       .montague         1.0000         1.0000        +INF            2.0000      
+s       .mccoy            1.0000         1.0000        +INF            4.0000      
+s       .capulet          1.0000         1.0000        +INF            4.0000      
+hatfield.car1              .              .            +INF             .          
+hatfield.car2              .              .            +INF            2.0000      
+hatfield.car3              .              .            +INF            1.0000      
+hatfield.car4              .              .            +INF            1.0000      
+montague.car1              .              .            +INF            1.0000      
+montague.car2              .              .            +INF             .          
+montague.car3              .              .            +INF             .          
+montague.car4              .              .            +INF            1.0000      
+mccoy   .car1              .              .            +INF            1.0000      
+mccoy   .car2              .              .            +INF            1.0000      
+mccoy   .car3              .              .            +INF            2.0000      
+mccoy   .car4              .              .            +INF             .          
+capulet .car1              .              .            +INF            2.0000      
+capulet .car2              .              .            +INF             .          
+capulet .car3              .              .            +INF             .          
+capulet .car4              .              .            +INF            2.0000      
+car1    .t                 .              .            +INF            4.0000      
+car2    .t                 .              .            +INF            3.0000      
+car3    .t                 .              .            +INF            3.0000      
+car4    .t                 .              .            +INF            4.0000      
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR dualobj           -INF           14.0000        +INF             .          
+
+---- VAR pi  
+
+                         LOWER          LEVEL          UPPER         MARGINAL
+
+s       .hatfield          .              .            +INF             .          
+s       .montague          .              .            +INF            2.0000      
+s       .mccoy             .              .            +INF             .          
+s       .capulet           .              .            +INF             .          
+hatfield.car1              .              .            +INF            2.0000      
+hatfield.car2              .              .            +INF             .          
+hatfield.car3              .              .            +INF            1.0000      
+hatfield.car4              .              .            +INF            1.0000      
+montague.car1              .              .            +INF            1.0000      
+montague.car2              .              .            +INF            2.0000      
+montague.car3              .              .            +INF            2.0000      
+montague.car4              .              .            +INF            1.0000      
+mccoy   .car1              .              .            +INF            1.0000      
+mccoy   .car2              .              .            +INF            1.0000      
+mccoy   .car3              .              .            +INF             .          
+mccoy   .car4              .              .            +INF            2.0000      
+capulet .car1              .              .            +INF            EPS         
+capulet .car2              .              .            +INF            2.0000      
+capulet .car3              .              .            +INF            2.0000      
+capulet .car4              .              .            +INF             .          
+car1    .t                 .             1.0000        +INF             .          
+car2    .t                 .             1.0000        +INF             .          
+car3    .t                 .             1.0000        +INF             .          
+car4    .t                 .             1.0000        +INF             .          
+
+---- VAR phi  
+
+                LOWER          LEVEL          UPPER         MARGINAL
+
+hatfield        -INF           -1.0000        +INF             .          
+montague        -INF           -1.0000        +INF             .          
+mccoy           -INF           -1.0000        +INF             .          
+capulet         -INF           -1.0000        +INF             .          
+car1            -INF           -1.0000        +INF             .          
+car2            -INF           -1.0000        +INF             .          
+car3            -INF           -1.0000        +INF             .          
+car4            -INF           -1.0000        +INF             .          
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+
+
+EXECUTION TIME       =        0.204 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+
+
+USER: Introduction to Optimization (CS/ISyE/ECE 524) G230906|0002AS-GEN
+      UW-Madison, CS Dept., Fall 2023, Prof. Ferris              DCE850
+      License for teaching and research at degree granting institutions
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\Rocke\OneDrive\Documents\isye524\lectures\randomex\picnicdual.gms
+Output     C:\Users\Rocke\OneDrive\Documents\isye524\lectures\randomex\picnicdual.lst

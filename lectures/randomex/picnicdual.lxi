@@ -1,0 +1,25 @@
+B 3 C o m p i l a t i o n
+B 89 Equation Listing    SOLVE maxflow Using LP From line 66
+D 92 defobj
+D 97 balance
+B 109 Column Listing      SOLVE maxflow Using LP From line 66
+E 112 x
+E 131 totgo
+B 139 Range Statistics    SOLVE maxflow Using LP From line 66
+B 150 Model Statistics    SOLVE maxflow Using LP From line 66
+B 163 Solution Report     SOLVE maxflow Using LP From line 66
+F 203 defobj
+F 205 balance
+G 218 x
+G 249 totgo
+B 259 Equation Listing    SOLVE dualflow Using LP From line 86
+D 262 def_dualobj
+D 267 dualcons
+B 319 Range Statistics    SOLVE dualflow Using LP From line 86
+B 330 Model Statistics    SOLVE dualflow Using LP From line 86
+B 343 Solution Report     SOLVE dualflow Using LP From line 86
+F 376 def_dualobj
+F 378 dualcons
+G 409 dualobj
+G 411 pi
+G 440 phi

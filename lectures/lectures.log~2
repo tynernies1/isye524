@@ -1,5 +1,4 @@
-
---- Job mincost2.gms Start 10/03/23 13:10:12 44.3.0 8b8fb1cb WEX-WEI x86 64bit/MS Windows
+--- Job mincost2.gms Start 10/03/23 12:55:19 44.3.0 8b8fb1cb WEX-WEI x86 64bit/MS Windows
 --- Applying:
     C:\GAMS\44\gmsprmNT.txt
 --- GAMS Parameters defined
@@ -23,7 +22,7 @@ GAMS 44.3.0   Copyright (C) 1987-2023 GAMS Development. All rights reserved
 --- mincost2.gms(64) 3 Mb
 --- $echo File C:\Users\Rocke\OneDrive\Documents\isye524\lectures\cplex.opt
 --- mincost2.gms(69) 3 Mb
---- Starting execution: elapsed 0:00:00.010
+--- Starting execution: elapsed 0:00:00.008
 --- mincost2.gms(42) 4 Mb
 --- Generating LP model mcf
 --- mincost2.gms(44) 4 Mb
@@ -32,7 +31,7 @@ GAMS 44.3.0   Copyright (C) 1987-2023 GAMS Development. All rights reserved
 --- RHS       [min, max] : [ 6.000E+00, 1.500E+01] - Zero values observed as well
 --- Bound     [min, max] : [ 1.034E+01, 1.499E+01] - Zero values observed as well
 --- Matrix    [min, max] : [ 1.000E+00, 6.000E+00]
---- Executing CPLEX (Solvelink=2): elapsed 0:00:00.024
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.014
 
 IBM ILOG CPLEX   44.3.0 8b8fb1cb Sep 1, 2023           WEI x86 64bit/MS Window
 
@@ -76,7 +75,7 @@ Network time = 0.00 sec. (0.00 ticks)  Iterations = 9 (9)
 Model has been proven infeasible
 
 --- Reading solution for model mcf
---- Executing after solve: elapsed 0:00:00.060
+--- Executing after solve: elapsed 0:00:00.058
 --- mincost2.gms(51) 4 Mb
 --- Generating LP model mcf
 --- mincost2.gms(56) 4 Mb
@@ -86,7 +85,7 @@ Model has been proven infeasible
 --- RHS       [min, max] : [ 6.000E+00, 1.500E+01] - Zero values observed as well
 --- Bound     [min, max] : [ 3.334E+00, 1.500E+01] - Zero values observed as well
 --- Matrix    [min, max] : [ 1.000E+00, 6.000E+00]
---- Executing CPLEX (Solvelink=2): elapsed 0:00:00.062
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.061
 
 IBM ILOG CPLEX   44.3.0 8b8fb1cb Sep 1, 2023           WEI x86 64bit/MS Window
 
@@ -131,7 +130,7 @@ Optimal solution found
 Objective:          222.563248
 
 --- Reading solution for model mcf
---- Executing after solve: elapsed 0:00:00.098
+--- Executing after solve: elapsed 0:00:00.101
 --- mincost2.gms(51) 4 Mb
 --- Generating LP model mcf
 --- mincost2.gms(56) 4 Mb
@@ -141,7 +140,7 @@ Objective:          222.563248
 --- RHS       [min, max] : [ 6.000E+00, 1.500E+01] - Zero values observed as well
 --- Bound     [min, max] : [ 4.336E+00, 1.500E+01] - Zero values observed as well
 --- Matrix    [min, max] : [ 1.000E+00, 6.000E+00]
---- Executing CPLEX (Solvelink=2): elapsed 0:00:00.101
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.104
 
 IBM ILOG CPLEX   44.3.0 8b8fb1cb Sep 1, 2023           WEI x86 64bit/MS Window
 
@@ -186,7 +185,7 @@ Optimal solution found
 Objective:          218.148630
 
 --- Reading solution for model mcf
---- Executing after solve: elapsed 0:00:00.132
+--- Executing after solve: elapsed 0:00:00.141
 --- mincost2.gms(51) 4 Mb
 --- Generating LP model mcf
 --- mincost2.gms(56) 4 Mb
@@ -196,7 +195,7 @@ Objective:          218.148630
 --- RHS       [min, max] : [ 6.000E+00, 1.500E+01] - Zero values observed as well
 --- Bound     [min, max] : [ 3.181E+00, 1.500E+01] - Zero values observed as well
 --- Matrix    [min, max] : [ 1.000E+00, 6.000E+00]
---- Executing CPLEX (Solvelink=2): elapsed 0:00:00.134
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.144
 
 IBM ILOG CPLEX   44.3.0 8b8fb1cb Sep 1, 2023           WEI x86 64bit/MS Window
 
@@ -246,7 +245,7 @@ Iteration      Dual Objective            In Variable           Out Variable
 Model has been proven infeasible
 
 --- Reading solution for model mcf
---- Executing after solve: elapsed 0:00:00.173
+--- Executing after solve: elapsed 0:00:00.183
 --- mincost2.gms(51) 4 Mb
 --- Generating LP model mcf
 --- mincost2.gms(56) 4 Mb
@@ -256,7 +255,7 @@ Model has been proven infeasible
 --- RHS       [min, max] : [ 6.000E+00, 1.500E+01] - Zero values observed as well
 --- Bound     [min, max] : [ 3.054E+00, 1.500E+01] - Zero values observed as well
 --- Matrix    [min, max] : [ 1.000E+00, 6.000E+00]
---- Executing CPLEX (Solvelink=2): elapsed 0:00:00.177
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.185
 
 IBM ILOG CPLEX   44.3.0 8b8fb1cb Sep 1, 2023           WEI x86 64bit/MS Window
 
@@ -301,7 +300,7 @@ Optimal solution found
 Objective:          218.660440
 
 --- Reading solution for model mcf
---- Executing after solve: elapsed 0:00:00.213
+--- Executing after solve: elapsed 0:00:00.221
 --- mincost2.gms(51) 4 Mb
 --- Generating LP model mcf
 --- mincost2.gms(56) 4 Mb
@@ -311,7 +310,7 @@ Objective:          218.660440
 --- RHS       [min, max] : [ 6.000E+00, 1.500E+01] - Zero values observed as well
 --- Bound     [min, max] : [ 3.570E+00, 1.500E+01] - Zero values observed as well
 --- Matrix    [min, max] : [ 1.000E+00, 6.000E+00]
---- Executing CPLEX (Solvelink=2): elapsed 0:00:00.215
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.224
 
 IBM ILOG CPLEX   44.3.0 8b8fb1cb Sep 1, 2023           WEI x86 64bit/MS Window
 
@@ -359,7 +358,7 @@ Iteration      Dual Objective            In Variable           Out Variable
 Model has been proven infeasible
 
 --- Reading solution for model mcf
---- Executing after solve: elapsed 0:00:00.250
+--- Executing after solve: elapsed 0:00:00.257
 --- mincost2.gms(51) 4 Mb
 --- Generating LP model mcf
 --- mincost2.gms(56) 4 Mb
@@ -369,7 +368,7 @@ Model has been proven infeasible
 --- RHS       [min, max] : [ 6.000E+00, 1.500E+01] - Zero values observed as well
 --- Bound     [min, max] : [ 3.773E+00, 1.500E+01] - Zero values observed as well
 --- Matrix    [min, max] : [ 1.000E+00, 6.000E+00]
---- Executing CPLEX (Solvelink=2): elapsed 0:00:00.252
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.260
 
 IBM ILOG CPLEX   44.3.0 8b8fb1cb Sep 1, 2023           WEI x86 64bit/MS Window
 
@@ -413,7 +412,7 @@ Network time = 0.00 sec. (0.00 ticks)  Iterations = 5 (5)
 Model has been proven infeasible
 
 --- Reading solution for model mcf
---- Executing after solve: elapsed 0:00:00.285
+--- Executing after solve: elapsed 0:00:00.295
 --- mincost2.gms(51) 4 Mb
 --- Generating LP model mcf
 --- mincost2.gms(56) 4 Mb
@@ -423,7 +422,7 @@ Model has been proven infeasible
 --- RHS       [min, max] : [ 6.000E+00, 1.500E+01] - Zero values observed as well
 --- Bound     [min, max] : [ 7.096E+00, 1.500E+01] - Zero values observed as well
 --- Matrix    [min, max] : [ 1.000E+00, 6.000E+00]
---- Executing CPLEX (Solvelink=2): elapsed 0:00:00.287
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.296
 
 IBM ILOG CPLEX   44.3.0 8b8fb1cb Sep 1, 2023           WEI x86 64bit/MS Window
 
@@ -468,7 +467,7 @@ Optimal solution found
 Objective:          220.438153
 
 --- Reading solution for model mcf
---- Executing after solve: elapsed 0:00:00.317
+--- Executing after solve: elapsed 0:00:00.334
 --- mincost2.gms(51) 4 Mb
 --- Generating LP model mcf
 --- mincost2.gms(56) 4 Mb
@@ -478,7 +477,7 @@ Objective:          220.438153
 --- RHS       [min, max] : [ 6.000E+00, 1.500E+01] - Zero values observed as well
 --- Bound     [min, max] : [ 4.377E+00, 1.500E+01] - Zero values observed as well
 --- Matrix    [min, max] : [ 1.000E+00, 6.000E+00]
---- Executing CPLEX (Solvelink=2): elapsed 0:00:00.319
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.336
 
 IBM ILOG CPLEX   44.3.0 8b8fb1cb Sep 1, 2023           WEI x86 64bit/MS Window
 
@@ -527,7 +526,7 @@ Iteration      Dual Objective            In Variable           Out Variable
 Model has been proven infeasible
 
 --- Reading solution for model mcf
---- Executing after solve: elapsed 0:00:00.347
+--- Executing after solve: elapsed 0:00:00.384
 --- mincost2.gms(51) 4 Mb
 --- Generating LP model mcf
 --- mincost2.gms(56) 4 Mb
@@ -537,7 +536,7 @@ Model has been proven infeasible
 --- RHS       [min, max] : [ 6.000E+00, 1.500E+01] - Zero values observed as well
 --- Bound     [min, max] : [ 3.397E+00, 1.500E+01] - Zero values observed as well
 --- Matrix    [min, max] : [ 1.000E+00, 6.000E+00]
---- Executing CPLEX (Solvelink=2): elapsed 0:00:00.348
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.386
 
 IBM ILOG CPLEX   44.3.0 8b8fb1cb Sep 1, 2023           WEI x86 64bit/MS Window
 
@@ -581,7 +580,7 @@ Network time = 0.00 sec. (0.00 ticks)  Iterations = 0 (0)
 Model has been proven infeasible
 
 --- Reading solution for model mcf
---- Executing after solve: elapsed 0:00:00.381
+--- Executing after solve: elapsed 0:00:00.438
 --- mincost2.gms(51) 4 Mb
 --- Generating LP model mcf
 --- mincost2.gms(56) 4 Mb
@@ -591,7 +590,7 @@ Model has been proven infeasible
 --- RHS       [min, max] : [ 6.000E+00, 1.500E+01] - Zero values observed as well
 --- Bound     [min, max] : [ 5.015E+00, 1.500E+01] - Zero values observed as well
 --- Matrix    [min, max] : [ 1.000E+00, 6.000E+00]
---- Executing CPLEX (Solvelink=2): elapsed 0:00:00.393
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.442
 
 IBM ILOG CPLEX   44.3.0 8b8fb1cb Sep 1, 2023           WEI x86 64bit/MS Window
 
@@ -636,7 +635,7 @@ Optimal solution found
 Objective:          218.970827
 
 --- Reading solution for model mcf
---- Executing after solve: elapsed 0:00:00.434
+--- Executing after solve: elapsed 0:00:00.485
 --- mincost2.gms(62) 4 Mb
 *** Status: Normal completion
---- Job mincost2.gms Stop 10/03/23 13:10:12 elapsed 0:00:00.434
+--- Job mincost2.gms Stop 10/03/23 12:55:19 elapsed 0:00:00.485
