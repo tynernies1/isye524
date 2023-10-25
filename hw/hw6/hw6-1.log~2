@@ -1,0 +1,206 @@
+
+--- Job hw6-2.gms Start 10/24/23 18:43:37 44.3.0 8b8fb1cb WEX-WEI x86 64bit/MS Windows
+--- Applying:
+    C:\GAMS\44\gmsprmNT.txt
+--- GAMS Parameters defined
+    Input C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw6\hw6-2.gms
+    PageSize 0
+    ScrDir C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw6\225a\
+    SysDir C:\GAMS\44\
+    LogOption 3
+    ErrMsg 1
+    ErrorLog 99
+    IDE 1
+    LstTitleLeftAligned 1
+Licensee: Introduction to Optimization (CS/ISyE/ECE 524) G230906|0002AS-GEN
+          UW-Madison, CS Dept., Fall 2023, Prof. Ferris              DCE850
+          C:\GAMS\44\gamslice.txt
+          License Admin: Michael C. Ferris, ferris@cs.wisc.edu             
+          Course license for use within the course and related course work
+Processor information: 1 socket(s), 4 core(s), and 8 thread(s) available
+GAMS 44.3.0   Copyright (C) 1987-2023 GAMS Development. All rights reserved
+--- Starting compilation
+--- hw6-2.gms(68) 3 Mb
+--- Starting execution: elapsed 0:00:00.006
+--- hw6-2.gms(10) 4 Mb
+--- Generating MIP model guards1
+--- hw6-2.gms(29) 4 Mb
+---   11 rows  101 columns  123 non-zeroes
+---   100 discrete-columns
+--- Range statistics (absolute non-zero finite values)
+--- RHS       [min, max] : [ 1.000E+00, 1.000E+00] - Zero values observed as well
+--- Bound     [min, max] : [ 1.000E+00, 1.000E+00] - Zero values observed as well
+--- Matrix    [min, max] : [ 1.000E+00, 1.000E+00]
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.015
+
+IBM ILOG CPLEX   44.3.0 8b8fb1cb Sep 1, 2023           WEI x86 64bit/MS Window
+
+--- GAMS/CPLEX licensed for continuous and discrete problems.
+--- GMO setup time: 0.00s
+--- GMO memory 0.51 Mb (peak 0.51 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.01 Mb)
+--- Starting Cplex
+
+Version identifier: 22.1.1.0 | 2022-11-27 | 9160aff4d
+CPXPARAM_Advance                                 0
+CPXPARAM_Simplex_Display                         2
+CPXPARAM_Threads                                 1
+CPXPARAM_MIP_Display                             4
+CPXPARAM_MIP_Pool_Capacity                       0
+CPXPARAM_MIP_Tolerances_AbsMIPGap                0
+Generic callback                                 0x50
+Found incumbent of value 100.000000 after 0.00 sec. (0.00 ticks)
+Tried aggregator 2 times.
+MIP Presolve eliminated 6 rows and 97 columns.
+Aggregator did 4 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.04 ticks)
+
+Root node processing (before b&c):
+  Real time             =    0.00 sec. (0.04 ticks)
+Sequential b&c:
+  Real time             =    0.00 sec. (0.00 ticks)
+                          ------------
+Total (root+branch&cut) =    0.00 sec. (0.04 ticks)
+
+--- MIP status (101): integer optimal solution.
+--- Cplex Time: 0.00sec (det. 0.04 ticks)
+
+--- Returning a primal only solution to GAMS (marginals all set to NA).
+--- Fixing integer variables and solving final LP...
+
+Version identifier: 22.1.1.0 | 2022-11-27 | 9160aff4d
+CPXPARAM_Advance                                 2
+CPXPARAM_Simplex_Display                         2
+CPXPARAM_Threads                                 1
+CPXPARAM_MIP_Display                             4
+CPXPARAM_MIP_Pool_Capacity                       0
+CPXPARAM_MIP_Tolerances_AbsMIPGap                0
+Tried aggregator 1 time.
+LP Presolve eliminated 10 rows and 101 columns.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.02 ticks)
+
+--- Fixed MIP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.03 ticks)
+
+
+Proven optimal solution
+MIP Solution:            6.000000    (0 iterations, 0 nodes)
+Final Solve:             6.000000    (0 iterations)
+
+Best possible:           6.000000
+Absolute gap:            0.000000
+Relative gap:            0.000000
+
+--- Reading solution for model guards1
+--- Executing after solve: elapsed 0:00:00.051
+--- Generating MIP model guards2
+--- hw6-2.gms(67) 4 Mb
+---   26 rows  626 columns  678 non-zeroes
+---   625 discrete-columns
+--- Range statistics (absolute non-zero finite values)
+--- RHS       [min, max] : [ 1.000E+00, 1.000E+00] - Zero values observed as well
+--- Bound     [min, max] : [ 1.000E+00, 1.000E+00] - Zero values observed as well
+--- Matrix    [min, max] : [ 1.000E+00, 1.000E+00]
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.058
+
+IBM ILOG CPLEX   44.3.0 8b8fb1cb Sep 1, 2023           WEI x86 64bit/MS Window
+
+--- GAMS/CPLEX licensed for continuous and discrete problems.
+--- GMO setup time: 0.00s
+--- Space for names approximately 0.01 Mb
+--- Use option 'names no' to turn use of names off
+--- GMO memory 0.57 Mb (peak 0.58 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.01 Mb (peak 0.04 Mb)
+--- Starting Cplex
+
+Version identifier: 22.1.1.0 | 2022-11-27 | 9160aff4d
+CPXPARAM_Advance                                 0
+CPXPARAM_Threads                                 1
+CPXPARAM_MIP_Display                             4
+CPXPARAM_MIP_Pool_Capacity                       0
+CPXPARAM_MIP_Tolerances_AbsMIPGap                0
+Generic callback                                 0x50
+Found incumbent of value 625.000000 after 0.00 sec. (0.02 ticks)
+Tried aggregator 2 times.
+MIP Presolve eliminated 18 rows and 619 columns.
+Aggregator did 2 substitutions.
+Reduced MIP has 5 rows, 5 columns, and 10 nonzeros.
+Reduced MIP has 5 binaries, 0 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.00 sec. (0.23 ticks)
+Probing time = 0.00 sec. (0.00 ticks)
+Tried aggregator 1 time.
+Detecting symmetries...
+Reduced MIP has 5 rows, 5 columns, and 10 nonzeros.
+Reduced MIP has 5 binaries, 0 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.00 sec. (0.01 ticks)
+Probing time = 0.00 sec. (0.00 ticks)
+Clique table members: 5.
+MIP emphasis: balance optimality and feasibility.
+MIP search method: dynamic search.
+Parallel mode: none, using 1 thread.
+Tried aggregator 1 time.
+No LP presolve or aggregator reductions.
+Presolve time = 0.00 sec. (0.00 ticks)
+
+Iteration log . . .
+Iteration:     1   Dual objective     =            12.000000
+Iteration:    62   Dual objective     =            13.000000
+Perturbation started.
+Iteration:   102   Dual objective     =            13.000000
+Removing perturbation.
+Root relaxation solution time = 0.02 sec. (0.12 ticks)
+
+        Nodes                                         Cuts/
+   Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap
+
+*     0+    0                           16.0000       11.0000            31.25%
+Found incumbent of value 16.000000 after 0.03 sec. (0.43 ticks)
+      0     0       13.5000     5       16.0000       13.5000      104   15.62%
+*     0+    0                           14.0000       13.5000             3.57%
+Found incumbent of value 14.000000 after 0.03 sec. (0.44 ticks)
+      0     0        cutoff             14.0000       13.5000      104    3.57%
+Elapsed time = 0.03 sec. (0.44 ticks, tree = 0.01 MB)
+
+Root node processing (before b&c):
+  Real time             =    0.03 sec. (0.44 ticks)
+Sequential b&c:
+  Real time             =    0.00 sec. (0.00 ticks)
+                          ------------
+Total (root+branch&cut) =    0.03 sec. (0.44 ticks)
+
+--- MIP status (101): integer optimal solution.
+--- Cplex Time: 0.03sec (det. 0.45 ticks)
+
+--- Returning a primal only solution to GAMS (marginals all set to NA).
+--- Fixing integer variables and solving final LP...
+
+Version identifier: 22.1.1.0 | 2022-11-27 | 9160aff4d
+CPXPARAM_Advance                                 2
+CPXPARAM_Threads                                 1
+CPXPARAM_MIP_Display                             4
+CPXPARAM_MIP_Pool_Capacity                       0
+CPXPARAM_MIP_Tolerances_AbsMIPGap                0
+Tried aggregator 1 time.
+LP Presolve eliminated 25 rows and 626 columns.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.10 ticks)
+
+--- Fixed MIP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.14 ticks)
+
+
+Proven optimal solution
+MIP Solution:           14.000000    (104 iterations, 0 nodes)
+Final Solve:            14.000000    (0 iterations)
+
+Best possible:          14.000000
+Absolute gap:            0.000000
+Relative gap:            0.000000
+
+--- Reading solution for model guards2
+*** Status: Normal completion
+--- Job hw6-2.gms Stop 10/24/23 18:43:38 elapsed 0:00:00.141

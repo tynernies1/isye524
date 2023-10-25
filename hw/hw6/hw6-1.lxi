@@ -1,0 +1,16 @@
+B 3 C o m p i l a t i o n
+B 73 Range Statistics    SOLVE invest Using MIP From line 47
+B 84 Model Statistics    SOLVE invest Using MIP From line 47
+B 97 Solution Report     SOLVE invest Using MIP From line 47
+F 142 obj
+F 143 total_cons
+F 145 max_cons
+F 156 min_cons
+F 169 option5_cons
+F 170 option3_cons
+G 174 z
+G 178 x
+G 189 delta
+B 206 E x e c u t i o n
+I 208 expectedReturn
+I 209 investments

@@ -1,0 +1,31 @@
+B 3 C o m p i l a t i o n
+B 84 E x e c u t i o n
+I 84 arcs
+B 101 Equation Listing    SOLVE guards1 Using MIP From line 29
+D 104 obj
+D 109 coverage
+B 121 Column Listing      SOLVE guards1 Using MIP From line 29
+E 124 use
+E 144 totguards
+B 152 Range Statistics    SOLVE guards1 Using MIP From line 29
+B 163 Model Statistics    SOLVE guards1 Using MIP From line 29
+B 176 Solution Report     SOLVE guards1 Using MIP From line 29
+F 221 obj
+F 223 coverage
+G 238 use
+G 345 totguards
+B 353 Equation Listing    SOLVE guards2 Using MIP From line 67
+D 356 obj2
+D 361 coverage2
+B 373 Column Listing      SOLVE guards2 Using MIP From line 67
+E 376 totguards2
+E 383 use2
+B 402 Range Statistics    SOLVE guards2 Using MIP From line 67
+B 413 Model Statistics    SOLVE guards2 Using MIP From line 67
+B 426 Solution Report     SOLVE guards2 Using MIP From line 67
+F 473 obj2
+F 475 coverage2
+G 507 totguards2
+G 509 use2
+B 1145 E x e c u t i o n
+I 1145 stations

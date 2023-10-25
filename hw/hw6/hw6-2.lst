@@ -1,0 +1,1178 @@
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/24/23 18:45:49 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1  set all_nodes / A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, W, X, Y, Z /;
+   2  set nodes(all_nodes) / A, B, C, D, E, F, G, H, I, J /;
+   3  alias(nodes, I, J);
+   4   
+   5  binary variables
+   6  use(nodes, nodes);
+   7   
+   8  set arcs(nodes, nodes) Arcs / A.(B, C, F, G), B.(H), C.D, D.(E, F), G.I, H.I, I.J /;
+   9   
+  10  display arcs;
+  11   
+  12  variable
+  13  totguards;
+  14   
+  15  binary variable
+  16  use(nodes, nodes) Arcs Used;
+  17   
+  18  equations
+  19  obj, coverage(nodes);
+  20   
+  21  obj..
+  22  totguards =e= sum((I, J), use(I, J));
+  23   
+  24  coverage(I)..
+  25  sum(J, use(I, J)$(arcs(I, J))) + sum(J, use(J, I)$(arcs(J, I))) =g= 1;
+  26   
+  27  model guards1 / obj, coverage /;
+  28   
+  29  solve guards1 using mip minimize totguards;
+  30   
+  31  alias(all_nodes, P, Q)
+  32   
+  33  set arcs_new(all_nodes, all_nodes) /
+  34      A.(B, Z),
+  35      B.C,
+  36      C.(D, E),
+  37      E.(F, G, I),
+  38      G.H,
+  39      I.(J, K),
+  40      K.(L, O),
+  41      L.(M, N),
+  42      O.P,
+  43      P.(Q, T, U),
+  44      Q.R,
+  45      R.S,
+  46      S.T,
+  47      U.(W, X, Z),
+  48      X.Y /;
+  49   
+  50  variable
+  51  totguards2;
+  52   
+  53  binary variable
+  54  use2(all_nodes, all_nodes) Arcs Used;
+  55   
+  56  equations
+  57  obj2, coverage2(all_nodes);
+  58   
+  59  obj2..
+  60  totguards2 =e= sum((P, Q), use2(P, Q));
+  61   
+  62  coverage2(P)..
+  63  sum(Q, use2(P, Q)$(arcs_new(P, Q))) + sum(Q, use2(Q, P)$(arcs_new(Q, P))) =g= 1;
+  64   
+  65  model guards2 / obj2, coverage2 /;
+  66   
+  67  solve guards2 using mip minimize totguards2;
+  68   
+  69  set stations(all_nodes, all_nodes);
+  70  stations(P, Q) = yes$(use2.l(P, Q));
+  71   
+  72  option stations:0:0:1;
+  73  display stations;
+
+
+COMPILATION TIME     =        0.000 SECONDS      3 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/24/23 18:45:49 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+----     10 SET arcs  Arcs
+
+            B           C           D           E           F           G           H           I           J
+
+A         YES         YES                                 YES         YES
+B                                                                                 YES
+C                                 YES
+D                                             YES         YES
+G                                                                                             YES
+H                                                                                             YES
+I                                                                                                         YES
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/24/23 18:45:49 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Equation Listing    SOLVE guards1 Using MIP From line 29
+
+
+---- obj  =E=  
+
+obj..  - use(A,A) - use(A,B) - use(A,C) - use(A,D) - use(A,E) - use(A,F) - use(A,G) - use(A,H) - use(A,I) - use(A,J) - use(B,A) - use(B,B) - use(B,C) - use(B,D) - use(B,E) - use(B,F) - use(B,G) - use(B,H) - use(B,I) - use(B,J) - use(C,A) - use(C,B) - use(C,C) - use(C,D) - use(C,E) - use(C,F) - use(C,G) - use(C,H) - use(C,I) - use(C,J) - use(D,A) - use(D,B) - use(D,C) - use(D,D) - use(D,E) - use(D,F) - use(D,G) - use(D,H) - use(D,I) - use(D,J) - use(E,A) - use(E,B) - use(E,C) - use(E,D) - use(E,E) - use(E,F) - use(E,G) - use(E,H) - use(E,I) - use(E,J) - use(F,A) - use(F,B) - use(F,C) - use(F,D) - use(F,E) - use(F,F) - use(F,G) - use(F,H) - use(F,I) - use(F,J) - use(G,A) - use(G,B) - use(G,C) - use(G,D) - use(G,E) - use(G,F) - use(G,G) - use(G,H) - use(G,I) - use(G,J) - use(H,A) - use(H,B) - use(H,C) - use(H,D) - use(H,E) - use(H,F) - use(H,G) - use(H,H) - use(H,I) - use(H,J) - use(I,A) - use(I,B) - use(I,C) - use(I,D) - use(I,E) - use(I,F) - use(I,G) - use(I,H) - use(I,I) - use(I,J) - use(J,A) - use(J,B) - use(J,C) - use(J,D) - use(J,E) - use(J,F) - use(J,G) - use(J,H) - use(J,I) - use(J,J) + totguards =E= 0 ; (LHS = 0)
+     
+
+---- coverage  =G=  
+
+coverage(A)..  use(A,B) + use(A,C) + use(A,F) + use(A,G) =G= 1 ; (LHS = 0, INFES = 1 ****)
+     
+coverage(B)..  use(A,B) + use(B,H) =G= 1 ; (LHS = 0, INFES = 1 ****)
+     
+coverage(C)..  use(A,C) + use(C,D) =G= 1 ; (LHS = 0, INFES = 1 ****)
+     
+REMAINING 7 ENTRIES SKIPPED
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/24/23 18:45:49 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Column Listing      SOLVE guards1 Using MIP From line 29
+
+
+---- use  Arcs Used
+
+use(A,A)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+       -1       obj
+
+use(A,B)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+       -1       obj
+        1       coverage(A)
+        1       coverage(B)
+
+use(A,C)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+       -1       obj
+        1       coverage(A)
+        1       coverage(C)
+
+REMAINING 97 ENTRIES SKIPPED
+
+---- totguards  
+
+totguards
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       obj
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/24/23 18:45:49 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Range Statistics    SOLVE guards1 Using MIP From line 29
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 1.000E+00, 1.000E+00] - Zero values observed as well
+Bound     [min, max] : [ 1.000E+00, 1.000E+00] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 1.000E+00]
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/24/23 18:45:49 Page 6
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE guards1 Using MIP From line 29
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           2     SINGLE EQUATIONS           11
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES          101
+NON ZERO ELEMENTS           123     DISCRETE VARIABLES        100
+
+
+GENERATION TIME      =        0.015 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/24/23 18:45:49 Page 7
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE guards1 Using MIP From line 29
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   guards1             OBJECTIVE  totguards
+     TYPE    MIP                 DIRECTION  MINIMIZE
+     SOLVER  CPLEX               FROM LINE  29
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE                6.0000
+
+ RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ ITERATION COUNT, LIMIT         0    2147483647
+--- GAMS/CPLEX licensed for continuous and discrete problems.
+--- GMO setup time: 0.00s
+--- GMO memory 0.51 Mb (peak 0.51 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.01 Mb)
+--- Starting Cplex
+
+
+--- MIP status (101): integer optimal solution.
+--- Cplex Time: 0.00sec (det. 0.04 ticks)
+
+--- Returning a primal only solution to GAMS (marginals all set to NA).
+--- Fixing integer variables and solving final LP...
+
+
+--- Fixed MIP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.03 ticks)
+
+
+Proven optimal solution
+MIP Solution:            6.000000    (0 iterations, 0 nodes)
+Final Solve:             6.000000    (0 iterations)
+
+Best possible:           6.000000
+Absolute gap:            0.000000
+Relative gap:            0.000000
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU obj                 .              .              .             1.0000      
+
+---- EQU coverage  
+
+         LOWER          LEVEL          UPPER         MARGINAL
+
+A         1.0000         3.0000        +INF             .          
+B         1.0000         1.0000        +INF             .          
+C         1.0000         1.0000        +INF             .          
+D         1.0000         1.0000        +INF             .          
+E         1.0000         1.0000        +INF             .          
+F         1.0000         1.0000        +INF             .          
+G         1.0000         1.0000        +INF             .          
+H         1.0000         1.0000        +INF             .          
+I         1.0000         1.0000        +INF             .          
+J         1.0000         1.0000        +INF             .          
+
+---- VAR use  Arcs Used
+
+           LOWER          LEVEL          UPPER         MARGINAL
+
+A.A          .              .             1.0000         1.0000      
+A.B          .              .             1.0000         1.0000      
+A.C          .             1.0000         1.0000         1.0000      
+A.D          .              .             1.0000         1.0000      
+A.E          .              .             1.0000         1.0000      
+A.F          .             1.0000         1.0000         1.0000      
+A.G          .             1.0000         1.0000         1.0000      
+A.H          .              .             1.0000         1.0000      
+A.I          .              .             1.0000         1.0000      
+A.J          .              .             1.0000         1.0000      
+B.A          .              .             1.0000         1.0000      
+B.B          .              .             1.0000         1.0000      
+B.C          .              .             1.0000         1.0000      
+B.D          .              .             1.0000         1.0000      
+B.E          .              .             1.0000         1.0000      
+B.F          .              .             1.0000         1.0000      
+B.G          .              .             1.0000         1.0000      
+B.H          .             1.0000         1.0000         1.0000      
+B.I          .              .             1.0000         1.0000      
+B.J          .              .             1.0000         1.0000      
+C.A          .              .             1.0000         1.0000      
+C.B          .              .             1.0000         1.0000      
+C.C          .              .             1.0000         1.0000      
+C.D          .              .             1.0000         1.0000      
+C.E          .              .             1.0000         1.0000      
+C.F          .              .             1.0000         1.0000      
+C.G          .              .             1.0000         1.0000      
+C.H          .              .             1.0000         1.0000      
+C.I          .              .             1.0000         1.0000      
+C.J          .              .             1.0000         1.0000      
+D.A          .              .             1.0000         1.0000      
+D.B          .              .             1.0000         1.0000      
+D.C          .              .             1.0000         1.0000      
+D.D          .              .             1.0000         1.0000      
+D.E          .             1.0000         1.0000         1.0000      
+D.F          .              .             1.0000         1.0000      
+D.G          .              .             1.0000         1.0000      
+D.H          .              .             1.0000         1.0000      
+D.I          .              .             1.0000         1.0000      
+D.J          .              .             1.0000         1.0000      
+E.A          .              .             1.0000         1.0000      
+E.B          .              .             1.0000         1.0000      
+E.C          .              .             1.0000         1.0000      
+E.D          .              .             1.0000         1.0000      
+E.E          .              .             1.0000         1.0000      
+E.F          .              .             1.0000         1.0000      
+E.G          .              .             1.0000         1.0000      
+E.H          .              .             1.0000         1.0000      
+E.I          .              .             1.0000         1.0000      
+E.J          .              .             1.0000         1.0000      
+F.A          .              .             1.0000         1.0000      
+F.B          .              .             1.0000         1.0000      
+F.C          .              .             1.0000         1.0000      
+F.D          .              .             1.0000         1.0000      
+F.E          .              .             1.0000         1.0000      
+F.F          .              .             1.0000         1.0000      
+F.G          .              .             1.0000         1.0000      
+F.H          .              .             1.0000         1.0000      
+F.I          .              .             1.0000         1.0000      
+F.J          .              .             1.0000         1.0000      
+G.A          .              .             1.0000         1.0000      
+G.B          .              .             1.0000         1.0000      
+G.C          .              .             1.0000         1.0000      
+G.D          .              .             1.0000         1.0000      
+G.E          .              .             1.0000         1.0000      
+G.F          .              .             1.0000         1.0000      
+G.G          .              .             1.0000         1.0000      
+G.H          .              .             1.0000         1.0000      
+G.I          .              .             1.0000         1.0000      
+G.J          .              .             1.0000         1.0000      
+H.A          .              .             1.0000         1.0000      
+H.B          .              .             1.0000         1.0000      
+H.C          .              .             1.0000         1.0000      
+H.D          .              .             1.0000         1.0000      
+H.E          .              .             1.0000         1.0000      
+H.F          .              .             1.0000         1.0000      
+H.G          .              .             1.0000         1.0000      
+H.H          .              .             1.0000         1.0000      
+H.I          .              .             1.0000         1.0000      
+H.J          .              .             1.0000         1.0000      
+I.A          .              .             1.0000         1.0000      
+I.B          .              .             1.0000         1.0000      
+I.C          .              .             1.0000         1.0000      
+I.D          .              .             1.0000         1.0000      
+I.E          .              .             1.0000         1.0000      
+I.F          .              .             1.0000         1.0000      
+I.G          .              .             1.0000         1.0000      
+I.H          .              .             1.0000         1.0000      
+I.I          .              .             1.0000         1.0000      
+I.J          .             1.0000         1.0000         1.0000      
+J.A          .              .             1.0000         1.0000      
+J.B          .              .             1.0000         1.0000      
+J.C          .              .             1.0000         1.0000      
+J.D          .              .             1.0000         1.0000      
+J.E          .              .             1.0000         1.0000      
+J.F          .              .             1.0000         1.0000      
+J.G          .              .             1.0000         1.0000      
+J.H          .              .             1.0000         1.0000      
+J.I          .              .             1.0000         1.0000      
+J.J          .              .             1.0000         1.0000      
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR totguards         -INF            6.0000        +INF             .          
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/24/23 18:45:49 Page 8
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Equation Listing    SOLVE guards2 Using MIP From line 67
+
+
+---- obj2  =E=  
+
+obj2..  totguards2 - use2(A,A) - use2(A,B) - use2(A,C) - use2(A,D) - use2(A,E) - use2(A,F) - use2(A,G) - use2(A,H) - use2(A,I) - use2(A,J) - use2(A,K) - use2(A,L) - use2(A,M) - use2(A,N) - use2(A,O) - use2(A,P) - use2(A,Q) - use2(A,R) - use2(A,S) - use2(A,T) - use2(A,U) - use2(A,W) - use2(A,X) - use2(A,Y) - use2(A,Z) - use2(B,A) - use2(B,B) - use2(B,C) - use2(B,D) - use2(B,E) - use2(B,F) - use2(B,G) - use2(B,H) - use2(B,I) - use2(B,J) - use2(B,K) - use2(B,L) - use2(B,M) - use2(B,N) - use2(B,O) - use2(B,P) - use2(B,Q) - use2(B,R) - use2(B,S) - use2(B,T) - use2(B,U) - use2(B,W) - use2(B,X) - use2(B,Y) - use2(B,Z) - use2(C,A) - use2(C,B) - use2(C,C) - use2(C,D) - use2(C,E) - use2(C,F) - use2(C,G) - use2(C,H) - use2(C,I) - use2(C,J) - use2(C,K) - use2(C,L) - use2(C,M) - use2(C,N) - use2(C,O) - use2(C,P) - use2(C,Q) - use2(C,R) - use2(C,S) - use2(C,T) - use2(C,U) - use2(C,W) - use2(C,X) - use2(C,Y) - use2(C,Z) - use2(D,A) - use2(D,B) - use2(D,C) - use2(D,D) - use2(D,E) - use2(D,F) - use2(D,G) - use2(D,H) - use2(D,I) - use2(D,J) - use2(D,K) - use2(D,L) - use2(D,M) - use2(D,N) - use2(D,O) - use2(D,P) - use2(D,Q) - use2(D,R) - use2(D,S) - use2(D,T) - use2(D,U) - use2(D,W) - use2(D,X) - use2(D,Y) - use2(D,Z) - use2(E,A) - use2(E,B) - use2(E,C) - use2(E,D) - use2(E,E) - use2(E,F) - use2(E,G) - use2(E,H) - use2(E,I) - use2(E,J) - use2(E,K) - use2(E,L) - use2(E,M) - use2(E,N) - use2(E,O) - use2(E,P) - use2(E,Q) - use2(E,R) - use2(E,S) - use2(E,T) - use2(E,U) - use2(E,W) - use2(E,X) - use2(E,Y) - use2(E,Z) - use2(F,A) - use2(F,B) - use2(F,C) - use2(F,D) - use2(F,E) - use2(F,F) - use2(F,G) - use2(F,H) - use2(F,I) - use2(F,J) - use2(F,K) - use2(F,L) - use2(F,M) - use2(F,N) - use2(F,O) - use2(F,P) - use2(F,Q) - use2(F,R) - use2(F,S) - use2(F,T) - use2(F,U) - use2(F,W) - use2(F,X) - use2(F,Y) - use2(F,Z) - use2(G,A) - use2(G,B) - use2(G,C) - use2(G,D) - use2(G,E) - use2(G,F) - use2(G,G) - use2(G,H) - use2(G,I) - use2(G,J) - use2(G,K) - use2(G,L) - use2(G,M) - use2(G,N) - use2(G,O) - use2(G,P) - use2(G,Q) - use2(G,R) - use2(G,S) - use2(G,T) - use2(G,U) - use2(G,W) - use2(G,X) - use2(G,Y) - use2(G,Z) - use2(H,A) - use2(H,B) - use2(H,C) - use2(H,D) - use2(H,E) - use2(H,F) - use2(H,G) - use2(H,H) - use2(H,I) - use2(H,J) - use2(H,K) - use2(H,L) - use2(H,M) - use2(H,N) - use2(H,O) - use2(H,P) - use2(H,Q) - use2(H,R) - use2(H,S) - use2(H,T) - use2(H,U) - use2(H,W) - use2(H,X) - use2(H,Y) - use2(H,Z) - use2(I,A) - use2(I,B) - use2(I,C) - use2(I,D) - use2(I,E) - use2(I,F) - use2(I,G) - use2(I,H) - use2(I,I) - use2(I,J) - use2(I,K) - use2(I,L) - use2(I,M) - use2(I,N) - use2(I,O) - use2(I,P) - use2(I,Q) - use2(I,R) - use2(I,S) - use2(I,T) - use2(I,U) - use2(I,W) - use2(I,X) - use2(I,Y) - use2(I,Z) - use2(J,A) - use2(J,B) - use2(J,C) - use2(J,D) - use2(J,E) - use2(J,F) - use2(J,G) - use2(J,H) - use2(J,I) - use2(J,J) - use2(J,K) - use2(J,L) - use2(J,M) - use2(J,N) - use2(J,O) - use2(J,P) - use2(J,Q) - use2(J,R) - use2(J,S) - use2(J,T) - use2(J,U) - use2(J,W) - use2(J,X) - use2(J,Y) - use2(J,Z) - use2(K,A) - use2(K,B) - use2(K,C) - use2(K,D) - use2(K,E) - use2(K,F) - use2(K,G) - use2(K,H) - use2(K,I) - use2(K,J) - use2(K,K) - use2(K,L) - use2(K,M) - use2(K,N) - use2(K,O) - use2(K,P) - use2(K,Q) - use2(K,R) - use2(K,S) - use2(K,T) - use2(K,U) - use2(K,W) - use2(K,X) - use2(K,Y) - use2(K,Z) - use2(L,A) - use2(L,B) - use2(L,C) - use2(L,D) - use2(L,E) - use2(L,F) - use2(L,G) - use2(L,H) - use2(L,I) - use2(L,J) - use2(L,K) - use2(L,L) - use2(L,M) - use2(L,N) - use2(L,O) - use2(L,P) - use2(L,Q) - use2(L,R) - use2(L,S) - use2(L,T) - use2(L,U) - use2(L,W) - use2(L,X) - use2(L,Y) - use2(L,Z) - use2(M,A) - use2(M,B) - use2(M,C) - use2(M,D) - use2(M,E) - use2(M,F) - use2(M,G) - use2(M,H) - use2(M,I) - use2(M,J) - use2(M,K) - use2(M,L) - use2(M,M) - use2(M,N) - use2(M,O) - use2(M,P) - use2(M,Q) - use2(M,R) - use2(M,S) - use2(M,T) - use2(M,U) - use2(M,W) - use2(M,X) - use2(M,Y) - use2(M,Z) - use2(N,A) - use2(N,B) - use2(N,C) - use2(N,D) - use2(N,E) - use2(N,F) - use2(N,G) - use2(N,H) - use2(N,I) - use2(N,J) - use2(N,K) - use2(N,L) - use2(N,M) - use2(N,N) - use2(N,O) - use2(N,P) - use2(N,Q) - use2(N,R) - use2(N,S) - use2(N,T) - use2(N,U) - use2(N,W) - use2(N,X) - use2(N,Y) - use2(N,Z) - use2(O,A) - use2(O,B) - use2(O,C) - use2(O,D) - use2(O,E) - use2(O,F) - use2(O,G) - use2(O,H) - use2(O,I) - use2(O,J) - use2(O,K) - use2(O,L) - use2(O,M) - use2(O,N) - use2(O,O) - use2(O,P) - use2(O,Q) - use2(O,R) - use2(O,S) - use2(O,T) - use2(O,U) - use2(O,W) - use2(O,X) - use2(O,Y) - use2(O,Z) - use2(P,A) - use2(P,B) - use2(P,C) - use2(P,D) - use2(P,E) - use2(P,F) - use2(P,G) - use2(P,H) - use2(P,I) - use2(P,J) - use2(P,K) - use2(P,L) - use2(P,M) - use2(P,N) - use2(P,O) - use2(P,P) - use2(P,Q) - use2(P,R) - use2(P,S) - use2(P,T) - use2(P,U) - use2(P,W) - use2(P,X) - use2(P,Y) - use2(P,Z) - use2(Q,A) - use2(Q,B) - use2(Q,C) - use2(Q,D) - use2(Q,E) - use2(Q,F) - use2(Q,G) - use2(Q,H) - use2(Q,I) - use2(Q,J) - use2(Q,K) - use2(Q,L) - use2(Q,M) - use2(Q,N) - use2(Q,O) - use2(Q,P) - use2(Q,Q) - use2(Q,R) - use2(Q,S) - use2(Q,T) - use2(Q,U) - use2(Q,W) - use2(Q,X) - use2(Q,Y) - use2(Q,Z) - use2(R,A) - use2(R,B) - use2(R,C) - use2(R,D) - use2(R,E) - use2(R,F) - use2(R,G) - use2(R,H) - use2(R,I) - use2(R,J) - use2(R,K) - use2(R,L) - use2(R,M) - use2(R,N) - use2(R,O) - use2(R,P) - use2(R,Q) - use2(R,R) - use2(R,S) - use2(R,T) - use2(R,U) - use2(R,W) - use2(R,X) - use2(R,Y) - use2(R,Z) - use2(S,A) - use2(S,B) - use2(S,C) - use2(S,D) - use2(S,E) - use2(S,F) - use2(S,G) - use2(S,H) - use2(S,I) - use2(S,J) - use2(S,K) - use2(S,L) - use2(S,M) - use2(S,N) - use2(S,O) - use2(S,P) - use2(S,Q) - use2(S,R) - use2(S,S) - use2(S,T) - use2(S,U) - use2(S,W) - use2(S,X) - use2(S,Y) - use2(S,Z) - use2(T,A) - use2(T,B) - use2(T,C) - use2(T,D) - use2(T,E) - use2(T,F) - use2(T,G) - use2(T,H) - use2(T,I) - use2(T,J) - use2(T,K) - use2(T,L) - use2(T,M) - use2(T,N) - use2(T,O) - use2(T,P) - use2(T,Q) - use2(T,R) - use2(T,S) - use2(T,T) - use2(T,U) - use2(T,W) - use2(T,X) - use2(T,Y) - use2(T,Z) - use2(U,A) - use2(U,B) - use2(U,C) - use2(U,D) - use2(U,E) - use2(U,F) - use2(U,G) - use2(U,H) - use2(U,I) - use2(U,J) - use2(U,K) - use2(U,L) - use2(U,M) - use2(U,N) - use2(U,O) - use2(U,P) - use2(U,Q) - use2(U,R) - use2(U,S) - use2(U,T) - use2(U,U) - use2(U,W) - use2(U,X) - use2(U,Y) - use2(U,Z) - use2(W,A) - use2(W,B) - use2(W,C) - use2(W,D) - use2(W,E) - use2(W,F) - use2(W,G) - use2(W,H) - use2(W,I) - use2(W,J) - use2(W,K) - use2(W,L) - use2(W,M) - use2(W,N) - use2(W,O) - use2(W,P) - use2(W,Q) - use2(W,R) - use2(W,S) - use2(W,T) - use2(W,U) - use2(W,W) - use2(W,X) - use2(W,Y) - use2(W,Z) - use2(X,A) - use2(X,B) - use2(X,C) - use2(X,D) - use2(X,E) - use2(X,F) - use2(X,G) - use2(X,H) - use2(X,I) - use2(X,J) - use2(X,K) - use2(X,L) - use2(X,M) - use2(X,N) - use2(X,O) - use2(X,P) - use2(X,Q) - use2(X,R) - use2(X,S) - use2(X,T) - use2(X,U) - use2(X,W) - use2(X,X) - use2(X,Y) - use2(X,Z) - use2(Y,A) - use2(Y,B) - use2(Y,C) - use2(Y,D) - use2(Y,E) - use2(Y,F) - use2(Y,G) - use2(Y,H) - use2(Y,I) - use2(Y,J) - use2(Y,K) - use2(Y,L) - use2(Y,M) - use2(Y,N) - use2(Y,O) - use2(Y,P) - use2(Y,Q) - use2(Y,R) - use2(Y,S) - use2(Y,T) - use2(Y,U) - use2(Y,W) - use2(Y,X) - use2(Y,Y) - use2(Y,Z) - use2(Z,A) - use2(Z,B) - use2(Z,C) - use2(Z,D) - use2(Z,E) - use2(Z,F) - use2(Z,G) - use2(Z,H) - use2(Z,I) - use2(Z,J) - use2(Z,K) - use2(Z,L) - use2(Z,M) - use2(Z,N) - use2(Z,O) - use2(Z,P) - use2(Z,Q) - use2(Z,R) - use2(Z,S) - use2(Z,T) - use2(Z,U) - use2(Z,W) - use2(Z,X) - use2(Z,Y) - use2(Z,Z) =E= 0 ; (LHS = 0)
+     
+
+---- coverage2  =G=  
+
+coverage2(A)..  use2(A,B) + use2(A,Z) =G= 1 ; (LHS = 0, INFES = 1 ****)
+     
+coverage2(B)..  use2(A,B) + use2(B,C) =G= 1 ; (LHS = 0, INFES = 1 ****)
+     
+coverage2(C)..  use2(B,C) + use2(C,D) + use2(C,E) =G= 1 ; (LHS = 0, INFES = 1 ****)
+     
+REMAINING 22 ENTRIES SKIPPED
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/24/23 18:45:49 Page 9
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Column Listing      SOLVE guards2 Using MIP From line 67
+
+
+---- totguards2  
+
+totguards2
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       obj2
+
+
+---- use2  Arcs Used
+
+use2(A,A)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+       -1       obj2
+
+use2(A,B)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+       -1       obj2
+        1       coverage2(A)
+        1       coverage2(B)
+
+use2(A,C)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+       -1       obj2
+
+REMAINING 622 ENTRIES SKIPPED
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/24/23 18:45:49 Page 10
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Range Statistics    SOLVE guards2 Using MIP From line 67
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 1.000E+00, 1.000E+00] - Zero values observed as well
+Bound     [min, max] : [ 1.000E+00, 1.000E+00] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 1.000E+00]
+
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/24/23 18:45:49 Page 11
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE guards2 Using MIP From line 67
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           2     SINGLE EQUATIONS           26
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES          626
+NON ZERO ELEMENTS           678     DISCRETE VARIABLES        625
+
+
+GENERATION TIME      =        0.000 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/24/23 18:45:49 Page 12
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE guards2 Using MIP From line 67
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   guards2             OBJECTIVE  totguards2
+     TYPE    MIP                 DIRECTION  MINIMIZE
+     SOLVER  CPLEX               FROM LINE  67
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE               14.0000
+
+ RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ ITERATION COUNT, LIMIT       104    2147483647
+--- GAMS/CPLEX licensed for continuous and discrete problems.
+--- GMO setup time: 0.00s
+--- Space for names approximately 0.01 Mb
+--- Use option 'names no' to turn use of names off
+--- GMO memory 0.57 Mb (peak 0.58 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.01 Mb (peak 0.04 Mb)
+--- Starting Cplex
+
+
+--- MIP status (101): integer optimal solution.
+--- Cplex Time: 0.00sec (det. 0.45 ticks)
+
+--- Returning a primal only solution to GAMS (marginals all set to NA).
+--- Fixing integer variables and solving final LP...
+
+
+--- Fixed MIP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.14 ticks)
+
+
+Proven optimal solution
+MIP Solution:           14.000000    (104 iterations, 0 nodes)
+Final Solve:            14.000000    (0 iterations)
+
+Best possible:          14.000000
+Absolute gap:            0.000000
+Relative gap:            0.000000
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU obj2                .              .              .             1.0000      
+
+---- EQU coverage2  
+
+         LOWER          LEVEL          UPPER         MARGINAL
+
+A         1.0000         2.0000        +INF             .          
+B         1.0000         1.0000        +INF             .          
+C         1.0000         1.0000        +INF             .          
+D         1.0000         1.0000        +INF             .          
+E         1.0000         1.0000        +INF             .          
+F         1.0000         1.0000        +INF             .          
+G         1.0000         1.0000        +INF             .          
+H         1.0000         1.0000        +INF             .          
+I         1.0000         1.0000        +INF             .          
+J         1.0000         1.0000        +INF             .          
+K         1.0000         1.0000        +INF             .          
+L         1.0000         2.0000        +INF             .          
+M         1.0000         1.0000        +INF             .          
+N         1.0000         1.0000        +INF             .          
+O         1.0000         1.0000        +INF             .          
+P         1.0000         2.0000        +INF             .          
+Q         1.0000         1.0000        +INF             .          
+R         1.0000         1.0000        +INF             .          
+S         1.0000         1.0000        +INF             .          
+T         1.0000         1.0000        +INF             .          
+U         1.0000         1.0000        +INF             .          
+W         1.0000         1.0000        +INF             .          
+X         1.0000         1.0000        +INF             .          
+Y         1.0000         1.0000        +INF             .          
+Z         1.0000         1.0000        +INF             .          
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR totguards2        -INF           14.0000        +INF             .          
+
+---- VAR use2  Arcs Used
+
+           LOWER          LEVEL          UPPER         MARGINAL
+
+A.A          .              .             1.0000         1.0000      
+A.B          .             1.0000         1.0000         1.0000      
+A.C          .              .             1.0000         1.0000      
+A.D          .              .             1.0000         1.0000      
+A.E          .              .             1.0000         1.0000      
+A.F          .              .             1.0000         1.0000      
+A.G          .              .             1.0000         1.0000      
+A.H          .              .             1.0000         1.0000      
+A.I          .              .             1.0000         1.0000      
+A.J          .              .             1.0000         1.0000      
+A.K          .              .             1.0000         1.0000      
+A.L          .              .             1.0000         1.0000      
+A.M          .              .             1.0000         1.0000      
+A.N          .              .             1.0000         1.0000      
+A.O          .              .             1.0000         1.0000      
+A.P          .              .             1.0000         1.0000      
+A.Q          .              .             1.0000         1.0000      
+A.R          .              .             1.0000         1.0000      
+A.S          .              .             1.0000         1.0000      
+A.T          .              .             1.0000         1.0000      
+A.U          .              .             1.0000         1.0000      
+A.W          .              .             1.0000         1.0000      
+A.X          .              .             1.0000         1.0000      
+A.Y          .              .             1.0000         1.0000      
+A.Z          .             1.0000         1.0000         1.0000      
+B.A          .              .             1.0000         1.0000      
+B.B          .              .             1.0000         1.0000      
+B.C          .              .             1.0000         1.0000      
+B.D          .              .             1.0000         1.0000      
+B.E          .              .             1.0000         1.0000      
+B.F          .              .             1.0000         1.0000      
+B.G          .              .             1.0000         1.0000      
+B.H          .              .             1.0000         1.0000      
+B.I          .              .             1.0000         1.0000      
+B.J          .              .             1.0000         1.0000      
+B.K          .              .             1.0000         1.0000      
+B.L          .              .             1.0000         1.0000      
+B.M          .              .             1.0000         1.0000      
+B.N          .              .             1.0000         1.0000      
+B.O          .              .             1.0000         1.0000      
+B.P          .              .             1.0000         1.0000      
+B.Q          .              .             1.0000         1.0000      
+B.R          .              .             1.0000         1.0000      
+B.S          .              .             1.0000         1.0000      
+B.T          .              .             1.0000         1.0000      
+B.U          .              .             1.0000         1.0000      
+B.W          .              .             1.0000         1.0000      
+B.X          .              .             1.0000         1.0000      
+B.Y          .              .             1.0000         1.0000      
+B.Z          .              .             1.0000         1.0000      
+C.A          .              .             1.0000         1.0000      
+C.B          .              .             1.0000         1.0000      
+C.C          .              .             1.0000         1.0000      
+C.D          .             1.0000         1.0000         1.0000      
+C.E          .              .             1.0000         1.0000      
+C.F          .              .             1.0000         1.0000      
+C.G          .              .             1.0000         1.0000      
+C.H          .              .             1.0000         1.0000      
+C.I          .              .             1.0000         1.0000      
+C.J          .              .             1.0000         1.0000      
+C.K          .              .             1.0000         1.0000      
+C.L          .              .             1.0000         1.0000      
+C.M          .              .             1.0000         1.0000      
+C.N          .              .             1.0000         1.0000      
+C.O          .              .             1.0000         1.0000      
+C.P          .              .             1.0000         1.0000      
+C.Q          .              .             1.0000         1.0000      
+C.R          .              .             1.0000         1.0000      
+C.S          .              .             1.0000         1.0000      
+C.T          .              .             1.0000         1.0000      
+C.U          .              .             1.0000         1.0000      
+C.W          .              .             1.0000         1.0000      
+C.X          .              .             1.0000         1.0000      
+C.Y          .              .             1.0000         1.0000      
+C.Z          .              .             1.0000         1.0000      
+D.A          .              .             1.0000         1.0000      
+D.B          .              .             1.0000         1.0000      
+D.C          .              .             1.0000         1.0000      
+D.D          .              .             1.0000         1.0000      
+D.E          .              .             1.0000         1.0000      
+D.F          .              .             1.0000         1.0000      
+D.G          .              .             1.0000         1.0000      
+D.H          .              .             1.0000         1.0000      
+D.I          .              .             1.0000         1.0000      
+D.J          .              .             1.0000         1.0000      
+D.K          .              .             1.0000         1.0000      
+D.L          .              .             1.0000         1.0000      
+D.M          .              .             1.0000         1.0000      
+D.N          .              .             1.0000         1.0000      
+D.O          .              .             1.0000         1.0000      
+D.P          .              .             1.0000         1.0000      
+D.Q          .              .             1.0000         1.0000      
+D.R          .              .             1.0000         1.0000      
+D.S          .              .             1.0000         1.0000      
+D.T          .              .             1.0000         1.0000      
+D.U          .              .             1.0000         1.0000      
+D.W          .              .             1.0000         1.0000      
+D.X          .              .             1.0000         1.0000      
+D.Y          .              .             1.0000         1.0000      
+D.Z          .              .             1.0000         1.0000      
+E.A          .              .             1.0000         1.0000      
+E.B          .              .             1.0000         1.0000      
+E.C          .              .             1.0000         1.0000      
+E.D          .              .             1.0000         1.0000      
+E.E          .              .             1.0000         1.0000      
+E.F          .             1.0000         1.0000         1.0000      
+E.G          .              .             1.0000         1.0000      
+E.H          .              .             1.0000         1.0000      
+E.I          .              .             1.0000         1.0000      
+E.J          .              .             1.0000         1.0000      
+E.K          .              .             1.0000         1.0000      
+E.L          .              .             1.0000         1.0000      
+E.M          .              .             1.0000         1.0000      
+E.N          .              .             1.0000         1.0000      
+E.O          .              .             1.0000         1.0000      
+E.P          .              .             1.0000         1.0000      
+E.Q          .              .             1.0000         1.0000      
+E.R          .              .             1.0000         1.0000      
+E.S          .              .             1.0000         1.0000      
+E.T          .              .             1.0000         1.0000      
+E.U          .              .             1.0000         1.0000      
+E.W          .              .             1.0000         1.0000      
+E.X          .              .             1.0000         1.0000      
+E.Y          .              .             1.0000         1.0000      
+E.Z          .              .             1.0000         1.0000      
+F.A          .              .             1.0000         1.0000      
+F.B          .              .             1.0000         1.0000      
+F.C          .              .             1.0000         1.0000      
+F.D          .              .             1.0000         1.0000      
+F.E          .              .             1.0000         1.0000      
+F.F          .              .             1.0000         1.0000      
+F.G          .              .             1.0000         1.0000      
+F.H          .              .             1.0000         1.0000      
+F.I          .              .             1.0000         1.0000      
+F.J          .              .             1.0000         1.0000      
+F.K          .              .             1.0000         1.0000      
+F.L          .              .             1.0000         1.0000      
+F.M          .              .             1.0000         1.0000      
+F.N          .              .             1.0000         1.0000      
+F.O          .              .             1.0000         1.0000      
+F.P          .              .             1.0000         1.0000      
+F.Q          .              .             1.0000         1.0000      
+F.R          .              .             1.0000         1.0000      
+F.S          .              .             1.0000         1.0000      
+F.T          .              .             1.0000         1.0000      
+F.U          .              .             1.0000         1.0000      
+F.W          .              .             1.0000         1.0000      
+F.X          .              .             1.0000         1.0000      
+F.Y          .              .             1.0000         1.0000      
+F.Z          .              .             1.0000         1.0000      
+G.A          .              .             1.0000         1.0000      
+G.B          .              .             1.0000         1.0000      
+G.C          .              .             1.0000         1.0000      
+G.D          .              .             1.0000         1.0000      
+G.E          .              .             1.0000         1.0000      
+G.F          .              .             1.0000         1.0000      
+G.G          .              .             1.0000         1.0000      
+G.H          .             1.0000         1.0000         1.0000      
+G.I          .              .             1.0000         1.0000      
+G.J          .              .             1.0000         1.0000      
+G.K          .              .             1.0000         1.0000      
+G.L          .              .             1.0000         1.0000      
+G.M          .              .             1.0000         1.0000      
+G.N          .              .             1.0000         1.0000      
+G.O          .              .             1.0000         1.0000      
+G.P          .              .             1.0000         1.0000      
+G.Q          .              .             1.0000         1.0000      
+G.R          .              .             1.0000         1.0000      
+G.S          .              .             1.0000         1.0000      
+G.T          .              .             1.0000         1.0000      
+G.U          .              .             1.0000         1.0000      
+G.W          .              .             1.0000         1.0000      
+G.X          .              .             1.0000         1.0000      
+G.Y          .              .             1.0000         1.0000      
+G.Z          .              .             1.0000         1.0000      
+H.A          .              .             1.0000         1.0000      
+H.B          .              .             1.0000         1.0000      
+H.C          .              .             1.0000         1.0000      
+H.D          .              .             1.0000         1.0000      
+H.E          .              .             1.0000         1.0000      
+H.F          .              .             1.0000         1.0000      
+H.G          .              .             1.0000         1.0000      
+H.H          .              .             1.0000         1.0000      
+H.I          .              .             1.0000         1.0000      
+H.J          .              .             1.0000         1.0000      
+H.K          .              .             1.0000         1.0000      
+H.L          .              .             1.0000         1.0000      
+H.M          .              .             1.0000         1.0000      
+H.N          .              .             1.0000         1.0000      
+H.O          .              .             1.0000         1.0000      
+H.P          .              .             1.0000         1.0000      
+H.Q          .              .             1.0000         1.0000      
+H.R          .              .             1.0000         1.0000      
+H.S          .              .             1.0000         1.0000      
+H.T          .              .             1.0000         1.0000      
+H.U          .              .             1.0000         1.0000      
+H.W          .              .             1.0000         1.0000      
+H.X          .              .             1.0000         1.0000      
+H.Y          .              .             1.0000         1.0000      
+H.Z          .              .             1.0000         1.0000      
+I.A          .              .             1.0000         1.0000      
+I.B          .              .             1.0000         1.0000      
+I.C          .              .             1.0000         1.0000      
+I.D          .              .             1.0000         1.0000      
+I.E          .              .             1.0000         1.0000      
+I.F          .              .             1.0000         1.0000      
+I.G          .              .             1.0000         1.0000      
+I.H          .              .             1.0000         1.0000      
+I.I          .              .             1.0000         1.0000      
+I.J          .             1.0000         1.0000         1.0000      
+I.K          .              .             1.0000         1.0000      
+I.L          .              .             1.0000         1.0000      
+I.M          .              .             1.0000         1.0000      
+I.N          .              .             1.0000         1.0000      
+I.O          .              .             1.0000         1.0000      
+I.P          .              .             1.0000         1.0000      
+I.Q          .              .             1.0000         1.0000      
+I.R          .              .             1.0000         1.0000      
+I.S          .              .             1.0000         1.0000      
+I.T          .              .             1.0000         1.0000      
+I.U          .              .             1.0000         1.0000      
+I.W          .              .             1.0000         1.0000      
+I.X          .              .             1.0000         1.0000      
+I.Y          .              .             1.0000         1.0000      
+I.Z          .              .             1.0000         1.0000      
+J.A          .              .             1.0000         1.0000      
+J.B          .              .             1.0000         1.0000      
+J.C          .              .             1.0000         1.0000      
+J.D          .              .             1.0000         1.0000      
+J.E          .              .             1.0000         1.0000      
+J.F          .              .             1.0000         1.0000      
+J.G          .              .             1.0000         1.0000      
+J.H          .              .             1.0000         1.0000      
+J.I          .              .             1.0000         1.0000      
+J.J          .              .             1.0000         1.0000      
+J.K          .              .             1.0000         1.0000      
+J.L          .              .             1.0000         1.0000      
+J.M          .              .             1.0000         1.0000      
+J.N          .              .             1.0000         1.0000      
+J.O          .              .             1.0000         1.0000      
+J.P          .              .             1.0000         1.0000      
+J.Q          .              .             1.0000         1.0000      
+J.R          .              .             1.0000         1.0000      
+J.S          .              .             1.0000         1.0000      
+J.T          .              .             1.0000         1.0000      
+J.U          .              .             1.0000         1.0000      
+J.W          .              .             1.0000         1.0000      
+J.X          .              .             1.0000         1.0000      
+J.Y          .              .             1.0000         1.0000      
+J.Z          .              .             1.0000         1.0000      
+K.A          .              .             1.0000         1.0000      
+K.B          .              .             1.0000         1.0000      
+K.C          .              .             1.0000         1.0000      
+K.D          .              .             1.0000         1.0000      
+K.E          .              .             1.0000         1.0000      
+K.F          .              .             1.0000         1.0000      
+K.G          .              .             1.0000         1.0000      
+K.H          .              .             1.0000         1.0000      
+K.I          .              .             1.0000         1.0000      
+K.J          .              .             1.0000         1.0000      
+K.K          .              .             1.0000         1.0000      
+K.L          .              .             1.0000         1.0000      
+K.M          .              .             1.0000         1.0000      
+K.N          .              .             1.0000         1.0000      
+K.O          .             1.0000         1.0000         1.0000      
+K.P          .              .             1.0000         1.0000      
+K.Q          .              .             1.0000         1.0000      
+K.R          .              .             1.0000         1.0000      
+K.S          .              .             1.0000         1.0000      
+K.T          .              .             1.0000         1.0000      
+K.U          .              .             1.0000         1.0000      
+K.W          .              .             1.0000         1.0000      
+K.X          .              .             1.0000         1.0000      
+K.Y          .              .             1.0000         1.0000      
+K.Z          .              .             1.0000         1.0000      
+L.A          .              .             1.0000         1.0000      
+L.B          .              .             1.0000         1.0000      
+L.C          .              .             1.0000         1.0000      
+L.D          .              .             1.0000         1.0000      
+L.E          .              .             1.0000         1.0000      
+L.F          .              .             1.0000         1.0000      
+L.G          .              .             1.0000         1.0000      
+L.H          .              .             1.0000         1.0000      
+L.I          .              .             1.0000         1.0000      
+L.J          .              .             1.0000         1.0000      
+L.K          .              .             1.0000         1.0000      
+L.L          .              .             1.0000         1.0000      
+L.M          .             1.0000         1.0000         1.0000      
+L.N          .             1.0000         1.0000         1.0000      
+L.O          .              .             1.0000         1.0000      
+L.P          .              .             1.0000         1.0000      
+L.Q          .              .             1.0000         1.0000      
+L.R          .              .             1.0000         1.0000      
+L.S          .              .             1.0000         1.0000      
+L.T          .              .             1.0000         1.0000      
+L.U          .              .             1.0000         1.0000      
+L.W          .              .             1.0000         1.0000      
+L.X          .              .             1.0000         1.0000      
+L.Y          .              .             1.0000         1.0000      
+L.Z          .              .             1.0000         1.0000      
+M.A          .              .             1.0000         1.0000      
+M.B          .              .             1.0000         1.0000      
+M.C          .              .             1.0000         1.0000      
+M.D          .              .             1.0000         1.0000      
+M.E          .              .             1.0000         1.0000      
+M.F          .              .             1.0000         1.0000      
+M.G          .              .             1.0000         1.0000      
+M.H          .              .             1.0000         1.0000      
+M.I          .              .             1.0000         1.0000      
+M.J          .              .             1.0000         1.0000      
+M.K          .              .             1.0000         1.0000      
+M.L          .              .             1.0000         1.0000      
+M.M          .              .             1.0000         1.0000      
+M.N          .              .             1.0000         1.0000      
+M.O          .              .             1.0000         1.0000      
+M.P          .              .             1.0000         1.0000      
+M.Q          .              .             1.0000         1.0000      
+M.R          .              .             1.0000         1.0000      
+M.S          .              .             1.0000         1.0000      
+M.T          .              .             1.0000         1.0000      
+M.U          .              .             1.0000         1.0000      
+M.W          .              .             1.0000         1.0000      
+M.X          .              .             1.0000         1.0000      
+M.Y          .              .             1.0000         1.0000      
+M.Z          .              .             1.0000         1.0000      
+N.A          .              .             1.0000         1.0000      
+N.B          .              .             1.0000         1.0000      
+N.C          .              .             1.0000         1.0000      
+N.D          .              .             1.0000         1.0000      
+N.E          .              .             1.0000         1.0000      
+N.F          .              .             1.0000         1.0000      
+N.G          .              .             1.0000         1.0000      
+N.H          .              .             1.0000         1.0000      
+N.I          .              .             1.0000         1.0000      
+N.J          .              .             1.0000         1.0000      
+N.K          .              .             1.0000         1.0000      
+N.L          .              .             1.0000         1.0000      
+N.M          .              .             1.0000         1.0000      
+N.N          .              .             1.0000         1.0000      
+N.O          .              .             1.0000         1.0000      
+N.P          .              .             1.0000         1.0000      
+N.Q          .              .             1.0000         1.0000      
+N.R          .              .             1.0000         1.0000      
+N.S          .              .             1.0000         1.0000      
+N.T          .              .             1.0000         1.0000      
+N.U          .              .             1.0000         1.0000      
+N.W          .              .             1.0000         1.0000      
+N.X          .              .             1.0000         1.0000      
+N.Y          .              .             1.0000         1.0000      
+N.Z          .              .             1.0000         1.0000      
+O.A          .              .             1.0000         1.0000      
+O.B          .              .             1.0000         1.0000      
+O.C          .              .             1.0000         1.0000      
+O.D          .              .             1.0000         1.0000      
+O.E          .              .             1.0000         1.0000      
+O.F          .              .             1.0000         1.0000      
+O.G          .              .             1.0000         1.0000      
+O.H          .              .             1.0000         1.0000      
+O.I          .              .             1.0000         1.0000      
+O.J          .              .             1.0000         1.0000      
+O.K          .              .             1.0000         1.0000      
+O.L          .              .             1.0000         1.0000      
+O.M          .              .             1.0000         1.0000      
+O.N          .              .             1.0000         1.0000      
+O.O          .              .             1.0000         1.0000      
+O.P          .              .             1.0000         1.0000      
+O.Q          .              .             1.0000         1.0000      
+O.R          .              .             1.0000         1.0000      
+O.S          .              .             1.0000         1.0000      
+O.T          .              .             1.0000         1.0000      
+O.U          .              .             1.0000         1.0000      
+O.W          .              .             1.0000         1.0000      
+O.X          .              .             1.0000         1.0000      
+O.Y          .              .             1.0000         1.0000      
+O.Z          .              .             1.0000         1.0000      
+P.A          .              .             1.0000         1.0000      
+P.B          .              .             1.0000         1.0000      
+P.C          .              .             1.0000         1.0000      
+P.D          .              .             1.0000         1.0000      
+P.E          .              .             1.0000         1.0000      
+P.F          .              .             1.0000         1.0000      
+P.G          .              .             1.0000         1.0000      
+P.H          .              .             1.0000         1.0000      
+P.I          .              .             1.0000         1.0000      
+P.J          .              .             1.0000         1.0000      
+P.K          .              .             1.0000         1.0000      
+P.L          .              .             1.0000         1.0000      
+P.M          .              .             1.0000         1.0000      
+P.N          .              .             1.0000         1.0000      
+P.O          .              .             1.0000         1.0000      
+P.P          .              .             1.0000         1.0000      
+P.Q          .             1.0000         1.0000         1.0000      
+P.R          .              .             1.0000         1.0000      
+P.S          .              .             1.0000         1.0000      
+P.T          .             1.0000         1.0000         1.0000      
+P.U          .              .             1.0000         1.0000      
+P.W          .              .             1.0000         1.0000      
+P.X          .              .             1.0000         1.0000      
+P.Y          .              .             1.0000         1.0000      
+P.Z          .              .             1.0000         1.0000      
+Q.A          .              .             1.0000         1.0000      
+Q.B          .              .             1.0000         1.0000      
+Q.C          .              .             1.0000         1.0000      
+Q.D          .              .             1.0000         1.0000      
+Q.E          .              .             1.0000         1.0000      
+Q.F          .              .             1.0000         1.0000      
+Q.G          .              .             1.0000         1.0000      
+Q.H          .              .             1.0000         1.0000      
+Q.I          .              .             1.0000         1.0000      
+Q.J          .              .             1.0000         1.0000      
+Q.K          .              .             1.0000         1.0000      
+Q.L          .              .             1.0000         1.0000      
+Q.M          .              .             1.0000         1.0000      
+Q.N          .              .             1.0000         1.0000      
+Q.O          .              .             1.0000         1.0000      
+Q.P          .              .             1.0000         1.0000      
+Q.Q          .              .             1.0000         1.0000      
+Q.R          .              .             1.0000         1.0000      
+Q.S          .              .             1.0000         1.0000      
+Q.T          .              .             1.0000         1.0000      
+Q.U          .              .             1.0000         1.0000      
+Q.W          .              .             1.0000         1.0000      
+Q.X          .              .             1.0000         1.0000      
+Q.Y          .              .             1.0000         1.0000      
+Q.Z          .              .             1.0000         1.0000      
+R.A          .              .             1.0000         1.0000      
+R.B          .              .             1.0000         1.0000      
+R.C          .              .             1.0000         1.0000      
+R.D          .              .             1.0000         1.0000      
+R.E          .              .             1.0000         1.0000      
+R.F          .              .             1.0000         1.0000      
+R.G          .              .             1.0000         1.0000      
+R.H          .              .             1.0000         1.0000      
+R.I          .              .             1.0000         1.0000      
+R.J          .              .             1.0000         1.0000      
+R.K          .              .             1.0000         1.0000      
+R.L          .              .             1.0000         1.0000      
+R.M          .              .             1.0000         1.0000      
+R.N          .              .             1.0000         1.0000      
+R.O          .              .             1.0000         1.0000      
+R.P          .              .             1.0000         1.0000      
+R.Q          .              .             1.0000         1.0000      
+R.R          .              .             1.0000         1.0000      
+R.S          .             1.0000         1.0000         1.0000      
+R.T          .              .             1.0000         1.0000      
+R.U          .              .             1.0000         1.0000      
+R.W          .              .             1.0000         1.0000      
+R.X          .              .             1.0000         1.0000      
+R.Y          .              .             1.0000         1.0000      
+R.Z          .              .             1.0000         1.0000      
+S.A          .              .             1.0000         1.0000      
+S.B          .              .             1.0000         1.0000      
+S.C          .              .             1.0000         1.0000      
+S.D          .              .             1.0000         1.0000      
+S.E          .              .             1.0000         1.0000      
+S.F          .              .             1.0000         1.0000      
+S.G          .              .             1.0000         1.0000      
+S.H          .              .             1.0000         1.0000      
+S.I          .              .             1.0000         1.0000      
+S.J          .              .             1.0000         1.0000      
+S.K          .              .             1.0000         1.0000      
+S.L          .              .             1.0000         1.0000      
+S.M          .              .             1.0000         1.0000      
+S.N          .              .             1.0000         1.0000      
+S.O          .              .             1.0000         1.0000      
+S.P          .              .             1.0000         1.0000      
+S.Q          .              .             1.0000         1.0000      
+S.R          .              .             1.0000         1.0000      
+S.S          .              .             1.0000         1.0000      
+S.T          .              .             1.0000         1.0000      
+S.U          .              .             1.0000         1.0000      
+S.W          .              .             1.0000         1.0000      
+S.X          .              .             1.0000         1.0000      
+S.Y          .              .             1.0000         1.0000      
+S.Z          .              .             1.0000         1.0000      
+T.A          .              .             1.0000         1.0000      
+T.B          .              .             1.0000         1.0000      
+T.C          .              .             1.0000         1.0000      
+T.D          .              .             1.0000         1.0000      
+T.E          .              .             1.0000         1.0000      
+T.F          .              .             1.0000         1.0000      
+T.G          .              .             1.0000         1.0000      
+T.H          .              .             1.0000         1.0000      
+T.I          .              .             1.0000         1.0000      
+T.J          .              .             1.0000         1.0000      
+T.K          .              .             1.0000         1.0000      
+T.L          .              .             1.0000         1.0000      
+T.M          .              .             1.0000         1.0000      
+T.N          .              .             1.0000         1.0000      
+T.O          .              .             1.0000         1.0000      
+T.P          .              .             1.0000         1.0000      
+T.Q          .              .             1.0000         1.0000      
+T.R          .              .             1.0000         1.0000      
+T.S          .              .             1.0000         1.0000      
+T.T          .              .             1.0000         1.0000      
+T.U          .              .             1.0000         1.0000      
+T.W          .              .             1.0000         1.0000      
+T.X          .              .             1.0000         1.0000      
+T.Y          .              .             1.0000         1.0000      
+T.Z          .              .             1.0000         1.0000      
+U.A          .              .             1.0000         1.0000      
+U.B          .              .             1.0000         1.0000      
+U.C          .              .             1.0000         1.0000      
+U.D          .              .             1.0000         1.0000      
+U.E          .              .             1.0000         1.0000      
+U.F          .              .             1.0000         1.0000      
+U.G          .              .             1.0000         1.0000      
+U.H          .              .             1.0000         1.0000      
+U.I          .              .             1.0000         1.0000      
+U.J          .              .             1.0000         1.0000      
+U.K          .              .             1.0000         1.0000      
+U.L          .              .             1.0000         1.0000      
+U.M          .              .             1.0000         1.0000      
+U.N          .              .             1.0000         1.0000      
+U.O          .              .             1.0000         1.0000      
+U.P          .              .             1.0000         1.0000      
+U.Q          .              .             1.0000         1.0000      
+U.R          .              .             1.0000         1.0000      
+U.S          .              .             1.0000         1.0000      
+U.T          .              .             1.0000         1.0000      
+U.U          .              .             1.0000         1.0000      
+U.W          .             1.0000         1.0000         1.0000      
+U.X          .              .             1.0000         1.0000      
+U.Y          .              .             1.0000         1.0000      
+U.Z          .              .             1.0000         1.0000      
+W.A          .              .             1.0000         1.0000      
+W.B          .              .             1.0000         1.0000      
+W.C          .              .             1.0000         1.0000      
+W.D          .              .             1.0000         1.0000      
+W.E          .              .             1.0000         1.0000      
+W.F          .              .             1.0000         1.0000      
+W.G          .              .             1.0000         1.0000      
+W.H          .              .             1.0000         1.0000      
+W.I          .              .             1.0000         1.0000      
+W.J          .              .             1.0000         1.0000      
+W.K          .              .             1.0000         1.0000      
+W.L          .              .             1.0000         1.0000      
+W.M          .              .             1.0000         1.0000      
+W.N          .              .             1.0000         1.0000      
+W.O          .              .             1.0000         1.0000      
+W.P          .              .             1.0000         1.0000      
+W.Q          .              .             1.0000         1.0000      
+W.R          .              .             1.0000         1.0000      
+W.S          .              .             1.0000         1.0000      
+W.T          .              .             1.0000         1.0000      
+W.U          .              .             1.0000         1.0000      
+W.W          .              .             1.0000         1.0000      
+W.X          .              .             1.0000         1.0000      
+W.Y          .              .             1.0000         1.0000      
+W.Z          .              .             1.0000         1.0000      
+X.A          .              .             1.0000         1.0000      
+X.B          .              .             1.0000         1.0000      
+X.C          .              .             1.0000         1.0000      
+X.D          .              .             1.0000         1.0000      
+X.E          .              .             1.0000         1.0000      
+X.F          .              .             1.0000         1.0000      
+X.G          .              .             1.0000         1.0000      
+X.H          .              .             1.0000         1.0000      
+X.I          .              .             1.0000         1.0000      
+X.J          .              .             1.0000         1.0000      
+X.K          .              .             1.0000         1.0000      
+X.L          .              .             1.0000         1.0000      
+X.M          .              .             1.0000         1.0000      
+X.N          .              .             1.0000         1.0000      
+X.O          .              .             1.0000         1.0000      
+X.P          .              .             1.0000         1.0000      
+X.Q          .              .             1.0000         1.0000      
+X.R          .              .             1.0000         1.0000      
+X.S          .              .             1.0000         1.0000      
+X.T          .              .             1.0000         1.0000      
+X.U          .              .             1.0000         1.0000      
+X.W          .              .             1.0000         1.0000      
+X.X          .              .             1.0000         1.0000      
+X.Y          .             1.0000         1.0000         1.0000      
+X.Z          .              .             1.0000         1.0000      
+Y.A          .              .             1.0000         1.0000      
+Y.B          .              .             1.0000         1.0000      
+Y.C          .              .             1.0000         1.0000      
+Y.D          .              .             1.0000         1.0000      
+Y.E          .              .             1.0000         1.0000      
+Y.F          .              .             1.0000         1.0000      
+Y.G          .              .             1.0000         1.0000      
+Y.H          .              .             1.0000         1.0000      
+Y.I          .              .             1.0000         1.0000      
+Y.J          .              .             1.0000         1.0000      
+Y.K          .              .             1.0000         1.0000      
+Y.L          .              .             1.0000         1.0000      
+Y.M          .              .             1.0000         1.0000      
+Y.N          .              .             1.0000         1.0000      
+Y.O          .              .             1.0000         1.0000      
+Y.P          .              .             1.0000         1.0000      
+Y.Q          .              .             1.0000         1.0000      
+Y.R          .              .             1.0000         1.0000      
+Y.S          .              .             1.0000         1.0000      
+Y.T          .              .             1.0000         1.0000      
+Y.U          .              .             1.0000         1.0000      
+Y.W          .              .             1.0000         1.0000      
+Y.X          .              .             1.0000         1.0000      
+Y.Y          .              .             1.0000         1.0000      
+Y.Z          .              .             1.0000         1.0000      
+Z.A          .              .             1.0000         1.0000      
+Z.B          .              .             1.0000         1.0000      
+Z.C          .              .             1.0000         1.0000      
+Z.D          .              .             1.0000         1.0000      
+Z.E          .              .             1.0000         1.0000      
+Z.F          .              .             1.0000         1.0000      
+Z.G          .              .             1.0000         1.0000      
+Z.H          .              .             1.0000         1.0000      
+Z.I          .              .             1.0000         1.0000      
+Z.J          .              .             1.0000         1.0000      
+Z.K          .              .             1.0000         1.0000      
+Z.L          .              .             1.0000         1.0000      
+Z.M          .              .             1.0000         1.0000      
+Z.N          .              .             1.0000         1.0000      
+Z.O          .              .             1.0000         1.0000      
+Z.P          .              .             1.0000         1.0000      
+Z.Q          .              .             1.0000         1.0000      
+Z.R          .              .             1.0000         1.0000      
+Z.S          .              .             1.0000         1.0000      
+Z.T          .              .             1.0000         1.0000      
+Z.U          .              .             1.0000         1.0000      
+Z.W          .              .             1.0000         1.0000      
+Z.X          .              .             1.0000         1.0000      
+Z.Y          .              .             1.0000         1.0000      
+Z.Z          .              .             1.0000         1.0000      
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/24/23 18:45:49 Page 13
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+----     73 SET stations  
+
+A.B
+A.Z
+C.D
+E.F
+G.H
+I.J
+K.O
+L.M
+L.N
+P.Q
+P.T
+R.S
+U.W
+X.Y
+
+
+
+EXECUTION TIME       =        0.093 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+
+
+USER: Introduction to Optimization (CS/ISyE/ECE 524) G230906|0002AS-GEN
+      UW-Madison, CS Dept., Fall 2023, Prof. Ferris              DCE850
+      License for teaching and research at degree granting institutions
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw6\hw6-2.gms
+Output     C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw6\hw6-2.lst
