@@ -289,12 +289,6 @@
             "file": "topbrassex/topbrass1.lst",
             "name": "topbrass1.lst",
             "type": "lst"
-        },
-        {
-            "codecMib": 106,
-            "file": "widgetco.lst",
-            "name": "widgetco.lst",
-            "type": "lst"
         }
     ],
     "options": [

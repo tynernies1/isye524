@@ -1,5 +1,5 @@
 {
-    "name": "qap",
+    "name": "simpsetcov",
     "nodes": [
     ],
     "options": [
