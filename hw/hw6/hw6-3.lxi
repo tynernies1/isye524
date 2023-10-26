@@ -1,0 +1,23 @@
+B 3 C o m p i l a t i o n
+B 56 E x e c u t i o n
+I 56 cover
+B 73 Equation Listing    SOLVE dumbledore Using MIP From line 38
+D 76 obj
+D 81 cover_cons
+D 92 budget_cons
+B 98 Column Listing      SOLVE dumbledore Using MIP From line 38
+E 101 pop_covered
+E 108 x
+E 134 covered
+B 154 Range Statistics    SOLVE dumbledore Using MIP From line 38
+B 165 Model Statistics    SOLVE dumbledore Using MIP From line 38
+B 178 Solution Report     SOLVE dumbledore Using MIP From line 38
+F 223 obj
+F 225 cover_cons
+F 247 budget_cons
+G 251 pop_covered
+G 253 x
+G 265 covered
+B 291 E x e c u t i o n
+I 291 open
+I 301 pop_covered
