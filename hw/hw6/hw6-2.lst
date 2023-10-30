@@ -1,9 +1,9 @@
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/24/23 18:45:49 Page 1
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 10/27/23 15:42:13 Page 1
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
 
-   1  set all_nodes / A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, W, X, Y, Z /;
+   1   set all_nodes / A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, W, X, Y, Z /;
    2  set nodes(all_nodes) / A, B, C, D, E, F, G, H, I, J /;
    3  alias(nodes, I, J);
    4   
@@ -78,8 +78,8 @@ C o m p i l a t i o n
   73  display stations;
 
 
-COMPILATION TIME     =        0.000 SECONDS      3 MB  44.3.0 8b8fb1cb WEX-WEI
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/24/23 18:45:49 Page 2
+COMPILATION TIME     =        0.016 SECONDS      3 MB  45.1.0 88bbff72 WEX-WEI
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 10/27/23 15:42:13 Page 2
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 E x e c u t i o n
 
@@ -96,7 +96,7 @@ G                                                                               
 H                                                                                             YES
 I                                                                                                         YES
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/24/23 18:45:49 Page 3
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 10/27/23 15:42:13 Page 3
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Equation Listing    SOLVE guards1 Using MIP From line 29
 
@@ -116,7 +116,7 @@ coverage(C)..  use(A,C) + use(C,D) =G= 1 ; (LHS = 0, INFES = 1 ****)
      
 REMAINING 7 ENTRIES SKIPPED
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/24/23 18:45:49 Page 4
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 10/27/23 15:42:13 Page 4
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Column Listing      SOLVE guards1 Using MIP From line 29
 
@@ -147,7 +147,7 @@ totguards
                 (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
         1       obj
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/24/23 18:45:49 Page 5
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 10/27/23 15:42:13 Page 5
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Range Statistics    SOLVE guards1 Using MIP From line 29
 
@@ -158,7 +158,7 @@ RHS       [min, max] : [ 1.000E+00, 1.000E+00] - Zero values observed as well
 Bound     [min, max] : [ 1.000E+00, 1.000E+00] - Zero values observed as well
 Matrix    [min, max] : [ 1.000E+00, 1.000E+00]
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/24/23 18:45:49 Page 6
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 10/27/23 15:42:13 Page 6
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Model Statistics    SOLVE guards1 Using MIP From line 29
 
@@ -170,8 +170,8 @@ BLOCKS OF VARIABLES           2     SINGLE VARIABLES          101
 NON ZERO ELEMENTS           123     DISCRETE VARIABLES        100
 
 
-GENERATION TIME      =        0.015 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/24/23 18:45:49 Page 7
+GENERATION TIME      =        0.140 SECONDS      4 MB  45.1.0 88bbff72 WEX-WEI
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 10/27/23 15:42:13 Page 7
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Solution Report     SOLVE guards1 Using MIP From line 29
 
@@ -188,7 +188,7 @@ Solution Report     SOLVE guards1 Using MIP From line 29
 
  RESOURCE USAGE, LIMIT          0.000 10000000000.000
  ITERATION COUNT, LIMIT         0    2147483647
---- GAMS/CPLEX licensed for continuous and discrete problems.
+*** This solver runs with a demo license. No commercial use.
 --- GMO setup time: 0.00s
 --- GMO memory 0.51 Mb (peak 0.51 Mb)
 --- Dictionary memory 0.00 Mb
@@ -348,7 +348,7 @@ J.J          .              .             1.0000         1.0000
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/24/23 18:45:49 Page 8
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 10/27/23 15:42:13 Page 8
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Equation Listing    SOLVE guards2 Using MIP From line 67
 
@@ -368,7 +368,7 @@ coverage2(C)..  use2(B,C) + use2(C,D) + use2(C,E) =G= 1 ; (LHS = 0, INFES = 1 **
      
 REMAINING 22 ENTRIES SKIPPED
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/24/23 18:45:49 Page 9
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 10/27/23 15:42:13 Page 9
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Column Listing      SOLVE guards2 Using MIP From line 67
 
@@ -397,7 +397,7 @@ use2(A,C)
        -1       obj2
 
 REMAINING 622 ENTRIES SKIPPED
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/24/23 18:45:49 Page 10
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 10/27/23 15:42:13 Page 10
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Range Statistics    SOLVE guards2 Using MIP From line 67
 
@@ -408,7 +408,7 @@ RHS       [min, max] : [ 1.000E+00, 1.000E+00] - Zero values observed as well
 Bound     [min, max] : [ 1.000E+00, 1.000E+00] - Zero values observed as well
 Matrix    [min, max] : [ 1.000E+00, 1.000E+00]
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/24/23 18:45:49 Page 11
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 10/27/23 15:42:13 Page 11
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Model Statistics    SOLVE guards2 Using MIP From line 67
 
@@ -420,8 +420,8 @@ BLOCKS OF VARIABLES           2     SINGLE VARIABLES          626
 NON ZERO ELEMENTS           678     DISCRETE VARIABLES        625
 
 
-GENERATION TIME      =        0.000 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/24/23 18:45:49 Page 12
+GENERATION TIME      =        0.015 SECONDS      4 MB  45.1.0 88bbff72 WEX-WEI
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 10/27/23 15:42:13 Page 12
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Solution Report     SOLVE guards2 Using MIP From line 67
 
@@ -438,7 +438,7 @@ Solution Report     SOLVE guards2 Using MIP From line 67
 
  RESOURCE USAGE, LIMIT          0.000 10000000000.000
  ITERATION COUNT, LIMIT       104    2147483647
---- GAMS/CPLEX licensed for continuous and discrete problems.
+*** This solver runs with a demo license. No commercial use.
 --- GMO setup time: 0.00s
 --- Space for names approximately 0.01 Mb
 --- Use option 'names no' to turn use of names off
@@ -1140,7 +1140,7 @@ Z.Z          .              .             1.0000         1.0000
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/24/23 18:45:49 Page 13
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 10/27/23 15:42:13 Page 13
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 E x e c u t i o n
 
@@ -1164,12 +1164,11 @@ X.Y
 
 
 
-EXECUTION TIME       =        0.093 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+EXECUTION TIME       =        0.609 SECONDS      4 MB  45.1.0 88bbff72 WEX-WEI
 
 
-USER: Introduction to Optimization (CS/ISyE/ECE 524) G230906|0002AS-GEN
-      UW-Madison, CS Dept., Fall 2023, Prof. Ferris              DCE850
-      License for teaching and research at degree granting institutions
+USER: GAMS Demo, for EULA and demo limitations see   G230930/0001CB-GEN
+      https://www.gams.com/latest/docs/UG%5FLicense.html         DC0000
 
 
 **** FILE SUMMARY

@@ -1,5 +1,5 @@
 {
-    "file": "hw6.gms",
+    "file": "hw6-2.gms",
     "name": "hw6",
     "nodes": [
         {
