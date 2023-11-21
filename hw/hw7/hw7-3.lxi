@@ -1,0 +1,24 @@
+B 3 C o m p i l a t i o n
+B 93 Equation Listing    SOLVE paint Using MIP From line 52
+D 96 obj_eq
+D 101 assign_J
+D 112 assign_I
+D 123 subtour_elim
+B 135 Column Listing      SOLVE paint Using MIP From line 52
+E 138 x
+E 160 y
+E 224 obj
+B 232 Range Statistics    SOLVE paint Using MIP From line 52
+B 243 Model Statistics    SOLVE paint Using MIP From line 52
+B 256 Solution Report     SOLVE paint Using MIP From line 52
+F 301 obj_eq
+F 303 assign_J
+F 318 assign_I
+F 333 subtour_elim
+G 419 x
+G 523 y
+G 539 obj
+B 549 E x e c u t i o n
+I 551 batchlength
+I 552 order
+I 557 y

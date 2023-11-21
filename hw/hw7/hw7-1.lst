@@ -1,0 +1,3311 @@
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 11/08/23 18:19:36 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1  set N / 1*50 /;
+   2   
+   3  alias(N, I);
+   4   
+   5  binary variables
+   6  cs_300(I), math_340(I), cs_400(I), female(I), male(I), undergrad(I), cs(I), math(I), ie(I), december(I),
+   7  finalfemales(I), ieundergrads(I), both300and400(I), both300and400ordecem(I), maleieundergrads(I),
+   8  maleieundergradsboth300and400ordecem(I);
+   9   
+  10  variable
+  11  totfemales;
+  12   
+  13  equations
+  14  obj, eq2, eq3, eq4, eq5, eq6, eq7, eq8, eq9, eq10, eq11, eq12, eq13, eq14, eq15, eq16, eq17, eq18, eq19,
+  15  eq20, eq21, eq22, eq23, eq24, eq25, eq26, eq27, eq28, eq29, eq30, eq31, eq32, eq33, eq34, eq35, eq36, eq37;
+  16   
+  17  obj..
+  18  totfemales =e= sum(I, finalfemales(I));
+  19   
+  20  eq2..
+  21  sum(I, cs_300(I)) =g= 10;
+  22   
+  23  eq3..
+  24  sum(I, math_340(I)) =g= 10;
+  25   
+  26  eq4..
+  27  sum(I, cs_400(I)) =e= 15;
+  28   
+  29  eq5..
+  30  sum(I, female(I)) =e= 15;
+  31   
+  32  eq6(I)..
+  33  male(I) =e= 1 - female(I) ;
+  34   
+  35  eq7..
+  36  sum(I, undergrad(I)) =e= 20;
+  37   
+  38  eq8..
+  39  sum(I, cs(I)) =e= 25;
+  40   
+  41  eq9..
+  42  sum(I, math(I)) =e= 15;
+  43   
+  44  eq10..
+  45  sum(I, ie(I)) =e= 10;
+  46   
+  47  eq11..
+  48  sum(I, december(I)) =e= 12;
+  49   
+  50  eq12(I)..
+  51  finalfemales(I) =l= ie(I);
+  52   
+  53  eq13(I)..
+  54  finalfemales(I) =l= undergrad(I);
+  55   
+  56  eq14(I)..
+  57  finalfemales(I) =l= female(I);
+  58   
+  59  eq15(I)..
+  60  finalfemales(I) =l= december(I);
+  61   
+  62  eq16(I)..
+  63  finalfemales(I) =l= both300and400(I);
+  64   
+  65  eq17(I)..
+  66  finalfemales(I) =g= ie(I) + undergrad(I) + female(I) + december(I) + both300and400(I) - 4;
+  67   
+  68  eq18(I)..
+  69  ieundergrads(I) =l= ie(I);
+  70   
+  71  eq19(I)..
+  72  ieundergrads(I) =l= undergrad(I);
+  73   
+  74  eq20(I)..
+  75  ieundergrads(I) =g= ie(I) + undergrad(I) - 1;
+  76   
+  77  eq21(I)..
+  78  both300and400(I) =l= cs_400(I);
+  79   
+  80  eq22(I)..
+  81  both300and400(I) =l= cs_300(I);
+  82   
+  83  eq23(I)..
+  84  both300and400(I) =g= cs_400(I) + cs_300(I) - 1;
+  85   
+  86  eq24(I)..
+  87  both300and400ordecem(I) =g= both300and400(I);
+  88   
+  89  eq25(I)..
+  90  both300and400ordecem(I) =g= december(I);
+  91   
+  92  eq26(I)..
+  93  both300and400ordecem(I) =l= both300and400(I) + december(I);
+  94   
+  95  eq27(I)..
+  96  maleieundergrads(I) =l= ie(I);
+  97   
+  98  eq28(I)..
+  99  maleieundergrads(I) =l= undergrad(I);
+ 100   
+ 101  eq29(I)..
+ 102  maleieundergrads(I) =l= male(I);
+ 103   
+ 104  eq30(I)..
+ 105  maleieundergrads(I) =g= ie(I) + undergrad(I) + male(I) - 2;
+ 106   
+ 107  eq31(I)..
+ 108  maleieundergradsboth300and400ordecem(I) =l= ie(I);
+ 109   
+ 110  eq32(I)..
+ 111  maleieundergradsboth300and400ordecem(I) =l= undergrad(I);
+ 112   
+ 113  eq33(I)..
+ 114  maleieundergradsboth300and400ordecem(I) =l= male(I);
+ 115   
+ 116  eq34(I)..
+ 117  maleieundergradsboth300and400ordecem(I) =l= both300and400(I);
+ 118   
+ 119  eq35(I)..
+ 120  maleieundergradsboth300and400ordecem(I) =g= ie(I) + undergrad(I) + male(I) + both300and400ordecem(I) - 3;
+ 121   
+ 122  eq36..
+ 123  sum(I, maleieundergrads(I)) =g= [2/3]*sum(I, ieundergrads(I));
+ 124   
+ 125  eq37..
+ 126  sum(I, maleieundergradsboth300and400ordecem(I)) =e= 2;
+ 127   
+ 128  model female_engineers / all /;
+ 129   
+ 130  solve female_engineers using mip maximize totfemales;
+ 131   
+ 132  parameter results(*);
+ 133   
+ 134  results('exists') = 1$(totfemales.l > 0);
+ 135  results('max howmany') = totfemales.l;
+ 136  results('femIEugrads') = sum(I$(ieundergrads.l(I) > 0.5), ieundergrads.l(I) - maleieundergrads.l(I));
+ 137  results('maleIEudrads') = sum(I$(ieundergrads.l(I) > 0.5),maleieundergrads.l(I));
+ 138  display results;
+ 139   
+ 140   
+ 141   
+ 142   
+
+
+COMPILATION TIME     =        0.000 SECONDS      3 MB  45.1.0 88bbff72 WEX-WEI
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 11/08/23 18:19:36 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Equation Listing    SOLVE female_engineers Using MIP From line 130
+
+
+---- obj  =E=  
+
+obj..  - finalfemales(1) - finalfemales(2) - finalfemales(3) - finalfemales(4) - finalfemales(5) - finalfemales(6) - finalfemales(7) - finalfemales(8) - finalfemales(9) - finalfemales(10) - finalfemales(11) - finalfemales(12) - finalfemales(13) - finalfemales(14) - finalfemales(15) - finalfemales(16) - finalfemales(17) - finalfemales(18) - finalfemales(19) - finalfemales(20) - finalfemales(21) - finalfemales(22) - finalfemales(23) - finalfemales(24) - finalfemales(25) - finalfemales(26) - finalfemales(27) - finalfemales(28) - finalfemales(29) - finalfemales(30) - finalfemales(31) - finalfemales(32) - finalfemales(33) - finalfemales(34) - finalfemales(35) - finalfemales(36) - finalfemales(37) - finalfemales(38) - finalfemales(39) - finalfemales(40) - finalfemales(41) - finalfemales(42) - finalfemales(43) - finalfemales(44) - finalfemales(45) - finalfemales(46) - finalfemales(47) - finalfemales(48) - finalfemales(49) - finalfemales(50) + totfemales =E= 0 ; (LHS = 0)
+     
+
+---- eq2  =G=  
+
+eq2..  cs_300(1) + cs_300(2) + cs_300(3) + cs_300(4) + cs_300(5) + cs_300(6) + cs_300(7) + cs_300(8) + cs_300(9) + cs_300(10) + cs_300(11) + cs_300(12) + cs_300(13) + cs_300(14) + cs_300(15) + cs_300(16) + cs_300(17) + cs_300(18) + cs_300(19) + cs_300(20) + cs_300(21) + cs_300(22) + cs_300(23) + cs_300(24) + cs_300(25) + cs_300(26) + cs_300(27) + cs_300(28) + cs_300(29) + cs_300(30) + cs_300(31) + cs_300(32) + cs_300(33) + cs_300(34) + cs_300(35) + cs_300(36) + cs_300(37) + cs_300(38) + cs_300(39) + cs_300(40) + cs_300(41) + cs_300(42) + cs_300(43) + cs_300(44) + cs_300(45) + cs_300(46) + cs_300(47) + cs_300(48) + cs_300(49) + cs_300(50) =G= 10 ; (LHS = 0, INFES = 10 ****)
+     
+
+---- eq3  =G=  
+
+eq3..  math_340(1) + math_340(2) + math_340(3) + math_340(4) + math_340(5) + math_340(6) + math_340(7) + math_340(8) + math_340(9) + math_340(10) + math_340(11) + math_340(12) + math_340(13) + math_340(14) + math_340(15) + math_340(16) + math_340(17) + math_340(18) + math_340(19) + math_340(20) + math_340(21) + math_340(22) + math_340(23) + math_340(24) + math_340(25) + math_340(26) + math_340(27) + math_340(28) + math_340(29) + math_340(30) + math_340(31) + math_340(32) + math_340(33) + math_340(34) + math_340(35) + math_340(36) + math_340(37) + math_340(38) + math_340(39) + math_340(40) + math_340(41) + math_340(42) + math_340(43) + math_340(44) + math_340(45) + math_340(46) + math_340(47) + math_340(48) + math_340(49) + math_340(50) =G= 10 ; (LHS = 0, INFES = 10 ****)
+     
+
+---- eq4  =E=  
+
+eq4..  cs_400(1) + cs_400(2) + cs_400(3) + cs_400(4) + cs_400(5) + cs_400(6) + cs_400(7) + cs_400(8) + cs_400(9) + cs_400(10) + cs_400(11) + cs_400(12) + cs_400(13) + cs_400(14) + cs_400(15) + cs_400(16) + cs_400(17) + cs_400(18) + cs_400(19) + cs_400(20) + cs_400(21) + cs_400(22) + cs_400(23) + cs_400(24) + cs_400(25) + cs_400(26) + cs_400(27) + cs_400(28) + cs_400(29) + cs_400(30) + cs_400(31) + cs_400(32) + cs_400(33) + cs_400(34) + cs_400(35) + cs_400(36) + cs_400(37) + cs_400(38) + cs_400(39) + cs_400(40) + cs_400(41) + cs_400(42) + cs_400(43) + cs_400(44) + cs_400(45) + cs_400(46) + cs_400(47) + cs_400(48) + cs_400(49) + cs_400(50) =E= 15 ; (LHS = 0, INFES = 15 ****)
+     
+
+---- eq5  =E=  
+
+eq5..  female(1) + female(2) + female(3) + female(4) + female(5) + female(6) + female(7) + female(8) + female(9) + female(10) + female(11) + female(12) + female(13) + female(14) + female(15) + female(16) + female(17) + female(18) + female(19) + female(20) + female(21) + female(22) + female(23) + female(24) + female(25) + female(26) + female(27) + female(28) + female(29) + female(30) + female(31) + female(32) + female(33) + female(34) + female(35) + female(36) + female(37) + female(38) + female(39) + female(40) + female(41) + female(42) + female(43) + female(44) + female(45) + female(46) + female(47) + female(48) + female(49) + female(50) =E= 15 ; (LHS = 0, INFES = 15 ****)
+     
+
+---- eq6  =E=  
+
+eq6(1)..  female(1) + male(1) =E= 1 ; (LHS = 0, INFES = 1 ****)
+     
+eq6(2)..  female(2) + male(2) =E= 1 ; (LHS = 0, INFES = 1 ****)
+     
+eq6(3)..  female(3) + male(3) =E= 1 ; (LHS = 0, INFES = 1 ****)
+     
+REMAINING 47 ENTRIES SKIPPED
+
+
+---- eq7  =E=  
+
+eq7..  undergrad(1) + undergrad(2) + undergrad(3) + undergrad(4) + undergrad(5) + undergrad(6) + undergrad(7) + undergrad(8) + undergrad(9) + undergrad(10) + undergrad(11) + undergrad(12) + undergrad(13) + undergrad(14) + undergrad(15) + undergrad(16) + undergrad(17) + undergrad(18) + undergrad(19) + undergrad(20) + undergrad(21) + undergrad(22) + undergrad(23) + undergrad(24) + undergrad(25) + undergrad(26) + undergrad(27) + undergrad(28) + undergrad(29) + undergrad(30) + undergrad(31) + undergrad(32) + undergrad(33) + undergrad(34) + undergrad(35) + undergrad(36) + undergrad(37) + undergrad(38) + undergrad(39) + undergrad(40) + undergrad(41) + undergrad(42) + undergrad(43) + undergrad(44) + undergrad(45) + undergrad(46) + undergrad(47) + undergrad(48) + undergrad(49) + undergrad(50) =E= 20 ; (LHS = 0, INFES = 20 ****)
+     
+
+---- eq8  =E=  
+
+eq8..  cs(1) + cs(2) + cs(3) + cs(4) + cs(5) + cs(6) + cs(7) + cs(8) + cs(9) + cs(10) + cs(11) + cs(12) + cs(13) + cs(14) + cs(15) + cs(16) + cs(17) + cs(18) + cs(19) + cs(20) + cs(21) + cs(22) + cs(23) + cs(24) + cs(25) + cs(26) + cs(27) + cs(28) + cs(29) + cs(30) + cs(31) + cs(32) + cs(33) + cs(34) + cs(35) + cs(36) + cs(37) + cs(38) + cs(39) + cs(40) + cs(41) + cs(42) + cs(43) + cs(44) + cs(45) + cs(46) + cs(47) + cs(48) + cs(49) + cs(50) =E= 25 ; (LHS = 0, INFES = 25 ****)
+     
+
+---- eq9  =E=  
+
+eq9..  math(1) + math(2) + math(3) + math(4) + math(5) + math(6) + math(7) + math(8) + math(9) + math(10) + math(11) + math(12) + math(13) + math(14) + math(15) + math(16) + math(17) + math(18) + math(19) + math(20) + math(21) + math(22) + math(23) + math(24) + math(25) + math(26) + math(27) + math(28) + math(29) + math(30) + math(31) + math(32) + math(33) + math(34) + math(35) + math(36) + math(37) + math(38) + math(39) + math(40) + math(41) + math(42) + math(43) + math(44) + math(45) + math(46) + math(47) + math(48) + math(49) + math(50) =E= 15 ; (LHS = 0, INFES = 15 ****)
+     
+
+---- eq10  =E=  
+
+eq10..  ie(1) + ie(2) + ie(3) + ie(4) + ie(5) + ie(6) + ie(7) + ie(8) + ie(9) + ie(10) + ie(11) + ie(12) + ie(13) + ie(14) + ie(15) + ie(16) + ie(17) + ie(18) + ie(19) + ie(20) + ie(21) + ie(22) + ie(23) + ie(24) + ie(25) + ie(26) + ie(27) + ie(28) + ie(29) + ie(30) + ie(31) + ie(32) + ie(33) + ie(34) + ie(35) + ie(36) + ie(37) + ie(38) + ie(39) + ie(40) + ie(41) + ie(42) + ie(43) + ie(44) + ie(45) + ie(46) + ie(47) + ie(48) + ie(49) + ie(50) =E= 10 ; (LHS = 0, INFES = 10 ****)
+     
+
+---- eq11  =E=  
+
+eq11..  december(1) + december(2) + december(3) + december(4) + december(5) + december(6) + december(7) + december(8) + december(9) + december(10) + december(11) + december(12) + december(13) + december(14) + december(15) + december(16) + december(17) + december(18) + december(19) + december(20) + december(21) + december(22) + december(23) + december(24) + december(25) + december(26) + december(27) + december(28) + december(29) + december(30) + december(31) + december(32) + december(33) + december(34) + december(35) + december(36) + december(37) + december(38) + december(39) + december(40) + december(41) + december(42) + december(43) + december(44) + december(45) + december(46) + december(47) + december(48) + december(49) + december(50) =E= 12 ; (LHS = 0, INFES = 12 ****)
+     
+
+---- eq12  =L=  
+
+eq12(1)..  - ie(1) + finalfemales(1) =L= 0 ; (LHS = 0)
+     
+eq12(2)..  - ie(2) + finalfemales(2) =L= 0 ; (LHS = 0)
+     
+eq12(3)..  - ie(3) + finalfemales(3) =L= 0 ; (LHS = 0)
+     
+REMAINING 47 ENTRIES SKIPPED
+
+
+---- eq13  =L=  
+
+eq13(1)..  - undergrad(1) + finalfemales(1) =L= 0 ; (LHS = 0)
+     
+eq13(2)..  - undergrad(2) + finalfemales(2) =L= 0 ; (LHS = 0)
+     
+eq13(3)..  - undergrad(3) + finalfemales(3) =L= 0 ; (LHS = 0)
+     
+REMAINING 47 ENTRIES SKIPPED
+
+
+---- eq14  =L=  
+
+eq14(1)..  - female(1) + finalfemales(1) =L= 0 ; (LHS = 0)
+     
+eq14(2)..  - female(2) + finalfemales(2) =L= 0 ; (LHS = 0)
+     
+eq14(3)..  - female(3) + finalfemales(3) =L= 0 ; (LHS = 0)
+     
+REMAINING 47 ENTRIES SKIPPED
+
+
+---- eq15  =L=  
+
+eq15(1)..  - december(1) + finalfemales(1) =L= 0 ; (LHS = 0)
+     
+eq15(2)..  - december(2) + finalfemales(2) =L= 0 ; (LHS = 0)
+     
+eq15(3)..  - december(3) + finalfemales(3) =L= 0 ; (LHS = 0)
+     
+REMAINING 47 ENTRIES SKIPPED
+
+
+---- eq16  =L=  
+
+eq16(1)..  finalfemales(1) - both300and400(1) =L= 0 ; (LHS = 0)
+     
+eq16(2)..  finalfemales(2) - both300and400(2) =L= 0 ; (LHS = 0)
+     
+eq16(3)..  finalfemales(3) - both300and400(3) =L= 0 ; (LHS = 0)
+     
+REMAINING 47 ENTRIES SKIPPED
+
+
+---- eq17  =G=  
+
+eq17(1)..  - female(1) - undergrad(1) - ie(1) - december(1) + finalfemales(1) - both300and400(1) =G= -4 ; (LHS = 0)
+     
+eq17(2)..  - female(2) - undergrad(2) - ie(2) - december(2) + finalfemales(2) - both300and400(2) =G= -4 ; (LHS = 0)
+     
+eq17(3)..  - female(3) - undergrad(3) - ie(3) - december(3) + finalfemales(3) - both300and400(3) =G= -4 ; (LHS = 0)
+     
+REMAINING 47 ENTRIES SKIPPED
+
+
+---- eq18  =L=  
+
+eq18(1)..  - ie(1) + ieundergrads(1) =L= 0 ; (LHS = 0)
+     
+eq18(2)..  - ie(2) + ieundergrads(2) =L= 0 ; (LHS = 0)
+     
+eq18(3)..  - ie(3) + ieundergrads(3) =L= 0 ; (LHS = 0)
+     
+REMAINING 47 ENTRIES SKIPPED
+
+
+---- eq19  =L=  
+
+eq19(1)..  - undergrad(1) + ieundergrads(1) =L= 0 ; (LHS = 0)
+     
+eq19(2)..  - undergrad(2) + ieundergrads(2) =L= 0 ; (LHS = 0)
+     
+eq19(3)..  - undergrad(3) + ieundergrads(3) =L= 0 ; (LHS = 0)
+     
+REMAINING 47 ENTRIES SKIPPED
+
+
+---- eq20  =G=  
+
+eq20(1)..  - undergrad(1) - ie(1) + ieundergrads(1) =G= -1 ; (LHS = 0)
+     
+eq20(2)..  - undergrad(2) - ie(2) + ieundergrads(2) =G= -1 ; (LHS = 0)
+     
+eq20(3)..  - undergrad(3) - ie(3) + ieundergrads(3) =G= -1 ; (LHS = 0)
+     
+REMAINING 47 ENTRIES SKIPPED
+
+
+---- eq21  =L=  
+
+eq21(1)..  - cs_400(1) + both300and400(1) =L= 0 ; (LHS = 0)
+     
+eq21(2)..  - cs_400(2) + both300and400(2) =L= 0 ; (LHS = 0)
+     
+eq21(3)..  - cs_400(3) + both300and400(3) =L= 0 ; (LHS = 0)
+     
+REMAINING 47 ENTRIES SKIPPED
+
+
+---- eq22  =L=  
+
+eq22(1)..  - cs_300(1) + both300and400(1) =L= 0 ; (LHS = 0)
+     
+eq22(2)..  - cs_300(2) + both300and400(2) =L= 0 ; (LHS = 0)
+     
+eq22(3)..  - cs_300(3) + both300and400(3) =L= 0 ; (LHS = 0)
+     
+REMAINING 47 ENTRIES SKIPPED
+
+
+---- eq23  =G=  
+
+eq23(1)..  - cs_300(1) - cs_400(1) + both300and400(1) =G= -1 ; (LHS = 0)
+     
+eq23(2)..  - cs_300(2) - cs_400(2) + both300and400(2) =G= -1 ; (LHS = 0)
+     
+eq23(3)..  - cs_300(3) - cs_400(3) + both300and400(3) =G= -1 ; (LHS = 0)
+     
+REMAINING 47 ENTRIES SKIPPED
+
+
+---- eq24  =G=  
+
+eq24(1)..  - both300and400(1) + both300and400ordecem(1) =G= 0 ; (LHS = 0)
+     
+eq24(2)..  - both300and400(2) + both300and400ordecem(2) =G= 0 ; (LHS = 0)
+     
+eq24(3)..  - both300and400(3) + both300and400ordecem(3) =G= 0 ; (LHS = 0)
+     
+REMAINING 47 ENTRIES SKIPPED
+
+
+---- eq25  =G=  
+
+eq25(1)..  - december(1) + both300and400ordecem(1) =G= 0 ; (LHS = 0)
+     
+eq25(2)..  - december(2) + both300and400ordecem(2) =G= 0 ; (LHS = 0)
+     
+eq25(3)..  - december(3) + both300and400ordecem(3) =G= 0 ; (LHS = 0)
+     
+REMAINING 47 ENTRIES SKIPPED
+
+
+---- eq26  =L=  
+
+eq26(1)..  - december(1) - both300and400(1) + both300and400ordecem(1) =L= 0 ; (LHS = 0)
+     
+eq26(2)..  - december(2) - both300and400(2) + both300and400ordecem(2) =L= 0 ; (LHS = 0)
+     
+eq26(3)..  - december(3) - both300and400(3) + both300and400ordecem(3) =L= 0 ; (LHS = 0)
+     
+REMAINING 47 ENTRIES SKIPPED
+
+
+---- eq27  =L=  
+
+eq27(1)..  - ie(1) + maleieundergrads(1) =L= 0 ; (LHS = 0)
+     
+eq27(2)..  - ie(2) + maleieundergrads(2) =L= 0 ; (LHS = 0)
+     
+eq27(3)..  - ie(3) + maleieundergrads(3) =L= 0 ; (LHS = 0)
+     
+REMAINING 47 ENTRIES SKIPPED
+
+
+---- eq28  =L=  
+
+eq28(1)..  - undergrad(1) + maleieundergrads(1) =L= 0 ; (LHS = 0)
+     
+eq28(2)..  - undergrad(2) + maleieundergrads(2) =L= 0 ; (LHS = 0)
+     
+eq28(3)..  - undergrad(3) + maleieundergrads(3) =L= 0 ; (LHS = 0)
+     
+REMAINING 47 ENTRIES SKIPPED
+
+
+---- eq29  =L=  
+
+eq29(1)..  - male(1) + maleieundergrads(1) =L= 0 ; (LHS = 0)
+     
+eq29(2)..  - male(2) + maleieundergrads(2) =L= 0 ; (LHS = 0)
+     
+eq29(3)..  - male(3) + maleieundergrads(3) =L= 0 ; (LHS = 0)
+     
+REMAINING 47 ENTRIES SKIPPED
+
+
+---- eq30  =G=  
+
+eq30(1)..  - male(1) - undergrad(1) - ie(1) + maleieundergrads(1) =G= -2 ; (LHS = 0)
+     
+eq30(2)..  - male(2) - undergrad(2) - ie(2) + maleieundergrads(2) =G= -2 ; (LHS = 0)
+     
+eq30(3)..  - male(3) - undergrad(3) - ie(3) + maleieundergrads(3) =G= -2 ; (LHS = 0)
+     
+REMAINING 47 ENTRIES SKIPPED
+
+
+---- eq31  =L=  
+
+eq31(1)..  - ie(1) + maleieundergradsboth300and400ordecem(1) =L= 0 ; (LHS = 0)
+     
+eq31(2)..  - ie(2) + maleieundergradsboth300and400ordecem(2) =L= 0 ; (LHS = 0)
+     
+eq31(3)..  - ie(3) + maleieundergradsboth300and400ordecem(3) =L= 0 ; (LHS = 0)
+     
+REMAINING 47 ENTRIES SKIPPED
+
+
+---- eq32  =L=  
+
+eq32(1)..  - undergrad(1) + maleieundergradsboth300and400ordecem(1) =L= 0 ; (LHS = 0)
+     
+eq32(2)..  - undergrad(2) + maleieundergradsboth300and400ordecem(2) =L= 0 ; (LHS = 0)
+     
+eq32(3)..  - undergrad(3) + maleieundergradsboth300and400ordecem(3) =L= 0 ; (LHS = 0)
+     
+REMAINING 47 ENTRIES SKIPPED
+
+
+---- eq33  =L=  
+
+eq33(1)..  - male(1) + maleieundergradsboth300and400ordecem(1) =L= 0 ; (LHS = 0)
+     
+eq33(2)..  - male(2) + maleieundergradsboth300and400ordecem(2) =L= 0 ; (LHS = 0)
+     
+eq33(3)..  - male(3) + maleieundergradsboth300and400ordecem(3) =L= 0 ; (LHS = 0)
+     
+REMAINING 47 ENTRIES SKIPPED
+
+
+---- eq34  =L=  
+
+eq34(1)..  - both300and400(1) + maleieundergradsboth300and400ordecem(1) =L= 0 ; (LHS = 0)
+     
+eq34(2)..  - both300and400(2) + maleieundergradsboth300and400ordecem(2) =L= 0 ; (LHS = 0)
+     
+eq34(3)..  - both300and400(3) + maleieundergradsboth300and400ordecem(3) =L= 0 ; (LHS = 0)
+     
+REMAINING 47 ENTRIES SKIPPED
+
+
+---- eq35  =G=  
+
+eq35(1)..  - male(1) - undergrad(1) - ie(1) - both300and400ordecem(1) + maleieundergradsboth300and400ordecem(1) =G= -3 ; (LHS = 0)
+     
+eq35(2)..  - male(2) - undergrad(2) - ie(2) - both300and400ordecem(2) + maleieundergradsboth300and400ordecem(2) =G= -3 ; (LHS = 0)
+     
+eq35(3)..  - male(3) - undergrad(3) - ie(3) - both300and400ordecem(3) + maleieundergradsboth300and400ordecem(3) =G= -3 ; (LHS = 0)
+     
+REMAINING 47 ENTRIES SKIPPED
+
+
+---- eq36  =G=  
+
+eq36..  - 0.666666666666667*ieundergrads(1) - 0.666666666666667*ieundergrads(2) - 0.666666666666667*ieundergrads(3) - 0.666666666666667*ieundergrads(4) - 0.666666666666667*ieundergrads(5) - 0.666666666666667*ieundergrads(6) - 0.666666666666667*ieundergrads(7) - 0.666666666666667*ieundergrads(8) - 0.666666666666667*ieundergrads(9) - 0.666666666666667*ieundergrads(10) - 0.666666666666667*ieundergrads(11) - 0.666666666666667*ieundergrads(12) - 0.666666666666667*ieundergrads(13) - 0.666666666666667*ieundergrads(14) - 0.666666666666667*ieundergrads(15) - 0.666666666666667*ieundergrads(16) - 0.666666666666667*ieundergrads(17) - 0.666666666666667*ieundergrads(18) - 0.666666666666667*ieundergrads(19) - 0.666666666666667*ieundergrads(20) - 0.666666666666667*ieundergrads(21) - 0.666666666666667*ieundergrads(22) - 0.666666666666667*ieundergrads(23) - 0.666666666666667*ieundergrads(24) - 0.666666666666667*ieundergrads(25) - 0.666666666666667*ieundergrads(26) - 0.666666666666667*ieundergrads(27) - 0.666666666666667*ieundergrads(28) - 0.666666666666667*ieundergrads(29) - 0.666666666666667*ieundergrads(30) - 0.666666666666667*ieundergrads(31) - 0.666666666666667*ieundergrads(32) - 0.666666666666667*ieundergrads(33) - 0.666666666666667*ieundergrads(34) - 0.666666666666667*ieundergrads(35) - 0.666666666666667*ieundergrads(36) - 0.666666666666667*ieundergrads(37) - 0.666666666666667*ieundergrads(38) - 0.666666666666667*ieundergrads(39) - 0.666666666666667*ieundergrads(40) - 0.666666666666667*ieundergrads(41) - 0.666666666666667*ieundergrads(42) - 0.666666666666667*ieundergrads(43) - 0.666666666666667*ieundergrads(44) - 0.666666666666667*ieundergrads(45) - 0.666666666666667*ieundergrads(46) - 0.666666666666667*ieundergrads(47) - 0.666666666666667*ieundergrads(48) - 0.666666666666667*ieundergrads(49) - 0.666666666666667*ieundergrads(50) + maleieundergrads(1) + maleieundergrads(2) + maleieundergrads(3) + maleieundergrads(4) + maleieundergrads(5) + maleieundergrads(6) + maleieundergrads(7) + maleieundergrads(8) + maleieundergrads(9) + maleieundergrads(10) + maleieundergrads(11) + maleieundergrads(12) + maleieundergrads(13) + maleieundergrads(14) + maleieundergrads(15) + maleieundergrads(16) + maleieundergrads(17) + maleieundergrads(18) + maleieundergrads(19) + maleieundergrads(20) + maleieundergrads(21) + maleieundergrads(22) + maleieundergrads(23) + maleieundergrads(24) + maleieundergrads(25) + maleieundergrads(26) + maleieundergrads(27) + maleieundergrads(28) + maleieundergrads(29) + maleieundergrads(30) + maleieundergrads(31) + maleieundergrads(32) + maleieundergrads(33) + maleieundergrads(34) + maleieundergrads(35) + maleieundergrads(36) + maleieundergrads(37) + maleieundergrads(38) + maleieundergrads(39) + maleieundergrads(40) + maleieundergrads(41) + maleieundergrads(42) + maleieundergrads(43) + maleieundergrads(44) + maleieundergrads(45) + maleieundergrads(46) + maleieundergrads(47) + maleieundergrads(48) + maleieundergrads(49) + maleieundergrads(50) =G= 0 ; (LHS = 0)
+     
+
+---- eq37  =E=  
+
+eq37..  maleieundergradsboth300and400ordecem(1) + maleieundergradsboth300and400ordecem(2) + maleieundergradsboth300and400ordecem(3) + maleieundergradsboth300and400ordecem(4) + maleieundergradsboth300and400ordecem(5) + maleieundergradsboth300and400ordecem(6) + maleieundergradsboth300and400ordecem(7) + maleieundergradsboth300and400ordecem(8) + maleieundergradsboth300and400ordecem(9) + maleieundergradsboth300and400ordecem(10) + maleieundergradsboth300and400ordecem(11) + maleieundergradsboth300and400ordecem(12) + maleieundergradsboth300and400ordecem(13) + maleieundergradsboth300and400ordecem(14) + maleieundergradsboth300and400ordecem(15) + maleieundergradsboth300and400ordecem(16) + maleieundergradsboth300and400ordecem(17) + maleieundergradsboth300and400ordecem(18) + maleieundergradsboth300and400ordecem(19) + maleieundergradsboth300and400ordecem(20) + maleieundergradsboth300and400ordecem(21) + maleieundergradsboth300and400ordecem(22) + maleieundergradsboth300and400ordecem(23) + maleieundergradsboth300and400ordecem(24) + maleieundergradsboth300and400ordecem(25) + maleieundergradsboth300and400ordecem(26) + maleieundergradsboth300and400ordecem(27) + maleieundergradsboth300and400ordecem(28) + maleieundergradsboth300and400ordecem(29) + maleieundergradsboth300and400ordecem(30) + maleieundergradsboth300and400ordecem(31) + maleieundergradsboth300and400ordecem(32) + maleieundergradsboth300and400ordecem(33) + maleieundergradsboth300and400ordecem(34) + maleieundergradsboth300and400ordecem(35) + maleieundergradsboth300and400ordecem(36) + maleieundergradsboth300and400ordecem(37) + maleieundergradsboth300and400ordecem(38) + maleieundergradsboth300and400ordecem(39) + maleieundergradsboth300and400ordecem(40) + maleieundergradsboth300and400ordecem(41) + maleieundergradsboth300and400ordecem(42) + maleieundergradsboth300and400ordecem(43) + maleieundergradsboth300and400ordecem(44) + maleieundergradsboth300and400ordecem(45) + maleieundergradsboth300and400ordecem(46) + maleieundergradsboth300and400ordecem(47) + maleieundergradsboth300and400ordecem(48) + maleieundergradsboth300and400ordecem(49) + maleieundergradsboth300and400ordecem(50) =E= 2 ; (LHS = 0, INFES = 2 ****)
+     
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 11/08/23 18:19:36 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Column Listing      SOLVE female_engineers Using MIP From line 130
+
+
+---- cs_300  
+
+cs_300(1)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq2
+       -1       eq22(1)
+       -1       eq23(1)
+
+cs_300(2)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq2
+       -1       eq22(2)
+       -1       eq23(2)
+
+cs_300(3)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq2
+       -1       eq22(3)
+       -1       eq23(3)
+
+REMAINING 47 ENTRIES SKIPPED
+
+---- math_340  
+
+math_340(1)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq3
+
+math_340(2)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq3
+
+math_340(3)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq3
+
+REMAINING 47 ENTRIES SKIPPED
+
+---- cs_400  
+
+cs_400(1)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq4
+       -1       eq21(1)
+       -1       eq23(1)
+
+cs_400(2)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq4
+       -1       eq21(2)
+       -1       eq23(2)
+
+cs_400(3)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq4
+       -1       eq21(3)
+       -1       eq23(3)
+
+REMAINING 47 ENTRIES SKIPPED
+
+---- female  
+
+female(1)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq5
+        1       eq6(1)
+       -1       eq14(1)
+       -1       eq17(1)
+
+female(2)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq5
+        1       eq6(2)
+       -1       eq14(2)
+       -1       eq17(2)
+
+female(3)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq5
+        1       eq6(3)
+       -1       eq14(3)
+       -1       eq17(3)
+
+REMAINING 47 ENTRIES SKIPPED
+
+---- male  
+
+male(1)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq6(1)
+       -1       eq29(1)
+       -1       eq30(1)
+       -1       eq33(1)
+       -1       eq35(1)
+
+male(2)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq6(2)
+       -1       eq29(2)
+       -1       eq30(2)
+       -1       eq33(2)
+       -1       eq35(2)
+
+male(3)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq6(3)
+       -1       eq29(3)
+       -1       eq30(3)
+       -1       eq33(3)
+       -1       eq35(3)
+
+REMAINING 47 ENTRIES SKIPPED
+
+---- undergrad  
+
+undergrad(1)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq7
+       -1       eq13(1)
+       -1       eq17(1)
+       -1       eq19(1)
+       -1       eq20(1)
+       -1       eq28(1)
+       -1       eq30(1)
+       -1       eq32(1)
+       -1       eq35(1)
+
+undergrad(2)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq7
+       -1       eq13(2)
+       -1       eq17(2)
+       -1       eq19(2)
+       -1       eq20(2)
+       -1       eq28(2)
+       -1       eq30(2)
+       -1       eq32(2)
+       -1       eq35(2)
+
+undergrad(3)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq7
+       -1       eq13(3)
+       -1       eq17(3)
+       -1       eq19(3)
+       -1       eq20(3)
+       -1       eq28(3)
+       -1       eq30(3)
+       -1       eq32(3)
+       -1       eq35(3)
+
+REMAINING 47 ENTRIES SKIPPED
+
+---- cs  
+
+cs(1)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq8
+
+cs(2)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq8
+
+cs(3)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq8
+
+REMAINING 47 ENTRIES SKIPPED
+
+---- math  
+
+math(1)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq9
+
+math(2)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq9
+
+math(3)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq9
+
+REMAINING 47 ENTRIES SKIPPED
+
+---- ie  
+
+ie(1)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq10
+       -1       eq12(1)
+       -1       eq17(1)
+       -1       eq18(1)
+       -1       eq20(1)
+       -1       eq27(1)
+       -1       eq30(1)
+       -1       eq31(1)
+       -1       eq35(1)
+
+ie(2)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq10
+       -1       eq12(2)
+       -1       eq17(2)
+       -1       eq18(2)
+       -1       eq20(2)
+       -1       eq27(2)
+       -1       eq30(2)
+       -1       eq31(2)
+       -1       eq35(2)
+
+ie(3)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq10
+       -1       eq12(3)
+       -1       eq17(3)
+       -1       eq18(3)
+       -1       eq20(3)
+       -1       eq27(3)
+       -1       eq30(3)
+       -1       eq31(3)
+       -1       eq35(3)
+
+REMAINING 47 ENTRIES SKIPPED
+
+---- december  
+
+december(1)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq11
+       -1       eq15(1)
+       -1       eq17(1)
+       -1       eq25(1)
+       -1       eq26(1)
+
+december(2)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq11
+       -1       eq15(2)
+       -1       eq17(2)
+       -1       eq25(2)
+       -1       eq26(2)
+
+december(3)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq11
+       -1       eq15(3)
+       -1       eq17(3)
+       -1       eq25(3)
+       -1       eq26(3)
+
+REMAINING 47 ENTRIES SKIPPED
+
+---- finalfemales  
+
+finalfemales(1)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+       -1       obj
+        1       eq12(1)
+        1       eq13(1)
+        1       eq14(1)
+        1       eq15(1)
+        1       eq16(1)
+        1       eq17(1)
+
+finalfemales(2)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+       -1       obj
+        1       eq12(2)
+        1       eq13(2)
+        1       eq14(2)
+        1       eq15(2)
+        1       eq16(2)
+        1       eq17(2)
+
+finalfemales(3)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+       -1       obj
+        1       eq12(3)
+        1       eq13(3)
+        1       eq14(3)
+        1       eq15(3)
+        1       eq16(3)
+        1       eq17(3)
+
+REMAINING 47 ENTRIES SKIPPED
+
+---- ieundergrads  
+
+ieundergrads(1)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq18(1)
+        1       eq19(1)
+        1       eq20(1)
+       -0.6667  eq36
+
+ieundergrads(2)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq18(2)
+        1       eq19(2)
+        1       eq20(2)
+       -0.6667  eq36
+
+ieundergrads(3)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq18(3)
+        1       eq19(3)
+        1       eq20(3)
+       -0.6667  eq36
+
+REMAINING 47 ENTRIES SKIPPED
+
+---- both300and400  
+
+both300and400(1)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+       -1       eq16(1)
+       -1       eq17(1)
+        1       eq21(1)
+        1       eq22(1)
+        1       eq23(1)
+       -1       eq24(1)
+       -1       eq26(1)
+       -1       eq34(1)
+
+both300and400(2)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+       -1       eq16(2)
+       -1       eq17(2)
+        1       eq21(2)
+        1       eq22(2)
+        1       eq23(2)
+       -1       eq24(2)
+       -1       eq26(2)
+       -1       eq34(2)
+
+both300and400(3)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+       -1       eq16(3)
+       -1       eq17(3)
+        1       eq21(3)
+        1       eq22(3)
+        1       eq23(3)
+       -1       eq24(3)
+       -1       eq26(3)
+       -1       eq34(3)
+
+REMAINING 47 ENTRIES SKIPPED
+
+---- both300and400ordecem  
+
+both300and400ordecem(1)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq24(1)
+        1       eq25(1)
+        1       eq26(1)
+       -1       eq35(1)
+
+both300and400ordecem(2)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq24(2)
+        1       eq25(2)
+        1       eq26(2)
+       -1       eq35(2)
+
+both300and400ordecem(3)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq24(3)
+        1       eq25(3)
+        1       eq26(3)
+       -1       eq35(3)
+
+REMAINING 47 ENTRIES SKIPPED
+
+---- maleieundergrads  
+
+maleieundergrads(1)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq27(1)
+        1       eq28(1)
+        1       eq29(1)
+        1       eq30(1)
+        1       eq36
+
+maleieundergrads(2)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq27(2)
+        1       eq28(2)
+        1       eq29(2)
+        1       eq30(2)
+        1       eq36
+
+maleieundergrads(3)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq27(3)
+        1       eq28(3)
+        1       eq29(3)
+        1       eq30(3)
+        1       eq36
+
+REMAINING 47 ENTRIES SKIPPED
+
+---- maleieundergradsboth300and400ordecem  
+
+maleieundergradsboth300and400ordecem(1)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq31(1)
+        1       eq32(1)
+        1       eq33(1)
+        1       eq34(1)
+        1       eq35(1)
+        1       eq37
+
+maleieundergradsboth300and400ordecem(2)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq31(2)
+        1       eq32(2)
+        1       eq33(2)
+        1       eq34(2)
+        1       eq35(2)
+        1       eq37
+
+maleieundergradsboth300and400ordecem(3)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       eq31(3)
+        1       eq32(3)
+        1       eq33(3)
+        1       eq34(3)
+        1       eq35(3)
+        1       eq37
+
+REMAINING 47 ENTRIES SKIPPED
+
+---- totfemales  
+
+totfemales
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       obj
+
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 11/08/23 18:19:36 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Range Statistics    SOLVE female_engineers Using MIP From line 130
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 1.000E+00, 2.500E+01] - Zero values observed as well
+Bound     [min, max] : [ 1.000E+00, 1.000E+00] - Zero values observed as well
+Matrix    [min, max] : [ 6.667E-01, 1.000E+00]
+
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 11/08/23 18:19:36 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE female_engineers Using MIP From line 130
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS          37     SINGLE EQUATIONS        1,262
+BLOCKS OF VARIABLES          17     SINGLE VARIABLES          801
+NON ZERO ELEMENTS         3,751     DISCRETE VARIABLES        800
+
+
+GENERATION TIME      =        0.063 SECONDS      4 MB  45.1.0 88bbff72 WEX-WEI
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 11/08/23 18:19:36 Page 6
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE female_engineers Using MIP From line 130
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   female_engineers    OBJECTIVE  totfemales
+     TYPE    MIP                 DIRECTION  MAXIMIZE
+     SOLVER  CPLEX               FROM LINE  130
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE                3.0000
+
+ RESOURCE USAGE, LIMIT          1.125 10000000000.000
+ ITERATION COUNT, LIMIT     25672    2147483647
+--- GAMS/CPLEX licensed for continuous and discrete problems.
+--- GMO setup time: 0.00s
+--- Space for names approximately 0.04 Mb
+--- Use option 'names no' to turn use of names off
+--- GMO memory 0.73 Mb (peak 0.74 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.03 Mb (peak 0.13 Mb)
+--- Starting Cplex
+
+
+--- MIP status (101): integer optimal solution.
+--- Cplex Time: 1.12sec (det. 1208.79 ticks)
+
+--- Returning a primal only solution to GAMS (marginals all set to NA).
+--- Fixing integer variables and solving final LP...
+
+
+--- Fixed MIP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.84 ticks)
+
+
+Proven optimal solution
+MIP Solution:            3.000000    (25672 iterations, 2183 nodes)
+Final Solve:             3.000000    (0 iterations)
+
+Best possible:           3.000000
+Absolute gap:            0.000000
+Relative gap:            0.000000
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU obj                 .              .              .             1.0000      
+---- EQU eq2               10.0000        37.0000        +INF             .          
+---- EQU eq3               10.0000        50.0000        +INF             .          
+---- EQU eq4               15.0000        15.0000        15.0000          .          
+---- EQU eq5               15.0000        15.0000        15.0000          .          
+
+---- EQU eq6  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1          1.0000         1.0000         1.0000          .          
+2          1.0000         1.0000         1.0000          .          
+3          1.0000         1.0000         1.0000          .          
+4          1.0000         1.0000         1.0000          .          
+5          1.0000         1.0000         1.0000          .          
+6          1.0000         1.0000         1.0000          .          
+7          1.0000         1.0000         1.0000          .          
+8          1.0000         1.0000         1.0000          .          
+9          1.0000         1.0000         1.0000          .          
+10         1.0000         1.0000         1.0000          .          
+11         1.0000         1.0000         1.0000          .          
+12         1.0000         1.0000         1.0000          .          
+13         1.0000         1.0000         1.0000          .          
+14         1.0000         1.0000         1.0000          .          
+15         1.0000         1.0000         1.0000          .          
+16         1.0000         1.0000         1.0000          .          
+17         1.0000         1.0000         1.0000          .          
+18         1.0000         1.0000         1.0000          .          
+19         1.0000         1.0000         1.0000          .          
+20         1.0000         1.0000         1.0000          .          
+21         1.0000         1.0000         1.0000          .          
+22         1.0000         1.0000         1.0000          .          
+23         1.0000         1.0000         1.0000          .          
+24         1.0000         1.0000         1.0000          .          
+25         1.0000         1.0000         1.0000          .          
+26         1.0000         1.0000         1.0000          .          
+27         1.0000         1.0000         1.0000          .          
+28         1.0000         1.0000         1.0000          .          
+29         1.0000         1.0000         1.0000          .          
+30         1.0000         1.0000         1.0000          .          
+31         1.0000         1.0000         1.0000          .          
+32         1.0000         1.0000         1.0000          .          
+33         1.0000         1.0000         1.0000          .          
+34         1.0000         1.0000         1.0000          .          
+35         1.0000         1.0000         1.0000          .          
+36         1.0000         1.0000         1.0000          .          
+37         1.0000         1.0000         1.0000          .          
+38         1.0000         1.0000         1.0000          .          
+39         1.0000         1.0000         1.0000          .          
+40         1.0000         1.0000         1.0000          .          
+41         1.0000         1.0000         1.0000          .          
+42         1.0000         1.0000         1.0000          .          
+43         1.0000         1.0000         1.0000          .          
+44         1.0000         1.0000         1.0000          .          
+45         1.0000         1.0000         1.0000          .          
+46         1.0000         1.0000         1.0000          .          
+47         1.0000         1.0000         1.0000          .          
+48         1.0000         1.0000         1.0000          .          
+49         1.0000         1.0000         1.0000          .          
+50         1.0000         1.0000         1.0000          .          
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU eq7               20.0000        20.0000        20.0000          .          
+---- EQU eq8               25.0000        25.0000        25.0000          .          
+---- EQU eq9               15.0000        15.0000        15.0000          .          
+---- EQU eq10              10.0000        10.0000        10.0000          .          
+---- EQU eq11              12.0000        12.0000        12.0000          .          
+
+---- EQU eq12  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1         -INF             .              .              .          
+2         -INF           -1.0000          .              .          
+3         -INF           -1.0000          .              .          
+4         -INF             .              .              .          
+5         -INF           -1.0000          .              .          
+6         -INF             .              .              .          
+7         -INF             .              .              .          
+8         -INF             .              .              .          
+9         -INF           -1.0000          .              .          
+10        -INF             .              .              .          
+11        -INF             .              .              .          
+12        -INF             .              .              .          
+13        -INF             .              .              .          
+14        -INF             .              .              .          
+15        -INF             .              .              .          
+16        -INF             .              .              .          
+17        -INF           -1.0000          .              .          
+18        -INF             .              .              .          
+19        -INF             .              .              .          
+20        -INF           -1.0000          .              .          
+21        -INF             .              .              .          
+22        -INF             .              .              .          
+23        -INF             .              .              .          
+24        -INF             .              .              .          
+25        -INF             .              .              .          
+26        -INF             .              .              .          
+27        -INF             .              .              .          
+28        -INF             .              .              .          
+29        -INF             .              .              .          
+30        -INF             .              .              .          
+31        -INF             .              .              .          
+32        -INF             .              .              .          
+33        -INF             .              .              .          
+34        -INF             .              .              .          
+35        -INF             .              .              .          
+36        -INF             .              .              .          
+37        -INF             .              .              .          
+38        -INF             .              .              .          
+39        -INF             .              .              .          
+40        -INF           -1.0000          .              .          
+41        -INF             .              .              .          
+42        -INF             .              .              .          
+43        -INF             .              .              .          
+44        -INF             .              .              .          
+45        -INF             .              .              .          
+46        -INF             .              .              .          
+47        -INF             .              .              .          
+48        -INF             .              .              .          
+49        -INF             .              .              .          
+50        -INF             .              .              .          
+
+---- EQU eq13  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1         -INF             .              .              .          
+2         -INF           -1.0000          .              .          
+3         -INF           -1.0000          .              .          
+4         -INF             .              .              .          
+5         -INF             .              .              .          
+6         -INF             .              .              .          
+7         -INF             .              .              .          
+8         -INF           -1.0000          .              .          
+9         -INF           -1.0000          .              .          
+10        -INF             .              .              .          
+11        -INF             .              .              .          
+12        -INF           -1.0000          .              .          
+13        -INF           -1.0000          .              .          
+14        -INF           -1.0000          .              .          
+15        -INF             .              .              .          
+16        -INF             .              .              .          
+17        -INF           -1.0000          .              .          
+18        -INF           -1.0000          .              .          
+19        -INF             .              .              .          
+20        -INF           -1.0000          .              .          
+21        -INF             .              .              .          
+22        -INF             .              .              .          
+23        -INF           -1.0000          .              .          
+24        -INF             .              .              .          
+25        -INF             .              .              .          
+26        -INF             .              .              .          
+27        -INF             .              .              .          
+28        -INF             .              .              .          
+29        -INF             .              .              .          
+30        -INF           -1.0000          .              .          
+31        -INF             .              .              .          
+32        -INF             .              .              .          
+33        -INF           -1.0000          .              .          
+34        -INF           -1.0000          .              .          
+35        -INF             .              .              .          
+36        -INF             .              .              .          
+37        -INF           -1.0000          .              .          
+38        -INF             .              .              .          
+39        -INF           -1.0000          .              .          
+40        -INF           -1.0000          .              .          
+41        -INF             .              .              .          
+42        -INF             .              .              .          
+43        -INF             .              .              .          
+44        -INF             .              .              .          
+45        -INF             .              .              .          
+46        -INF             .              .              .          
+47        -INF             .              .              .          
+48        -INF             .              .              .          
+49        -INF             .              .              .          
+50        -INF             .              .              .          
+
+---- EQU eq14  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1         -INF             .              .              .          
+2         -INF             .              .              .          
+3         -INF             .              .              .          
+4         -INF           -1.0000          .              .          
+5         -INF             .              .              .          
+6         -INF           -1.0000          .              .          
+7         -INF           -1.0000          .              .          
+8         -INF           -1.0000          .              .          
+9         -INF             .              .              .          
+10        -INF             .              .              .          
+11        -INF             .              .              .          
+12        -INF           -1.0000          .              .          
+13        -INF           -1.0000          .              .          
+14        -INF             .              .              .          
+15        -INF           -1.0000          .              .          
+16        -INF             .              .              .          
+17        -INF             .              .              .          
+18        -INF             .              .              .          
+19        -INF             .              .              .          
+20        -INF             .              .              .          
+21        -INF             .              .              .          
+22        -INF             .              .              .          
+23        -INF             .              .              .          
+24        -INF             .              .              .          
+25        -INF             .              .              .          
+26        -INF             .              .              .          
+27        -INF             .              .              .          
+28        -INF             .              .              .          
+29        -INF             .              .              .          
+30        -INF             .              .              .          
+31        -INF             .              .              .          
+32        -INF             .              .              .          
+33        -INF             .              .              .          
+34        -INF             .              .              .          
+35        -INF             .              .              .          
+36        -INF             .              .              .          
+37        -INF             .              .              .          
+38        -INF             .              .              .          
+39        -INF             .              .              .          
+40        -INF             .              .              .          
+41        -INF             .              .              .          
+42        -INF             .              .              .          
+43        -INF           -1.0000          .              .          
+44        -INF           -1.0000          .              .          
+45        -INF           -1.0000          .              .          
+46        -INF             .              .              .          
+47        -INF             .              .              .          
+48        -INF           -1.0000          .              .          
+49        -INF             .              .              .          
+50        -INF           -1.0000          .              .          
+
+---- EQU eq15  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1         -INF             .              .              .          
+2         -INF             .              .              .          
+3         -INF             .              .              .          
+4         -INF           -1.0000          .              .          
+5         -INF           -1.0000          .              .          
+6         -INF           -1.0000          .              .          
+7         -INF             .              .              .          
+8         -INF             .              .              .          
+9         -INF             .              .              .          
+10        -INF             .              .              .          
+11        -INF             .              .              .          
+12        -INF             .              .              .          
+13        -INF           -1.0000          .              .          
+14        -INF             .              .              .          
+15        -INF           -1.0000          .              .          
+16        -INF             .              .              .          
+17        -INF             .              .              .          
+18        -INF             .              .              .          
+19        -INF           -1.0000          .              .          
+20        -INF             .              .              .          
+21        -INF             .              .              .          
+22        -INF             .              .              .          
+23        -INF             .              .              .          
+24        -INF             .              .              .          
+25        -INF             .              .              .          
+26        -INF           -1.0000          .              .          
+27        -INF             .              .              .          
+28        -INF             .              .              .          
+29        -INF             .              .              .          
+30        -INF             .              .              .          
+31        -INF             .              .              .          
+32        -INF             .              .              .          
+33        -INF             .              .              .          
+34        -INF             .              .              .          
+35        -INF             .              .              .          
+36        -INF             .              .              .          
+37        -INF             .              .              .          
+38        -INF             .              .              .          
+39        -INF             .              .              .          
+40        -INF             .              .              .          
+41        -INF           -1.0000          .              .          
+42        -INF             .              .              .          
+43        -INF           -1.0000          .              .          
+44        -INF             .              .              .          
+45        -INF             .              .              .          
+46        -INF             .              .              .          
+47        -INF             .              .              .          
+48        -INF             .              .              .          
+49        -INF             .              .              .          
+50        -INF             .              .              .          
+
+---- EQU eq16  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1         -INF             .              .              .          
+2         -INF           -1.0000          .              .          
+3         -INF           -1.0000          .              .          
+4         -INF             .              .              .          
+5         -INF             .              .              .          
+6         -INF           -1.0000          .              .          
+7         -INF             .              .              .          
+8         -INF             .              .              .          
+9         -INF             .              .              .          
+10        -INF             .              .              .          
+11        -INF             .              .              .          
+12        -INF             .              .              .          
+13        -INF             .              .              .          
+14        -INF             .              .              .          
+15        -INF             .              .              .          
+16        -INF             .              .              .          
+17        -INF             .              .              .          
+18        -INF             .              .              .          
+19        -INF             .              .              .          
+20        -INF             .              .              .          
+21        -INF             .              .              .          
+22        -INF             .              .              .          
+23        -INF           -1.0000          .              .          
+24        -INF             .              .              .          
+25        -INF             .              .              .          
+26        -INF             .              .              .          
+27        -INF             .              .              .          
+28        -INF             .              .              .          
+29        -INF             .              .              .          
+30        -INF             .              .              .          
+31        -INF             .              .              .          
+32        -INF             .              .              .          
+33        -INF           -1.0000          .              .          
+34        -INF             .              .              .          
+35        -INF             .              .              .          
+36        -INF             .              .              .          
+37        -INF             .              .              .          
+38        -INF             .              .              .          
+39        -INF             .              .              .          
+40        -INF             .              .              .          
+41        -INF             .              .              .          
+42        -INF             .              .              .          
+43        -INF             .              .              .          
+44        -INF           -1.0000          .              .          
+45        -INF             .              .              .          
+46        -INF             .              .              .          
+47        -INF           -1.0000          .              .          
+48        -INF             .              .              .          
+49        -INF             .              .              .          
+50        -INF           -1.0000          .              .          
+
+---- EQU eq17  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1         -4.0000        -4.0000        +INF             .          
+2         -4.0000        -3.0000        +INF             .          
+3         -4.0000        -3.0000        +INF             .          
+4         -4.0000        -2.0000        +INF             .          
+5         -4.0000        -2.0000        +INF             .          
+6         -4.0000        -3.0000        +INF             .          
+7         -4.0000        -1.0000        +INF             .          
+8         -4.0000        -2.0000        +INF             .          
+9         -4.0000        -2.0000        +INF             .          
+10        -4.0000        -4.0000        +INF             .          
+11        -4.0000        -4.0000        +INF             .          
+12        -4.0000        -2.0000        +INF             .          
+13        -4.0000        -3.0000        +INF             .          
+14        -4.0000        -1.0000        +INF             .          
+15        -4.0000        -2.0000        +INF             .          
+16        -4.0000          .            +INF             .          
+17        -4.0000        -2.0000        +INF             .          
+18        -4.0000        -1.0000        +INF             .          
+19        -4.0000        -1.0000        +INF             .          
+20        -4.0000        -2.0000        +INF             .          
+21        -4.0000          .            +INF             .          
+22        -4.0000          .            +INF             .          
+23        -4.0000        -2.0000        +INF             .          
+24        -4.0000          .            +INF             .          
+25        -4.0000          .            +INF             .          
+26        -4.0000        -1.0000        +INF             .          
+27        -4.0000          .            +INF             .          
+28        -4.0000          .            +INF             .          
+29        -4.0000          .            +INF             .          
+30        -4.0000        -1.0000        +INF             .          
+31        -4.0000          .            +INF             .          
+32        -4.0000          .            +INF             .          
+33        -4.0000        -2.0000        +INF             .          
+34        -4.0000        -1.0000        +INF             .          
+35        -4.0000          .            +INF             .          
+36        -4.0000          .            +INF             .          
+37        -4.0000        -1.0000        +INF             .          
+38        -4.0000          .            +INF             .          
+39        -4.0000        -1.0000        +INF             .          
+40        -4.0000        -2.0000        +INF             .          
+41        -4.0000        -1.0000        +INF             .          
+42        -4.0000          .            +INF             .          
+43        -4.0000        -2.0000        +INF             .          
+44        -4.0000        -2.0000        +INF             .          
+45        -4.0000        -1.0000        +INF             .          
+46        -4.0000          .            +INF             .          
+47        -4.0000        -1.0000        +INF             .          
+48        -4.0000        -1.0000        +INF             .          
+49        -4.0000          .            +INF             .          
+50        -4.0000        -2.0000        +INF             .          
+
+---- EQU eq18  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1         -INF             .              .              .          
+2         -INF             .              .              .          
+3         -INF             .              .              .          
+4         -INF             .              .              .          
+5         -INF           -1.0000          .              .          
+6         -INF             .              .              .          
+7         -INF             .              .              .          
+8         -INF             .              .              .          
+9         -INF             .              .              .          
+10        -INF             .              .              .          
+11        -INF             .              .              .          
+12        -INF             .              .              .          
+13        -INF             .              .              .          
+14        -INF             .              .              .          
+15        -INF             .              .              .          
+16        -INF             .              .              .          
+17        -INF             .              .              .          
+18        -INF             .              .              .          
+19        -INF             .              .              .          
+20        -INF             .              .              .          
+21        -INF             .              .              .          
+22        -INF             .              .              .          
+23        -INF             .              .              .          
+24        -INF             .              .              .          
+25        -INF             .              .              .          
+26        -INF             .              .              .          
+27        -INF             .              .              .          
+28        -INF             .              .              .          
+29        -INF             .              .              .          
+30        -INF             .              .              .          
+31        -INF             .              .              .          
+32        -INF             .              .              .          
+33        -INF             .              .              .          
+34        -INF             .              .              .          
+35        -INF             .              .              .          
+36        -INF             .              .              .          
+37        -INF             .              .              .          
+38        -INF             .              .              .          
+39        -INF             .              .              .          
+40        -INF             .              .              .          
+41        -INF             .              .              .          
+42        -INF             .              .              .          
+43        -INF             .              .              .          
+44        -INF             .              .              .          
+45        -INF             .              .              .          
+46        -INF             .              .              .          
+47        -INF             .              .              .          
+48        -INF             .              .              .          
+49        -INF             .              .              .          
+50        -INF             .              .              .          
+
+---- EQU eq19  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1         -INF             .              .              .          
+2         -INF             .              .              .          
+3         -INF             .              .              .          
+4         -INF             .              .              .          
+5         -INF             .              .              .          
+6         -INF             .              .              .          
+7         -INF             .              .              .          
+8         -INF           -1.0000          .              .          
+9         -INF             .              .              .          
+10        -INF             .              .              .          
+11        -INF             .              .              .          
+12        -INF           -1.0000          .              .          
+13        -INF           -1.0000          .              .          
+14        -INF           -1.0000          .              .          
+15        -INF             .              .              .          
+16        -INF             .              .              .          
+17        -INF             .              .              .          
+18        -INF           -1.0000          .              .          
+19        -INF             .              .              .          
+20        -INF             .              .              .          
+21        -INF             .              .              .          
+22        -INF             .              .              .          
+23        -INF           -1.0000          .              .          
+24        -INF             .              .              .          
+25        -INF             .              .              .          
+26        -INF             .              .              .          
+27        -INF             .              .              .          
+28        -INF             .              .              .          
+29        -INF             .              .              .          
+30        -INF           -1.0000          .              .          
+31        -INF             .              .              .          
+32        -INF             .              .              .          
+33        -INF           -1.0000          .              .          
+34        -INF           -1.0000          .              .          
+35        -INF             .              .              .          
+36        -INF             .              .              .          
+37        -INF           -1.0000          .              .          
+38        -INF             .              .              .          
+39        -INF           -1.0000          .              .          
+40        -INF             .              .              .          
+41        -INF             .              .              .          
+42        -INF             .              .              .          
+43        -INF             .              .              .          
+44        -INF             .              .              .          
+45        -INF             .              .              .          
+46        -INF             .              .              .          
+47        -INF             .              .              .          
+48        -INF             .              .              .          
+49        -INF             .              .              .          
+50        -INF             .              .              .          
+
+---- EQU eq20  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1         -1.0000        -1.0000        +INF             .          
+2         -1.0000        -1.0000        +INF             .          
+3         -1.0000        -1.0000        +INF             .          
+4         -1.0000          .            +INF             .          
+5         -1.0000        -1.0000        +INF             .          
+6         -1.0000          .            +INF             .          
+7         -1.0000          .            +INF             .          
+8         -1.0000        -1.0000        +INF             .          
+9         -1.0000        -1.0000        +INF             .          
+10        -1.0000        -1.0000        +INF             .          
+11        -1.0000        -1.0000        +INF             .          
+12        -1.0000        -1.0000        +INF             .          
+13        -1.0000        -1.0000        +INF             .          
+14        -1.0000        -1.0000        +INF             .          
+15        -1.0000          .            +INF             .          
+16        -1.0000          .            +INF             .          
+17        -1.0000        -1.0000        +INF             .          
+18        -1.0000        -1.0000        +INF             .          
+19        -1.0000          .            +INF             .          
+20        -1.0000        -1.0000        +INF             .          
+21        -1.0000          .            +INF             .          
+22        -1.0000          .            +INF             .          
+23        -1.0000        -1.0000        +INF             .          
+24        -1.0000          .            +INF             .          
+25        -1.0000          .            +INF             .          
+26        -1.0000          .            +INF             .          
+27        -1.0000          .            +INF             .          
+28        -1.0000          .            +INF             .          
+29        -1.0000          .            +INF             .          
+30        -1.0000        -1.0000        +INF             .          
+31        -1.0000          .            +INF             .          
+32        -1.0000          .            +INF             .          
+33        -1.0000        -1.0000        +INF             .          
+34        -1.0000        -1.0000        +INF             .          
+35        -1.0000          .            +INF             .          
+36        -1.0000          .            +INF             .          
+37        -1.0000        -1.0000        +INF             .          
+38        -1.0000          .            +INF             .          
+39        -1.0000        -1.0000        +INF             .          
+40        -1.0000        -1.0000        +INF             .          
+41        -1.0000          .            +INF             .          
+42        -1.0000          .            +INF             .          
+43        -1.0000          .            +INF             .          
+44        -1.0000          .            +INF             .          
+45        -1.0000          .            +INF             .          
+46        -1.0000          .            +INF             .          
+47        -1.0000          .            +INF             .          
+48        -1.0000          .            +INF             .          
+49        -1.0000          .            +INF             .          
+50        -1.0000          .            +INF             .          
+
+---- EQU eq21  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1         -INF             .              .              .          
+2         -INF             .              .              .          
+3         -INF             .              .              .          
+4         -INF             .              .              .          
+5         -INF           -1.0000          .              .          
+6         -INF             .              .              .          
+7         -INF             .              .              .          
+8         -INF             .              .              .          
+9         -INF             .              .              .          
+10        -INF             .              .              .          
+11        -INF             .              .              .          
+12        -INF             .              .              .          
+13        -INF             .              .              .          
+14        -INF             .              .              .          
+15        -INF             .              .              .          
+16        -INF             .              .              .          
+17        -INF           -1.0000          .              .          
+18        -INF             .              .              .          
+19        -INF             .              .              .          
+20        -INF             .              .              .          
+21        -INF             .              .              .          
+22        -INF             .              .              .          
+23        -INF             .              .              .          
+24        -INF             .              .              .          
+25        -INF           -1.0000          .              .          
+26        -INF             .              .              .          
+27        -INF             .              .              .          
+28        -INF             .              .              .          
+29        -INF             .              .              .          
+30        -INF             .              .              .          
+31        -INF             .              .              .          
+32        -INF             .              .              .          
+33        -INF             .              .              .          
+34        -INF             .              .              .          
+35        -INF             .              .              .          
+36        -INF             .              .              .          
+37        -INF             .              .              .          
+38        -INF             .              .              .          
+39        -INF           -1.0000          .              .          
+40        -INF             .              .              .          
+41        -INF             .              .              .          
+42        -INF             .              .              .          
+43        -INF             .              .              .          
+44        -INF             .              .              .          
+45        -INF             .              .              .          
+46        -INF             .              .              .          
+47        -INF             .              .              .          
+48        -INF             .              .              .          
+49        -INF             .              .              .          
+50        -INF             .              .              .          
+
+---- EQU eq22  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1         -INF             .              .              .          
+2         -INF             .              .              .          
+3         -INF             .              .              .          
+4         -INF           -1.0000          .              .          
+5         -INF             .              .              .          
+6         -INF             .              .              .          
+7         -INF           -1.0000          .              .          
+8         -INF           -1.0000          .              .          
+9         -INF           -1.0000          .              .          
+10        -INF             .              .              .          
+11        -INF             .              .              .          
+12        -INF           -1.0000          .              .          
+13        -INF           -1.0000          .              .          
+14        -INF           -1.0000          .              .          
+15        -INF           -1.0000          .              .          
+16        -INF           -1.0000          .              .          
+17        -INF             .              .              .          
+18        -INF           -1.0000          .              .          
+19        -INF           -1.0000          .              .          
+20        -INF           -1.0000          .              .          
+21        -INF           -1.0000          .              .          
+22        -INF           -1.0000          .              .          
+23        -INF             .              .              .          
+24        -INF           -1.0000          .              .          
+25        -INF             .              .              .          
+26        -INF             .              .              .          
+27        -INF           -1.0000          .              .          
+28        -INF             .              .              .          
+29        -INF             .              .              .          
+30        -INF           -1.0000          .              .          
+31        -INF             .              .              .          
+32        -INF           -1.0000          .              .          
+33        -INF             .              .              .          
+34        -INF           -1.0000          .              .          
+35        -INF             .              .              .          
+36        -INF             .              .              .          
+37        -INF           -1.0000          .              .          
+38        -INF           -1.0000          .              .          
+39        -INF             .              .              .          
+40        -INF           -1.0000          .              .          
+41        -INF           -1.0000          .              .          
+42        -INF           -1.0000          .              .          
+43        -INF           -1.0000          .              .          
+44        -INF             .              .              .          
+45        -INF             .              .              .          
+46        -INF           -1.0000          .              .          
+47        -INF             .              .              .          
+48        -INF             .              .              .          
+49        -INF             .              .              .          
+50        -INF             .              .              .          
+
+---- EQU eq23  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1         -1.0000        -1.0000        +INF             .          
+2         -1.0000        -1.0000        +INF             .          
+3         -1.0000        -1.0000        +INF             .          
+4         -1.0000        -1.0000        +INF             .          
+5         -1.0000        -1.0000        +INF             .          
+6         -1.0000        -1.0000        +INF             .          
+7         -1.0000        -1.0000        +INF             .          
+8         -1.0000        -1.0000        +INF             .          
+9         -1.0000        -1.0000        +INF             .          
+10        -1.0000        -1.0000        +INF             .          
+11        -1.0000        -1.0000        +INF             .          
+12        -1.0000        -1.0000        +INF             .          
+13        -1.0000        -1.0000        +INF             .          
+14        -1.0000        -1.0000        +INF             .          
+15        -1.0000        -1.0000        +INF             .          
+16        -1.0000        -1.0000        +INF             .          
+17        -1.0000        -1.0000        +INF             .          
+18        -1.0000        -1.0000        +INF             .          
+19        -1.0000        -1.0000        +INF             .          
+20        -1.0000        -1.0000        +INF             .          
+21        -1.0000        -1.0000        +INF             .          
+22        -1.0000        -1.0000        +INF             .          
+23        -1.0000        -1.0000        +INF             .          
+24        -1.0000        -1.0000        +INF             .          
+25        -1.0000        -1.0000        +INF             .          
+26        -1.0000          .            +INF             .          
+27        -1.0000        -1.0000        +INF             .          
+28        -1.0000          .            +INF             .          
+29        -1.0000          .            +INF             .          
+30        -1.0000        -1.0000        +INF             .          
+31        -1.0000          .            +INF             .          
+32        -1.0000        -1.0000        +INF             .          
+33        -1.0000        -1.0000        +INF             .          
+34        -1.0000        -1.0000        +INF             .          
+35        -1.0000          .            +INF             .          
+36        -1.0000          .            +INF             .          
+37        -1.0000        -1.0000        +INF             .          
+38        -1.0000        -1.0000        +INF             .          
+39        -1.0000        -1.0000        +INF             .          
+40        -1.0000        -1.0000        +INF             .          
+41        -1.0000        -1.0000        +INF             .          
+42        -1.0000        -1.0000        +INF             .          
+43        -1.0000        -1.0000        +INF             .          
+44        -1.0000        -1.0000        +INF             .          
+45        -1.0000          .            +INF             .          
+46        -1.0000        -1.0000        +INF             .          
+47        -1.0000        -1.0000        +INF             .          
+48        -1.0000          .            +INF             .          
+49        -1.0000          .            +INF             .          
+50        -1.0000        -1.0000        +INF             .          
+
+---- EQU eq24  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1           .              .            +INF             .          
+2           .              .            +INF             .          
+3           .              .            +INF             .          
+4           .             1.0000        +INF             .          
+5           .             1.0000        +INF             .          
+6           .              .            +INF             .          
+7           .              .            +INF             .          
+8           .              .            +INF             .          
+9           .              .            +INF             .          
+10          .              .            +INF             .          
+11          .              .            +INF             .          
+12          .              .            +INF             .          
+13          .             1.0000        +INF             .          
+14          .              .            +INF             .          
+15          .             1.0000        +INF             .          
+16          .              .            +INF             .          
+17          .              .            +INF             .          
+18          .              .            +INF             .          
+19          .             1.0000        +INF             .          
+20          .              .            +INF             .          
+21          .              .            +INF             .          
+22          .              .            +INF             .          
+23          .              .            +INF             .          
+24          .              .            +INF             .          
+25          .              .            +INF             .          
+26          .             1.0000        +INF             .          
+27          .              .            +INF             .          
+28          .              .            +INF             .          
+29          .              .            +INF             .          
+30          .              .            +INF             .          
+31          .              .            +INF             .          
+32          .              .            +INF             .          
+33          .              .            +INF             .          
+34          .              .            +INF             .          
+35          .              .            +INF             .          
+36          .              .            +INF             .          
+37          .              .            +INF             .          
+38          .              .            +INF             .          
+39          .              .            +INF             .          
+40          .              .            +INF             .          
+41          .             1.0000        +INF             .          
+42          .              .            +INF             .          
+43          .             1.0000        +INF             .          
+44          .              .            +INF             .          
+45          .              .            +INF             .          
+46          .              .            +INF             .          
+47          .              .            +INF             .          
+48          .              .            +INF             .          
+49          .              .            +INF             .          
+50          .              .            +INF             .          
+
+---- EQU eq25  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1           .              .            +INF             .          
+2           .             1.0000        +INF             .          
+3           .             1.0000        +INF             .          
+4           .              .            +INF             .          
+5           .              .            +INF             .          
+6           .              .            +INF             .          
+7           .              .            +INF             .          
+8           .              .            +INF             .          
+9           .              .            +INF             .          
+10          .              .            +INF             .          
+11          .              .            +INF             .          
+12          .              .            +INF             .          
+13          .              .            +INF             .          
+14          .              .            +INF             .          
+15          .              .            +INF             .          
+16          .              .            +INF             .          
+17          .              .            +INF             .          
+18          .              .            +INF             .          
+19          .              .            +INF             .          
+20          .              .            +INF             .          
+21          .              .            +INF             .          
+22          .              .            +INF             .          
+23          .             1.0000        +INF             .          
+24          .              .            +INF             .          
+25          .              .            +INF             .          
+26          .              .            +INF             .          
+27          .              .            +INF             .          
+28          .              .            +INF             .          
+29          .              .            +INF             .          
+30          .              .            +INF             .          
+31          .              .            +INF             .          
+32          .              .            +INF             .          
+33          .             1.0000        +INF             .          
+34          .              .            +INF             .          
+35          .              .            +INF             .          
+36          .              .            +INF             .          
+37          .              .            +INF             .          
+38          .              .            +INF             .          
+39          .              .            +INF             .          
+40          .              .            +INF             .          
+41          .              .            +INF             .          
+42          .              .            +INF             .          
+43          .              .            +INF             .          
+44          .             1.0000        +INF             .          
+45          .              .            +INF             .          
+46          .              .            +INF             .          
+47          .             1.0000        +INF             .          
+48          .              .            +INF             .          
+49          .              .            +INF             .          
+50          .             1.0000        +INF             .          
+
+---- EQU eq26  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1         -INF           -1.0000          .              .          
+2         -INF             .              .              .          
+3         -INF             .              .              .          
+4         -INF             .              .              .          
+5         -INF             .              .              .          
+6         -INF           -1.0000          .              .          
+7         -INF             .              .              .          
+8         -INF             .              .              .          
+9         -INF             .              .              .          
+10        -INF           -1.0000          .              .          
+11        -INF           -1.0000          .              .          
+12        -INF             .              .              .          
+13        -INF             .              .              .          
+14        -INF             .              .              .          
+15        -INF             .              .              .          
+16        -INF             .              .              .          
+17        -INF             .              .              .          
+18        -INF             .              .              .          
+19        -INF             .              .              .          
+20        -INF             .              .              .          
+21        -INF             .              .              .          
+22        -INF             .              .              .          
+23        -INF             .              .              .          
+24        -INF             .              .              .          
+25        -INF             .              .              .          
+26        -INF             .              .              .          
+27        -INF             .              .              .          
+28        -INF             .              .              .          
+29        -INF             .              .              .          
+30        -INF             .              .              .          
+31        -INF             .              .              .          
+32        -INF             .              .              .          
+33        -INF             .              .              .          
+34        -INF             .              .              .          
+35        -INF             .              .              .          
+36        -INF             .              .              .          
+37        -INF             .              .              .          
+38        -INF             .              .              .          
+39        -INF             .              .              .          
+40        -INF             .              .              .          
+41        -INF             .              .              .          
+42        -INF             .              .              .          
+43        -INF             .              .              .          
+44        -INF             .              .              .          
+45        -INF             .              .              .          
+46        -INF             .              .              .          
+47        -INF             .              .              .          
+48        -INF             .              .              .          
+49        -INF             .              .              .          
+50        -INF             .              .              .          
+
+---- EQU eq27  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1         -INF           -1.0000          .              .          
+2         -INF             .              .              .          
+3         -INF             .              .              .          
+4         -INF             .              .              .          
+5         -INF           -1.0000          .              .          
+6         -INF             .              .              .          
+7         -INF             .              .              .          
+8         -INF             .              .              .          
+9         -INF             .              .              .          
+10        -INF           -1.0000          .              .          
+11        -INF           -1.0000          .              .          
+12        -INF             .              .              .          
+13        -INF             .              .              .          
+14        -INF             .              .              .          
+15        -INF             .              .              .          
+16        -INF             .              .              .          
+17        -INF             .              .              .          
+18        -INF             .              .              .          
+19        -INF             .              .              .          
+20        -INF             .              .              .          
+21        -INF             .              .              .          
+22        -INF             .              .              .          
+23        -INF             .              .              .          
+24        -INF             .              .              .          
+25        -INF             .              .              .          
+26        -INF             .              .              .          
+27        -INF             .              .              .          
+28        -INF             .              .              .          
+29        -INF             .              .              .          
+30        -INF             .              .              .          
+31        -INF             .              .              .          
+32        -INF             .              .              .          
+33        -INF             .              .              .          
+34        -INF             .              .              .          
+35        -INF             .              .              .          
+36        -INF             .              .              .          
+37        -INF             .              .              .          
+38        -INF             .              .              .          
+39        -INF             .              .              .          
+40        -INF             .              .              .          
+41        -INF             .              .              .          
+42        -INF             .              .              .          
+43        -INF             .              .              .          
+44        -INF             .              .              .          
+45        -INF             .              .              .          
+46        -INF             .              .              .          
+47        -INF             .              .              .          
+48        -INF             .              .              .          
+49        -INF             .              .              .          
+50        -INF             .              .              .          
+
+---- EQU eq28  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1         -INF           -1.0000          .              .          
+2         -INF             .              .              .          
+3         -INF             .              .              .          
+4         -INF             .              .              .          
+5         -INF             .              .              .          
+6         -INF             .              .              .          
+7         -INF             .              .              .          
+8         -INF           -1.0000          .              .          
+9         -INF             .              .              .          
+10        -INF           -1.0000          .              .          
+11        -INF           -1.0000          .              .          
+12        -INF           -1.0000          .              .          
+13        -INF           -1.0000          .              .          
+14        -INF           -1.0000          .              .          
+15        -INF             .              .              .          
+16        -INF             .              .              .          
+17        -INF             .              .              .          
+18        -INF           -1.0000          .              .          
+19        -INF             .              .              .          
+20        -INF             .              .              .          
+21        -INF             .              .              .          
+22        -INF             .              .              .          
+23        -INF           -1.0000          .              .          
+24        -INF             .              .              .          
+25        -INF             .              .              .          
+26        -INF             .              .              .          
+27        -INF             .              .              .          
+28        -INF             .              .              .          
+29        -INF             .              .              .          
+30        -INF           -1.0000          .              .          
+31        -INF             .              .              .          
+32        -INF             .              .              .          
+33        -INF           -1.0000          .              .          
+34        -INF           -1.0000          .              .          
+35        -INF             .              .              .          
+36        -INF             .              .              .          
+37        -INF           -1.0000          .              .          
+38        -INF             .              .              .          
+39        -INF           -1.0000          .              .          
+40        -INF             .              .              .          
+41        -INF             .              .              .          
+42        -INF             .              .              .          
+43        -INF             .              .              .          
+44        -INF             .              .              .          
+45        -INF             .              .              .          
+46        -INF             .              .              .          
+47        -INF             .              .              .          
+48        -INF             .              .              .          
+49        -INF             .              .              .          
+50        -INF             .              .              .          
+
+---- EQU eq29  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1         -INF             .              .              .          
+2         -INF             .              .              .          
+3         -INF             .              .              .          
+4         -INF             .              .              .          
+5         -INF           -1.0000          .              .          
+6         -INF             .              .              .          
+7         -INF             .              .              .          
+8         -INF             .              .              .          
+9         -INF             .              .              .          
+10        -INF             .              .              .          
+11        -INF             .              .              .          
+12        -INF             .              .              .          
+13        -INF             .              .              .          
+14        -INF           -1.0000          .              .          
+15        -INF             .              .              .          
+16        -INF           -1.0000          .              .          
+17        -INF             .              .              .          
+18        -INF           -1.0000          .              .          
+19        -INF           -1.0000          .              .          
+20        -INF             .              .              .          
+21        -INF           -1.0000          .              .          
+22        -INF           -1.0000          .              .          
+23        -INF           -1.0000          .              .          
+24        -INF           -1.0000          .              .          
+25        -INF           -1.0000          .              .          
+26        -INF           -1.0000          .              .          
+27        -INF           -1.0000          .              .          
+28        -INF           -1.0000          .              .          
+29        -INF           -1.0000          .              .          
+30        -INF           -1.0000          .              .          
+31        -INF           -1.0000          .              .          
+32        -INF           -1.0000          .              .          
+33        -INF           -1.0000          .              .          
+34        -INF           -1.0000          .              .          
+35        -INF           -1.0000          .              .          
+36        -INF           -1.0000          .              .          
+37        -INF           -1.0000          .              .          
+38        -INF           -1.0000          .              .          
+39        -INF           -1.0000          .              .          
+40        -INF             .              .              .          
+41        -INF           -1.0000          .              .          
+42        -INF           -1.0000          .              .          
+43        -INF             .              .              .          
+44        -INF             .              .              .          
+45        -INF             .              .              .          
+46        -INF           -1.0000          .              .          
+47        -INF           -1.0000          .              .          
+48        -INF             .              .              .          
+49        -INF           -1.0000          .              .          
+50        -INF             .              .              .          
+
+---- EQU eq30  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1         -2.0000        -2.0000        +INF             .          
+2         -2.0000        -2.0000        +INF             .          
+3         -2.0000        -2.0000        +INF             .          
+4         -2.0000          .            +INF             .          
+5         -2.0000        -2.0000        +INF             .          
+6         -2.0000          .            +INF             .          
+7         -2.0000          .            +INF             .          
+8         -2.0000        -1.0000        +INF             .          
+9         -2.0000        -2.0000        +INF             .          
+10        -2.0000        -2.0000        +INF             .          
+11        -2.0000        -2.0000        +INF             .          
+12        -2.0000        -1.0000        +INF             .          
+13        -2.0000        -1.0000        +INF             .          
+14        -2.0000        -2.0000        +INF             .          
+15        -2.0000          .            +INF             .          
+16        -2.0000        -1.0000        +INF             .          
+17        -2.0000        -2.0000        +INF             .          
+18        -2.0000        -2.0000        +INF             .          
+19        -2.0000        -1.0000        +INF             .          
+20        -2.0000        -2.0000        +INF             .          
+21        -2.0000        -1.0000        +INF             .          
+22        -2.0000        -1.0000        +INF             .          
+23        -2.0000        -2.0000        +INF             .          
+24        -2.0000        -1.0000        +INF             .          
+25        -2.0000        -1.0000        +INF             .          
+26        -2.0000        -1.0000        +INF             .          
+27        -2.0000        -1.0000        +INF             .          
+28        -2.0000        -1.0000        +INF             .          
+29        -2.0000        -1.0000        +INF             .          
+30        -2.0000        -2.0000        +INF             .          
+31        -2.0000        -1.0000        +INF             .          
+32        -2.0000        -1.0000        +INF             .          
+33        -2.0000        -2.0000        +INF             .          
+34        -2.0000        -2.0000        +INF             .          
+35        -2.0000        -1.0000        +INF             .          
+36        -2.0000        -1.0000        +INF             .          
+37        -2.0000        -2.0000        +INF             .          
+38        -2.0000        -1.0000        +INF             .          
+39        -2.0000        -2.0000        +INF             .          
+40        -2.0000        -2.0000        +INF             .          
+41        -2.0000        -1.0000        +INF             .          
+42        -2.0000        -1.0000        +INF             .          
+43        -2.0000          .            +INF             .          
+44        -2.0000          .            +INF             .          
+45        -2.0000          .            +INF             .          
+46        -2.0000        -1.0000        +INF             .          
+47        -2.0000        -1.0000        +INF             .          
+48        -2.0000          .            +INF             .          
+49        -2.0000        -1.0000        +INF             .          
+50        -2.0000          .            +INF             .          
+
+---- EQU eq31  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1         -INF           -1.0000          .              .          
+2         -INF             .              .              .          
+3         -INF             .              .              .          
+4         -INF             .              .              .          
+5         -INF           -1.0000          .              .          
+6         -INF             .              .              .          
+7         -INF             .              .              .          
+8         -INF             .              .              .          
+9         -INF           -1.0000          .              .          
+10        -INF           -1.0000          .              .          
+11        -INF           -1.0000          .              .          
+12        -INF             .              .              .          
+13        -INF             .              .              .          
+14        -INF             .              .              .          
+15        -INF             .              .              .          
+16        -INF             .              .              .          
+17        -INF           -1.0000          .              .          
+18        -INF             .              .              .          
+19        -INF             .              .              .          
+20        -INF           -1.0000          .              .          
+21        -INF             .              .              .          
+22        -INF             .              .              .          
+23        -INF             .              .              .          
+24        -INF             .              .              .          
+25        -INF             .              .              .          
+26        -INF             .              .              .          
+27        -INF             .              .              .          
+28        -INF             .              .              .          
+29        -INF             .              .              .          
+30        -INF             .              .              .          
+31        -INF             .              .              .          
+32        -INF             .              .              .          
+33        -INF             .              .              .          
+34        -INF             .              .              .          
+35        -INF             .              .              .          
+36        -INF             .              .              .          
+37        -INF             .              .              .          
+38        -INF             .              .              .          
+39        -INF             .              .              .          
+40        -INF           -1.0000          .              .          
+41        -INF             .              .              .          
+42        -INF             .              .              .          
+43        -INF             .              .              .          
+44        -INF             .              .              .          
+45        -INF             .              .              .          
+46        -INF             .              .              .          
+47        -INF             .              .              .          
+48        -INF             .              .              .          
+49        -INF             .              .              .          
+50        -INF             .              .              .          
+
+---- EQU eq32  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1         -INF           -1.0000          .              .          
+2         -INF             .              .              .          
+3         -INF             .              .              .          
+4         -INF             .              .              .          
+5         -INF             .              .              .          
+6         -INF             .              .              .          
+7         -INF             .              .              .          
+8         -INF           -1.0000          .              .          
+9         -INF           -1.0000          .              .          
+10        -INF           -1.0000          .              .          
+11        -INF           -1.0000          .              .          
+12        -INF           -1.0000          .              .          
+13        -INF           -1.0000          .              .          
+14        -INF           -1.0000          .              .          
+15        -INF             .              .              .          
+16        -INF             .              .              .          
+17        -INF           -1.0000          .              .          
+18        -INF           -1.0000          .              .          
+19        -INF             .              .              .          
+20        -INF           -1.0000          .              .          
+21        -INF             .              .              .          
+22        -INF             .              .              .          
+23        -INF           -1.0000          .              .          
+24        -INF             .              .              .          
+25        -INF             .              .              .          
+26        -INF             .              .              .          
+27        -INF             .              .              .          
+28        -INF             .              .              .          
+29        -INF             .              .              .          
+30        -INF           -1.0000          .              .          
+31        -INF             .              .              .          
+32        -INF             .              .              .          
+33        -INF           -1.0000          .              .          
+34        -INF           -1.0000          .              .          
+35        -INF             .              .              .          
+36        -INF             .              .              .          
+37        -INF           -1.0000          .              .          
+38        -INF             .              .              .          
+39        -INF           -1.0000          .              .          
+40        -INF           -1.0000          .              .          
+41        -INF             .              .              .          
+42        -INF             .              .              .          
+43        -INF             .              .              .          
+44        -INF             .              .              .          
+45        -INF             .              .              .          
+46        -INF             .              .              .          
+47        -INF             .              .              .          
+48        -INF             .              .              .          
+49        -INF             .              .              .          
+50        -INF             .              .              .          
+
+---- EQU eq33  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1         -INF             .              .              .          
+2         -INF             .              .              .          
+3         -INF             .              .              .          
+4         -INF             .              .              .          
+5         -INF           -1.0000          .              .          
+6         -INF             .              .              .          
+7         -INF             .              .              .          
+8         -INF             .              .              .          
+9         -INF           -1.0000          .              .          
+10        -INF             .              .              .          
+11        -INF             .              .              .          
+12        -INF             .              .              .          
+13        -INF             .              .              .          
+14        -INF           -1.0000          .              .          
+15        -INF             .              .              .          
+16        -INF           -1.0000          .              .          
+17        -INF           -1.0000          .              .          
+18        -INF           -1.0000          .              .          
+19        -INF           -1.0000          .              .          
+20        -INF           -1.0000          .              .          
+21        -INF           -1.0000          .              .          
+22        -INF           -1.0000          .              .          
+23        -INF           -1.0000          .              .          
+24        -INF           -1.0000          .              .          
+25        -INF           -1.0000          .              .          
+26        -INF           -1.0000          .              .          
+27        -INF           -1.0000          .              .          
+28        -INF           -1.0000          .              .          
+29        -INF           -1.0000          .              .          
+30        -INF           -1.0000          .              .          
+31        -INF           -1.0000          .              .          
+32        -INF           -1.0000          .              .          
+33        -INF           -1.0000          .              .          
+34        -INF           -1.0000          .              .          
+35        -INF           -1.0000          .              .          
+36        -INF           -1.0000          .              .          
+37        -INF           -1.0000          .              .          
+38        -INF           -1.0000          .              .          
+39        -INF           -1.0000          .              .          
+40        -INF           -1.0000          .              .          
+41        -INF           -1.0000          .              .          
+42        -INF           -1.0000          .              .          
+43        -INF             .              .              .          
+44        -INF             .              .              .          
+45        -INF             .              .              .          
+46        -INF           -1.0000          .              .          
+47        -INF           -1.0000          .              .          
+48        -INF             .              .              .          
+49        -INF           -1.0000          .              .          
+50        -INF             .              .              .          
+
+---- EQU eq34  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1         -INF           -1.0000          .              .          
+2         -INF             .              .              .          
+3         -INF             .              .              .          
+4         -INF             .              .              .          
+5         -INF             .              .              .          
+6         -INF           -1.0000          .              .          
+7         -INF             .              .              .          
+8         -INF             .              .              .          
+9         -INF             .              .              .          
+10        -INF           -1.0000          .              .          
+11        -INF           -1.0000          .              .          
+12        -INF             .              .              .          
+13        -INF             .              .              .          
+14        -INF             .              .              .          
+15        -INF             .              .              .          
+16        -INF             .              .              .          
+17        -INF             .              .              .          
+18        -INF             .              .              .          
+19        -INF             .              .              .          
+20        -INF             .              .              .          
+21        -INF             .              .              .          
+22        -INF             .              .              .          
+23        -INF           -1.0000          .              .          
+24        -INF             .              .              .          
+25        -INF             .              .              .          
+26        -INF             .              .              .          
+27        -INF             .              .              .          
+28        -INF             .              .              .          
+29        -INF             .              .              .          
+30        -INF             .              .              .          
+31        -INF             .              .              .          
+32        -INF             .              .              .          
+33        -INF           -1.0000          .              .          
+34        -INF             .              .              .          
+35        -INF             .              .              .          
+36        -INF             .              .              .          
+37        -INF             .              .              .          
+38        -INF             .              .              .          
+39        -INF             .              .              .          
+40        -INF             .              .              .          
+41        -INF             .              .              .          
+42        -INF             .              .              .          
+43        -INF             .              .              .          
+44        -INF           -1.0000          .              .          
+45        -INF             .              .              .          
+46        -INF             .              .              .          
+47        -INF           -1.0000          .              .          
+48        -INF             .              .              .          
+49        -INF             .              .              .          
+50        -INF           -1.0000          .              .          
+
+---- EQU eq35  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1         -3.0000        -3.0000        +INF             .          
+2         -3.0000        -3.0000        +INF             .          
+3         -3.0000        -3.0000        +INF             .          
+4         -3.0000        -1.0000        +INF             .          
+5         -3.0000        -3.0000        +INF             .          
+6         -3.0000        -1.0000        +INF             .          
+7         -3.0000          .            +INF             .          
+8         -3.0000        -1.0000        +INF             .          
+9         -3.0000        -3.0000        +INF             .          
+10        -3.0000        -3.0000        +INF             .          
+11        -3.0000        -3.0000        +INF             .          
+12        -3.0000        -1.0000        +INF             .          
+13        -3.0000        -2.0000        +INF             .          
+14        -3.0000        -2.0000        +INF             .          
+15        -3.0000        -1.0000        +INF             .          
+16        -3.0000        -1.0000        +INF             .          
+17        -3.0000        -3.0000        +INF             .          
+18        -3.0000        -2.0000        +INF             .          
+19        -3.0000        -2.0000        +INF             .          
+20        -3.0000        -3.0000        +INF             .          
+21        -3.0000        -1.0000        +INF             .          
+22        -3.0000        -1.0000        +INF             .          
+23        -3.0000        -3.0000        +INF             .          
+24        -3.0000        -1.0000        +INF             .          
+25        -3.0000        -1.0000        +INF             .          
+26        -3.0000        -2.0000        +INF             .          
+27        -3.0000        -1.0000        +INF             .          
+28        -3.0000        -1.0000        +INF             .          
+29        -3.0000        -1.0000        +INF             .          
+30        -3.0000        -2.0000        +INF             .          
+31        -3.0000        -1.0000        +INF             .          
+32        -3.0000        -1.0000        +INF             .          
+33        -3.0000        -3.0000        +INF             .          
+34        -3.0000        -2.0000        +INF             .          
+35        -3.0000        -1.0000        +INF             .          
+36        -3.0000        -1.0000        +INF             .          
+37        -3.0000        -2.0000        +INF             .          
+38        -3.0000        -1.0000        +INF             .          
+39        -3.0000        -2.0000        +INF             .          
+40        -3.0000        -3.0000        +INF             .          
+41        -3.0000        -2.0000        +INF             .          
+42        -3.0000        -1.0000        +INF             .          
+43        -3.0000        -1.0000        +INF             .          
+44        -3.0000        -1.0000        +INF             .          
+45        -3.0000          .            +INF             .          
+46        -3.0000        -1.0000        +INF             .          
+47        -3.0000        -2.0000        +INF             .          
+48        -3.0000          .            +INF             .          
+49        -3.0000        -1.0000        +INF             .          
+50        -3.0000        -1.0000        +INF             .          
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU eq36                .              .            +INF             .          
+---- EQU eq37               2.0000         2.0000         2.0000          .          
+
+---- VAR cs_300  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1           .             1.0000         1.0000         EPS         
+2           .             1.0000         1.0000         EPS         
+3           .             1.0000         1.0000         EPS         
+4           .             1.0000         1.0000         EPS         
+5           .              .             1.0000         EPS         
+6           .             1.0000         1.0000         EPS         
+7           .             1.0000         1.0000         EPS         
+8           .             1.0000         1.0000         EPS         
+9           .             1.0000         1.0000         EPS         
+10          .             1.0000         1.0000         EPS         
+11          .             1.0000         1.0000         EPS         
+12          .             1.0000         1.0000         EPS         
+13          .             1.0000         1.0000         EPS         
+14          .             1.0000         1.0000         EPS         
+15          .             1.0000         1.0000         EPS         
+16          .             1.0000         1.0000         EPS         
+17          .              .             1.0000         EPS         
+18          .             1.0000         1.0000         EPS         
+19          .             1.0000         1.0000         EPS         
+20          .             1.0000         1.0000         EPS         
+21          .             1.0000         1.0000         EPS         
+22          .             1.0000         1.0000         EPS         
+23          .             1.0000         1.0000         EPS         
+24          .             1.0000         1.0000         EPS         
+25          .              .             1.0000         EPS         
+26          .              .             1.0000         EPS         
+27          .             1.0000         1.0000         EPS         
+28          .              .             1.0000         EPS         
+29          .              .             1.0000         EPS         
+30          .             1.0000         1.0000         EPS         
+31          .              .             1.0000         EPS         
+32          .             1.0000         1.0000         EPS         
+33          .             1.0000         1.0000         EPS         
+34          .             1.0000         1.0000         EPS         
+35          .              .             1.0000         EPS         
+36          .              .             1.0000         EPS         
+37          .             1.0000         1.0000         EPS         
+38          .             1.0000         1.0000         EPS         
+39          .              .             1.0000         EPS         
+40          .             1.0000         1.0000         EPS         
+41          .             1.0000         1.0000         EPS         
+42          .             1.0000         1.0000         EPS         
+43          .             1.0000         1.0000         EPS         
+44          .             1.0000         1.0000         EPS         
+45          .              .             1.0000         EPS         
+46          .             1.0000         1.0000         EPS         
+47          .             1.0000         1.0000         EPS         
+48          .              .             1.0000         EPS         
+49          .              .             1.0000         EPS         
+50          .             1.0000         1.0000         EPS         
+
+---- VAR math_340  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1           .             1.0000         1.0000         EPS         
+2           .             1.0000         1.0000         EPS         
+3           .             1.0000         1.0000         EPS         
+4           .             1.0000         1.0000         EPS         
+5           .             1.0000         1.0000         EPS         
+6           .             1.0000         1.0000         EPS         
+7           .             1.0000         1.0000         EPS         
+8           .             1.0000         1.0000         EPS         
+9           .             1.0000         1.0000         EPS         
+10          .             1.0000         1.0000         EPS         
+11          .             1.0000         1.0000         EPS         
+12          .             1.0000         1.0000         EPS         
+13          .             1.0000         1.0000         EPS         
+14          .             1.0000         1.0000         EPS         
+15          .             1.0000         1.0000         EPS         
+16          .             1.0000         1.0000         EPS         
+17          .             1.0000         1.0000         EPS         
+18          .             1.0000         1.0000         EPS         
+19          .             1.0000         1.0000         EPS         
+20          .             1.0000         1.0000         EPS         
+21          .             1.0000         1.0000         EPS         
+22          .             1.0000         1.0000         EPS         
+23          .             1.0000         1.0000         EPS         
+24          .             1.0000         1.0000         EPS         
+25          .             1.0000         1.0000         EPS         
+26          .             1.0000         1.0000         EPS         
+27          .             1.0000         1.0000         EPS         
+28          .             1.0000         1.0000         EPS         
+29          .             1.0000         1.0000         EPS         
+30          .             1.0000         1.0000         EPS         
+31          .             1.0000         1.0000         EPS         
+32          .             1.0000         1.0000         EPS         
+33          .             1.0000         1.0000         EPS         
+34          .             1.0000         1.0000         EPS         
+35          .             1.0000         1.0000         EPS         
+36          .             1.0000         1.0000         EPS         
+37          .             1.0000         1.0000         EPS         
+38          .             1.0000         1.0000         EPS         
+39          .             1.0000         1.0000         EPS         
+40          .             1.0000         1.0000         EPS         
+41          .             1.0000         1.0000         EPS         
+42          .             1.0000         1.0000         EPS         
+43          .             1.0000         1.0000         EPS         
+44          .             1.0000         1.0000         EPS         
+45          .             1.0000         1.0000         EPS         
+46          .             1.0000         1.0000         EPS         
+47          .             1.0000         1.0000         EPS         
+48          .             1.0000         1.0000         EPS         
+49          .             1.0000         1.0000         EPS         
+50          .             1.0000         1.0000         EPS         
+
+---- VAR cs_400  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1           .             1.0000         1.0000         EPS         
+2           .             1.0000         1.0000         EPS         
+3           .             1.0000         1.0000         EPS         
+4           .              .             1.0000         EPS         
+5           .             1.0000         1.0000         EPS         
+6           .             1.0000         1.0000         EPS         
+7           .              .             1.0000         EPS         
+8           .              .             1.0000         EPS         
+9           .              .             1.0000         EPS         
+10          .             1.0000         1.0000         EPS         
+11          .             1.0000         1.0000         EPS         
+12          .              .             1.0000         EPS         
+13          .              .             1.0000         EPS         
+14          .              .             1.0000         EPS         
+15          .              .             1.0000         EPS         
+16          .              .             1.0000         EPS         
+17          .             1.0000         1.0000         EPS         
+18          .              .             1.0000         EPS         
+19          .              .             1.0000         EPS         
+20          .              .             1.0000         EPS         
+21          .              .             1.0000         EPS         
+22          .              .             1.0000         EPS         
+23          .             1.0000         1.0000         EPS         
+24          .              .             1.0000         EPS         
+25          .             1.0000         1.0000         EPS         
+26          .              .             1.0000         EPS         
+27          .              .             1.0000         EPS         
+28          .              .             1.0000         EPS         
+29          .              .             1.0000         EPS         
+30          .              .             1.0000         EPS         
+31          .              .             1.0000         EPS         
+32          .              .             1.0000         EPS         
+33          .             1.0000         1.0000         EPS         
+34          .              .             1.0000         EPS         
+35          .              .             1.0000         EPS         
+36          .              .             1.0000         EPS         
+37          .              .             1.0000         EPS         
+38          .              .             1.0000         EPS         
+39          .             1.0000         1.0000         EPS         
+40          .              .             1.0000         EPS         
+41          .              .             1.0000         EPS         
+42          .              .             1.0000         EPS         
+43          .              .             1.0000         EPS         
+44          .             1.0000         1.0000         EPS         
+45          .              .             1.0000         EPS         
+46          .              .             1.0000         EPS         
+47          .             1.0000         1.0000         EPS         
+48          .              .             1.0000         EPS         
+49          .              .             1.0000         EPS         
+50          .             1.0000         1.0000         EPS         
+
+---- VAR female  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1           .             1.0000         1.0000         EPS         
+2           .              .             1.0000         EPS         
+3           .              .             1.0000         EPS         
+4           .             1.0000         1.0000         EPS         
+5           .              .             1.0000         EPS         
+6           .             1.0000         1.0000         EPS         
+7           .             1.0000         1.0000         EPS         
+8           .             1.0000         1.0000         EPS         
+9           .              .             1.0000         EPS         
+10          .             1.0000         1.0000         EPS         
+11          .             1.0000         1.0000         EPS         
+12          .             1.0000         1.0000         EPS         
+13          .             1.0000         1.0000         EPS         
+14          .              .             1.0000         EPS         
+15          .             1.0000         1.0000         EPS         
+16          .              .             1.0000         EPS         
+17          .              .             1.0000         EPS         
+18          .              .             1.0000         EPS         
+19          .              .             1.0000         EPS         
+20          .              .             1.0000         EPS         
+21          .              .             1.0000         EPS         
+22          .              .             1.0000         EPS         
+23          .              .             1.0000         EPS         
+24          .              .             1.0000         EPS         
+25          .              .             1.0000         EPS         
+26          .              .             1.0000         EPS         
+27          .              .             1.0000         EPS         
+28          .              .             1.0000         EPS         
+29          .              .             1.0000         EPS         
+30          .              .             1.0000         EPS         
+31          .              .             1.0000         EPS         
+32          .              .             1.0000         EPS         
+33          .              .             1.0000         EPS         
+34          .              .             1.0000         EPS         
+35          .              .             1.0000         EPS         
+36          .              .             1.0000         EPS         
+37          .              .             1.0000         EPS         
+38          .              .             1.0000         EPS         
+39          .              .             1.0000         EPS         
+40          .              .             1.0000         EPS         
+41          .              .             1.0000         EPS         
+42          .              .             1.0000         EPS         
+43          .             1.0000         1.0000         EPS         
+44          .             1.0000         1.0000         EPS         
+45          .             1.0000         1.0000         EPS         
+46          .              .             1.0000         EPS         
+47          .              .             1.0000         EPS         
+48          .             1.0000         1.0000         EPS         
+49          .              .             1.0000         EPS         
+50          .             1.0000         1.0000         EPS         
+
+---- VAR male  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1           .              .             1.0000         EPS         
+2           .             1.0000         1.0000         EPS         
+3           .             1.0000         1.0000         EPS         
+4           .              .             1.0000         EPS         
+5           .             1.0000         1.0000         EPS         
+6           .              .             1.0000         EPS         
+7           .              .             1.0000         EPS         
+8           .              .             1.0000         EPS         
+9           .             1.0000         1.0000         EPS         
+10          .              .             1.0000         EPS         
+11          .              .             1.0000         EPS         
+12          .              .             1.0000         EPS         
+13          .              .             1.0000         EPS         
+14          .             1.0000         1.0000         EPS         
+15          .              .             1.0000         EPS         
+16          .             1.0000         1.0000         EPS         
+17          .             1.0000         1.0000         EPS         
+18          .             1.0000         1.0000         EPS         
+19          .             1.0000         1.0000         EPS         
+20          .             1.0000         1.0000         EPS         
+21          .             1.0000         1.0000         EPS         
+22          .             1.0000         1.0000         EPS         
+23          .             1.0000         1.0000         EPS         
+24          .             1.0000         1.0000         EPS         
+25          .             1.0000         1.0000         EPS         
+26          .             1.0000         1.0000         EPS         
+27          .             1.0000         1.0000         EPS         
+28          .             1.0000         1.0000         EPS         
+29          .             1.0000         1.0000         EPS         
+30          .             1.0000         1.0000         EPS         
+31          .             1.0000         1.0000         EPS         
+32          .             1.0000         1.0000         EPS         
+33          .             1.0000         1.0000         EPS         
+34          .             1.0000         1.0000         EPS         
+35          .             1.0000         1.0000         EPS         
+36          .             1.0000         1.0000         EPS         
+37          .             1.0000         1.0000         EPS         
+38          .             1.0000         1.0000         EPS         
+39          .             1.0000         1.0000         EPS         
+40          .             1.0000         1.0000         EPS         
+41          .             1.0000         1.0000         EPS         
+42          .             1.0000         1.0000         EPS         
+43          .              .             1.0000         EPS         
+44          .              .             1.0000         EPS         
+45          .              .             1.0000         EPS         
+46          .             1.0000         1.0000         EPS         
+47          .             1.0000         1.0000         EPS         
+48          .              .             1.0000         EPS         
+49          .             1.0000         1.0000         EPS         
+50          .              .             1.0000         EPS         
+
+---- VAR undergrad  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1           .             1.0000         1.0000         EPS         
+2           .             1.0000         1.0000         EPS         
+3           .             1.0000         1.0000         EPS         
+4           .              .             1.0000         EPS         
+5           .              .             1.0000         EPS         
+6           .              .             1.0000         EPS         
+7           .              .             1.0000         EPS         
+8           .             1.0000         1.0000         EPS         
+9           .             1.0000         1.0000         EPS         
+10          .             1.0000         1.0000         EPS         
+11          .             1.0000         1.0000         EPS         
+12          .             1.0000         1.0000         EPS         
+13          .             1.0000         1.0000         EPS         
+14          .             1.0000         1.0000         EPS         
+15          .              .             1.0000         EPS         
+16          .              .             1.0000         EPS         
+17          .             1.0000         1.0000         EPS         
+18          .             1.0000         1.0000         EPS         
+19          .              .             1.0000         EPS         
+20          .             1.0000         1.0000         EPS         
+21          .              .             1.0000         EPS         
+22          .              .             1.0000         EPS         
+23          .             1.0000         1.0000         EPS         
+24          .              .             1.0000         EPS         
+25          .              .             1.0000         EPS         
+26          .              .             1.0000         EPS         
+27          .              .             1.0000         EPS         
+28          .              .             1.0000         EPS         
+29          .              .             1.0000         EPS         
+30          .             1.0000         1.0000         EPS         
+31          .              .             1.0000         EPS         
+32          .              .             1.0000         EPS         
+33          .             1.0000         1.0000         EPS         
+34          .             1.0000         1.0000         EPS         
+35          .              .             1.0000         EPS         
+36          .              .             1.0000         EPS         
+37          .             1.0000         1.0000         EPS         
+38          .              .             1.0000         EPS         
+39          .             1.0000         1.0000         EPS         
+40          .             1.0000         1.0000         EPS         
+41          .              .             1.0000         EPS         
+42          .              .             1.0000         EPS         
+43          .              .             1.0000         EPS         
+44          .              .             1.0000         EPS         
+45          .              .             1.0000         EPS         
+46          .              .             1.0000         EPS         
+47          .              .             1.0000         EPS         
+48          .              .             1.0000         EPS         
+49          .              .             1.0000         EPS         
+50          .              .             1.0000         EPS         
+
+---- VAR cs  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1           .             1.0000         1.0000         EPS         
+2           .             1.0000         1.0000         EPS         
+3           .             1.0000         1.0000         EPS         
+4           .             1.0000         1.0000         EPS         
+5           .             1.0000         1.0000         EPS         
+6           .             1.0000         1.0000         EPS         
+7           .             1.0000         1.0000         EPS         
+8           .             1.0000         1.0000         EPS         
+9           .             1.0000         1.0000         EPS         
+10          .             1.0000         1.0000         EPS         
+11          .             1.0000         1.0000         EPS         
+12          .             1.0000         1.0000         EPS         
+13          .             1.0000         1.0000         EPS         
+14          .             1.0000         1.0000         EPS         
+15          .             1.0000         1.0000         EPS         
+16          .             1.0000         1.0000         EPS         
+17          .             1.0000         1.0000         EPS         
+18          .             1.0000         1.0000         EPS         
+19          .             1.0000         1.0000         EPS         
+20          .             1.0000         1.0000         EPS         
+21          .             1.0000         1.0000         EPS         
+22          .             1.0000         1.0000         EPS         
+23          .             1.0000         1.0000         EPS         
+24          .             1.0000         1.0000         EPS         
+25          .             1.0000         1.0000         EPS         
+26          .              .             1.0000         EPS         
+27          .              .             1.0000         EPS         
+28          .              .             1.0000         EPS         
+29          .              .             1.0000         EPS         
+30          .              .             1.0000         EPS         
+31          .              .             1.0000         EPS         
+32          .              .             1.0000         EPS         
+33          .              .             1.0000         EPS         
+34          .              .             1.0000         EPS         
+35          .              .             1.0000         EPS         
+36          .              .             1.0000         EPS         
+37          .              .             1.0000         EPS         
+38          .              .             1.0000         EPS         
+39          .              .             1.0000         EPS         
+40          .              .             1.0000         EPS         
+41          .              .             1.0000         EPS         
+42          .              .             1.0000         EPS         
+43          .              .             1.0000         EPS         
+44          .              .             1.0000         EPS         
+45          .              .             1.0000         EPS         
+46          .              .             1.0000         EPS         
+47          .              .             1.0000         EPS         
+48          .              .             1.0000         EPS         
+49          .              .             1.0000         EPS         
+50          .              .             1.0000         EPS         
+
+---- VAR math  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1           .             1.0000         1.0000         EPS         
+2           .             1.0000         1.0000         EPS         
+3           .             1.0000         1.0000         EPS         
+4           .             1.0000         1.0000         EPS         
+5           .             1.0000         1.0000         EPS         
+6           .             1.0000         1.0000         EPS         
+7           .             1.0000         1.0000         EPS         
+8           .             1.0000         1.0000         EPS         
+9           .             1.0000         1.0000         EPS         
+10          .             1.0000         1.0000         EPS         
+11          .             1.0000         1.0000         EPS         
+12          .             1.0000         1.0000         EPS         
+13          .             1.0000         1.0000         EPS         
+14          .             1.0000         1.0000         EPS         
+15          .             1.0000         1.0000         EPS         
+16          .              .             1.0000         EPS         
+17          .              .             1.0000         EPS         
+18          .              .             1.0000         EPS         
+19          .              .             1.0000         EPS         
+20          .              .             1.0000         EPS         
+21          .              .             1.0000         EPS         
+22          .              .             1.0000         EPS         
+23          .              .             1.0000         EPS         
+24          .              .             1.0000         EPS         
+25          .              .             1.0000         EPS         
+26          .              .             1.0000         EPS         
+27          .              .             1.0000         EPS         
+28          .              .             1.0000         EPS         
+29          .              .             1.0000         EPS         
+30          .              .             1.0000         EPS         
+31          .              .             1.0000         EPS         
+32          .              .             1.0000         EPS         
+33          .              .             1.0000         EPS         
+34          .              .             1.0000         EPS         
+35          .              .             1.0000         EPS         
+36          .              .             1.0000         EPS         
+37          .              .             1.0000         EPS         
+38          .              .             1.0000         EPS         
+39          .              .             1.0000         EPS         
+40          .              .             1.0000         EPS         
+41          .              .             1.0000         EPS         
+42          .              .             1.0000         EPS         
+43          .              .             1.0000         EPS         
+44          .              .             1.0000         EPS         
+45          .              .             1.0000         EPS         
+46          .              .             1.0000         EPS         
+47          .              .             1.0000         EPS         
+48          .              .             1.0000         EPS         
+49          .              .             1.0000         EPS         
+50          .              .             1.0000         EPS         
+
+---- VAR ie  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1           .             1.0000         1.0000         EPS         
+2           .             1.0000         1.0000         EPS         
+3           .             1.0000         1.0000         EPS         
+4           .              .             1.0000         EPS         
+5           .             1.0000         1.0000         EPS         
+6           .              .             1.0000         EPS         
+7           .              .             1.0000         EPS         
+8           .              .             1.0000         EPS         
+9           .             1.0000         1.0000         EPS         
+10          .             1.0000         1.0000         EPS         
+11          .             1.0000         1.0000         EPS         
+12          .              .             1.0000         EPS         
+13          .              .             1.0000         EPS         
+14          .              .             1.0000         EPS         
+15          .              .             1.0000         EPS         
+16          .              .             1.0000         EPS         
+17          .             1.0000         1.0000         EPS         
+18          .              .             1.0000         EPS         
+19          .              .             1.0000         EPS         
+20          .             1.0000         1.0000         EPS         
+21          .              .             1.0000         EPS         
+22          .              .             1.0000         EPS         
+23          .              .             1.0000         EPS         
+24          .              .             1.0000         EPS         
+25          .              .             1.0000         EPS         
+26          .              .             1.0000         EPS         
+27          .              .             1.0000         EPS         
+28          .              .             1.0000         EPS         
+29          .              .             1.0000         EPS         
+30          .              .             1.0000         EPS         
+31          .              .             1.0000         EPS         
+32          .              .             1.0000         EPS         
+33          .              .             1.0000         EPS         
+34          .              .             1.0000         EPS         
+35          .              .             1.0000         EPS         
+36          .              .             1.0000         EPS         
+37          .              .             1.0000         EPS         
+38          .              .             1.0000         EPS         
+39          .              .             1.0000         EPS         
+40          .             1.0000         1.0000         EPS         
+41          .              .             1.0000         EPS         
+42          .              .             1.0000         EPS         
+43          .              .             1.0000         EPS         
+44          .              .             1.0000         EPS         
+45          .              .             1.0000         EPS         
+46          .              .             1.0000         EPS         
+47          .              .             1.0000         EPS         
+48          .              .             1.0000         EPS         
+49          .              .             1.0000         EPS         
+50          .              .             1.0000         EPS         
+
+---- VAR december  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1           .             1.0000         1.0000         EPS         
+2           .              .             1.0000         EPS         
+3           .              .             1.0000         EPS         
+4           .             1.0000         1.0000         EPS         
+5           .             1.0000         1.0000         EPS         
+6           .             1.0000         1.0000         EPS         
+7           .              .             1.0000         EPS         
+8           .              .             1.0000         EPS         
+9           .              .             1.0000         EPS         
+10          .             1.0000         1.0000         EPS         
+11          .             1.0000         1.0000         EPS         
+12          .              .             1.0000         EPS         
+13          .             1.0000         1.0000         EPS         
+14          .              .             1.0000         EPS         
+15          .             1.0000         1.0000         EPS         
+16          .              .             1.0000         EPS         
+17          .              .             1.0000         EPS         
+18          .              .             1.0000         EPS         
+19          .             1.0000         1.0000         EPS         
+20          .              .             1.0000         EPS         
+21          .              .             1.0000         EPS         
+22          .              .             1.0000         EPS         
+23          .              .             1.0000         EPS         
+24          .              .             1.0000         EPS         
+25          .              .             1.0000         EPS         
+26          .             1.0000         1.0000         EPS         
+27          .              .             1.0000         EPS         
+28          .              .             1.0000         EPS         
+29          .              .             1.0000         EPS         
+30          .              .             1.0000         EPS         
+31          .              .             1.0000         EPS         
+32          .              .             1.0000         EPS         
+33          .              .             1.0000         EPS         
+34          .              .             1.0000         EPS         
+35          .              .             1.0000         EPS         
+36          .              .             1.0000         EPS         
+37          .              .             1.0000         EPS         
+38          .              .             1.0000         EPS         
+39          .              .             1.0000         EPS         
+40          .              .             1.0000         EPS         
+41          .             1.0000         1.0000         EPS         
+42          .              .             1.0000         EPS         
+43          .             1.0000         1.0000         EPS         
+44          .              .             1.0000         EPS         
+45          .              .             1.0000         EPS         
+46          .              .             1.0000         EPS         
+47          .              .             1.0000         EPS         
+48          .              .             1.0000         EPS         
+49          .              .             1.0000         EPS         
+50          .              .             1.0000         EPS         
+
+---- VAR finalfemales  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1           .             1.0000         1.0000         1.0000      
+2           .              .             1.0000         1.0000      
+3           .              .             1.0000         1.0000      
+4           .              .             1.0000         1.0000      
+5           .              .             1.0000         1.0000      
+6           .              .             1.0000         1.0000      
+7           .              .             1.0000         1.0000      
+8           .              .             1.0000         1.0000      
+9           .              .             1.0000         1.0000      
+10          .             1.0000         1.0000         1.0000      
+11          .             1.0000         1.0000         1.0000      
+12          .              .             1.0000         1.0000      
+13          .              .             1.0000         1.0000      
+14          .              .             1.0000         1.0000      
+15          .              .             1.0000         1.0000      
+16          .              .             1.0000         1.0000      
+17          .              .             1.0000         1.0000      
+18          .              .             1.0000         1.0000      
+19          .              .             1.0000         1.0000      
+20          .              .             1.0000         1.0000      
+21          .              .             1.0000         1.0000      
+22          .              .             1.0000         1.0000      
+23          .              .             1.0000         1.0000      
+24          .              .             1.0000         1.0000      
+25          .              .             1.0000         1.0000      
+26          .              .             1.0000         1.0000      
+27          .              .             1.0000         1.0000      
+28          .              .             1.0000         1.0000      
+29          .              .             1.0000         1.0000      
+30          .              .             1.0000         1.0000      
+31          .              .             1.0000         1.0000      
+32          .              .             1.0000         1.0000      
+33          .              .             1.0000         1.0000      
+34          .              .             1.0000         1.0000      
+35          .              .             1.0000         1.0000      
+36          .              .             1.0000         1.0000      
+37          .              .             1.0000         1.0000      
+38          .              .             1.0000         1.0000      
+39          .              .             1.0000         1.0000      
+40          .              .             1.0000         1.0000      
+41          .              .             1.0000         1.0000      
+42          .              .             1.0000         1.0000      
+43          .              .             1.0000         1.0000      
+44          .              .             1.0000         1.0000      
+45          .              .             1.0000         1.0000      
+46          .              .             1.0000         1.0000      
+47          .              .             1.0000         1.0000      
+48          .              .             1.0000         1.0000      
+49          .              .             1.0000         1.0000      
+50          .              .             1.0000         1.0000      
+
+---- VAR ieundergrads  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1           .             1.0000         1.0000         EPS         
+2           .             1.0000         1.0000         EPS         
+3           .             1.0000         1.0000         EPS         
+4           .              .             1.0000         EPS         
+5           .              .             1.0000         EPS         
+6           .              .             1.0000         EPS         
+7           .              .             1.0000         EPS         
+8           .              .             1.0000         EPS         
+9           .             1.0000         1.0000         EPS         
+10          .             1.0000         1.0000         EPS         
+11          .             1.0000         1.0000         EPS         
+12          .              .             1.0000         EPS         
+13          .              .             1.0000         EPS         
+14          .              .             1.0000         EPS         
+15          .              .             1.0000         EPS         
+16          .              .             1.0000         EPS         
+17          .             1.0000         1.0000         EPS         
+18          .              .             1.0000         EPS         
+19          .              .             1.0000         EPS         
+20          .             1.0000         1.0000         EPS         
+21          .              .             1.0000         EPS         
+22          .              .             1.0000         EPS         
+23          .              .             1.0000         EPS         
+24          .              .             1.0000         EPS         
+25          .              .             1.0000         EPS         
+26          .              .             1.0000         EPS         
+27          .              .             1.0000         EPS         
+28          .              .             1.0000         EPS         
+29          .              .             1.0000         EPS         
+30          .              .             1.0000         EPS         
+31          .              .             1.0000         EPS         
+32          .              .             1.0000         EPS         
+33          .              .             1.0000         EPS         
+34          .              .             1.0000         EPS         
+35          .              .             1.0000         EPS         
+36          .              .             1.0000         EPS         
+37          .              .             1.0000         EPS         
+38          .              .             1.0000         EPS         
+39          .              .             1.0000         EPS         
+40          .             1.0000         1.0000         EPS         
+41          .              .             1.0000         EPS         
+42          .              .             1.0000         EPS         
+43          .              .             1.0000         EPS         
+44          .              .             1.0000         EPS         
+45          .              .             1.0000         EPS         
+46          .              .             1.0000         EPS         
+47          .              .             1.0000         EPS         
+48          .              .             1.0000         EPS         
+49          .              .             1.0000         EPS         
+50          .              .             1.0000         EPS         
+
+---- VAR both300and400  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1           .             1.0000         1.0000         EPS         
+2           .             1.0000         1.0000         EPS         
+3           .             1.0000         1.0000         EPS         
+4           .              .             1.0000         EPS         
+5           .              .             1.0000         EPS         
+6           .             1.0000         1.0000         EPS         
+7           .              .             1.0000         EPS         
+8           .              .             1.0000         EPS         
+9           .              .             1.0000         EPS         
+10          .             1.0000         1.0000         EPS         
+11          .             1.0000         1.0000         EPS         
+12          .              .             1.0000         EPS         
+13          .              .             1.0000         EPS         
+14          .              .             1.0000         EPS         
+15          .              .             1.0000         EPS         
+16          .              .             1.0000         EPS         
+17          .              .             1.0000         EPS         
+18          .              .             1.0000         EPS         
+19          .              .             1.0000         EPS         
+20          .              .             1.0000         EPS         
+21          .              .             1.0000         EPS         
+22          .              .             1.0000         EPS         
+23          .             1.0000         1.0000         EPS         
+24          .              .             1.0000         EPS         
+25          .              .             1.0000         EPS         
+26          .              .             1.0000         EPS         
+27          .              .             1.0000         EPS         
+28          .              .             1.0000         EPS         
+29          .              .             1.0000         EPS         
+30          .              .             1.0000         EPS         
+31          .              .             1.0000         EPS         
+32          .              .             1.0000         EPS         
+33          .             1.0000         1.0000         EPS         
+34          .              .             1.0000         EPS         
+35          .              .             1.0000         EPS         
+36          .              .             1.0000         EPS         
+37          .              .             1.0000         EPS         
+38          .              .             1.0000         EPS         
+39          .              .             1.0000         EPS         
+40          .              .             1.0000         EPS         
+41          .              .             1.0000         EPS         
+42          .              .             1.0000         EPS         
+43          .              .             1.0000         EPS         
+44          .             1.0000         1.0000         EPS         
+45          .              .             1.0000         EPS         
+46          .              .             1.0000         EPS         
+47          .             1.0000         1.0000         EPS         
+48          .              .             1.0000         EPS         
+49          .              .             1.0000         EPS         
+50          .             1.0000         1.0000         EPS         
+
+---- VAR both300and400ordecem  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1           .             1.0000         1.0000         EPS         
+2           .             1.0000         1.0000         EPS         
+3           .             1.0000         1.0000         EPS         
+4           .             1.0000         1.0000         EPS         
+5           .             1.0000         1.0000         EPS         
+6           .             1.0000         1.0000         EPS         
+7           .              .             1.0000         EPS         
+8           .              .             1.0000         EPS         
+9           .              .             1.0000         EPS         
+10          .             1.0000         1.0000         EPS         
+11          .             1.0000         1.0000         EPS         
+12          .              .             1.0000         EPS         
+13          .             1.0000         1.0000         EPS         
+14          .              .             1.0000         EPS         
+15          .             1.0000         1.0000         EPS         
+16          .              .             1.0000         EPS         
+17          .              .             1.0000         EPS         
+18          .              .             1.0000         EPS         
+19          .             1.0000         1.0000         EPS         
+20          .              .             1.0000         EPS         
+21          .              .             1.0000         EPS         
+22          .              .             1.0000         EPS         
+23          .             1.0000         1.0000         EPS         
+24          .              .             1.0000         EPS         
+25          .              .             1.0000         EPS         
+26          .             1.0000         1.0000         EPS         
+27          .              .             1.0000         EPS         
+28          .              .             1.0000         EPS         
+29          .              .             1.0000         EPS         
+30          .              .             1.0000         EPS         
+31          .              .             1.0000         EPS         
+32          .              .             1.0000         EPS         
+33          .             1.0000         1.0000         EPS         
+34          .              .             1.0000         EPS         
+35          .              .             1.0000         EPS         
+36          .              .             1.0000         EPS         
+37          .              .             1.0000         EPS         
+38          .              .             1.0000         EPS         
+39          .              .             1.0000         EPS         
+40          .              .             1.0000         EPS         
+41          .             1.0000         1.0000         EPS         
+42          .              .             1.0000         EPS         
+43          .             1.0000         1.0000         EPS         
+44          .             1.0000         1.0000         EPS         
+45          .              .             1.0000         EPS         
+46          .              .             1.0000         EPS         
+47          .             1.0000         1.0000         EPS         
+48          .              .             1.0000         EPS         
+49          .              .             1.0000         EPS         
+50          .             1.0000         1.0000         EPS         
+
+---- VAR maleieundergrads  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1           .              .             1.0000         EPS         
+2           .             1.0000         1.0000         EPS         
+3           .             1.0000         1.0000         EPS         
+4           .              .             1.0000         EPS         
+5           .              .             1.0000         EPS         
+6           .              .             1.0000         EPS         
+7           .              .             1.0000         EPS         
+8           .              .             1.0000         EPS         
+9           .             1.0000         1.0000         EPS         
+10          .              .             1.0000         EPS         
+11          .              .             1.0000         EPS         
+12          .              .             1.0000         EPS         
+13          .              .             1.0000         EPS         
+14          .              .             1.0000         EPS         
+15          .              .             1.0000         EPS         
+16          .              .             1.0000         EPS         
+17          .             1.0000         1.0000         EPS         
+18          .              .             1.0000         EPS         
+19          .              .             1.0000         EPS         
+20          .             1.0000         1.0000         EPS         
+21          .              .             1.0000         EPS         
+22          .              .             1.0000         EPS         
+23          .              .             1.0000         EPS         
+24          .              .             1.0000         EPS         
+25          .              .             1.0000         EPS         
+26          .              .             1.0000         EPS         
+27          .              .             1.0000         EPS         
+28          .              .             1.0000         EPS         
+29          .              .             1.0000         EPS         
+30          .              .             1.0000         EPS         
+31          .              .             1.0000         EPS         
+32          .              .             1.0000         EPS         
+33          .              .             1.0000         EPS         
+34          .              .             1.0000         EPS         
+35          .              .             1.0000         EPS         
+36          .              .             1.0000         EPS         
+37          .              .             1.0000         EPS         
+38          .              .             1.0000         EPS         
+39          .              .             1.0000         EPS         
+40          .             1.0000         1.0000         EPS         
+41          .              .             1.0000         EPS         
+42          .              .             1.0000         EPS         
+43          .              .             1.0000         EPS         
+44          .              .             1.0000         EPS         
+45          .              .             1.0000         EPS         
+46          .              .             1.0000         EPS         
+47          .              .             1.0000         EPS         
+48          .              .             1.0000         EPS         
+49          .              .             1.0000         EPS         
+50          .              .             1.0000         EPS         
+
+---- VAR maleieundergradsboth300and400ordecem  
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+1           .              .             1.0000         EPS         
+2           .             1.0000         1.0000         EPS         
+3           .             1.0000         1.0000         EPS         
+4           .              .             1.0000         EPS         
+5           .              .             1.0000         EPS         
+6           .              .             1.0000         EPS         
+7           .              .             1.0000         EPS         
+8           .              .             1.0000         EPS         
+9           .              .             1.0000         EPS         
+10          .              .             1.0000         EPS         
+11          .              .             1.0000         EPS         
+12          .              .             1.0000         EPS         
+13          .              .             1.0000         EPS         
+14          .              .             1.0000         EPS         
+15          .              .             1.0000         EPS         
+16          .              .             1.0000         EPS         
+17          .              .             1.0000         EPS         
+18          .              .             1.0000         EPS         
+19          .              .             1.0000         EPS         
+20          .              .             1.0000         EPS         
+21          .              .             1.0000         EPS         
+22          .              .             1.0000         EPS         
+23          .              .             1.0000         EPS         
+24          .              .             1.0000         EPS         
+25          .              .             1.0000         EPS         
+26          .              .             1.0000         EPS         
+27          .              .             1.0000         EPS         
+28          .              .             1.0000         EPS         
+29          .              .             1.0000         EPS         
+30          .              .             1.0000         EPS         
+31          .              .             1.0000         EPS         
+32          .              .             1.0000         EPS         
+33          .              .             1.0000         EPS         
+34          .              .             1.0000         EPS         
+35          .              .             1.0000         EPS         
+36          .              .             1.0000         EPS         
+37          .              .             1.0000         EPS         
+38          .              .             1.0000         EPS         
+39          .              .             1.0000         EPS         
+40          .              .             1.0000         EPS         
+41          .              .             1.0000         EPS         
+42          .              .             1.0000         EPS         
+43          .              .             1.0000         EPS         
+44          .              .             1.0000         EPS         
+45          .              .             1.0000         EPS         
+46          .              .             1.0000         EPS         
+47          .              .             1.0000         EPS         
+48          .              .             1.0000         EPS         
+49          .              .             1.0000         EPS         
+50          .              .             1.0000         EPS         
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR totfemales        -INF            3.0000        +INF             .          
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 11/08/23 18:19:36 Page 7
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+----    138 PARAMETER results  
+
+exists       1.000,    max howmany  3.000,    femIEugrads  3.000,    maleIEudrads 6.000
+
+
+
+EXECUTION TIME       =        1.266 SECONDS      4 MB  45.1.0 88bbff72 WEX-WEI
+
+
+USER: Introduction to Optimization (CS/ISyE/ECE 524) G230906|0002AS-GEN
+      UW-Madison, CS Dept., Fall 2023, Prof. Ferris              DCE850
+      License for teaching and research at degree granting institutions
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw7\hw7-1.gms
+Output     C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw7\hw7-1.lst

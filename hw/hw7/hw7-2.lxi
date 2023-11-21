@@ -1,0 +1,39 @@
+B 3 C o m p i l a t i o n
+B 81 Include File Summary
+B 93 Equation Listing    SOLVE nuclear Using MIP From line 53
+D 96 obj_eq
+D 101 power_dmnd
+D 112 on_cons1
+D 123 on_cons2
+D 134 on_cons3
+D 145 on_cons4
+D 156 coal_2_activate
+D 167 nuclear_3_on
+D 178 max_pwr
+D 189 min_pwr
+B 201 Column Listing      SOLVE nuclear Using MIP From line 53
+E 204 on
+E 244 start
+E 269 coal_2_on
+E 288 power
+E 313 obj
+B 321 Range Statistics    SOLVE nuclear Using MIP From line 53
+B 332 Model Statistics    SOLVE nuclear Using MIP From line 53
+B 345 Solution Report     SOLVE nuclear Using MIP From line 53
+F 392 obj_eq
+F 394 power_dmnd
+F 423 on_cons1
+F 548 on_cons2
+F 673 on_cons3
+F 798 on_cons4
+F 908 coal_2_activate
+F 937 nuclear_3_on
+F 966 max_pwr
+F 1211 min_pwr
+G 1456 on
+G 1701 start
+G 1826 coal_2_on
+G 1855 power
+G 2102 obj
+B 2110 E x e c u t i o n
+I 2110 oper
