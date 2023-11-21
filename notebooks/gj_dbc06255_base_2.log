@@ -1,0 +1,51 @@
+--- Job gj_dbc06255_base_2.gms Start 11/06/23 10:43:43 45.1.0 88bbff72 WEX-WEI x86 64bit/MS Windows
+--- Applying:
+    C:\GAMS\45\gmsprmNT.txt
+--- GAMS Parameters defined
+    LP CPLEX
+    MIP CPLEX
+    RMIP CPLEX
+    NLP CONOPT
+    MCP PATH
+    MPEC NLPEC
+    RMPEC NLPEC
+    CNS CONOPT
+    DNLP CONOPT
+    RMINLP CONOPT
+    MINLP DICOPT
+    QCP CONOPT
+    MIQCP SBB
+    RMIQCP CONOPT
+    EMP JAMS
+    Restart C:\Users\Rocke\OneDrive\Documents\isye524\notebooks\gj_dbc06255_base_cp.g00
+    Input C:\Users\Rocke\OneDrive\Documents\isye524\notebooks\gj_dbc06255_base_2.gms
+    Output C:\Users\Rocke\OneDrive\Documents\isye524\notebooks\gj_dbc06255_base_2.lst
+    Save C:\Users\Rocke\OneDrive\Documents\isye524\notebooks\gj_dbc06255_base_cpnew.g00
+    ScrDir C:\Users\Rocke\OneDrive\Documents\isye524\notebooks\225a\
+    SysDir C:\GAMS\45\
+    CurDir C:\Users\Rocke\OneDrive\Documents\isye524\notebooks\
+    LogOption 3
+    LogFile C:\Users\Rocke\OneDrive\Documents\isye524\notebooks\gj_dbc06255_base_2.log
+    Trace C:\Users\Rocke\OneDrive\Documents\isye524\notebooks\gj_dbc06255_base_2.trc
+    Reference C:\Users\Rocke\OneDrive\Documents\isye524\notebooks\gj_dbc06255_base_2.ref
+    TraceOpt 3
+    GDX C:\Users\Rocke\OneDrive\Documents\isye524\notebooks\gj_dbc06255_base_2_gdxout.gdx
+Licensee: Introduction to Optimization (CS/ISyE/ECE 524) G230906|0002AS-GEN
+          UW-Madison, CS Dept., Fall 2023, Prof. Ferris              DCE850
+          C:\GAMS\45\gamslice.txt
+          License Admin: Michael C. Ferris, ferris@cs.wisc.edu             
+          Course license for use within the course and related course work
+          The evaluation period of the license will expire on Feb 03, 2024
+Processor information: 1 socket(s), 4 core(s), and 8 thread(s) available
+GAMS 45.1.0   Copyright (C) 1987-2023 GAMS Development. All rights reserved
+--- Starting continued compilation
+--- Workfile was generated under GAMS version WEX451-451
+--- gj_dbc06255_base_2.gms(1) 2 Mb
+--- GDXin=C:\Users\Rocke\OneDrive\Documents\isye524\notebooks\gj_dbc06255_base_2_gdxin.gdx
+--- GDX File ($gdxIn) C:\Users\Rocke\OneDrive\Documents\isye524\notebooks\gj_dbc06255_base_2_gdxin.gdx
+--- gj_dbc06255_base_2.gms(23) 3 Mb
+--- Starting execution: elapsed 0:00:00.087
+--- RefFile C:\Users\Rocke\OneDrive\Documents\isye524\notebooks\gj_dbc06255_base_2.ref
+--- GDX File C:\Users\Rocke\OneDrive\Documents\isye524\notebooks\gj_dbc06255_base_2_gdxout.gdx
+*** Status: Normal completion
+--- Job gj_dbc06255_base_2.gms Stop 11/06/23 10:43:43 elapsed 0:00:00.153

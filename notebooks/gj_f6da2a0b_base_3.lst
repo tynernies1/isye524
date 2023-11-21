@@ -1,0 +1,187 @@
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 10/27/23 15:54:25 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+GDXIN   C:\Users\Rocke\OneDrive\Documents\isye524\notebooks\gj_f6da2a0b_base_3_gdxin.gdx
+--- LOAD  I = 1:I
+--- LOAD  R = 2:R
+--- LOAD  a = 3:a
+--- LOAD  c = 4:c
+--- LOAD  b = 5:b
+--- LOAD  x = 6:x
+--- LOAD  profit = 7:profit
+  44  equation
+  45      profit_eq "profit definition",
+  46      resource_con(R) "resource limit";
+  47   
+  48  * EQUATION (MODEL) DEFINITION
+  49  profit_eq..
+  50    profit =E= sum(I,c(I)*x(I));
+  51   
+  52  resource_con(R)..
+  53    sum(I, a(R,I)*x(I)) =L= b(R);
+  54   
+  55  model btb /all/;
+  56   
+  57  solve btb using lp maximizing profit;
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 10/27/23 15:54:25 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Include File Summary
+
+
+   SEQ   GLOBAL TYPE      PARENT   LOCAL  FILENAME
+
+     1        1 INPUT          0       0  C:\Users\Rocke\OneDrive\Documents\isye524\notebooks\gj_f6da2a0b_base_3.gms
+     2       25 GDXIN          1       1  C:\Users\Rocke\OneDrive\Documents\isye524\notebooks\gj_f6da2a0b_base_3_gdxin.gdx
+
+
+COMPILATION TIME     =        0.000 SECONDS      3 MB  45.1.0 88bbff72 WEX-WEI
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 10/27/23 15:54:25 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Equation Listing    SOLVE btb Using LP From line 57
+
+
+---- profit_eq  =E=  profit definition
+
+profit_eq..  profit - 12*x(football) - 9*x(soccer) =E= 0 ; (LHS = 0)
+     
+
+---- resource_con  =L=  resource limit
+
+resource_con(plaques)..  x(football) + x(soccer) =L= 1750 ; (LHS = 0)
+     
+resource_con(wood)..  4*x(football) + 2*x(soccer) =L= 4800 ; (LHS = 0)
+     
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 10/27/23 15:54:25 Page 6
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Column Listing      SOLVE btb Using LP From line 57
+
+
+---- profit  total profit
+
+profit
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       profit_eq
+
+
+---- x  number trophies
+
+x(football)
+                (.LO, .L, .UP, .M = 0, 0, 1000, 0)
+      -12       profit_eq
+        1       resource_con(plaques)
+        4       resource_con(wood)
+
+x(soccer)
+                (.LO, .L, .UP, .M = 0, 0, 1500, 0)
+       -9       profit_eq
+        1       resource_con(plaques)
+        2       resource_con(wood)
+
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 10/27/23 15:54:25 Page 7
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Range Statistics    SOLVE btb Using LP From line 57
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 1.750E+03, 4.800E+03] - Zero values observed as well
+Bound     [min, max] : [ 1.000E+03, 1.500E+03] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 1.200E+01]
+
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 10/27/23 15:54:25 Page 8
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE btb Using LP From line 57
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           2     SINGLE EQUATIONS            3
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES            3
+NON ZERO ELEMENTS             7
+
+
+GENERATION TIME      =        0.000 SECONDS      4 MB  45.1.0 88bbff72 WEX-WEI
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 10/27/23 15:54:25 Page 9
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE btb Using LP From line 57
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   btb                 OBJECTIVE  profit
+     TYPE    LP                  DIRECTION  MAXIMIZE
+     SOLVER  CPLEX               FROM LINE  57
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE            17700.0000
+
+ RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ ITERATION COUNT, LIMIT         2    2147483647
+--- GAMS/CPLEX licensed for continuous and discrete problems.
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.00 ticks)
+
+
+Optimal solution found
+Objective:        17700.000000
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU profit_eq           .              .              .             1.0000      
+
+  profit_eq  profit definition
+
+---- EQU resource_con  resource limit
+
+               LOWER          LEVEL          UPPER         MARGINAL
+
+plaques        -INF         1750.0000      1750.0000         6.0000      
+wood           -INF         4800.0000      4800.0000         1.5000      
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR profit            -INF        17700.0000        +INF             .          
+
+  profit  total profit
+
+---- VAR x  number trophies
+
+                LOWER          LEVEL          UPPER         MARGINAL
+
+football          .           650.0000      1000.0000          .          
+soccer            .          1100.0000      1500.0000          .          
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+
+
+EXECUTION TIME       =        0.047 SECONDS      4 MB  45.1.0 88bbff72 WEX-WEI
+
+
+USER: Introduction to Optimization (CS/ISyE/ECE 524) G230906|0002AS-GEN
+      UW-Madison, CS Dept., Fall 2023, Prof. Ferris              DCE850
+      License for teaching and research at degree granting institutions
+
+
+**** FILE SUMMARY
+
+Restart    C:\Users\Rocke\OneDrive\Documents\isye524\notebooks\gj_f6da2a0b_base_cp.g00
+Input      C:\Users\Rocke\OneDrive\Documents\isye524\notebooks\gj_f6da2a0b_base_3.gms
+Output     C:\Users\Rocke\OneDrive\Documents\isye524\notebooks\gj_f6da2a0b_base_3.lst
+Save       C:\Users\Rocke\OneDrive\Documents\isye524\notebooks\gj_f6da2a0b_base_cpnew.g00
+
+**** WARNING - COMPILER OPTIONS ARE NON DEFAULT     ONEMPTY
+     EOLCOM # 

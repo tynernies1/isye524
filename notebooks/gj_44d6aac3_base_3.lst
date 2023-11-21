@@ -1,0 +1,58 @@
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/27/23 11:51:46 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+GDXIN   C:\Users\Rocke\OneDrive\Documents\isye524\notebooks\gj_44d6aac3_base_3_gdxin.gdx
+  30  set I /football,soccer/;
+  31  set R /plaques,wood/;
+  32   
+  33  table a(R,I)  "Per-Unit resource requirements"
+  34           football   soccer
+  35  plaques     1         1
+  36  wood        4         2  ;
+  37   
+  38  parameters
+  39      c(I) / "football" 12, "soccer" 9 /
+  40      u(I) / "football" 1000 , "soccer"  1500 /
+  41      b(R) / "plaques"  1750,  "wood"  4800 /;
+  42   
+  43  * VARIABLE AND EQUATION DECLARATIONS
+  44  free variable profit "total profit";
+  45   
+  46  positive variables
+  47  x(I)     "number trophies" ;
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/27/23 11:51:46 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Include File Summary
+
+
+   SEQ   GLOBAL TYPE      PARENT   LOCAL  FILENAME
+
+     1        1 INPUT          0       0  C:\Users\Rocke\OneDrive\Documents\isye524\notebooks\gj_44d6aac3_base_3.gms
+     2       25 GDXIN          1       1  C:\Users\Rocke\OneDrive\Documents\isye524\notebooks\gj_44d6aac3_base_3_gdxin.gdx
+
+
+COMPILATION TIME     =        0.016 SECONDS      3 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/27/23 11:51:46 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+EXECUTION TIME       =        0.000 SECONDS      3 MB  44.3.0 8b8fb1cb WEX-WEI
+
+
+USER: Introduction to Optimization (CS/ISyE/ECE 524) G230906|0002AS-GEN
+      UW-Madison, CS Dept., Fall 2023, Prof. Ferris              DCE850
+      License for teaching and research at degree granting institutions
+
+
+**** FILE SUMMARY
+
+Restart    C:\Users\Rocke\OneDrive\Documents\isye524\notebooks\gj_44d6aac3_base_cp.g00
+Input      C:\Users\Rocke\OneDrive\Documents\isye524\notebooks\gj_44d6aac3_base_3.gms
+Output     C:\Users\Rocke\OneDrive\Documents\isye524\notebooks\gj_44d6aac3_base_3.lst
+Save       C:\Users\Rocke\OneDrive\Documents\isye524\notebooks\gj_44d6aac3_base_cpnew.g00
+
+**** WARNING - COMPILER OPTIONS ARE NON DEFAULT     ONEMPTY
+     EOLCOM # 

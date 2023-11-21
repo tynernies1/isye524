@@ -1,0 +1,64 @@
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/27/23 14:51:49 Page 10
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+GDXIN   C:\Users\Rocke\OneDrive\Documents\isye524\notebooks\gj_debdaf6f_base_4_gdxin.gdx
+--- LOAD  I = 1:I
+--- LOAD  R = 2:R
+--- LOAD  a = 3:a
+--- LOAD  c = 4:c
+--- LOAD  b = 5:b
+--- LOAD  x = 6:x
+  61  set I /football,soccer/;
+  62  set R /plaques,wood/;
+  63   
+  64  table a(R,I)  "Per-Unit resource requirements"
+  65           football   soccer
+  66  plaques     1         1
+  67  wood        4         2  ;
+  68   
+  69  parameters
+  70      c(I) / "football" 12, "soccer" 9 /
+  71      u(I) / "football" 1000 , "soccer"  1500 /
+  72      b(R) / "plaques"  1750,  "wood"  4800 /;
+  73   
+  74  * VARIABLE AND EQUATION DECLARATIONS
+  75  free variable profit "total profit";
+  76   
+  77  positive variables
+  78  x(I)     "number trophies" ;
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/27/23 14:51:49 Page 11
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Include File Summary
+
+
+   SEQ   GLOBAL TYPE      PARENT   LOCAL  FILENAME
+
+     1        1 INPUT          0       0  C:\Users\Rocke\OneDrive\Documents\isye524\notebooks\gj_debdaf6f_base_4.gms
+     2       44 GDXIN          1       1  C:\Users\Rocke\OneDrive\Documents\isye524\notebooks\gj_debdaf6f_base_4_gdxin.gdx
+
+
+COMPILATION TIME     =        0.016 SECONDS      3 MB  44.3.0 8b8fb1cb WEX-WEI
+GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/27/23 14:51:49 Page 12
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+EXECUTION TIME       =        0.000 SECONDS      3 MB  44.3.0 8b8fb1cb WEX-WEI
+
+
+USER: Introduction to Optimization (CS/ISyE/ECE 524) G230906|0002AS-GEN
+      UW-Madison, CS Dept., Fall 2023, Prof. Ferris              DCE850
+      License for teaching and research at degree granting institutions
+
+
+**** FILE SUMMARY
+
+Restart    C:\Users\Rocke\OneDrive\Documents\isye524\notebooks\gj_debdaf6f_base_cp.g00
+Input      C:\Users\Rocke\OneDrive\Documents\isye524\notebooks\gj_debdaf6f_base_4.gms
+Output     C:\Users\Rocke\OneDrive\Documents\isye524\notebooks\gj_debdaf6f_base_4.lst
+Save       C:\Users\Rocke\OneDrive\Documents\isye524\notebooks\gj_debdaf6f_base_cpnew.g00
+
+**** WARNING - COMPILER OPTIONS ARE NON DEFAULT     ONEMPTY
+     EOLCOM # 
