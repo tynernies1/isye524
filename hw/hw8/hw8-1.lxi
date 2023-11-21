@@ -1,0 +1,35 @@
+B 3 C o m p i l a t i o n
+B 89 Equation Listing    SOLVE machines Using MIP From line 72
+D 92 obj
+D 103 either_machord
+D 114 or_machord
+D 125 either_partord
+D 136 or_partord
+D 147 p1cons
+D 152 p2cons
+D 157 p3cons
+D 162 p4cons
+B 168 Column Listing      SOLVE machines Using MIP From line 72
+E 171 x
+E 190 y
+E 215 start
+E 256 makespan
+B 311 Range Statistics    SOLVE machines Using MIP From line 72
+B 322 Model Statistics    SOLVE machines Using MIP From line 72
+B 335 Solution Report     SOLVE machines Using MIP From line 72
+F 378 obj
+F 431 either_machord
+F 460 or_machord
+F 489 either_partord
+F 522 or_partord
+F 557 p1cons
+F 558 p2cons
+F 559 p3cons
+F 560 p4cons
+G 562 x
+G 591 y
+G 610 start
+G 665 makespan
+B 673 E x e c u t i o n
+I 675 makespan
+I 676 start

@@ -1,0 +1,36 @@
+
+--- Job hw8-2.gms Start 11/19/23 22:20:45 45.1.0 88bbff72 WEX-WEI x86 64bit/MS Windows
+--- Applying:
+    C:\GAMS\45\gmsprmNT.txt
+--- GAMS Parameters defined
+    Input C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw8\hw8-2.gms
+    PageSize 0
+    ScrDir C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw8\225a\
+    SysDir C:\GAMS\45\
+    LogOption 3
+    ErrMsg 1
+    ErrorLog 99
+    IDE 1
+    LstTitleLeftAligned 1
+Licensee: Introduction to Optimization (CS/ISyE/ECE 524) G230906|0002AS-GEN
+          UW-Madison, CS Dept., Fall 2023, Prof. Ferris              DCE850
+          C:\GAMS\45\gamslice.txt
+          License Admin: Michael C. Ferris, ferris@cs.wisc.edu             
+          Course license for use within the course and related course work
+          The evaluation period of the license will expire on Feb 03, 2024
+Processor information: 1 socket(s), 4 core(s), and 8 thread(s) available
+GAMS 45.1.0   Copyright (C) 1987-2023 GAMS Development. All rights reserved
+--- Starting compilation
+--- hw8-2.gms(5) 2 Mb
+--- GDXin=C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw8\nltrans.gdx
+--- GDX File ($gdxIn) C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw8\nltrans.gdx
+--- hw8-2.gms(45) 3 Mb 1 Error
+*** Error 409 in C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw8\hw8-2.gms
+    Unrecognizable item - skip to find a new statement
+      looking for a ';' or a key word to get started again
+--- hw8-2.gms(97) 3 Mb 2 Errors
+*** Error 257 in C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw8\hw8-2.gms
+    Solve statement not checked because of previous errors
+--- hw8-2.gms(105) 3 Mb 2 Errors
+*** Status: Compilation error(s)
+--- Job hw8-2.gms Stop 11/19/23 22:20:45 elapsed 0:00:00.028

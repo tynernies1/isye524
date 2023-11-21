@@ -1,0 +1,28 @@
+B 3 C o m p i l a t i o n
+B 56 E x e c u t i o n
+I 56 ct
+B 65 Equation Listing    SOLVE fuel Using LP From line 46
+D 68 obj
+D 73 absp1
+D 84 absn1
+D 95 absp2
+D 106 absn2
+D 117 lin_recur
+B 129 Column Listing      SOLVE fuel Using LP From line 46
+E 132 x
+E 152 u
+E 189 z
+E 217 totfuel
+B 225 Range Statistics    SOLVE fuel Using LP From line 46
+B 236 Model Statistics    SOLVE fuel Using LP From line 46
+B 249 Solution Report     SOLVE fuel Using LP From line 46
+F 284 obj
+F 286 absp1
+F 342 absn1
+F 398 absp2
+F 454 absn2
+F 510 lin_recur
+G 715 x
+G 924 u
+G 980 z
+G 1038 totfuel

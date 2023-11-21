@@ -1,0 +1,51 @@
+B 3 C o m p i l a t i o n
+B 116 Include File Summary
+B 128 Equation Listing    SOLVE nltrans Using NLP From line 32
+D 131 defobj
+D 136 supplycons
+D 145 demandcons
+B 157 Column Listing      SOLVE nltrans Using NLP From line 32
+E 160 trans
+E 182 total_cost
+B 190 Range Statistics    SOLVE nltrans Using NLP From line 32
+B 201 Model Statistics    SOLVE nltrans Using NLP From line 32
+B 215 Solution Report     SOLVE nltrans Using NLP From line 32
+F 263 defobj
+F 265 supplycons
+F 273 demandcons
+G 285 trans
+G 313 total_cost
+B 322 E x e c u t i o n
+I 322 m
+I 338 c
+B 353 Equation Listing    SOLVE transport Using MIP From line 97
+D 356 obj
+D 361 cost_eq
+D 372 wlo
+D 383 wup
+D 394 oneW
+D 405 supplycons_mip
+D 414 demandcons_mip
+D 425 xeq
+B 437 Column Listing      SOLVE transport Using MIP From line 97
+E 440 b
+E 462 x
+E 484 w
+E 509 y
+E 528 min_cost
+B 536 Range Statistics    SOLVE transport Using MIP From line 97
+B 547 Model Statistics    SOLVE transport Using MIP From line 97
+B 560 Solution Report     SOLVE transport Using MIP From line 97
+F 605 obj
+F 607 cost_eq
+F 633 wlo
+F 701 wup
+F 769 oneW
+F 795 supplycons_mip
+F 803 demandcons_mip
+F 815 xeq
+G 841 b
+G 909 x
+G 935 w
+G 1003 y
+G 1031 min_cost

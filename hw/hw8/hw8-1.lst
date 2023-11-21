@@ -1,0 +1,705 @@
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 11/19/23 20:01:32 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1  sets part / p1*p3 /
+   2  oper / o1*o8 /
+   3  machine / m1, m2 /
+   4  ;
+   5   
+   6  alias(oper, oi, oj);
+   7  alias(part, pj, pk);
+   8  alias(machine, m);
+   9   
+  10  set task(part, oper) /
+  11  p1.o1, p1.o2, p2.o3, p2.o4, p2.o5, p3.o6, p3.o7, p3.o8 /;
+  12   
+  13  parameter procdata(part,oper,machine) /
+  14  p1.o1.m1 4
+  15  p1.o2.m2 2
+  16  p2.o3.m2 3
+  17  p2.o4.m1 2
+  18  p2.o5.m1 2
+  19  p3.o6.m2 3
+  20  p3.o7.m1 2
+  21  p3.o8.m2 1
+  22  /;
+  23   
+  24  scalar bigm;
+  25  bigm  = sum((part, oper, machine), procdata(part, oper, machine));
+  26   
+  27  set okmach(part, oper, machine);
+  28   
+  29  okmach(part, oper, m) = yes$(procdata(part, oper, m) gt 0);
+  30   
+  31  binary variable
+  32  x(m, pj, oi, pk, oj), y(part, oper, oper);
+  33   
+  34  positive variable
+  35  start(part, oper, machine);
+  36   
+  37  variable
+  38  makespan;
+  39   
+  40  equations
+  41  obj, either_machord, or_machord, either_partord, or_partord, p1cons, p2cons, p3cons, p4cons;
+  42   
+  43  obj(part, oper, machine)..
+  44  makespan =g= start(part, oper, machine) + procdata(part, oper, machine);
+  45   
+  46  either_machord(m, pj, oi, pk, oj)$(okmach(pj, oi, m) and okmach(pk, oj, m) and not sameas(oi, oj))..
+  47  start(pj, oi, m) + procdata(pj, oi, m) =l= start(pk, oj, m) + bigm*(1 - x(m, pj, oi, pk, oj));
+  48   
+  49  or_machord(m, pj, oi, pk, oj)$(okmach(pj, oi, m) and okmach(pk, oj, m) and not sameas(oi, oj))..
+  50  start(pk, oj, m) + procdata(pk, oj, m) =l= start(pj, oi, m) + bigm*x(m, pj, oi, pk, oj);
+  51   
+  52  either_partord(pj, oi, oj, m)$(task(pj, oi) and task(pj, oj) and not sameas(oi, oj))..
+  53  start(pj, oi, m) + procdata(pj, oi, m) =l= start(pj, oj, m) + bigm*(1 - y(pj, oi, oj));
+  54   
+  55  or_partord(pk, oi, oj, m)$(task(pk, oi) and task(pk, oj) and not sameas(oi, oj))..
+  56  start(pk, oj, m) + procdata(pk, oj, m) =l= start(pk, oi, m) + bigm*y(pk, oi, oj);
+  57   
+  58  p1cons..
+  59  start('p1', 'o1', 'm1') + procdata('p1', 'o1', 'm1') =l= start('p1', 'o2', 'm2');
+  60   
+  61  p2cons..
+  62  start('p2', 'o3', 'm2') + procdata('p2', 'o3', 'm2') =l= start('p2', 'o5', 'm1');
+  63   
+  64  p3cons..
+  65  start('p2', 'o4', 'm1') + procdata('p2', 'o4', 'm1') =l= start('p2', 'o5', 'm1');
+  66   
+  67  p4cons..
+  68  start('p3', 'o7', 'm1') + procdata('p3', 'o7', 'm1') =l= start('p3', 'o8', 'm1');
+  69   
+  70  model machines / all /;
+  71   
+  72  solve machines using mip minimize makespan;
+  73   
+  74  option makespan:1,start:1:0:1;
+  75  display makespan.l, start.l;
+  76   
+  77   
+  78   
+
+
+COMPILATION TIME     =        0.000 SECONDS      3 MB  45.1.0 88bbff72 WEX-WEI
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 11/19/23 20:01:32 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Equation Listing    SOLVE machines Using MIP From line 72
+
+
+---- obj  =G=  
+
+obj(p1,o1,m1)..  - start(p1,o1,m1) + makespan =G= 4 ; (LHS = 0, INFES = 4 ****)
+     
+obj(p1,o1,m2)..  - start(p1,o1,m2) + makespan =G= 0 ; (LHS = 0)
+     
+obj(p1,o2,m1)..  - start(p1,o2,m1) + makespan =G= 0 ; (LHS = 0)
+     
+REMAINING 45 ENTRIES SKIPPED
+
+
+---- either_machord  =L=  
+
+either_machord(m1,p1,o1,p2,o4)..  19*x(m1,p1,o1,p2,o4) + start(p1,o1,m1) - start(p2,o4,m1) =L= 15 ; (LHS = 0)
+     
+either_machord(m1,p1,o1,p2,o5)..  19*x(m1,p1,o1,p2,o5) + start(p1,o1,m1) - start(p2,o5,m1) =L= 15 ; (LHS = 0)
+     
+either_machord(m1,p1,o1,p3,o7)..  19*x(m1,p1,o1,p3,o7) + start(p1,o1,m1) - start(p3,o7,m1) =L= 15 ; (LHS = 0)
+     
+REMAINING 21 ENTRIES SKIPPED
+
+
+---- or_machord  =L=  
+
+or_machord(m1,p1,o1,p2,o4)..  - 19*x(m1,p1,o1,p2,o4) - start(p1,o1,m1) + start(p2,o4,m1) =L= -2 ; (LHS = 0, INFES = 2 ****)
+     
+or_machord(m1,p1,o1,p2,o5)..  - 19*x(m1,p1,o1,p2,o5) - start(p1,o1,m1) + start(p2,o5,m1) =L= -2 ; (LHS = 0, INFES = 2 ****)
+     
+or_machord(m1,p1,o1,p3,o7)..  - 19*x(m1,p1,o1,p3,o7) - start(p1,o1,m1) + start(p3,o7,m1) =L= -2 ; (LHS = 0, INFES = 2 ****)
+     
+REMAINING 21 ENTRIES SKIPPED
+
+
+---- either_partord  =L=  
+
+either_partord(p1,o1,o2,m1)..  19*y(p1,o1,o2) + start(p1,o1,m1) - start(p1,o2,m1) =L= 15 ; (LHS = 0)
+     
+either_partord(p1,o1,o2,m2)..  19*y(p1,o1,o2) + start(p1,o1,m2) - start(p1,o2,m2) =L= 19 ; (LHS = 0)
+     
+either_partord(p1,o2,o1,m1)..  19*y(p1,o2,o1) - start(p1,o1,m1) + start(p1,o2,m1) =L= 19 ; (LHS = 0)
+     
+REMAINING 25 ENTRIES SKIPPED
+
+
+---- or_partord  =L=  
+
+or_partord(p1,o1,o2,m1)..  - 19*y(p1,o1,o2) - start(p1,o1,m1) + start(p1,o2,m1) =L= 0 ; (LHS = 0)
+     
+or_partord(p1,o1,o2,m2)..  - 19*y(p1,o1,o2) - start(p1,o1,m2) + start(p1,o2,m2) =L= -2 ; (LHS = 0, INFES = 2 ****)
+     
+or_partord(p1,o2,o1,m1)..  - 19*y(p1,o2,o1) + start(p1,o1,m1) - start(p1,o2,m1) =L= -4 ; (LHS = 0, INFES = 4 ****)
+     
+REMAINING 25 ENTRIES SKIPPED
+
+
+---- p1cons  =L=  
+
+p1cons..  start(p1,o1,m1) - start(p1,o2,m2) =L= -4 ; (LHS = 0, INFES = 4 ****)
+     
+
+---- p2cons  =L=  
+
+p2cons..  start(p2,o3,m2) - start(p2,o5,m1) =L= -3 ; (LHS = 0, INFES = 3 ****)
+     
+
+---- p3cons  =L=  
+
+p3cons..  start(p2,o4,m1) - start(p2,o5,m1) =L= -2 ; (LHS = 0, INFES = 2 ****)
+     
+
+---- p4cons  =L=  
+
+p4cons..  start(p3,o7,m1) - start(p3,o8,m1) =L= -2 ; (LHS = 0, INFES = 2 ****)
+     
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 11/19/23 20:01:32 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Column Listing      SOLVE machines Using MIP From line 72
+
+
+---- x  
+
+x(m1,p1,o1,p2,o4)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+       19       either_machord(m1,p1,o1,p2,o4)
+      -19       or_machord(m1,p1,o1,p2,o4)
+
+x(m1,p1,o1,p2,o5)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+       19       either_machord(m1,p1,o1,p2,o5)
+      -19       or_machord(m1,p1,o1,p2,o5)
+
+x(m1,p1,o1,p3,o7)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+       19       either_machord(m1,p1,o1,p3,o7)
+      -19       or_machord(m1,p1,o1,p3,o7)
+
+REMAINING 21 ENTRIES SKIPPED
+
+---- y  
+
+y(p1,o1,o2)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+       19       either_partord(p1,o1,o2,m1)
+       19       either_partord(p1,o1,o2,m2)
+      -19       or_partord(p1,o1,o2,m1)
+      -19       or_partord(p1,o1,o2,m2)
+
+y(p1,o2,o1)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+       19       either_partord(p1,o2,o1,m1)
+       19       either_partord(p1,o2,o1,m2)
+      -19       or_partord(p1,o2,o1,m1)
+      -19       or_partord(p1,o2,o1,m2)
+
+y(p2,o3,o4)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+       19       either_partord(p2,o3,o4,m1)
+       19       either_partord(p2,o3,o4,m2)
+      -19       or_partord(p2,o3,o4,m1)
+      -19       or_partord(p2,o3,o4,m2)
+
+REMAINING 11 ENTRIES SKIPPED
+
+---- start  
+
+start(p1,o1,m1)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       -1       obj(p1,o1,m1)
+        1       either_machord(m1,p1,o1,p2,o4)
+        1       either_machord(m1,p1,o1,p2,o5)
+        1       either_machord(m1,p1,o1,p3,o7)
+       -1       either_machord(m1,p2,o4,p1,o1)
+       -1       either_machord(m1,p2,o5,p1,o1)
+       -1       either_machord(m1,p3,o7,p1,o1)
+       -1       or_machord(m1,p1,o1,p2,o4)
+       -1       or_machord(m1,p1,o1,p2,o5)
+       -1       or_machord(m1,p1,o1,p3,o7)
+        1       or_machord(m1,p2,o4,p1,o1)
+        1       or_machord(m1,p2,o5,p1,o1)
+        1       or_machord(m1,p3,o7,p1,o1)
+        1       either_partord(p1,o1,o2,m1)
+       -1       either_partord(p1,o2,o1,m1)
+       -1       or_partord(p1,o1,o2,m1)
+        1       or_partord(p1,o2,o1,m1)
+        1       p1cons
+
+start(p1,o1,m2)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       -1       obj(p1,o1,m2)
+        1       either_partord(p1,o1,o2,m2)
+       -1       either_partord(p1,o2,o1,m2)
+       -1       or_partord(p1,o1,o2,m2)
+        1       or_partord(p1,o2,o1,m2)
+
+start(p1,o2,m1)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       -1       obj(p1,o2,m1)
+       -1       either_partord(p1,o1,o2,m1)
+        1       either_partord(p1,o2,o1,m1)
+        1       or_partord(p1,o1,o2,m1)
+       -1       or_partord(p1,o2,o1,m1)
+
+REMAINING 45 ENTRIES SKIPPED
+
+---- makespan  
+
+makespan
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       obj(p1,o1,m1)
+        1       obj(p1,o1,m2)
+        1       obj(p1,o2,m1)
+        1       obj(p1,o2,m2)
+        1       obj(p1,o3,m1)
+        1       obj(p1,o3,m2)
+        1       obj(p1,o4,m1)
+        1       obj(p1,o4,m2)
+        1       obj(p1,o5,m1)
+        1       obj(p1,o5,m2)
+        1       obj(p1,o6,m1)
+        1       obj(p1,o6,m2)
+        1       obj(p1,o7,m1)
+        1       obj(p1,o7,m2)
+        1       obj(p1,o8,m1)
+        1       obj(p1,o8,m2)
+        1       obj(p2,o1,m1)
+        1       obj(p2,o1,m2)
+        1       obj(p2,o2,m1)
+        1       obj(p2,o2,m2)
+        1       obj(p2,o3,m1)
+        1       obj(p2,o3,m2)
+        1       obj(p2,o4,m1)
+        1       obj(p2,o4,m2)
+        1       obj(p2,o5,m1)
+        1       obj(p2,o5,m2)
+        1       obj(p2,o6,m1)
+        1       obj(p2,o6,m2)
+        1       obj(p2,o7,m1)
+        1       obj(p2,o7,m2)
+        1       obj(p2,o8,m1)
+        1       obj(p2,o8,m2)
+        1       obj(p3,o1,m1)
+        1       obj(p3,o1,m2)
+        1       obj(p3,o2,m1)
+        1       obj(p3,o2,m2)
+        1       obj(p3,o3,m1)
+        1       obj(p3,o3,m2)
+        1       obj(p3,o4,m1)
+        1       obj(p3,o4,m2)
+        1       obj(p3,o5,m1)
+        1       obj(p3,o5,m2)
+        1       obj(p3,o6,m1)
+        1       obj(p3,o6,m2)
+        1       obj(p3,o7,m1)
+        1       obj(p3,o7,m2)
+        1       obj(p3,o8,m1)
+        1       obj(p3,o8,m2)
+
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 11/19/23 20:01:32 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Range Statistics    SOLVE machines Using MIP From line 72
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 1.000E+00, 1.900E+01] - Zero values observed as well
+Bound     [min, max] : [ 1.000E+00, 1.000E+00] - Zero values observed as well
+Matrix    [min, max] : [ 1.000E+00, 1.900E+01]
+
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 11/19/23 20:01:32 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE machines Using MIP From line 72
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           9     SINGLE EQUATIONS          156
+BLOCKS OF VARIABLES           4     SINGLE VARIABLES           87
+NON ZERO ELEMENTS           416     DISCRETE VARIABLES         38
+
+
+GENERATION TIME      =        0.000 SECONDS      4 MB  45.1.0 88bbff72 WEX-WEI
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 11/19/23 20:01:32 Page 6
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE machines Using MIP From line 72
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   machines            OBJECTIVE  makespan
+     TYPE    MIP                 DIRECTION  MINIMIZE
+     SOLVER  CPLEX               FROM LINE  72
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      1 Optimal
+**** OBJECTIVE VALUE               10.0000
+
+ RESOURCE USAGE, LIMIT          0.031 10000000000.000
+ ITERATION COUNT, LIMIT       156    2147483647
+--- GAMS/CPLEX licensed for continuous and discrete problems.
+--- GMO setup time: 0.00s
+--- GMO memory 0.53 Mb (peak 0.53 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.02 Mb)
+--- Starting Cplex
+
+
+--- MIP status (101): integer optimal solution.
+--- Cplex Time: 0.03sec (det. 7.59 ticks)
+
+--- Returning a primal only solution to GAMS (marginals all set to NA).
+--- Fixing integer variables and solving final LP...
+
+
+--- Fixed MIP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.22 ticks)
+
+
+Proven optimal solution
+MIP Solution:           10.000000    (156 iterations, 8 nodes)
+Final Solve:            10.000000    (15 iterations)
+
+Best possible:          10.000000
+Absolute gap:            0.000000
+Relative gap:            0.000000
+
+
+---- EQU obj  
+
+                LOWER          LEVEL          UPPER         MARGINAL
+
+p1.o1.m1         4.0000        10.0000        +INF             .          
+p1.o1.m2          .            10.0000        +INF             .          
+p1.o2.m1          .             6.0000        +INF             .          
+p1.o2.m2         2.0000         3.0000        +INF             .          
+p1.o3.m1          .            10.0000        +INF             .          
+p1.o3.m2          .            10.0000        +INF             .          
+p1.o4.m1          .            10.0000        +INF             .          
+p1.o4.m2          .            10.0000        +INF             .          
+p1.o5.m1          .            10.0000        +INF             .          
+p1.o5.m2          .            10.0000        +INF             .          
+p1.o6.m1          .            10.0000        +INF             .          
+p1.o6.m2          .            10.0000        +INF             .          
+p1.o7.m1          .            10.0000        +INF             .          
+p1.o7.m2          .            10.0000        +INF             .          
+p1.o8.m1          .            10.0000        +INF             .          
+p1.o8.m2          .            10.0000        +INF             .          
+p2.o1.m1          .            10.0000        +INF             .          
+p2.o1.m2          .            10.0000        +INF             .          
+p2.o2.m1          .            10.0000        +INF             .          
+p2.o2.m2          .            10.0000        +INF             .          
+p2.o3.m1          .            10.0000        +INF             .          
+p2.o3.m2         3.0000         9.0000        +INF             .          
+p2.o4.m1         2.0000         6.0000        +INF             .          
+p2.o4.m2          .             6.0000        +INF             .          
+p2.o5.m1         2.0000         2.0000        +INF            1.0000      
+p2.o5.m2          .             6.0000        +INF             .          
+p2.o6.m1          .            10.0000        +INF             .          
+p2.o6.m2          .            10.0000        +INF             .          
+p2.o7.m1          .            10.0000        +INF             .          
+p2.o7.m2          .            10.0000        +INF             .          
+p2.o8.m1          .            10.0000        +INF             .          
+p2.o8.m2          .            10.0000        +INF             .          
+p3.o1.m1          .            10.0000        +INF             .          
+p3.o1.m2          .            10.0000        +INF             .          
+p3.o2.m1          .            10.0000        +INF             .          
+p3.o2.m2          .            10.0000        +INF             .          
+p3.o3.m1          .            10.0000        +INF             .          
+p3.o3.m2          .            10.0000        +INF             .          
+p3.o4.m1          .            10.0000        +INF             .          
+p3.o4.m2          .            10.0000        +INF             .          
+p3.o5.m1          .            10.0000        +INF             .          
+p3.o5.m2          .            10.0000        +INF             .          
+p3.o6.m1          .             2.0000        +INF             .          
+p3.o6.m2         3.0000         6.0000        +INF             .          
+p3.o7.m1         2.0000         4.0000        +INF             .          
+p3.o7.m2          .            10.0000        +INF             .          
+p3.o8.m1          .             2.0000        +INF             .          
+p3.o8.m2         1.0000        10.0000        +INF             .          
+
+---- EQU either_machord  
+
+                      LOWER          LEVEL          UPPER         MARGINAL
+
+m1.p1.o1.p2.o4        -INF           15.0000        15.0000          .          
+m1.p1.o1.p2.o5        -INF           11.0000        15.0000          .          
+m1.p1.o1.p3.o7        -INF           13.0000        15.0000          .          
+m1.p2.o4.p1.o1        -INF            4.0000        17.0000          .          
+m1.p2.o4.p2.o5        -INF           15.0000        17.0000          .          
+m1.p2.o4.p3.o7        -INF           17.0000        17.0000        -1.0000      
+m1.p2.o5.p1.o1        -INF            8.0000        17.0000          .          
+m1.p2.o5.p2.o4        -INF            4.0000        17.0000          .          
+m1.p2.o5.p3.o7        -INF            2.0000        17.0000          .          
+m1.p3.o7.p1.o1        -INF            6.0000        17.0000          .          
+m1.p3.o7.p2.o4        -INF            2.0000        17.0000          .          
+m1.p3.o7.p2.o5        -INF           17.0000        17.0000        -1.0000      
+m2.p1.o2.p2.o3        -INF            6.0000        17.0000          .          
+m2.p1.o2.p3.o6        -INF            3.0000        17.0000          .          
+m2.p1.o2.p3.o8        -INF            7.0000        17.0000          .          
+m2.p2.o3.p1.o2        -INF           13.0000        16.0000          .          
+m2.p2.o3.p3.o6        -INF           16.0000        16.0000         EPS         
+m2.p2.o3.p3.o8        -INF            1.0000        16.0000          .          
+m2.p3.o6.p1.o2        -INF           16.0000        16.0000          .          
+m2.p3.o6.p2.o3        -INF            3.0000        16.0000          .          
+m2.p3.o6.p3.o8        -INF            4.0000        16.0000          .          
+m2.p3.o8.p1.o2        -INF           12.0000        18.0000          .          
+m2.p3.o8.p2.o3        -INF           18.0000        18.0000          .          
+m2.p3.o8.p3.o6        -INF           15.0000        18.0000          .          
+
+---- EQU or_machord  
+
+                      LOWER          LEVEL          UPPER         MARGINAL
+
+m1.p1.o1.p2.o4        -INF          -15.0000        -2.0000          .          
+m1.p1.o1.p2.o5        -INF          -11.0000        -2.0000          .          
+m1.p1.o1.p3.o7        -INF          -13.0000        -2.0000          .          
+m1.p2.o4.p1.o1        -INF           -4.0000        -4.0000        -1.0000      
+m1.p2.o4.p2.o5        -INF          -15.0000        -2.0000          .          
+m1.p2.o4.p3.o7        -INF          -17.0000        -2.0000          .          
+m1.p2.o5.p1.o1        -INF           -8.0000        -4.0000          .          
+m1.p2.o5.p2.o4        -INF           -4.0000        -2.0000          .          
+m1.p2.o5.p3.o7        -INF           -2.0000        -2.0000          .          
+m1.p3.o7.p1.o1        -INF           -6.0000        -4.0000          .          
+m1.p3.o7.p2.o4        -INF           -2.0000        -2.0000          .          
+m1.p3.o7.p2.o5        -INF          -17.0000        -2.0000          .          
+m2.p1.o2.p2.o3        -INF           -6.0000        -3.0000          .          
+m2.p1.o2.p3.o6        -INF           -3.0000        -3.0000         EPS         
+m2.p1.o2.p3.o8        -INF           -7.0000        -1.0000          .          
+m2.p2.o3.p1.o2        -INF          -13.0000        -2.0000          .          
+m2.p2.o3.p3.o6        -INF          -16.0000        -3.0000          .          
+m2.p2.o3.p3.o8        -INF           -1.0000        -1.0000         EPS         
+m2.p3.o6.p1.o2        -INF          -16.0000        -2.0000          .          
+m2.p3.o6.p2.o3        -INF           -3.0000        -3.0000          .          
+m2.p3.o6.p3.o8        -INF           -4.0000        -1.0000          .          
+m2.p3.o8.p1.o2        -INF          -12.0000        -2.0000          .          
+m2.p3.o8.p2.o3        -INF          -18.0000        -3.0000          .          
+m2.p3.o8.p3.o6        -INF          -15.0000        -3.0000          .          
+
+---- EQU either_partord  
+
+                   LOWER          LEVEL          UPPER         MARGINAL
+
+p1.o1.o2.m1        -INF           15.0000        15.0000         EPS         
+p1.o1.o2.m2        -INF           12.0000        19.0000          .          
+p1.o2.o1.m1        -INF            4.0000        19.0000          .          
+p1.o2.o1.m2        -INF            7.0000        17.0000          .          
+p2.o3.o4.m1        -INF           15.0000        19.0000          .          
+p2.o3.o4.m2        -INF           16.0000        16.0000         EPS         
+p2.o3.o5.m1        -INF           11.0000        19.0000          .          
+p2.o3.o5.m2        -INF           16.0000        16.0000         EPS         
+p2.o4.o3.m1        -INF            4.0000        17.0000          .          
+p2.o4.o3.m2        -INF            3.0000        19.0000          .          
+p2.o4.o5.m1        -INF           15.0000        17.0000          .          
+p2.o4.o5.m2        -INF           19.0000        19.0000          .          
+p2.o5.o3.m1        -INF            8.0000        17.0000          .          
+p2.o5.o3.m2        -INF            3.0000        19.0000          .          
+p2.o5.o4.m1        -INF            4.0000        17.0000          .          
+p2.o5.o4.m2        -INF             .            19.0000          .          
+p3.o6.o7.m1        -INF            2.0000        19.0000          .          
+p3.o6.o7.m2        -INF            4.0000        16.0000          .          
+p3.o6.o8.m1        -INF             .            19.0000          .          
+p3.o6.o8.m2        -INF            4.0000        16.0000          .          
+p3.o7.o6.m1        -INF           17.0000        17.0000         EPS         
+p3.o7.o6.m2        -INF           15.0000        19.0000          .          
+p3.o7.o8.m1        -INF           17.0000        17.0000          .          
+p3.o7.o8.m2        -INF           19.0000        19.0000          .          
+p3.o8.o6.m1        -INF           19.0000        19.0000          .          
+p3.o8.o6.m2        -INF           15.0000        18.0000          .          
+p3.o8.o7.m1        -INF            2.0000        19.0000          .          
+p3.o8.o7.m2        -INF             .            18.0000          .          
+
+---- EQU or_partord  
+
+                   LOWER          LEVEL          UPPER         MARGINAL
+
+p1.o1.o2.m1        -INF          -15.0000          .              .          
+p1.o1.o2.m2        -INF          -12.0000        -2.0000          .          
+p1.o2.o1.m1        -INF           -4.0000        -4.0000          .          
+p1.o2.o1.m2        -INF           -7.0000          .              .          
+p2.o3.o4.m1        -INF          -15.0000        -2.0000          .          
+p2.o3.o4.m2        -INF          -16.0000          .              .          
+p2.o3.o5.m1        -INF          -11.0000        -2.0000          .          
+p2.o3.o5.m2        -INF          -16.0000          .              .          
+p2.o4.o3.m1        -INF           -4.0000          .              .          
+p2.o4.o3.m2        -INF           -3.0000        -3.0000          .          
+p2.o4.o5.m1        -INF          -15.0000        -2.0000          .          
+p2.o4.o5.m2        -INF          -19.0000          .              .          
+p2.o5.o3.m1        -INF           -8.0000          .              .          
+p2.o5.o3.m2        -INF           -3.0000        -3.0000          .          
+p2.o5.o4.m1        -INF           -4.0000        -2.0000          .          
+p2.o5.o4.m2        -INF             .              .              .          
+p3.o6.o7.m1        -INF           -2.0000        -2.0000          .          
+p3.o6.o7.m2        -INF           -4.0000          .              .          
+p3.o6.o8.m1        -INF             .              .              .          
+p3.o6.o8.m2        -INF           -4.0000        -1.0000          .          
+p3.o7.o6.m1        -INF          -17.0000          .              .          
+p3.o7.o6.m2        -INF          -15.0000        -3.0000          .          
+p3.o7.o8.m1        -INF          -17.0000          .              .          
+p3.o7.o8.m2        -INF          -19.0000        -1.0000          .          
+p3.o8.o6.m1        -INF          -19.0000          .              .          
+p3.o8.o6.m2        -INF          -15.0000        -3.0000          .          
+p3.o8.o7.m1        -INF           -2.0000        -2.0000          .          
+p3.o8.o7.m2        -INF             .              .              .          
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU p1cons            -INF           -7.0000        -4.0000          .          
+---- EQU p2cons            -INF           -7.0000        -3.0000          .          
+---- EQU p3cons            -INF           -4.0000        -2.0000          .          
+---- EQU p4cons            -INF           -2.0000        -2.0000         EPS         
+
+---- VAR x  
+
+                      LOWER          LEVEL          UPPER         MARGINAL
+
+m1.p1.o1.p2.o4          .             1.0000         1.0000         EPS         
+m1.p1.o1.p2.o5          .             1.0000         1.0000         EPS         
+m1.p1.o1.p3.o7          .             1.0000         1.0000         EPS         
+m1.p2.o4.p1.o1          .              .             1.0000       -19.0000      
+m1.p2.o4.p2.o5          .             1.0000         1.0000         EPS         
+m1.p2.o4.p3.o7          .             1.0000         1.0000        19.0000      
+m1.p2.o5.p1.o1          .              .             1.0000         EPS         
+m1.p2.o5.p2.o4          .              .             1.0000         EPS         
+m1.p2.o5.p3.o7          .              .             1.0000         EPS         
+m1.p3.o7.p1.o1          .              .             1.0000         EPS         
+m1.p3.o7.p2.o4          .              .             1.0000         EPS         
+m1.p3.o7.p2.o5          .             1.0000         1.0000        19.0000      
+m2.p1.o2.p2.o3          .              .             1.0000         EPS         
+m2.p1.o2.p3.o6          .              .             1.0000         EPS         
+m2.p1.o2.p3.o8          .              .             1.0000         EPS         
+m2.p2.o3.p1.o2          .             1.0000         1.0000         EPS         
+m2.p2.o3.p3.o6          .             1.0000         1.0000         EPS         
+m2.p2.o3.p3.o8          .              .             1.0000         EPS         
+m2.p3.o6.p1.o2          .             1.0000         1.0000         EPS         
+m2.p3.o6.p2.o3          .              .             1.0000         EPS         
+m2.p3.o6.p3.o8          .              .             1.0000         EPS         
+m2.p3.o8.p1.o2          .             1.0000         1.0000         EPS         
+m2.p3.o8.p2.o3          .             1.0000         1.0000         EPS         
+m2.p3.o8.p3.o6          .             1.0000         1.0000         EPS         
+
+---- VAR y  
+
+                LOWER          LEVEL          UPPER         MARGINAL
+
+p1.o1.o2          .             1.0000         1.0000         EPS         
+p1.o2.o1          .              .             1.0000         EPS         
+p2.o3.o4          .             1.0000         1.0000         EPS         
+p2.o3.o5          .             1.0000         1.0000         EPS         
+p2.o4.o3          .              .             1.0000         EPS         
+p2.o4.o5          .             1.0000         1.0000         EPS         
+p2.o5.o3          .              .             1.0000         EPS         
+p2.o5.o4          .              .             1.0000         EPS         
+p3.o6.o7          .              .             1.0000         EPS         
+p3.o6.o8          .              .             1.0000         EPS         
+p3.o7.o6          .             1.0000         1.0000         EPS         
+p3.o7.o8          .             1.0000         1.0000         EPS         
+p3.o8.o6          .             1.0000         1.0000         EPS         
+p3.o8.o7          .              .             1.0000         EPS         
+
+---- VAR start  
+
+                LOWER          LEVEL          UPPER         MARGINAL
+
+p1.o1.m1          .              .            +INF            1.0000      
+p1.o1.m2          .              .            +INF            EPS         
+p1.o2.m1          .             4.0000        +INF             .          
+p1.o2.m2          .             7.0000        +INF             .          
+p1.o3.m1          .              .            +INF            EPS         
+p1.o3.m2          .              .            +INF            EPS         
+p1.o4.m1          .              .            +INF            EPS         
+p1.o4.m2          .              .            +INF            EPS         
+p1.o5.m1          .              .            +INF            EPS         
+p1.o5.m2          .              .            +INF            EPS         
+p1.o6.m1          .              .            +INF            EPS         
+p1.o6.m2          .              .            +INF            EPS         
+p1.o7.m1          .              .            +INF            EPS         
+p1.o7.m2          .              .            +INF            EPS         
+p1.o8.m1          .              .            +INF            EPS         
+p1.o8.m2          .              .            +INF            EPS         
+p2.o1.m1          .              .            +INF            EPS         
+p2.o1.m2          .              .            +INF            EPS         
+p2.o2.m1          .              .            +INF            EPS         
+p2.o2.m2          .              .            +INF            EPS         
+p2.o3.m1          .              .            +INF            EPS         
+p2.o3.m2          .             1.0000        +INF             .          
+p2.o4.m1          .             4.0000        +INF             .          
+p2.o4.m2          .             4.0000        +INF             .          
+p2.o5.m1          .             8.0000        +INF             .          
+p2.o5.m2          .             4.0000        +INF             .          
+p2.o6.m1          .              .            +INF            EPS         
+p2.o6.m2          .              .            +INF            EPS         
+p2.o7.m1          .              .            +INF            EPS         
+p2.o7.m2          .              .            +INF            EPS         
+p2.o8.m1          .              .            +INF            EPS         
+p2.o8.m2          .              .            +INF            EPS         
+p3.o1.m1          .              .            +INF            EPS         
+p3.o1.m2          .              .            +INF            EPS         
+p3.o2.m1          .              .            +INF            EPS         
+p3.o2.m2          .              .            +INF            EPS         
+p3.o3.m1          .              .            +INF            EPS         
+p3.o3.m2          .              .            +INF            EPS         
+p3.o4.m1          .              .            +INF            EPS         
+p3.o4.m2          .              .            +INF            EPS         
+p3.o5.m1          .              .            +INF            EPS         
+p3.o5.m2          .              .            +INF            EPS         
+p3.o6.m1          .             8.0000        +INF             .          
+p3.o6.m2          .             4.0000        +INF             .          
+p3.o7.m1          .             6.0000        +INF             .          
+p3.o7.m2          .              .            +INF            EPS         
+p3.o8.m1          .             8.0000        +INF             .          
+p3.o8.m2          .              .            +INF            EPS         
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR makespan          -INF           10.0000        +INF             .          
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 11/19/23 20:01:32 Page 7
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+----     75 VARIABLE makespan.L            =         10.0  
+
+----     75 VARIABLE start.L  
+
+p1.o2.m1 4.0
+p1.o2.m2 7.0
+p2.o3.m2 1.0
+p2.o4.m1 4.0
+p2.o4.m2 4.0
+p2.o5.m1 8.0
+p2.o5.m2 4.0
+p3.o6.m1 8.0
+p3.o6.m2 4.0
+p3.o7.m1 6.0
+p3.o8.m1 8.0
+
+
+
+EXECUTION TIME       =        0.171 SECONDS      4 MB  45.1.0 88bbff72 WEX-WEI
+
+
+USER: Introduction to Optimization (CS/ISyE/ECE 524) G230906|0002AS-GEN
+      UW-Madison, CS Dept., Fall 2023, Prof. Ferris              DCE850
+      License for teaching and research at degree granting institutions
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw8\hw8-1.gms
+Output     C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw8\hw8-1.lst
