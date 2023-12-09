@@ -1,0 +1,18 @@
+B 3 C o m p i l a t i o n
+B 40 Equation Listing    SOLVE machine_wear Using NLP From line 26
+D 43 cost_eq
+B 49 Column Listing      SOLVE machine_wear Using NLP From line 26
+E 52 N
+E 60 f
+E 68 totcost
+B 76 Range Statistics    SOLVE machine_wear Using NLP From line 26
+B 87 Model Statistics    SOLVE machine_wear Using NLP From line 26
+B 101 Solution Report     SOLVE machine_wear Using NLP From line 26
+F 148 cost_eq
+G 152 N
+G 153 f
+G 154 totcost
+B 166 E x e c u t i o n
+I 168 N
+I 169 f
+I 170 totcost

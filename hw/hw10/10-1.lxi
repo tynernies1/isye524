@@ -1,0 +1,153 @@
+B 3 C o m p i l a t i o n
+B 180 Equation Listing    SOLVE mean_val_soln Using LP From line 111
+D 183 defobj
+D 188 res_cons
+D 199 surplus
+B 211 Column Listing      SOLVE mean_val_soln Using LP From line 111
+E 214 over
+E 235 under
+E 254 extra
+E 273 cost
+E 280 x
+B 312 Range Statistics    SOLVE mean_val_soln Using LP From line 111
+B 323 Model Statistics    SOLVE mean_val_soln Using LP From line 111
+B 336 Solution Report     SOLVE mean_val_soln Using LP From line 111
+F 369 defobj
+F 371 res_cons
+F 388 surplus
+G 402 over
+G 416 under
+G 430 extra
+G 449 cost
+G 451 x
+B 471 Equation Listing    SOLVE stochastic_soln Using LP From line 138
+D 474 defobj_scen
+D 479 res_cons_scen
+D 490 surplus_scen
+B 502 Column Listing      SOLVE stochastic_soln Using LP From line 138
+E 505 extra
+E 524 x
+E 564 over_scen
+E 586 under_scen
+E 605 cost_scen
+B 613 Range Statistics    SOLVE stochastic_soln Using LP From line 138
+B 624 Model Statistics    SOLVE stochastic_soln Using LP From line 138
+B 637 Solution Report     SOLVE stochastic_soln Using LP From line 138
+F 670 defobj_scen
+F 672 res_cons_scen
+F 689 surplus_scen
+G 730 extra
+G 747 x
+G 761 over_scen
+G 802 under_scen
+G 845 cost_scen
+B 853 Equation Listing    SOLVE stochastic_soln Using LP From line 148
+D 856 defobj_scen
+D 861 res_cons_scen
+D 872 surplus_scen
+B 884 Column Listing      SOLVE stochastic_soln Using LP From line 148
+E 887 extra
+E 906 x
+E 937 over_scen
+E 958 under_scen
+E 977 cost_scen
+B 985 Range Statistics    SOLVE stochastic_soln Using LP From line 148
+B 996 Model Statistics    SOLVE stochastic_soln Using LP From line 148
+B 1014 Solution Report     SOLVE stochastic_soln Using LP From line 148
+F 1047 defobj_scen
+F 1049 res_cons_scen
+F 1066 surplus_scen
+G 1080 extra
+G 1097 x
+G 1111 over_scen
+G 1125 under_scen
+G 1141 cost_scen
+B 1149 Equation Listing    SOLVE stochastic_soln Using LP From line 148
+D 1152 defobj_scen
+D 1157 res_cons_scen
+D 1168 surplus_scen
+B 1180 Column Listing      SOLVE stochastic_soln Using LP From line 148
+E 1183 extra
+E 1202 x
+E 1233 over_scen
+E 1254 under_scen
+E 1273 cost_scen
+B 1281 Range Statistics    SOLVE stochastic_soln Using LP From line 148
+B 1292 Model Statistics    SOLVE stochastic_soln Using LP From line 148
+B 1310 Solution Report     SOLVE stochastic_soln Using LP From line 148
+F 1343 defobj_scen
+F 1345 res_cons_scen
+F 1362 surplus_scen
+G 1376 extra
+G 1393 x
+G 1407 over_scen
+G 1421 under_scen
+G 1437 cost_scen
+B 1445 Equation Listing    SOLVE stochastic_soln Using LP From line 148
+D 1448 defobj_scen
+D 1453 res_cons_scen
+D 1464 surplus_scen
+B 1476 Column Listing      SOLVE stochastic_soln Using LP From line 148
+E 1479 extra
+E 1498 x
+E 1529 over_scen
+E 1550 under_scen
+E 1569 cost_scen
+B 1577 Range Statistics    SOLVE stochastic_soln Using LP From line 148
+B 1588 Model Statistics    SOLVE stochastic_soln Using LP From line 148
+B 1606 Solution Report     SOLVE stochastic_soln Using LP From line 148
+F 1639 defobj_scen
+F 1641 res_cons_scen
+F 1658 surplus_scen
+G 1672 extra
+G 1689 x
+G 1703 over_scen
+G 1717 under_scen
+G 1733 cost_scen
+B 1741 Equation Listing    SOLVE stochastic_soln Using LP From line 148
+D 1744 defobj_scen
+D 1749 res_cons_scen
+D 1760 surplus_scen
+B 1772 Column Listing      SOLVE stochastic_soln Using LP From line 148
+E 1775 extra
+E 1794 x
+E 1825 over_scen
+E 1846 under_scen
+E 1865 cost_scen
+B 1873 Range Statistics    SOLVE stochastic_soln Using LP From line 148
+B 1884 Model Statistics    SOLVE stochastic_soln Using LP From line 148
+B 1902 Solution Report     SOLVE stochastic_soln Using LP From line 148
+F 1935 defobj_scen
+F 1937 res_cons_scen
+F 1954 surplus_scen
+G 1968 extra
+G 1985 x
+G 1999 over_scen
+G 2013 under_scen
+G 2029 cost_scen
+B 2037 Equation Listing    SOLVE stochastic_soln Using LP From line 155
+D 2040 defobj_scen
+D 2045 res_cons_scen
+D 2056 surplus_scen
+B 2068 Column Listing      SOLVE stochastic_soln Using LP From line 155
+E 2071 extra
+E 2090 x
+E 2130 over_scen
+E 2152 under_scen
+E 2171 cost_scen
+B 2179 Range Statistics    SOLVE stochastic_soln Using LP From line 155
+B 2190 Model Statistics    SOLVE stochastic_soln Using LP From line 155
+B 2203 Solution Report     SOLVE stochastic_soln Using LP From line 155
+F 2236 defobj_scen
+F 2238 res_cons_scen
+F 2255 surplus_scen
+G 2296 extra
+G 2313 x
+G 2327 over_scen
+G 2368 under_scen
+G 2411 cost_scen
+B 2419 E x e c u t i o n
+I 2419 obj_stor
+I 2425 obj_stor_scen
+I 2431 evpi
+I 2432 vss

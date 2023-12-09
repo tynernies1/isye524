@@ -1,0 +1,132 @@
+B 3 C o m p i l a t i o n
+B 297 Include File Summary
+B 309 Equation Listing    SOLVE multi_product Using MIP From line 51
+D 312 obj
+D 317 res_cons
+D 328 demand_cons
+D 335 salvage_cons
+B 347 Column Listing      SOLVE multi_product Using MIP From line 51
+E 350 x
+E 381 y
+E 403 z
+E 425 profit
+B 433 Range Statistics    SOLVE multi_product Using MIP From line 51
+B 444 Model Statistics    SOLVE multi_product Using MIP From line 51
+B 457 Solution Report     SOLVE multi_product Using MIP From line 51
+F 490 obj
+F 492 res_cons
+F 502 demand_cons
+F 509 salvage_cons
+G 519 x
+G 526 y
+G 536 z
+G 548 profit
+B 556 Equation Listing    SOLVE multi_product_scen Using MIP From line 115
+D 559 obj_scen
+D 564 res_cons_scen
+D 575 demand_cons_scen
+D 586 salvage_cons_scen
+B 598 Column Listing      SOLVE multi_product_scen Using MIP From line 115
+E 601 y
+E 671 z
+E 741 x_scen
+E 790 profit_scen
+B 798 Range Statistics    SOLVE multi_product_scen Using MIP From line 115
+B 809 Model Statistics    SOLVE multi_product_scen Using MIP From line 115
+B 822 Solution Report     SOLVE multi_product_scen Using MIP From line 115
+F 855 obj_scen
+F 857 res_cons_scen
+F 907 demand_cons_scen
+F 930 salvage_cons_scen
+G 980 y
+G 990 z
+G 1000 x_scen
+G 1025 profit_scen
+B 1033 E x e c u t i o n
+I 1035 profit_scen
+B 1039 Equation Listing    SOLVE multi_product_pois Using MIP From line 168
+D 1042 obj_pois
+D 1047 res_cons_scen
+D 1058 demand_cons_pois
+D 1069 salvage_cons_scen
+B 1081 Column Listing      SOLVE multi_product_pois Using MIP From line 168
+E 1084 y
+E 1154 z
+E 1224 x_scen
+E 1270 x_pois
+E 1286 profit_pois
+B 1294 Range Statistics    SOLVE multi_product_pois Using MIP From line 168
+B 1305 Model Statistics    SOLVE multi_product_pois Using MIP From line 168
+B 1323 Solution Report     SOLVE multi_product_pois Using MIP From line 168
+B 1359 Equation Listing    SOLVE multi_product_pois Using MIP From line 168
+D 1362 obj_pois
+D 1367 res_cons_scen
+D 1378 demand_cons_pois
+D 1389 salvage_cons_scen
+B 1401 Column Listing      SOLVE multi_product_pois Using MIP From line 168
+E 1404 y
+E 1474 z
+E 1544 x_scen
+E 1590 x_pois
+E 1606 profit_pois
+B 1614 Range Statistics    SOLVE multi_product_pois Using MIP From line 168
+B 1625 Model Statistics    SOLVE multi_product_pois Using MIP From line 168
+B 1643 Solution Report     SOLVE multi_product_pois Using MIP From line 168
+B 1679 Equation Listing    SOLVE multi_product_pois Using MIP From line 168
+D 1682 obj_pois
+D 1687 res_cons_scen
+D 1698 demand_cons_pois
+D 1709 salvage_cons_scen
+B 1721 Column Listing      SOLVE multi_product_pois Using MIP From line 168
+E 1724 y
+E 1794 z
+E 1864 x_scen
+E 1910 x_pois
+E 1926 profit_pois
+B 1934 Range Statistics    SOLVE multi_product_pois Using MIP From line 168
+B 1945 Model Statistics    SOLVE multi_product_pois Using MIP From line 168
+B 1963 Solution Report     SOLVE multi_product_pois Using MIP From line 168
+B 1999 Equation Listing    SOLVE multi_product_pois Using MIP From line 168
+D 2002 obj_pois
+D 2007 res_cons_scen
+D 2018 demand_cons_pois
+D 2029 salvage_cons_scen
+B 2041 Column Listing      SOLVE multi_product_pois Using MIP From line 168
+E 2044 y
+E 2114 z
+E 2184 x_scen
+E 2230 x_pois
+E 2246 profit_pois
+B 2254 Range Statistics    SOLVE multi_product_pois Using MIP From line 168
+B 2265 Model Statistics    SOLVE multi_product_pois Using MIP From line 168
+B 2283 Solution Report     SOLVE multi_product_pois Using MIP From line 168
+B 2319 Equation Listing    SOLVE multi_product_pois Using MIP From line 168
+D 2322 obj_pois
+D 2327 res_cons_scen
+D 2338 demand_cons_pois
+D 2349 salvage_cons_scen
+B 2361 Column Listing      SOLVE multi_product_pois Using MIP From line 168
+E 2364 y
+E 2434 z
+E 2504 x_scen
+E 2550 x_pois
+E 2566 profit_pois
+B 2574 Range Statistics    SOLVE multi_product_pois Using MIP From line 168
+B 2585 Model Statistics    SOLVE multi_product_pois Using MIP From line 168
+B 2603 Solution Report     SOLVE multi_product_pois Using MIP From line 168
+B 2639 Equation Listing    SOLVE multi_product_pois Using MIP From line 168
+D 2642 obj_pois
+D 2647 res_cons_scen
+D 2658 demand_cons_pois
+D 2669 salvage_cons_scen
+B 2681 Column Listing      SOLVE multi_product_pois Using MIP From line 168
+E 2684 y
+E 2754 z
+E 2824 x_scen
+E 2870 x_pois
+E 2886 profit_pois
+B 2894 Range Statistics    SOLVE multi_product_pois Using MIP From line 168
+B 2905 Model Statistics    SOLVE multi_product_pois Using MIP From line 168
+B 2923 Solution Report     SOLVE multi_product_pois Using MIP From line 168
+B 2959 E x e c u t i o n
+I 2961 results
