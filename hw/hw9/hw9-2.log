@@ -1,0 +1,84 @@
+
+--- Job hw9-2.gms Start 11/30/23 20:52:31 45.1.0 88bbff72 WEX-WEI x86 64bit/MS Windows
+--- Applying:
+    C:\GAMS\45\gmsprmNT.txt
+--- GAMS Parameters defined
+    Input C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw9\hw9-2.gms
+    PageSize 0
+    ScrDir C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw9\225a\
+    SysDir C:\GAMS\45\
+    LogOption 3
+    ErrMsg 1
+    ErrorLog 99
+    IDE 1
+    LstTitleLeftAligned 1
+Licensee: Introduction to Optimization (CS/ISyE/ECE 524) G230906|0002AS-GEN
+          UW-Madison, CS Dept., Fall 2023, Prof. Ferris              DCE850
+          C:\GAMS\45\gamslice.txt
+          License Admin: Michael C. Ferris, ferris@cs.wisc.edu             
+          Course license for use within the course and related course work
+          The evaluation period of the license will expire on Feb 03, 2024
+Processor information: 1 socket(s), 4 core(s), and 8 thread(s) available
+GAMS 45.1.0   Copyright (C) 1987-2023 GAMS Development. All rights reserved
+--- Starting compilation
+--- hw9-2.gms(79) 3 Mb
+--- Starting execution: elapsed 0:00:00.013
+--- hw9-2.gms(32) 4 Mb
+--- Generating NLP model w1
+--- hw9-2.gms(35) 6 Mb
+---   3 rows  21 columns  61 non-zeroes
+---   125 nl-code  40 nl-non-zeroes
+--- Range statistics (absolute non-zero finite values)
+--- RHS       [min, max] : [ 5.000E+03, 8.000E+03] - Zero values observed as well
+--- Bound     [min, max] : [ 1.000E+00, 1.000E+00]
+--- Matrix    [min, max] : [ 1.000E+00, 1.094E+02]
+--- hw9-2.gms(35) 4 Mb
+--- Executing CONOPT (Solvelink=2): elapsed 0:00:00.028
+
+CONOPT 3         45.1.0 88bbff72 Oct 14, 2023          WEI x86 64bit/MS Window
+
+ 
+ 
+    C O N O P T 3   version 3.17O
+    Copyright (C)   ARKI Consulting and Development A/S
+                    Bagsvaerdvej 246 A
+                    DK-2880 Bagsvaerd, Denmark
+ 
+ 
+   Iter Phase Ninf   Infeasibility   RGmax    NSB   Step InItr MX OK
+      0   0        1.4530039626E+04 (Input point)
+ 
+                   Pre-triangular equations:   0
+                   Post-triangular equations:  1
+ 
+      1   0        1.2555000000E+04 (After pre-processing)
+      2   0        3.0651855469E+00 (After scaling)
+ 
+ ** Feasible solution. Value of objective =    2321464.64113
+ 
+   Iter Phase Ninf     Objective     RGmax    NSB   Step InItr MX OK
+     11   4        1.8628807401E+06 1.2E+05    19 2.0E+00      F  T
+     16   4        1.8155877245E+06 6.3E+00    19 1.0E+00    7 F  T
+     20   4        1.8155877245E+06 3.6E-10    19
+ 
+ ** Optimal solution. Reduced gradient less than tolerance.
+ 
+--- Reading solution for model w1
+--- Executing after solve: elapsed 0:00:00.094
+--- hw9-2.gms(61) 4 Mb
+--- Generating QCP model w2
+--- hw9-2.gms(62) 6 Mb
+---   43 rows  61 columns  141 non-zeroes
+---   161 nl-code  40 nl-non-zeroes
+--- Range statistics (absolute non-zero finite values)
+--- RHS       [min, max] : [ 5.000E+03, 8.000E+03] - Zero values observed as well
+--- Bound     [min, max] : [ 1.000E+00, 1.000E+00]
+--- Matrix    [min, max] : [ 1.000E+00, 1.000E+10]
+--- hw9-2.gms(62) 4 Mb
+--- Executing MOSEK (Solvelink=2): elapsed 0:00:00.102
+*** Could not load data from file: Detected 40 general nonlinear rows in model
+--- Reading solution for model w2
+--- Executing after solve: elapsed 0:00:00.154
+--- hw9-2.gms(67) 4 Mb
+*** Status: Normal completion
+--- Job hw9-2.gms Stop 11/30/23 20:52:31 elapsed 0:00:00.154

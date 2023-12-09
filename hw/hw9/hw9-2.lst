@@ -1,0 +1,541 @@
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 11/30/23 20:52:31 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1  sets N /ad1*ad20/;
+   2  alias(I,N) ;
+   3   
+   4  parameters c(I) Cost,
+   5  alpha(I) Witches proportionality constant,
+   6  beta(I) Wizards proportionality constant ;
+   7   
+   8  scalars K1, K2;
+   9   
+  10  c(I) = normal(100,5);
+  11  alpha(I) = uniform(7,13);
+  12   
+  13  beta(I) = 13-alpha(I) + 7 + 5$(uniform(0,1) < 0.3) ;
+  14   
+  15  K1 = 5000;
+  16  K2 = 8000;
+  17   
+  18  variable cost;
+  19  positive variable x(I);
+  20   
+  21  equations defobj, tot_witches, tot_wizards;
+  22   
+  23  defobj..
+  24      cost =e= sum(I, c(I)*x(I));
+  25   
+  26  tot_witches..
+  27      sum(I, alpha(I)*sqrt(x(I))) =g= K1;
+  28   
+  29  tot_wizards..
+  30      sum(I, beta(I)*sqrt(x(I))) =g= K2;
+  31   
+  32  x.lo(I) = 1;
+  33   
+  34  model w1 / defobj, tot_witches, tot_wizards /;
+  35  solve w1 using nlp min cost;
+  36   
+  37  parameter solution(*,i), totalAdTime(*);
+  38  totalAdTime('nlp') = sum(I, x.l(I)) ;
+  39  solution('nlp',i) = x.l(i);
+  40   
+  41  display totalAdTime;
+  42   
+  43  variables witch_mins(I), wiz_mins(I);
+  44   
+  45  equations witch_eq, wizard_eq, cons1, cons2;
+  46   
+  47  witch_eq..
+  48      sum(I, alpha(I)*witch_mins(I)) =g= K1;
+  49   
+  50  wizard_eq..
+  51      sum(I, beta(I)*wiz_mins(I)) =g= K2;
+  52   
+  53  cons1(I)..
+  54      sqrt(witch_mins(I)) =l= x(I);
+  55   
+  56  cons2(I)..
+  57      sqrt(wiz_mins(I)) =l= x(I);
+  58   
+  59  model w2 / defobj, witch_eq, wizard_eq, cons1, cons2 /;
+  60   
+  61  option qcp = mosek;
+  62  solve w2 using qcp minimizing cost;
+  63   
+  64  totalAdTime('qcp') = sum(I, x.l(I));
+  65  solution('qcp',I) = x.l(I);
+  66   
+  67  display solution, totalAdTime;
+  68   
+  69   
+  70   
+  71   
+  72   
+  73   
+  74   
+  75   
+  76   
+  77   
+  78   
+  79   
+
+
+COMPILATION TIME     =        0.000 SECONDS      3 MB  45.1.0 88bbff72 WEX-WEI
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 11/30/23 20:52:31 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Equation Listing    SOLVE w1 Using NLP From line 35
+
+
+---- defobj  =E=  
+
+defobj..  cost - 98.4332853570572*x(ad1) - 101.638374041132*x(ad2) - 102.317793911813*x(ad3) - 90.8502610800552*x(ad4) - 96.3419379318221*x(ad5) - 95.1420086413329*x(ad6) - 98.0303677984163*x(ad7) - 104.672863441725*x(ad8) - 96.2035162046639*x(ad9) - 100.001847601754*x(ad10) - 95.455421629114*x(ad11) - 101.719333674322*x(ad12) - 96.6884278227715*x(ad13) - 97.5692517581452*x(ad14) - 109.417676368582*x(ad15) - 96.3961540520591*x(ad16) - 93.5049674334345*x(ad17) - 93.1226302048127*x(ad18) - 101.598399851103*x(ad19) - 105.935106702865*x(ad20) =E= 0 ; (LHS = -1975.03962550698, INFES = 1975.03962550698 ****)
+     
+
+---- tot_witches  =G=  
+
+tot_witches..  (4.192447214)*x(ad1) + (5.49720338)*x(ad2) + (5.827572818)*x(ad3) + (4.410975431)*x(ad4) + (3.831476873)*x(ad5) + (5.007154598)*x(ad6) + (3.980518286)*x(ad7) + (6.117386933)*x(ad8) + (4.295343635)*x(ad9) + (4.357442966)*x(ad10) + (5.281867766)*x(ad11) + (5.668157213)*x(ad12) + (5.384746031)*x(ad13) + (4.891393595)*x(ad14) + (4.739920982)*x(ad15) + (3.853086071)*x(ad16) + (4.442636801)*x(ad17) + (3.639654542)*x(ad18) + (4.515650816)*x(ad19) + (4.046298779)*x(ad20) =G= 5000 ; (LHS = 187.96186946, INFES = 4812.03813054 ****)
+     
+
+---- tot_wizards  =G=  
+
+tot_wizards..  (5.807552786)*x(ad1) + (4.50279662)*x(ad2) + (4.172427182)*x(ad3) + (8.089024569)*x(ad4) + (6.168523127)*x(ad5) + (4.992845402)*x(ad6) + (6.019481714)*x(ad7) + (6.382613067)*x(ad8) + (8.204656365)*x(ad9) + (8.142557034)*x(ad10) + (4.718132234)*x(ad11) + (4.331842787)*x(ad12) + (7.115253969)*x(ad13) + (5.108606405)*x(ad14) + (7.760079018)*x(ad15) + (8.646913929)*x(ad16) + (5.557363199)*x(ad17) + (6.360345458)*x(ad18) + (7.984349184)*x(ad19) + (8.453701221)*x(ad20) =G= 8000 ; (LHS = 257.03813054, INFES = 7742.96186946 ****)
+     
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 11/30/23 20:52:31 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Column Listing      SOLVE w1 Using NLP From line 35
+
+
+---- cost  
+
+cost
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       defobj
+
+
+---- x  
+
+x(ad1)
+                (.LO, .L, .UP, .M = 1, 1, +INF, 0)
+      -98.4333  defobj
+       (4.1924) tot_witches
+       (5.8076) tot_wizards
+        0       (OLD LEVEL ****)
+
+x(ad2)
+                (.LO, .L, .UP, .M = 1, 1, +INF, 0)
+     -101.6384  defobj
+       (5.4972) tot_witches
+       (4.5028) tot_wizards
+        0       (OLD LEVEL ****)
+
+x(ad3)
+                (.LO, .L, .UP, .M = 1, 1, +INF, 0)
+     -102.3178  defobj
+       (5.8276) tot_witches
+       (4.1724) tot_wizards
+        0       (OLD LEVEL ****)
+
+REMAINING 17 ENTRIES SKIPPED
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 11/30/23 20:52:31 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Range Statistics    SOLVE w1 Using NLP From line 35
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 5.000E+03, 8.000E+03] - Zero values observed as well
+Bound     [min, max] : [ 1.000E+00, 1.000E+00]
+Matrix    [min, max] : [ 1.000E+00, 1.094E+02]
+
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 11/30/23 20:52:31 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE w1 Using NLP From line 35
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           3     SINGLE EQUATIONS            3
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES           21  20 projected
+NON ZERO ELEMENTS            61     NON LINEAR N-Z             40
+CODE LENGTH                 125     CONSTANT POOL              56
+
+
+GENERATION TIME      =        0.000 SECONDS      4 MB  45.1.0 88bbff72 WEX-WEI
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 11/30/23 20:52:31 Page 6
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE w1 Using NLP From line 35
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   w1                  OBJECTIVE  cost
+     TYPE    NLP                 DIRECTION  MINIMIZE
+     SOLVER  CONOPT              FROM LINE  35
+
+**** SOLVER STATUS     1 Normal Completion
+**** MODEL STATUS      2 Locally Optimal
+**** OBJECTIVE VALUE          1815587.7245
+
+ RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ ITERATION COUNT, LIMIT        20    2147483647
+ EVALUATION ERRORS              0             0
+ 
+ 
+    C O N O P T 3   version 3.17O
+    Copyright (C)   ARKI Consulting and Development A/S
+                    Bagsvaerdvej 246 A
+                    DK-2880 Bagsvaerd, Denmark
+ 
+ 
+    The model has 21 variables and 3 constraints
+    with 61 Jacobian elements, 40 of which are nonlinear.
+    The Hessian of the Lagrangian has 20 elements on the diagonal,
+    0 elements below the diagonal, and 20 nonlinear variables.
+ 
+ ** Warning **  The value of LFITER is out of range.
+                LFITER is decreased from 2147483647 to 1000000000.
+ 
+                   Pre-triangular equations:   0
+                   Post-triangular equations:  1
+ 
+ 
+ ** Optimal solution. Reduced gradient less than tolerance.
+ 
+ 
+ CONOPT time Total                            0.004 seconds
+   of which: Function evaluations             0.000 =  0.0%
+             1st Derivative evaluations       0.004 =100.0%
+             2nd Derivative evaluations       0.000 =  0.0%
+             Directional 2nd Derivative       0.000 =  0.0%
+ 
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU defobj              .              .              .             1.0000      
+---- EQU tot_witch~      5000.0000      5442.1740        +INF             .          
+---- EQU tot_wizar~      8000.0000      8000.0000        +INF          453.8969      
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR cost              -INF      1815587.7245        +INF             .          
+
+---- VAR x  
+
+            LOWER          LEVEL          UPPER         MARGINAL
+
+ad1          1.0000       717.1613        +INF            EPS         
+ad2          1.0000       404.3559        +INF            EPS         
+ad3          1.0000       342.6018        +INF            EPS         
+ad4          1.0000      1633.2567        +INF            EPS         
+ad5          1.0000       844.5904        +INF            EPS         
+ad6          1.0000       567.3696        +INF            EPS         
+ad7          1.0000       776.8040        +INF            EPS         
+ad8          1.0000       766.0257        +INF             .          
+ad9          1.0000      1498.4884        +INF            EPS         
+ad10         1.0000      1365.9036        +INF            EPS         
+ad11         1.0000       503.3308        +INF            EPS         
+ad12         1.0000       373.6396        +INF            EPS         
+ad13         1.0000      1115.6971        +INF            EPS         
+ad14         1.0000       564.7984        +INF            EPS         
+ad15         1.0000      1036.2673        +INF            EPS         
+ad16         1.0000      1657.7436        +INF            EPS         
+ad17         1.0000       727.7508        +INF            EPS         
+ad18         1.0000       961.0930        +INF            EPS         
+ad19         1.0000      1272.3887        +INF            EPS         
+ad20         1.0000      1311.9838        +INF            EPS         
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+                             0     ERRORS
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 11/30/23 20:52:31 Page 7
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+----     41 PARAMETER totalAdTime  
+
+nlp 18441.250
+
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 11/30/23 20:52:31 Page 8
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Equation Listing    SOLVE w2 Using QCP From line 62
+
+
+---- defobj  =E=  
+
+defobj..  cost - 98.4332853570572*x(ad1) - 101.638374041132*x(ad2) - 102.317793911813*x(ad3) - 90.8502610800552*x(ad4) - 96.3419379318221*x(ad5) - 95.1420086413329*x(ad6) - 98.0303677984163*x(ad7) - 104.672863441725*x(ad8) - 96.2035162046639*x(ad9) - 100.001847601754*x(ad10) - 95.455421629114*x(ad11) - 101.719333674322*x(ad12) - 96.6884278227715*x(ad13) - 97.5692517581452*x(ad14) - 109.417676368582*x(ad15) - 96.3961540520591*x(ad16) - 93.5049674334345*x(ad17) - 93.1226302048127*x(ad18) - 101.598399851103*x(ad19) - 105.935106702865*x(ad20) =E= 0 ; (LHS = -2.3283064365387E-10, INFES = 2.3283064365387E-10 ****)
+     
+
+---- witch_eq  =G=  
+
+witch_eq..  8.384894428*witch_mins(ad1) + 10.99440676*witch_mins(ad2) + 11.655145636*witch_mins(ad3) + 8.821950862*witch_mins(ad4) + 7.662953746*witch_mins(ad5) + 10.014309196*witch_mins(ad6) + 7.961036572*witch_mins(ad7) + 12.234773866*witch_mins(ad8) + 8.59068727*witch_mins(ad9) + 8.714885932*witch_mins(ad10) + 10.563735532*witch_mins(ad11) + 11.336314426*witch_mins(ad12) + 10.769492062*witch_mins(ad13) + 9.78278719*witch_mins(ad14) + 9.479841964*witch_mins(ad15) + 7.706172142*witch_mins(ad16) + 8.885273602*witch_mins(ad17) + 7.279309084*witch_mins(ad18) + 9.031301632*witch_mins(ad19) + 8.092597558*witch_mins(ad20) =G= 5000 ; (LHS = 0, INFES = 5000 ****)
+     
+
+---- wizard_eq  =G=  
+
+wizard_eq..  11.615105572*wiz_mins(ad1) + 9.00559324*wiz_mins(ad2) + 8.344854364*wiz_mins(ad3) + 16.178049138*wiz_mins(ad4) + 12.337046254*wiz_mins(ad5) + 9.985690804*wiz_mins(ad6) + 12.038963428*wiz_mins(ad7) + 12.765226134*wiz_mins(ad8) + 16.40931273*wiz_mins(ad9) + 16.285114068*wiz_mins(ad10) + 9.436264468*wiz_mins(ad11) + 8.663685574*wiz_mins(ad12) + 14.230507938*wiz_mins(ad13) + 10.21721281*wiz_mins(ad14) + 15.520158036*wiz_mins(ad15) + 17.293827858*wiz_mins(ad16) + 11.114726398*wiz_mins(ad17) + 12.720690916*wiz_mins(ad18) + 15.968698368*wiz_mins(ad19) + 16.907402442*wiz_mins(ad20) =G= 8000 ; (LHS = 0, INFES = 8000 ****)
+     
+
+---- cons1  =L=  
+
+cons1(ad1)..  - x(ad1) + (10000000000)*witch_mins(ad1) =L= 0 ; (LHS = -717.161329149341)
+     
+cons1(ad2)..  - x(ad2) + (10000000000)*witch_mins(ad2) =L= 0 ; (LHS = -404.355856900457)
+     
+cons1(ad3)..  - x(ad3) + (10000000000)*witch_mins(ad3) =L= 0 ; (LHS = -342.601838755833)
+     
+REMAINING 17 ENTRIES SKIPPED
+
+
+---- cons2  =L=  
+
+cons2(ad1)..  - x(ad1) + (10000000000)*wiz_mins(ad1) =L= 0 ; (LHS = -717.161329149341)
+     
+cons2(ad2)..  - x(ad2) + (10000000000)*wiz_mins(ad2) =L= 0 ; (LHS = -404.355856900457)
+     
+cons2(ad3)..  - x(ad3) + (10000000000)*wiz_mins(ad3) =L= 0 ; (LHS = -342.601838755833)
+     
+REMAINING 17 ENTRIES SKIPPED
+
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 11/30/23 20:52:31 Page 9
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Column Listing      SOLVE w2 Using QCP From line 62
+
+
+---- cost  
+
+cost
+                (.LO, .L, .UP, .M = -INF, 1815587.72450965, +INF, 0)
+        1       defobj
+
+
+---- x  
+
+x(ad1)
+                (.LO, .L, .UP, .M = 1, 717.161329149341, +INF, EPS)
+      -98.4333  defobj
+       -1       cons1(ad1)
+       -1       cons2(ad1)
+
+x(ad2)
+                (.LO, .L, .UP, .M = 1, 404.355856900457, +INF, EPS)
+     -101.6384  defobj
+       -1       cons1(ad2)
+       -1       cons2(ad2)
+
+x(ad3)
+                (.LO, .L, .UP, .M = 1, 342.601838755833, +INF, EPS)
+     -102.3178  defobj
+       -1       cons1(ad3)
+       -1       cons2(ad3)
+
+REMAINING 17 ENTRIES SKIPPED
+
+---- witch_mins  
+
+witch_mins(ad1)
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        8.3849  witch_eq
+ (1.000000E+10) cons1(ad1)
+
+witch_mins(ad2)
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+       10.9944  witch_eq
+ (1.000000E+10) cons1(ad2)
+
+witch_mins(ad3)
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+       11.6551  witch_eq
+ (1.000000E+10) cons1(ad3)
+
+REMAINING 17 ENTRIES SKIPPED
+
+---- wiz_mins  
+
+wiz_mins(ad1)
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+       11.6151  wizard_eq
+ (1.000000E+10) cons2(ad1)
+
+wiz_mins(ad2)
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        9.0056  wizard_eq
+ (1.000000E+10) cons2(ad2)
+
+wiz_mins(ad3)
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        8.3449  wizard_eq
+ (1.000000E+10) cons2(ad3)
+
+REMAINING 17 ENTRIES SKIPPED
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 11/30/23 20:52:31 Page 10
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Range Statistics    SOLVE w2 Using QCP From line 62
+
+
+RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
+
+RHS       [min, max] : [ 5.000E+03, 8.000E+03] - Zero values observed as well
+Bound     [min, max] : [ 1.000E+00, 1.000E+00]
+Matrix    [min, max] : [ 1.000E+00, 1.000E+10]
+
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 11/30/23 20:52:31 Page 11
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE w2 Using QCP From line 62
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           5     SINGLE EQUATIONS           43
+BLOCKS OF VARIABLES           4     SINGLE VARIABLES           61
+NON ZERO ELEMENTS           141     NON LINEAR N-Z             40
+CODE LENGTH                 161     CONSTANT POOL              16
+
+
+GENERATION TIME      =        0.000 SECONDS      4 MB  45.1.0 88bbff72 WEX-WEI
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 11/30/23 20:52:31 Page 12
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE w2 Using QCP From line 62
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   w2                  OBJECTIVE  cost
+     TYPE    QCP                 DIRECTION  MINIMIZE
+     SOLVER  MOSEK               FROM LINE  62
+
+**** SOLVER STATUS     13 System Failure
+**** MODEL STATUS      13 Error No Solution
+**** OBJECTIVE VALUE               NA
+
+ RESOURCE USAGE, LIMIT         NA     10000000000.000
+ ITERATION COUNT, LIMIT        NA    2147483647
+ EVALUATION ERRORS             NA             0
+General nonlinearity detected in row cons1(ad1)
+General nonlinearity detected in row cons1(ad2)
+General nonlinearity detected in row cons1(ad3)
+General nonlinearity detected in row cons1(ad4)
+General nonlinearity detected in row cons1(ad5)
+General nonlinearity detected in row cons1(ad6)
+General nonlinearity detected in row cons1(ad7)
+General nonlinearity detected in row cons1(ad8)
+General nonlinearity detected in row cons1(ad9)
+General nonlinearity detected in row cons1(ad10)
+General nonlinearity detected in row cons1(ad11)
+General nonlinearity detected in row cons1(ad12)
+General nonlinearity detected in row cons1(ad13)
+General nonlinearity detected in row cons1(ad14)
+General nonlinearity detected in row cons1(ad15)
+General nonlinearity detected in row cons1(ad16)
+General nonlinearity detected in row cons1(ad17)
+General nonlinearity detected in row cons1(ad18)
+General nonlinearity detected in row cons1(ad19)
+General nonlinearity detected in row cons1(ad20)
+General nonlinearity detected in row cons2(ad1)
+General nonlinearity detected in row cons2(ad2)
+General nonlinearity detected in row cons2(ad3)
+General nonlinearity detected in row cons2(ad4)
+General nonlinearity detected in row cons2(ad5)
+General nonlinearity detected in row cons2(ad6)
+General nonlinearity detected in row cons2(ad7)
+General nonlinearity detected in row cons2(ad8)
+General nonlinearity detected in row cons2(ad9)
+General nonlinearity detected in row cons2(ad10)
+General nonlinearity detected in row cons2(ad11)
+General nonlinearity detected in row cons2(ad12)
+General nonlinearity detected in row cons2(ad13)
+General nonlinearity detected in row cons2(ad14)
+General nonlinearity detected in row cons2(ad15)
+General nonlinearity detected in row cons2(ad16)
+General nonlinearity detected in row cons2(ad17)
+General nonlinearity detected in row cons2(ad18)
+General nonlinearity detected in row cons2(ad19)
+General nonlinearity detected in row cons2(ad20)
+*** Could not load data from file: Detected 40 general nonlinear rows in model
+
+No solution returned
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 11/30/23 20:52:31 Page 13
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE w2 Using QCP From line 62
+
+
+**** SOLVER STATUS FILE LISTED BELOW
+=E "General nonlinearity detected in row " 4 ""
+=E "General nonlinearity detected in row " 5 ""
+=E "General nonlinearity detected in row " 6 ""
+=E "General nonlinearity detected in row " 7 ""
+=E "General nonlinearity detected in row " 8 ""
+=E "General nonlinearity detected in row " 9 ""
+=E "General nonlinearity detected in row " 10 ""
+=E "General nonlinearity detected in row " 11 ""
+=E "General nonlinearity detected in row " 12 ""
+=E "General nonlinearity detected in row " 13 ""
+=E "General nonlinearity detected in row " 14 ""
+=E "General nonlinearity detected in row " 15 ""
+=E "General nonlinearity detected in row " 16 ""
+=E "General nonlinearity detected in row " 17 ""
+=E "General nonlinearity detected in row " 18 ""
+=E "General nonlinearity detected in row " 19 ""
+=E "General nonlinearity detected in row " 20 ""
+=E "General nonlinearity detected in row " 21 ""
+=E "General nonlinearity detected in row " 22 ""
+=E "General nonlinearity detected in row " 23 ""
+=E "General nonlinearity detected in row " 24 ""
+=E "General nonlinearity detected in row " 25 ""
+=E "General nonlinearity detected in row " 26 ""
+=E "General nonlinearity detected in row " 27 ""
+=E "General nonlinearity detected in row " 28 ""
+=E "General nonlinearity detected in row " 29 ""
+=E "General nonlinearity detected in row " 30 ""
+=E "General nonlinearity detected in row " 31 ""
+=E "General nonlinearity detected in row " 32 ""
+=E "General nonlinearity detected in row " 33 ""
+=E "General nonlinearity detected in row " 34 ""
+=E "General nonlinearity detected in row " 35 ""
+=E "General nonlinearity detected in row " 36 ""
+=E "General nonlinearity detected in row " 37 ""
+=E "General nonlinearity detected in row " 38 ""
+=E "General nonlinearity detected in row " 39 ""
+=E "General nonlinearity detected in row " 40 ""
+=E "General nonlinearity detected in row " 41 ""
+=E "General nonlinearity detected in row " 42 ""
+=E "General nonlinearity detected in row " 43 ""
+=C*** Could not load data from file: Detected 40 general nonlinear rows in model
+**** SOLVER STATUS FILE LISTED ABOVE
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 11/30/23 20:52:31 Page 14
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+----     67 PARAMETER solution  
+
+            ad1         ad2         ad3         ad4         ad5         ad6         ad7         ad8         ad9        ad10        ad11        ad12        ad13        ad14        ad15        ad16        ad17        ad18        ad19        ad20
+
+nlp     717.161     404.356     342.602    1633.257     844.590     567.370     776.804     766.026    1498.488    1365.904     503.331     373.640    1115.697     564.798    1036.267    1657.744     727.751     961.093    1272.389    1311.984
+qcp     717.161     404.356     342.602    1633.257     844.590     567.370     776.804     766.026    1498.488    1365.904     503.331     373.640    1115.697     564.798    1036.267    1657.744     727.751     961.093    1272.389    1311.984
+
+
+----     67 PARAMETER totalAdTime  
+
+nlp 18441.250,    qcp 18441.250
+
+
+
+EXECUTION TIME       =        0.156 SECONDS      4 MB  45.1.0 88bbff72 WEX-WEI
+
+
+USER: Introduction to Optimization (CS/ISyE/ECE 524) G230906|0002AS-GEN
+      UW-Madison, CS Dept., Fall 2023, Prof. Ferris              DCE850
+      License for teaching and research at degree granting institutions
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw9\hw9-2.gms
+Output     C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw9\hw9-2.lst

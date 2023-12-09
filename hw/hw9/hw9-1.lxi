@@ -1,0 +1,1031 @@
+B 3 C o m p i l a t i o n
+B 105 Include File Summary
+B 117 Equation Listing    SOLVE svmmod Using QCP From line 55
+D 120 defobj
+D 127 cons
+D 138 defdual_obj
+D 145 cons_v
+D 156 cons1_alpha
+D 163 cons2_alpha
+B 175 Column Listing      SOLVE svmmod Using QCP From line 55
+E 178 delta
+E 197 obj
+E 204 w
+E 3220 gamma
+E 6226 v
+E 6245 dual_obj
+E 6252 alpha
+B 6299 Range Statistics    SOLVE svmmod Using QCP From line 55
+B 6310 Model Statistics    SOLVE svmmod Using QCP From line 55
+B 6324 Solution Report     SOLVE svmmod Using QCP From line 55
+F 6372 defobj
+F 6374 cons
+F 9381 defdual_obj
+F 9383 cons_v
+F 9400 cons1_alpha
+F 9402 cons2_alpha
+G 12407 delta
+G 15414 obj
+G 15416 w
+G 15433 gamma
+G 15435 v
+G 15452 dual_obj
+G 15454 alpha
+B 18466 Equation Listing    SOLVE svmmod Using QCP From line 56
+D 18469 defobj
+D 18476 cons
+D 18487 defdual_obj
+D 18494 cons_v
+D 18505 cons1_alpha
+D 18512 cons2_alpha
+B 18524 Column Listing      SOLVE svmmod Using QCP From line 56
+E 18527 delta
+E 18546 obj
+E 18553 w
+E 21569 gamma
+E 24575 v
+E 24594 dual_obj
+E 24601 alpha
+B 24648 Range Statistics    SOLVE svmmod Using QCP From line 56
+B 24659 Model Statistics    SOLVE svmmod Using QCP From line 56
+B 24673 Solution Report     SOLVE svmmod Using QCP From line 56
+F 24721 defobj
+F 24723 cons
+F 27730 defdual_obj
+F 27732 cons_v
+F 27749 cons1_alpha
+F 27751 cons2_alpha
+G 30756 delta
+G 33763 obj
+G 33765 w
+G 33782 gamma
+G 33784 v
+G 33801 dual_obj
+G 33803 alpha
+B 36815 Equation Listing    SOLVE svmmod Using QCP From line 76
+D 36818 defobj
+D 36825 cons
+D 36836 defdual_obj
+D 36843 cons_v
+D 36854 cons1_alpha
+D 36861 cons2_alpha
+B 36873 Column Listing      SOLVE svmmod Using QCP From line 76
+E 36876 delta
+E 36895 obj
+E 36902 w
+E 39718 gamma
+E 42524 v
+E 42543 dual_obj
+E 42550 alpha
+B 42597 Range Statistics    SOLVE svmmod Using QCP From line 76
+B 42608 Model Statistics    SOLVE svmmod Using QCP From line 76
+B 42629 Solution Report     SOLVE svmmod Using QCP From line 76
+F 42677 defobj
+F 42679 cons
+F 45486 defdual_obj
+F 45488 cons_v
+F 45505 cons1_alpha
+F 45507 cons2_alpha
+G 48312 delta
+G 51119 obj
+G 51121 w
+G 51138 gamma
+G 51140 v
+G 51157 dual_obj
+G 51159 alpha
+B 53971 Equation Listing    SOLVE svmmod Using QCP From line 76
+D 53974 defobj
+D 53981 cons
+D 53992 defdual_obj
+D 53999 cons_v
+D 54010 cons1_alpha
+D 54017 cons2_alpha
+B 54029 Column Listing      SOLVE svmmod Using QCP From line 76
+E 54032 delta
+E 54051 obj
+E 54058 w
+E 56874 gamma
+E 59680 v
+E 59699 dual_obj
+E 59706 alpha
+B 59753 Range Statistics    SOLVE svmmod Using QCP From line 76
+B 59764 Model Statistics    SOLVE svmmod Using QCP From line 76
+B 59785 Solution Report     SOLVE svmmod Using QCP From line 76
+F 59833 defobj
+F 59835 cons
+F 62642 defdual_obj
+F 62644 cons_v
+F 62661 cons1_alpha
+F 62663 cons2_alpha
+G 65468 delta
+G 68275 obj
+G 68277 w
+G 68294 gamma
+G 68296 v
+G 68313 dual_obj
+G 68315 alpha
+B 71127 Equation Listing    SOLVE svmmod Using QCP From line 76
+D 71130 defobj
+D 71137 cons
+D 71148 defdual_obj
+D 71155 cons_v
+D 71166 cons1_alpha
+D 71173 cons2_alpha
+B 71185 Column Listing      SOLVE svmmod Using QCP From line 76
+E 71188 delta
+E 71207 obj
+E 71214 w
+E 74030 gamma
+E 76836 v
+E 76855 dual_obj
+E 76862 alpha
+B 76909 Range Statistics    SOLVE svmmod Using QCP From line 76
+B 76920 Model Statistics    SOLVE svmmod Using QCP From line 76
+B 76941 Solution Report     SOLVE svmmod Using QCP From line 76
+F 76989 defobj
+F 76991 cons
+F 79798 defdual_obj
+F 79800 cons_v
+F 79817 cons1_alpha
+F 79819 cons2_alpha
+G 82624 delta
+G 85431 obj
+G 85433 w
+G 85450 gamma
+G 85452 v
+G 85469 dual_obj
+G 85471 alpha
+B 88283 Equation Listing    SOLVE svmmod Using QCP From line 76
+D 88286 defobj
+D 88293 cons
+D 88304 defdual_obj
+D 88311 cons_v
+D 88322 cons1_alpha
+D 88329 cons2_alpha
+B 88341 Column Listing      SOLVE svmmod Using QCP From line 76
+E 88344 delta
+E 88363 obj
+E 88370 w
+E 91186 gamma
+E 93992 v
+E 94011 dual_obj
+E 94018 alpha
+B 94065 Range Statistics    SOLVE svmmod Using QCP From line 76
+B 94076 Model Statistics    SOLVE svmmod Using QCP From line 76
+B 94097 Solution Report     SOLVE svmmod Using QCP From line 76
+F 94145 defobj
+F 94147 cons
+F 96954 defdual_obj
+F 96956 cons_v
+F 96973 cons1_alpha
+F 96975 cons2_alpha
+G 99780 delta
+G 102587 obj
+G 102589 w
+G 102606 gamma
+G 102608 v
+G 102625 dual_obj
+G 102627 alpha
+B 105439 Equation Listing    SOLVE svmmod Using QCP From line 76
+D 105442 defobj
+D 105449 cons
+D 105460 defdual_obj
+D 105467 cons_v
+D 105478 cons1_alpha
+D 105485 cons2_alpha
+B 105497 Column Listing      SOLVE svmmod Using QCP From line 76
+E 105500 delta
+E 105519 obj
+E 105526 w
+E 108342 gamma
+E 111148 v
+E 111167 dual_obj
+E 111174 alpha
+B 111221 Range Statistics    SOLVE svmmod Using QCP From line 76
+B 111232 Model Statistics    SOLVE svmmod Using QCP From line 76
+B 111253 Solution Report     SOLVE svmmod Using QCP From line 76
+F 111301 defobj
+F 111303 cons
+F 114110 defdual_obj
+F 114112 cons_v
+F 114129 cons1_alpha
+F 114131 cons2_alpha
+G 116936 delta
+G 119743 obj
+G 119745 w
+G 119762 gamma
+G 119764 v
+G 119781 dual_obj
+G 119783 alpha
+B 122595 Equation Listing    SOLVE svmmod Using QCP From line 76
+D 122598 defobj
+D 122605 cons
+D 122616 defdual_obj
+D 122623 cons_v
+D 122634 cons1_alpha
+D 122641 cons2_alpha
+B 122653 Column Listing      SOLVE svmmod Using QCP From line 76
+E 122656 delta
+E 122675 obj
+E 122682 w
+E 125498 gamma
+E 128304 v
+E 128323 dual_obj
+E 128330 alpha
+B 128377 Range Statistics    SOLVE svmmod Using QCP From line 76
+B 128388 Model Statistics    SOLVE svmmod Using QCP From line 76
+B 128409 Solution Report     SOLVE svmmod Using QCP From line 76
+F 128456 defobj
+F 128458 cons
+F 131265 defdual_obj
+F 131267 cons_v
+F 131284 cons1_alpha
+F 131286 cons2_alpha
+G 134091 delta
+G 136898 obj
+G 136900 w
+G 136917 gamma
+G 136919 v
+G 136936 dual_obj
+G 136938 alpha
+B 139750 Equation Listing    SOLVE svmmod Using QCP From line 76
+D 139753 defobj
+D 139760 cons
+D 139771 defdual_obj
+D 139778 cons_v
+D 139789 cons1_alpha
+D 139796 cons2_alpha
+B 139808 Column Listing      SOLVE svmmod Using QCP From line 76
+E 139811 delta
+E 139830 obj
+E 139837 w
+E 142653 gamma
+E 145459 v
+E 145478 dual_obj
+E 145485 alpha
+B 145532 Range Statistics    SOLVE svmmod Using QCP From line 76
+B 145543 Model Statistics    SOLVE svmmod Using QCP From line 76
+B 145564 Solution Report     SOLVE svmmod Using QCP From line 76
+F 145612 defobj
+F 145614 cons
+F 148421 defdual_obj
+F 148423 cons_v
+F 148440 cons1_alpha
+F 148442 cons2_alpha
+G 151247 delta
+G 154054 obj
+G 154056 w
+G 154073 gamma
+G 154075 v
+G 154092 dual_obj
+G 154094 alpha
+B 156906 Equation Listing    SOLVE svmmod Using QCP From line 76
+D 156909 defobj
+D 156916 cons
+D 156927 defdual_obj
+D 156934 cons_v
+D 156945 cons1_alpha
+D 156952 cons2_alpha
+B 156964 Column Listing      SOLVE svmmod Using QCP From line 76
+E 156967 delta
+E 156986 obj
+E 156993 w
+E 159809 gamma
+E 162615 v
+E 162634 dual_obj
+E 162641 alpha
+B 162688 Range Statistics    SOLVE svmmod Using QCP From line 76
+B 162699 Model Statistics    SOLVE svmmod Using QCP From line 76
+B 162720 Solution Report     SOLVE svmmod Using QCP From line 76
+F 162768 defobj
+F 162770 cons
+F 165577 defdual_obj
+F 165579 cons_v
+F 165596 cons1_alpha
+F 165598 cons2_alpha
+G 168403 delta
+G 171210 obj
+G 171212 w
+G 171229 gamma
+G 171231 v
+G 171248 dual_obj
+G 171250 alpha
+B 174062 Equation Listing    SOLVE svmmod Using QCP From line 76
+D 174065 defobj
+D 174072 cons
+D 174083 defdual_obj
+D 174090 cons_v
+D 174101 cons1_alpha
+D 174108 cons2_alpha
+B 174120 Column Listing      SOLVE svmmod Using QCP From line 76
+E 174123 delta
+E 174142 obj
+E 174149 w
+E 176965 gamma
+E 179771 v
+E 179790 dual_obj
+E 179797 alpha
+B 179844 Range Statistics    SOLVE svmmod Using QCP From line 76
+B 179855 Model Statistics    SOLVE svmmod Using QCP From line 76
+B 179876 Solution Report     SOLVE svmmod Using QCP From line 76
+F 179924 defobj
+F 179926 cons
+F 182733 defdual_obj
+F 182735 cons_v
+F 182752 cons1_alpha
+F 182754 cons2_alpha
+G 185559 delta
+G 188366 obj
+G 188368 w
+G 188385 gamma
+G 188387 v
+G 188404 dual_obj
+G 188406 alpha
+B 191218 Equation Listing    SOLVE svmmod Using QCP From line 76
+D 191221 defobj
+D 191228 cons
+D 191239 defdual_obj
+D 191246 cons_v
+D 191257 cons1_alpha
+D 191264 cons2_alpha
+B 191276 Column Listing      SOLVE svmmod Using QCP From line 76
+E 191279 delta
+E 191298 obj
+E 191305 w
+E 194121 gamma
+E 196927 v
+E 196946 dual_obj
+E 196953 alpha
+B 197000 Range Statistics    SOLVE svmmod Using QCP From line 76
+B 197011 Model Statistics    SOLVE svmmod Using QCP From line 76
+B 197032 Solution Report     SOLVE svmmod Using QCP From line 76
+F 197080 defobj
+F 197082 cons
+F 199889 defdual_obj
+F 199891 cons_v
+F 199908 cons1_alpha
+F 199910 cons2_alpha
+G 202715 delta
+G 205522 obj
+G 205524 w
+G 205541 gamma
+G 205543 v
+G 205560 dual_obj
+G 205562 alpha
+B 208374 Equation Listing    SOLVE svmmod Using QCP From line 76
+D 208377 defobj
+D 208384 cons
+D 208395 defdual_obj
+D 208402 cons_v
+D 208413 cons1_alpha
+D 208420 cons2_alpha
+B 208432 Column Listing      SOLVE svmmod Using QCP From line 76
+E 208435 delta
+E 208454 obj
+E 208461 w
+E 211277 gamma
+E 214083 v
+E 214102 dual_obj
+E 214109 alpha
+B 214156 Range Statistics    SOLVE svmmod Using QCP From line 76
+B 214167 Model Statistics    SOLVE svmmod Using QCP From line 76
+B 214188 Solution Report     SOLVE svmmod Using QCP From line 76
+F 214235 defobj
+F 214237 cons
+F 217044 defdual_obj
+F 217046 cons_v
+F 217063 cons1_alpha
+F 217065 cons2_alpha
+G 219870 delta
+G 222677 obj
+G 222679 w
+G 222696 gamma
+G 222698 v
+G 222715 dual_obj
+G 222717 alpha
+B 225529 Equation Listing    SOLVE svmmod Using QCP From line 76
+D 225532 defobj
+D 225539 cons
+D 225550 defdual_obj
+D 225557 cons_v
+D 225568 cons1_alpha
+D 225575 cons2_alpha
+B 225587 Column Listing      SOLVE svmmod Using QCP From line 76
+E 225590 delta
+E 225609 obj
+E 225616 w
+E 228432 gamma
+E 231238 v
+E 231257 dual_obj
+E 231264 alpha
+B 231311 Range Statistics    SOLVE svmmod Using QCP From line 76
+B 231322 Model Statistics    SOLVE svmmod Using QCP From line 76
+B 231343 Solution Report     SOLVE svmmod Using QCP From line 76
+F 231390 defobj
+F 231392 cons
+F 234199 defdual_obj
+F 234201 cons_v
+F 234218 cons1_alpha
+F 234220 cons2_alpha
+G 237025 delta
+G 239832 obj
+G 239834 w
+G 239851 gamma
+G 239853 v
+G 239870 dual_obj
+G 239872 alpha
+B 242684 Equation Listing    SOLVE svmmod Using QCP From line 76
+D 242687 defobj
+D 242694 cons
+D 242705 defdual_obj
+D 242712 cons_v
+D 242723 cons1_alpha
+D 242730 cons2_alpha
+B 242742 Column Listing      SOLVE svmmod Using QCP From line 76
+E 242745 delta
+E 242764 obj
+E 242771 w
+E 245587 gamma
+E 248393 v
+E 248412 dual_obj
+E 248419 alpha
+B 248466 Range Statistics    SOLVE svmmod Using QCP From line 76
+B 248477 Model Statistics    SOLVE svmmod Using QCP From line 76
+B 248498 Solution Report     SOLVE svmmod Using QCP From line 76
+F 248544 defobj
+F 248546 cons
+F 251353 defdual_obj
+F 251355 cons_v
+F 251372 cons1_alpha
+F 251374 cons2_alpha
+G 254179 delta
+G 256986 obj
+G 256988 w
+G 257005 gamma
+G 257007 v
+G 257024 dual_obj
+G 257026 alpha
+B 259838 Equation Listing    SOLVE svmmod Using QCP From line 76
+D 259841 defobj
+D 259848 cons
+D 259859 defdual_obj
+D 259866 cons_v
+D 259877 cons1_alpha
+D 259884 cons2_alpha
+B 259896 Column Listing      SOLVE svmmod Using QCP From line 76
+E 259899 delta
+E 259918 obj
+E 259925 w
+E 262741 gamma
+E 265547 v
+E 265566 dual_obj
+E 265573 alpha
+B 265620 Range Statistics    SOLVE svmmod Using QCP From line 76
+B 265631 Model Statistics    SOLVE svmmod Using QCP From line 76
+B 265652 Solution Report     SOLVE svmmod Using QCP From line 76
+F 265699 defobj
+F 265701 cons
+F 268508 defdual_obj
+F 268510 cons_v
+F 268527 cons1_alpha
+F 268529 cons2_alpha
+G 271334 delta
+G 274141 obj
+G 274143 w
+G 274160 gamma
+G 274162 v
+G 274179 dual_obj
+G 274181 alpha
+B 276993 Equation Listing    SOLVE svmmod Using QCP From line 76
+D 276996 defobj
+D 277003 cons
+D 277014 defdual_obj
+D 277021 cons_v
+D 277032 cons1_alpha
+D 277039 cons2_alpha
+B 277051 Column Listing      SOLVE svmmod Using QCP From line 76
+E 277054 delta
+E 277073 obj
+E 277080 w
+E 279896 gamma
+E 282702 v
+E 282721 dual_obj
+E 282728 alpha
+B 282775 Range Statistics    SOLVE svmmod Using QCP From line 76
+B 282786 Model Statistics    SOLVE svmmod Using QCP From line 76
+B 282807 Solution Report     SOLVE svmmod Using QCP From line 76
+F 282854 defobj
+F 282856 cons
+F 285663 defdual_obj
+F 285665 cons_v
+F 285682 cons1_alpha
+F 285684 cons2_alpha
+G 288489 delta
+G 291296 obj
+G 291298 w
+G 291315 gamma
+G 291317 v
+G 291334 dual_obj
+G 291336 alpha
+B 294148 Equation Listing    SOLVE svmmod Using QCP From line 76
+D 294151 defobj
+D 294158 cons
+D 294169 defdual_obj
+D 294176 cons_v
+D 294187 cons1_alpha
+D 294194 cons2_alpha
+B 294206 Column Listing      SOLVE svmmod Using QCP From line 76
+E 294209 delta
+E 294228 obj
+E 294235 w
+E 297051 gamma
+E 299857 v
+E 299876 dual_obj
+E 299883 alpha
+B 299930 Range Statistics    SOLVE svmmod Using QCP From line 76
+B 299941 Model Statistics    SOLVE svmmod Using QCP From line 76
+B 299962 Solution Report     SOLVE svmmod Using QCP From line 76
+F 300008 defobj
+F 300010 cons
+F 302817 defdual_obj
+F 302819 cons_v
+F 302836 cons1_alpha
+F 302838 cons2_alpha
+G 305643 delta
+G 308450 obj
+G 308452 w
+G 308469 gamma
+G 308471 v
+G 308488 dual_obj
+G 308490 alpha
+B 311302 Equation Listing    SOLVE svmmod Using QCP From line 76
+D 311305 defobj
+D 311312 cons
+D 311323 defdual_obj
+D 311330 cons_v
+D 311341 cons1_alpha
+D 311348 cons2_alpha
+B 311360 Column Listing      SOLVE svmmod Using QCP From line 76
+E 311363 delta
+E 311382 obj
+E 311389 w
+E 314205 gamma
+E 317011 v
+E 317030 dual_obj
+E 317037 alpha
+B 317084 Range Statistics    SOLVE svmmod Using QCP From line 76
+B 317095 Model Statistics    SOLVE svmmod Using QCP From line 76
+B 317116 Solution Report     SOLVE svmmod Using QCP From line 76
+F 317162 defobj
+F 317164 cons
+F 319971 defdual_obj
+F 319973 cons_v
+F 319990 cons1_alpha
+F 319992 cons2_alpha
+G 322797 delta
+G 325604 obj
+G 325606 w
+G 325623 gamma
+G 325625 v
+G 325642 dual_obj
+G 325644 alpha
+B 328456 Equation Listing    SOLVE svmmod Using QCP From line 76
+D 328459 defobj
+D 328466 cons
+D 328477 defdual_obj
+D 328484 cons_v
+D 328495 cons1_alpha
+D 328502 cons2_alpha
+B 328514 Column Listing      SOLVE svmmod Using QCP From line 76
+E 328517 delta
+E 328536 obj
+E 328543 w
+E 331359 gamma
+E 334165 v
+E 334184 dual_obj
+E 334191 alpha
+B 334238 Range Statistics    SOLVE svmmod Using QCP From line 76
+B 334249 Model Statistics    SOLVE svmmod Using QCP From line 76
+B 334270 Solution Report     SOLVE svmmod Using QCP From line 76
+F 334316 defobj
+F 334318 cons
+F 337125 defdual_obj
+F 337127 cons_v
+F 337144 cons1_alpha
+F 337146 cons2_alpha
+G 339951 delta
+G 342758 obj
+G 342760 w
+G 342777 gamma
+G 342779 v
+G 342796 dual_obj
+G 342798 alpha
+B 345610 Equation Listing    SOLVE svmmod Using QCP From line 76
+D 345613 defobj
+D 345620 cons
+D 345631 defdual_obj
+D 345638 cons_v
+D 345649 cons1_alpha
+D 345656 cons2_alpha
+B 345668 Column Listing      SOLVE svmmod Using QCP From line 76
+E 345671 delta
+E 345690 obj
+E 345697 w
+E 348513 gamma
+E 351319 v
+E 351338 dual_obj
+E 351345 alpha
+B 351392 Range Statistics    SOLVE svmmod Using QCP From line 76
+B 351403 Model Statistics    SOLVE svmmod Using QCP From line 76
+B 351424 Solution Report     SOLVE svmmod Using QCP From line 76
+F 351470 defobj
+F 351472 cons
+F 354279 defdual_obj
+F 354281 cons_v
+F 354298 cons1_alpha
+F 354300 cons2_alpha
+G 357105 delta
+G 359912 obj
+G 359914 w
+G 359931 gamma
+G 359933 v
+G 359950 dual_obj
+G 359952 alpha
+B 362764 Equation Listing    SOLVE svmmod Using QCP From line 76
+D 362767 defobj
+D 362774 cons
+D 362785 defdual_obj
+D 362792 cons_v
+D 362803 cons1_alpha
+D 362810 cons2_alpha
+B 362822 Column Listing      SOLVE svmmod Using QCP From line 76
+E 362825 delta
+E 362844 obj
+E 362851 w
+E 365667 gamma
+E 368473 v
+E 368492 dual_obj
+E 368499 alpha
+B 368546 Range Statistics    SOLVE svmmod Using QCP From line 76
+B 368557 Model Statistics    SOLVE svmmod Using QCP From line 76
+B 368578 Solution Report     SOLVE svmmod Using QCP From line 76
+F 368624 defobj
+F 368626 cons
+F 371433 defdual_obj
+F 371435 cons_v
+F 371452 cons1_alpha
+F 371454 cons2_alpha
+G 374259 delta
+G 377066 obj
+G 377068 w
+G 377085 gamma
+G 377087 v
+G 377104 dual_obj
+G 377106 alpha
+B 379918 Equation Listing    SOLVE svmmod Using QCP From line 76
+D 379921 defobj
+D 379928 cons
+D 379939 defdual_obj
+D 379946 cons_v
+D 379957 cons1_alpha
+D 379964 cons2_alpha
+B 379976 Column Listing      SOLVE svmmod Using QCP From line 76
+E 379979 delta
+E 379998 obj
+E 380005 w
+E 382821 gamma
+E 385627 v
+E 385646 dual_obj
+E 385653 alpha
+B 385700 Range Statistics    SOLVE svmmod Using QCP From line 76
+B 385711 Model Statistics    SOLVE svmmod Using QCP From line 76
+B 385732 Solution Report     SOLVE svmmod Using QCP From line 76
+F 385778 defobj
+F 385780 cons
+F 388587 defdual_obj
+F 388589 cons_v
+F 388606 cons1_alpha
+F 388608 cons2_alpha
+G 391413 delta
+G 394220 obj
+G 394222 w
+G 394239 gamma
+G 394241 v
+G 394258 dual_obj
+G 394260 alpha
+B 397072 Equation Listing    SOLVE svmmod Using QCP From line 76
+D 397075 defobj
+D 397082 cons
+D 397093 defdual_obj
+D 397100 cons_v
+D 397111 cons1_alpha
+D 397118 cons2_alpha
+B 397130 Column Listing      SOLVE svmmod Using QCP From line 76
+E 397133 delta
+E 397152 obj
+E 397159 w
+E 399975 gamma
+E 402781 v
+E 402800 dual_obj
+E 402807 alpha
+B 402854 Range Statistics    SOLVE svmmod Using QCP From line 76
+B 402865 Model Statistics    SOLVE svmmod Using QCP From line 76
+B 402886 Solution Report     SOLVE svmmod Using QCP From line 76
+F 402932 defobj
+F 402934 cons
+F 405741 defdual_obj
+F 405743 cons_v
+F 405760 cons1_alpha
+F 405762 cons2_alpha
+G 408567 delta
+G 411374 obj
+G 411376 w
+G 411393 gamma
+G 411395 v
+G 411412 dual_obj
+G 411414 alpha
+B 414226 Equation Listing    SOLVE svmmod Using QCP From line 76
+D 414229 defobj
+D 414236 cons
+D 414247 defdual_obj
+D 414254 cons_v
+D 414265 cons1_alpha
+D 414272 cons2_alpha
+B 414284 Column Listing      SOLVE svmmod Using QCP From line 76
+E 414287 delta
+E 414306 obj
+E 414313 w
+E 417129 gamma
+E 419935 v
+E 419954 dual_obj
+E 419961 alpha
+B 420008 Range Statistics    SOLVE svmmod Using QCP From line 76
+B 420019 Model Statistics    SOLVE svmmod Using QCP From line 76
+B 420040 Solution Report     SOLVE svmmod Using QCP From line 76
+F 420086 defobj
+F 420088 cons
+F 422895 defdual_obj
+F 422897 cons_v
+F 422914 cons1_alpha
+F 422916 cons2_alpha
+G 425721 delta
+G 428528 obj
+G 428530 w
+G 428547 gamma
+G 428549 v
+G 428566 dual_obj
+G 428568 alpha
+B 431380 Equation Listing    SOLVE svmmod Using QCP From line 76
+D 431383 defobj
+D 431390 cons
+D 431401 defdual_obj
+D 431408 cons_v
+D 431419 cons1_alpha
+D 431426 cons2_alpha
+B 431438 Column Listing      SOLVE svmmod Using QCP From line 76
+E 431441 delta
+E 431460 obj
+E 431467 w
+E 434283 gamma
+E 437089 v
+E 437108 dual_obj
+E 437115 alpha
+B 437162 Range Statistics    SOLVE svmmod Using QCP From line 76
+B 437173 Model Statistics    SOLVE svmmod Using QCP From line 76
+B 437194 Solution Report     SOLVE svmmod Using QCP From line 76
+F 437240 defobj
+F 437242 cons
+F 440049 defdual_obj
+F 440051 cons_v
+F 440068 cons1_alpha
+F 440070 cons2_alpha
+G 442875 delta
+G 445682 obj
+G 445684 w
+G 445701 gamma
+G 445703 v
+G 445720 dual_obj
+G 445722 alpha
+B 448534 Equation Listing    SOLVE svmmod Using QCP From line 76
+D 448537 defobj
+D 448544 cons
+D 448555 defdual_obj
+D 448562 cons_v
+D 448573 cons1_alpha
+D 448580 cons2_alpha
+B 448592 Column Listing      SOLVE svmmod Using QCP From line 76
+E 448595 delta
+E 448614 obj
+E 448621 w
+E 451437 gamma
+E 454243 v
+E 454262 dual_obj
+E 454269 alpha
+B 454316 Range Statistics    SOLVE svmmod Using QCP From line 76
+B 454327 Model Statistics    SOLVE svmmod Using QCP From line 76
+B 454348 Solution Report     SOLVE svmmod Using QCP From line 76
+F 454394 defobj
+F 454396 cons
+F 457203 defdual_obj
+F 457205 cons_v
+F 457222 cons1_alpha
+F 457224 cons2_alpha
+G 460029 delta
+G 462836 obj
+G 462838 w
+G 462855 gamma
+G 462857 v
+G 462874 dual_obj
+G 462876 alpha
+B 465688 Equation Listing    SOLVE svmmod Using QCP From line 76
+D 465691 defobj
+D 465698 cons
+D 465709 defdual_obj
+D 465716 cons_v
+D 465727 cons1_alpha
+D 465734 cons2_alpha
+B 465746 Column Listing      SOLVE svmmod Using QCP From line 76
+E 465749 delta
+E 465768 obj
+E 465775 w
+E 468591 gamma
+E 471397 v
+E 471416 dual_obj
+E 471423 alpha
+B 471470 Range Statistics    SOLVE svmmod Using QCP From line 76
+B 471481 Model Statistics    SOLVE svmmod Using QCP From line 76
+B 471502 Solution Report     SOLVE svmmod Using QCP From line 76
+F 471548 defobj
+F 471550 cons
+F 474357 defdual_obj
+F 474359 cons_v
+F 474376 cons1_alpha
+F 474378 cons2_alpha
+G 477183 delta
+G 479990 obj
+G 479992 w
+G 480009 gamma
+G 480011 v
+G 480028 dual_obj
+G 480030 alpha
+B 482842 Equation Listing    SOLVE svmmod Using QCP From line 76
+D 482845 defobj
+D 482852 cons
+D 482863 defdual_obj
+D 482870 cons_v
+D 482881 cons1_alpha
+D 482888 cons2_alpha
+B 482900 Column Listing      SOLVE svmmod Using QCP From line 76
+E 482903 delta
+E 482922 obj
+E 482929 w
+E 485745 gamma
+E 488551 v
+E 488570 dual_obj
+E 488577 alpha
+B 488624 Range Statistics    SOLVE svmmod Using QCP From line 76
+B 488635 Model Statistics    SOLVE svmmod Using QCP From line 76
+B 488656 Solution Report     SOLVE svmmod Using QCP From line 76
+F 488702 defobj
+F 488704 cons
+F 491511 defdual_obj
+F 491513 cons_v
+F 491530 cons1_alpha
+F 491532 cons2_alpha
+G 494337 delta
+G 497144 obj
+G 497146 w
+G 497163 gamma
+G 497165 v
+G 497182 dual_obj
+G 497184 alpha
+B 499996 Equation Listing    SOLVE svmmod Using QCP From line 76
+D 499999 defobj
+D 500006 cons
+D 500017 defdual_obj
+D 500024 cons_v
+D 500035 cons1_alpha
+D 500042 cons2_alpha
+B 500054 Column Listing      SOLVE svmmod Using QCP From line 76
+E 500057 delta
+E 500076 obj
+E 500083 w
+E 502899 gamma
+E 505705 v
+E 505724 dual_obj
+E 505731 alpha
+B 505778 Range Statistics    SOLVE svmmod Using QCP From line 76
+B 505789 Model Statistics    SOLVE svmmod Using QCP From line 76
+B 505810 Solution Report     SOLVE svmmod Using QCP From line 76
+F 505856 defobj
+F 505858 cons
+F 508665 defdual_obj
+F 508667 cons_v
+F 508684 cons1_alpha
+F 508686 cons2_alpha
+G 511491 delta
+G 514298 obj
+G 514300 w
+G 514317 gamma
+G 514319 v
+G 514336 dual_obj
+G 514338 alpha
+B 517150 Equation Listing    SOLVE svmmod Using QCP From line 76
+D 517153 defobj
+D 517160 cons
+D 517171 defdual_obj
+D 517178 cons_v
+D 517189 cons1_alpha
+D 517196 cons2_alpha
+B 517208 Column Listing      SOLVE svmmod Using QCP From line 76
+E 517211 delta
+E 517230 obj
+E 517237 w
+E 520053 gamma
+E 522859 v
+E 522878 dual_obj
+E 522885 alpha
+B 522932 Range Statistics    SOLVE svmmod Using QCP From line 76
+B 522943 Model Statistics    SOLVE svmmod Using QCP From line 76
+B 522964 Solution Report     SOLVE svmmod Using QCP From line 76
+F 523010 defobj
+F 523012 cons
+F 525819 defdual_obj
+F 525821 cons_v
+F 525838 cons1_alpha
+F 525840 cons2_alpha
+G 528645 delta
+G 531452 obj
+G 531454 w
+G 531471 gamma
+G 531473 v
+G 531490 dual_obj
+G 531492 alpha
+B 534304 Equation Listing    SOLVE svmmod Using QCP From line 76
+D 534307 defobj
+D 534314 cons
+D 534325 defdual_obj
+D 534332 cons_v
+D 534343 cons1_alpha
+D 534350 cons2_alpha
+B 534362 Column Listing      SOLVE svmmod Using QCP From line 76
+E 534365 delta
+E 534384 obj
+E 534391 w
+E 537207 gamma
+E 540013 v
+E 540032 dual_obj
+E 540039 alpha
+B 540086 Range Statistics    SOLVE svmmod Using QCP From line 76
+B 540097 Model Statistics    SOLVE svmmod Using QCP From line 76
+B 540118 Solution Report     SOLVE svmmod Using QCP From line 76
+F 540164 defobj
+F 540166 cons
+F 542973 defdual_obj
+F 542975 cons_v
+F 542992 cons1_alpha
+F 542994 cons2_alpha
+G 545799 delta
+G 548606 obj
+G 548608 w
+G 548625 gamma
+G 548627 v
+G 548644 dual_obj
+G 548646 alpha
+B 551458 Equation Listing    SOLVE svmmod Using QCP From line 87
+D 551461 defobj
+D 551470 cons
+D 551481 defdual_obj
+D 551488 cons_v
+D 551499 cons1_alpha
+D 551506 cons2_alpha
+B 551518 Column Listing      SOLVE svmmod Using QCP From line 87
+E 551521 delta
+E 551540 obj
+E 551547 w
+E 555063 gamma
+E 558569 v
+E 558588 dual_obj
+E 558595 alpha
+B 558642 Range Statistics    SOLVE svmmod Using QCP From line 87
+B 558653 Model Statistics    SOLVE svmmod Using QCP From line 87
+B 558667 Solution Report     SOLVE svmmod Using QCP From line 87
+F 558713 defobj
+F 558715 cons
+F 562222 defdual_obj
+F 562224 cons_v
+F 562241 cons1_alpha
+F 562243 cons2_alpha
+G 565748 delta
+G 569255 obj
+G 569257 w
+G 569274 gamma
+G 569276 v
+G 569293 dual_obj
+G 569295 alpha
+B 572807 E x e c u t i o n
+I 572807 wsolns
+I 572816 gsolns
+I 572821 errvec
+I 572827 C
+I 572828 errorrate

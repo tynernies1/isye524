@@ -1,0 +1,35 @@
+B 3 C o m p i l a t i o n
+B 90 Equation Listing    SOLVE w1 Using NLP From line 35
+D 93 defobj
+D 98 tot_witches
+D 103 tot_wizards
+B 109 Column Listing      SOLVE w1 Using NLP From line 35
+E 112 cost
+E 119 x
+B 145 Range Statistics    SOLVE w1 Using NLP From line 35
+B 156 Model Statistics    SOLVE w1 Using NLP From line 35
+B 170 Solution Report     SOLVE w1 Using NLP From line 35
+F 218 defobj
+F 219 tot_witches
+F 220 tot_wizards
+G 224 cost
+G 226 x
+B 258 E x e c u t i o n
+I 258 totalAdTime
+B 267 Equation Listing    SOLVE w2 Using QCP From line 62
+D 270 defobj
+D 275 witch_eq
+D 280 wizard_eq
+D 285 cons1
+D 296 cons2
+B 308 Column Listing      SOLVE w2 Using QCP From line 62
+E 311 cost
+E 318 x
+E 340 witch_mins
+E 359 wiz_mins
+B 379 Range Statistics    SOLVE w2 Using QCP From line 62
+B 390 Model Statistics    SOLVE w2 Using QCP From line 62
+B 404 Solution Report     SOLVE w2 Using QCP From line 62
+B 513 E x e c u t i o n
+I 513 solution
+I 522 totalAdTime
