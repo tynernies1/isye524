@@ -1,4 +1,4 @@
-GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/12/23 17:27:20 Page 1
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/13/23 10:21:53 Page 1
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
@@ -115,68 +115,67 @@ C o m p i l a t i o n
  110   
  111  solve mean_val_soln using lp minimize cost;
  112   
- 113  display cost.l;
- 114  parameter
- 115  x_stor(p, t), obj_stor(*);
- 116  x_stor(p, t) = x.l(p, t);
- 117   
- 118  positive variables
- 119  over_scen(p, t, s) resources we are over demand in each scenario,
- 120  under_scen(p, t, s) resources we are under demand in each scenario;
- 121   
- 122  variables
- 123  cost_scen;
- 124   
- 125  equations
- 126  defobj_scen, res_cons_scen, surplus_scen;
- 127   
- 128  defobj_scen..
- 129      cost_scen =e= sum((p, t, scen), prob(scen)*(c(p, t)*x(p, t) + over_scen(p, t, scen)*alpha(p) + under_scen(p, t, scen)*beta(p))) + sum((r, t, scen), prob(scen)*(extra(r, t)*g(r)));
- 130   
- 131  res_cons_scen(R, T)..
- 132      sum(p, a(p, r)*x(p, t)) =l= b(r) + extra(r, t);
- 133   
- 134  surplus_scen(P, T, scen)..
- 135      over_scen(p, t, scen) =e= x(p, t) + over_scen(p, t-1, scen) + under_scen(p, t, scen) - d(p, t, scen);
- 136   
- 137  model stochastic_soln / defobj_scen, res_cons_scen, surplus_scen /;
- 138   
- 139  solve stochastic_soln using lp minimize cost_scen;
- 140  obj_stor('de') = cost_scen.l;
- 141   
- 142  scen(s) = no;
- 143   
- 144  parameter
- 145  obj_stor_scen(*);
- 146   
- 147  loop(s,
- 148      scen(s) = yes;
- 149      solve stochastic_soln using lp minimize cost_scen;
- 150      obj_stor_scen(s) = cost_scen.l;
- 151      scen(s) = no;
- 152  );
- 153   
- 154  x.fx(p, t) = x_stor(p, t);
- 155  scen(s) = yes;
- 156  solve stochastic_soln using lp minimize cost_scen;
- 157  obj_stor('mean') = cost_scen.l;
- 158   
- 159  parameter evpi, vss;
- 160  evpi = obj_stor('de') - sum(s, obj_stor_scen(s));
- 161  vss = obj_stor('mean') - obj_stor('de');
- 162   
- 163  display evpi, vss, obj_stor;
+ 113  parameter
+ 114  x_stor(p, t), obj_stor(*);
+ 115  x_stor(p, t) = x.l(p, t);
+ 116   
+ 117  positive variables
+ 118  over_scen(p, t, s) resources we are over demand in each scenario,
+ 119  under_scen(p, t, s) resources we are under demand in each scenario;
+ 120   
+ 121  variables
+ 122  cost_scen;
+ 123   
+ 124  equations
+ 125  defobj_scen, res_cons_scen, surplus_scen;
+ 126   
+ 127  defobj_scen..
+ 128      cost_scen =e= sum((p, t, scen), prob(scen)*(c(p, t)*x(p, t) + over_scen(p, t, scen)*alpha(p) + under_scen(p, t, scen)*beta(p))) + sum((r, t, scen), prob(scen)*(extra(r, t)*g(r)));
+ 129   
+ 130  res_cons_scen(R, T)..
+ 131      sum(p, a(p, r)*x(p, t)) =l= b(r) + extra(r, t);
+ 132   
+ 133  surplus_scen(P, T, scen)..
+ 134      over_scen(p, t, scen) =e= x(p, t) + over_scen(p, t-1, scen) + under_scen(p, t, scen) - d(p, t, scen);
+ 135   
+ 136  model stochastic_soln / defobj_scen, res_cons_scen, surplus_scen /;
+ 137   
+ 138  solve stochastic_soln using lp minimize cost_scen;
+ 139  obj_stor('de') = cost_scen.l;
+ 140   
+ 141  scen(s) = no;
+ 142   
+ 143  parameter
+ 144  obj_stor_scen(*);
+ 145   
+ 146  loop(s,
+ 147      scen(s) = yes;
+ 148      solve stochastic_soln using lp minimize cost_scen;
+ 149      obj_stor_scen(s) = cost_scen.l;
+ 150      scen(s) = no;
+ 151  );
+ 152   
+ 153  x.fx(p, t) = x_stor(p, t);
+ 154  scen(s) = yes;
+ 155  solve stochastic_soln using lp minimize cost_scen;
+ 156  obj_stor('mean') = cost_scen.l;
+ 157   
+ 158  parameter evpi, vss;
+ 159  evpi = obj_stor('de') - sum(s, obj_stor_scen(s));
+ 160  vss = obj_stor('mean') - obj_stor('de');
+ 161   
+ 162  display evpi, vss, obj_stor;
+ 163   
  164   
  165   
  166   
  167   
  168   
  169   
- 170   
 
 
-COMPILATION TIME     =        0.000 SECONDS      3 MB  45.1.0 88bbff72 WEX-WEI
-GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/12/23 17:27:20 Page 2
+COMPILATION TIME     =        0.016 SECONDS      3 MB  45.1.0 88bbff72 WEX-WEI
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/13/23 10:21:53 Page 2
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Equation Listing    SOLVE mean_val_soln Using LP From line 111
 
@@ -207,7 +206,7 @@ surplus(salsa,3)..  - over(salsa,2) + over(salsa,3) - under(salsa,3) - x(salsa,3
      
 REMAINING 6 ENTRIES SKIPPED
 
-GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/12/23 17:27:20 Page 3
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/13/23 10:21:53 Page 3
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Column Listing      SOLVE mean_val_soln Using LP From line 111
 
@@ -308,7 +307,7 @@ x(salsa,3)
        -1       surplus(salsa,3)
 
 REMAINING 6 ENTRIES SKIPPED
-GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/12/23 17:27:20 Page 4
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/13/23 10:21:53 Page 4
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Range Statistics    SOLVE mean_val_soln Using LP From line 111
 
@@ -319,7 +318,7 @@ RHS       [min, max] : [ 5.000E+00, 3.000E+02] - Zero values observed as well
 Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 Matrix    [min, max] : [ 2.000E-01, 1.200E+01]
 
-GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/12/23 17:27:20 Page 5
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/13/23 10:21:53 Page 5
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Model Statistics    SOLVE mean_val_soln Using LP From line 111
 
@@ -331,8 +330,8 @@ BLOCKS OF VARIABLES           5     SINGLE VARIABLES           40
 NON ZERO ELEMENTS           118
 
 
-GENERATION TIME      =        0.015 SECONDS      4 MB  45.1.0 88bbff72 WEX-WEI
-GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/12/23 17:27:20 Page 6
+GENERATION TIME      =        0.062 SECONDS      4 MB  45.1.0 88bbff72 WEX-WEI
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/13/23 10:21:53 Page 6
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Solution Report     SOLVE mean_val_soln Using LP From line 111
 
@@ -347,7 +346,7 @@ Solution Report     SOLVE mean_val_soln Using LP From line 111
 **** MODEL STATUS      1 Optimal
 **** OBJECTIVE VALUE              735.2208
 
- RESOURCE USAGE, LIMIT          0.016 10000000000.000
+ RESOURCE USAGE, LIMIT          0.000 10000000000.000
  ITERATION COUNT, LIMIT         3    2147483647
 --- GAMS/CPLEX licensed for continuous and discrete problems.
 --- GMO setup time: 0.00s
@@ -358,7 +357,7 @@ Solution Report     SOLVE mean_val_soln Using LP From line 111
 
 
 --- LP status (1): optimal.
---- Cplex Time: 0.02sec (det. 0.06 ticks)
+--- Cplex Time: 0.00sec (det. 0.06 ticks)
 
 
 Optimal solution found
@@ -467,15 +466,9 @@ paste  .3        -INF          170.0000        +INF             .
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/12/23 17:27:20 Page 7
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/13/23 10:21:53 Page 7
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-E x e c u t i o n
-
-
-----    113 VARIABLE cost.L                =      735.221  
-GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/12/23 17:27:20 Page 8
-G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Equation Listing    SOLVE stochastic_soln Using LP From line 139
+Equation Listing    SOLVE stochastic_soln Using LP From line 138
 
 
 ---- defobj_scen  =E=  
@@ -504,9 +497,9 @@ surplus_scen(salsa,1,3)..  - x(salsa,1) + over_scen(salsa,1,3) - under_scen(sals
      
 REMAINING 33 ENTRIES SKIPPED
 
-GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/12/23 17:27:20 Page 9
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/13/23 10:21:53 Page 8
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Column Listing      SOLVE stochastic_soln Using LP From line 139
+Column Listing      SOLVE stochastic_soln Using LP From line 138
 
 
 ---- extra  extra resources we have to buy
@@ -615,9 +608,9 @@ cost_scen
                 (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
         1       defobj_scen
 
-GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/12/23 17:27:20 Page 10
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/13/23 10:21:53 Page 9
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Range Statistics    SOLVE stochastic_soln Using LP From line 139
+Range Statistics    SOLVE stochastic_soln Using LP From line 138
 
 
 RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
@@ -626,9 +619,9 @@ RHS       [min, max] : [ 5.000E+00, 3.000E+02] - Zero values observed as well
 Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 Matrix    [min, max] : [ 3.000E-02, 4.800E+00]
 
-GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/12/23 17:27:20 Page 11
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/13/23 10:21:53 Page 10
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Model Statistics    SOLVE stochastic_soln Using LP From line 139
+Model Statistics    SOLVE stochastic_soln Using LP From line 138
 
 
 MODEL STATISTICS
@@ -638,23 +631,23 @@ BLOCKS OF VARIABLES           5     SINGLE VARIABLES           94
 NON ZERO ELEMENTS           271
 
 
-GENERATION TIME      =        0.000 SECONDS      4 MB  45.1.0 88bbff72 WEX-WEI
-GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/12/23 17:27:20 Page 12
+GENERATION TIME      =        0.015 SECONDS      4 MB  45.1.0 88bbff72 WEX-WEI
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/13/23 10:21:53 Page 11
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Solution Report     SOLVE stochastic_soln Using LP From line 139
+Solution Report     SOLVE stochastic_soln Using LP From line 138
 
 
                S O L V E      S U M M A R Y
 
      MODEL   stochastic_soln     OBJECTIVE  cost_scen
      TYPE    LP                  DIRECTION  MINIMIZE
-     SOLVER  CPLEX               FROM LINE  139
+     SOLVER  CPLEX               FROM LINE  138
 
 **** SOLVER STATUS     1 Normal Completion
 **** MODEL STATUS      1 Optimal
 **** OBJECTIVE VALUE              939.4500
 
- RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ RESOURCE USAGE, LIMIT          0.015 10000000000.000
  ITERATION COUNT, LIMIT        37    2147483647
 --- GAMS/CPLEX licensed for continuous and discrete problems.
 --- GMO setup time: 0.00s
@@ -665,7 +658,7 @@ Solution Report     SOLVE stochastic_soln Using LP From line 139
 
 
 --- LP status (1): optimal.
---- Cplex Time: 0.00sec (det. 0.24 ticks)
+--- Cplex Time: 0.02sec (det. 0.24 ticks)
 
 
 Optimal solution found
@@ -855,9 +848,9 @@ paste  .3.4          .           100.0000        +INF             .
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/12/23 17:27:20 Page 13
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/13/23 10:21:53 Page 12
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Equation Listing    SOLVE stochastic_soln Using LP From line 149
+Equation Listing    SOLVE stochastic_soln Using LP From line 148
 
 
 ---- defobj_scen  =E=  
@@ -886,9 +879,9 @@ surplus_scen(salsa,3,1)..  - x(salsa,3) - over_scen(salsa,2,1) + over_scen(salsa
      
 REMAINING 6 ENTRIES SKIPPED
 
-GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/12/23 17:27:20 Page 14
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/13/23 10:21:53 Page 13
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Column Listing      SOLVE stochastic_soln Using LP From line 149
+Column Listing      SOLVE stochastic_soln Using LP From line 148
 
 
 ---- extra  extra resources we have to buy
@@ -987,9 +980,9 @@ cost_scen
                 (.LO, .L, .UP, .M = -INF, 939.45, +INF, 0)
         1       defobj_scen
 
-GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/12/23 17:27:20 Page 15
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/13/23 10:21:53 Page 14
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Range Statistics    SOLVE stochastic_soln Using LP From line 149
+Range Statistics    SOLVE stochastic_soln Using LP From line 148
 
 
 RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
@@ -998,9 +991,9 @@ RHS       [min, max] : [ 5.000E+00, 3.000E+02] - Zero values observed as well
 Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 Matrix    [min, max] : [ 3.000E-02, 3.000E+00]
 
-GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/12/23 17:27:20 Page 16
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/13/23 10:21:53 Page 15
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Model Statistics    SOLVE stochastic_soln Using LP From line 149
+Model Statistics    SOLVE stochastic_soln Using LP From line 148
 
 
 LOOPS                                    S   1
@@ -1016,22 +1009,22 @@ NON ZERO ELEMENTS           118
 GENERATION TIME      =        0.000 SECONDS      4 MB  45.1.0 88bbff72 WEX-WEI
                L O O P S                  S 1
 
-GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/12/23 17:27:20 Page 17
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/13/23 10:21:53 Page 16
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Solution Report     SOLVE stochastic_soln Using LP From line 149
+Solution Report     SOLVE stochastic_soln Using LP From line 148
 
 
                S O L V E      S U M M A R Y
 
      MODEL   stochastic_soln     OBJECTIVE  cost_scen
      TYPE    LP                  DIRECTION  MINIMIZE
-     SOLVER  CPLEX               FROM LINE  149
+     SOLVER  CPLEX               FROM LINE  148
 
 **** SOLVER STATUS     1 Normal Completion
 **** MODEL STATUS      1 Optimal
 **** OBJECTIVE VALUE               79.0875
 
- RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ RESOURCE USAGE, LIMIT          0.015 10000000000.000
  ITERATION COUNT, LIMIT         0    2147483647
 --- GAMS/CPLEX licensed for continuous and discrete problems.
 --- GMO setup time: 0.00s
@@ -1042,7 +1035,7 @@ Solution Report     SOLVE stochastic_soln Using LP From line 149
 
 
 --- LP status (1): optimal.
---- Cplex Time: 0.00sec (det. 0.06 ticks)
+--- Cplex Time: 0.01sec (det. 0.06 ticks)
 
 
 Optimal solution found
@@ -1151,9 +1144,9 @@ paste  .3.1          .              .            +INF            0.4200
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/12/23 17:27:20 Page 18
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/13/23 10:21:53 Page 17
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Equation Listing    SOLVE stochastic_soln Using LP From line 149
+Equation Listing    SOLVE stochastic_soln Using LP From line 148
 
 
 ---- defobj_scen  =E=  
@@ -1182,9 +1175,9 @@ surplus_scen(salsa,3,2)..  - x(salsa,3) - over_scen(salsa,2,2) + over_scen(salsa
      
 REMAINING 6 ENTRIES SKIPPED
 
-GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/12/23 17:27:20 Page 19
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/13/23 10:21:53 Page 18
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Column Listing      SOLVE stochastic_soln Using LP From line 149
+Column Listing      SOLVE stochastic_soln Using LP From line 148
 
 
 ---- extra  extra resources we have to buy
@@ -1283,9 +1276,9 @@ cost_scen
                 (.LO, .L, .UP, .M = -INF, 79.0875, +INF, 0)
         1       defobj_scen
 
-GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/12/23 17:27:20 Page 20
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/13/23 10:21:53 Page 19
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Range Statistics    SOLVE stochastic_soln Using LP From line 149
+Range Statistics    SOLVE stochastic_soln Using LP From line 148
 
 
 RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
@@ -1294,9 +1287,9 @@ RHS       [min, max] : [ 5.000E+00, 3.000E+02] - Zero values observed as well
 Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 Matrix    [min, max] : [ 8.000E-02, 4.800E+00]
 
-GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/12/23 17:27:20 Page 21
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/13/23 10:21:53 Page 20
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Model Statistics    SOLVE stochastic_soln Using LP From line 149
+Model Statistics    SOLVE stochastic_soln Using LP From line 148
 
 
 LOOPS                                    S   2
@@ -1309,19 +1302,19 @@ BLOCKS OF VARIABLES           5     SINGLE VARIABLES           40
 NON ZERO ELEMENTS           118
 
 
-GENERATION TIME      =        0.000 SECONDS      4 MB  45.1.0 88bbff72 WEX-WEI
+GENERATION TIME      =        0.016 SECONDS      4 MB  45.1.0 88bbff72 WEX-WEI
                L O O P S                  S 2
 
-GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/12/23 17:27:20 Page 22
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/13/23 10:21:53 Page 21
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Solution Report     SOLVE stochastic_soln Using LP From line 149
+Solution Report     SOLVE stochastic_soln Using LP From line 148
 
 
                S O L V E      S U M M A R Y
 
      MODEL   stochastic_soln     OBJECTIVE  cost_scen
      TYPE    LP                  DIRECTION  MINIMIZE
-     SOLVER  CPLEX               FROM LINE  149
+     SOLVER  CPLEX               FROM LINE  148
 
 **** SOLVER STATUS     1 Normal Completion
 **** MODEL STATUS      1 Optimal
@@ -1447,9 +1440,9 @@ paste  .3.2          .              .            +INF            1.1200
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/12/23 17:27:20 Page 23
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/13/23 10:21:53 Page 22
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Equation Listing    SOLVE stochastic_soln Using LP From line 149
+Equation Listing    SOLVE stochastic_soln Using LP From line 148
 
 
 ---- defobj_scen  =E=  
@@ -1478,9 +1471,9 @@ surplus_scen(salsa,3,3)..  - x(salsa,3) - over_scen(salsa,2,3) + over_scen(salsa
      
 REMAINING 6 ENTRIES SKIPPED
 
-GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/12/23 17:27:20 Page 24
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/13/23 10:21:53 Page 23
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Column Listing      SOLVE stochastic_soln Using LP From line 149
+Column Listing      SOLVE stochastic_soln Using LP From line 148
 
 
 ---- extra  extra resources we have to buy
@@ -1579,9 +1572,9 @@ cost_scen
                 (.LO, .L, .UP, .M = -INF, 284.9, +INF, 0)
         1       defobj_scen
 
-GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/12/23 17:27:20 Page 25
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/13/23 10:21:53 Page 24
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Range Statistics    SOLVE stochastic_soln Using LP From line 149
+Range Statistics    SOLVE stochastic_soln Using LP From line 148
 
 
 RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
@@ -1590,9 +1583,9 @@ RHS       [min, max] : [ 5.000E+00, 3.000E+02] - Zero values observed as well
 Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 Matrix    [min, max] : [ 3.000E-02, 3.000E+00]
 
-GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/12/23 17:27:20 Page 26
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/13/23 10:21:53 Page 25
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Model Statistics    SOLVE stochastic_soln Using LP From line 149
+Model Statistics    SOLVE stochastic_soln Using LP From line 148
 
 
 LOOPS                                    S   3
@@ -1605,25 +1598,25 @@ BLOCKS OF VARIABLES           5     SINGLE VARIABLES           40
 NON ZERO ELEMENTS           118
 
 
-GENERATION TIME      =        0.000 SECONDS      4 MB  45.1.0 88bbff72 WEX-WEI
+GENERATION TIME      =        0.016 SECONDS      4 MB  45.1.0 88bbff72 WEX-WEI
                L O O P S                  S 3
 
-GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/12/23 17:27:20 Page 27
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/13/23 10:21:53 Page 26
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Solution Report     SOLVE stochastic_soln Using LP From line 149
+Solution Report     SOLVE stochastic_soln Using LP From line 148
 
 
                S O L V E      S U M M A R Y
 
      MODEL   stochastic_soln     OBJECTIVE  cost_scen
      TYPE    LP                  DIRECTION  MINIMIZE
-     SOLVER  CPLEX               FROM LINE  149
+     SOLVER  CPLEX               FROM LINE  148
 
 **** SOLVER STATUS     1 Normal Completion
 **** MODEL STATUS      1 Optimal
 **** OBJECTIVE VALUE              107.5000
 
- RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ RESOURCE USAGE, LIMIT          0.031 10000000000.000
  ITERATION COUNT, LIMIT         4    2147483647
 --- GAMS/CPLEX licensed for continuous and discrete problems.
 --- GMO setup time: 0.00s
@@ -1634,7 +1627,7 @@ Solution Report     SOLVE stochastic_soln Using LP From line 149
 
 
 --- LP status (1): optimal.
---- Cplex Time: 0.00sec (det. 0.08 ticks)
+--- Cplex Time: 0.03sec (det. 0.08 ticks)
 
 
 Optimal solution found
@@ -1743,9 +1736,9 @@ paste  .3.3          .              .            +INF            0.4200
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/12/23 17:27:20 Page 28
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/13/23 10:21:53 Page 27
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Equation Listing    SOLVE stochastic_soln Using LP From line 149
+Equation Listing    SOLVE stochastic_soln Using LP From line 148
 
 
 ---- defobj_scen  =E=  
@@ -1774,9 +1767,9 @@ surplus_scen(salsa,3,4)..  - x(salsa,3) - over_scen(salsa,2,4) + over_scen(salsa
      
 REMAINING 6 ENTRIES SKIPPED
 
-GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/12/23 17:27:20 Page 29
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/13/23 10:21:53 Page 28
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Column Listing      SOLVE stochastic_soln Using LP From line 149
+Column Listing      SOLVE stochastic_soln Using LP From line 148
 
 
 ---- extra  extra resources we have to buy
@@ -1875,9 +1868,9 @@ cost_scen
                 (.LO, .L, .UP, .M = -INF, 107.5, +INF, 0)
         1       defobj_scen
 
-GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/12/23 17:27:20 Page 30
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/13/23 10:21:53 Page 29
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Range Statistics    SOLVE stochastic_soln Using LP From line 149
+Range Statistics    SOLVE stochastic_soln Using LP From line 148
 
 
 RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
@@ -1886,9 +1879,9 @@ RHS       [min, max] : [ 5.000E+00, 3.000E+02] - Zero values observed as well
 Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 Matrix    [min, max] : [ 6.000E-02, 3.600E+00]
 
-GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/12/23 17:27:20 Page 31
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/13/23 10:21:53 Page 30
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Model Statistics    SOLVE stochastic_soln Using LP From line 149
+Model Statistics    SOLVE stochastic_soln Using LP From line 148
 
 
 LOOPS                                    S   4
@@ -1904,16 +1897,16 @@ NON ZERO ELEMENTS           118
 GENERATION TIME      =        0.015 SECONDS      4 MB  45.1.0 88bbff72 WEX-WEI
                L O O P S                  S 4
 
-GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/12/23 17:27:20 Page 32
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/13/23 10:21:53 Page 31
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Solution Report     SOLVE stochastic_soln Using LP From line 149
+Solution Report     SOLVE stochastic_soln Using LP From line 148
 
 
                S O L V E      S U M M A R Y
 
      MODEL   stochastic_soln     OBJECTIVE  cost_scen
      TYPE    LP                  DIRECTION  MINIMIZE
-     SOLVER  CPLEX               FROM LINE  149
+     SOLVER  CPLEX               FROM LINE  148
 
 **** SOLVER STATUS     1 Normal Completion
 **** MODEL STATUS      1 Optimal
@@ -2039,9 +2032,9 @@ paste  .3.4          .              .            +INF            0.7675
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/12/23 17:27:20 Page 33
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/13/23 10:21:53 Page 32
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Equation Listing    SOLVE stochastic_soln Using LP From line 156
+Equation Listing    SOLVE stochastic_soln Using LP From line 155
 
 
 ---- defobj_scen  =E=  
@@ -2070,9 +2063,9 @@ surplus_scen(salsa,1,3)..  - x(salsa,1) + over_scen(salsa,1,3) - under_scen(sals
      
 REMAINING 33 ENTRIES SKIPPED
 
-GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/12/23 17:27:20 Page 34
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/13/23 10:21:53 Page 33
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Column Listing      SOLVE stochastic_soln Using LP From line 156
+Column Listing      SOLVE stochastic_soln Using LP From line 155
 
 
 ---- extra  extra resources we have to buy
@@ -2181,9 +2174,9 @@ cost_scen
                 (.LO, .L, .UP, .M = -INF, 285, +INF, 0)
         1       defobj_scen
 
-GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/12/23 17:27:20 Page 35
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/13/23 10:21:53 Page 34
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Range Statistics    SOLVE stochastic_soln Using LP From line 156
+Range Statistics    SOLVE stochastic_soln Using LP From line 155
 
 
 RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
@@ -2192,9 +2185,9 @@ RHS       [min, max] : [ 5.000E+00, 3.000E+02] - Zero values observed as well
 Bound     [min, max] : [ 6.833E+00, 1.700E+02] - Zero values observed as well
 Matrix    [min, max] : [ 3.000E-02, 4.800E+00]
 
-GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/12/23 17:27:20 Page 36
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/13/23 10:21:53 Page 35
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Model Statistics    SOLVE stochastic_soln Using LP From line 156
+Model Statistics    SOLVE stochastic_soln Using LP From line 155
 
 
 MODEL STATISTICS
@@ -2205,16 +2198,16 @@ NON ZERO ELEMENTS           271
 
 
 GENERATION TIME      =        0.000 SECONDS      4 MB  45.1.0 88bbff72 WEX-WEI
-GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/12/23 17:27:20 Page 37
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/13/23 10:21:53 Page 36
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Solution Report     SOLVE stochastic_soln Using LP From line 156
+Solution Report     SOLVE stochastic_soln Using LP From line 155
 
 
                S O L V E      S U M M A R Y
 
      MODEL   stochastic_soln     OBJECTIVE  cost_scen
      TYPE    LP                  DIRECTION  MINIMIZE
-     SOLVER  CPLEX               FROM LINE  156
+     SOLVER  CPLEX               FROM LINE  155
 
 **** SOLVER STATUS     1 Normal Completion
 **** MODEL STATUS      1 Optimal
@@ -2421,21 +2414,21 @@ paste  .3.4          .            30.0000        +INF             .
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/12/23 17:27:20 Page 38
+GAMS 45.1.0  88bbff72 Oct 14, 2023          WEX-WEI x86 64bit/MS Windows - 12/13/23 10:21:53 Page 37
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 E x e c u t i o n
 
 
-----    163 PARAMETER evpi                 =      182.963  
+----    162 PARAMETER evpi                 =      182.963  
             PARAMETER vss                  =       28.398  
 
-----    163 PARAMETER obj_stor  
+----    162 PARAMETER obj_stor  
 
 de   939.450,    mean 967.848
 
 
 
-EXECUTION TIME       =        0.281 SECONDS      4 MB  45.1.0 88bbff72 WEX-WEI
+EXECUTION TIME       =        1.000 SECONDS      4 MB  45.1.0 88bbff72 WEX-WEI
 
 
 USER: Introduction to Optimization (CS/ISyE/ECE 524) G230906|0002AS-GEN

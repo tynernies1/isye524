@@ -1,5 +1,5 @@
 
---- Job hw10-1.gms Start 12/12/23 17:26:51 45.1.0 88bbff72 WEX-WEI x86 64bit/MS Windows
+--- Job hw10-1.gms Start 12/12/23 17:27:20 45.1.0 88bbff72 WEX-WEI x86 64bit/MS Windows
 --- Applying:
     C:\GAMS\45\gmsprmNT.txt
 --- GAMS Parameters defined
@@ -21,8 +21,8 @@ Licensee: Introduction to Optimization (CS/ISyE/ECE 524) G230906|0002AS-GEN
 Processor information: 1 socket(s), 4 core(s), and 8 thread(s) available
 GAMS 45.1.0   Copyright (C) 1987-2023 GAMS Development. All rights reserved
 --- Starting compilation
---- hw10-1.gms(169) 3 Mb
---- Starting execution: elapsed 0:00:00.006
+--- hw10-1.gms(170) 3 Mb
+--- Starting execution: elapsed 0:00:00.007
 --- hw10-1.gms(87) 4 Mb
 --- Generating LP model mean_val_soln
 --- hw10-1.gms(111) 4 Mb
@@ -31,7 +31,7 @@ GAMS 45.1.0   Copyright (C) 1987-2023 GAMS Development. All rights reserved
 --- RHS       [min, max] : [ 5.000E+00, 3.000E+02] - Zero values observed as well
 --- Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 --- Matrix    [min, max] : [ 2.000E-01, 1.200E+01]
---- Executing CPLEX (Solvelink=2): elapsed 0:00:00.019
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.022
 
 IBM ILOG CPLEX   45.1.0 88bbff72 Oct 14, 2023          WEI x86 64bit/MS Window
 
@@ -61,23 +61,23 @@ Iteration      Dual Objective            In Variable           Out Variable
      3             735.220833        extra(spices,1)res_cons(spices,3 slack
 
 --- LP status (1): optimal.
---- Cplex Time: 0.00sec (det. 0.06 ticks)
+--- Cplex Time: 0.02sec (det. 0.06 ticks)
 
 
 Optimal solution found
 Objective:          735.220833
 
 --- Reading solution for model mean_val_soln
---- Executing after solve: elapsed 0:00:00.054
---- hw10-1.gms(115) 4 Mb
+--- Executing after solve: elapsed 0:00:00.066
+--- hw10-1.gms(116) 4 Mb
 --- Generating LP model stochastic_soln
---- hw10-1.gms(138) 4 Mb
+--- hw10-1.gms(139) 4 Mb
 ---   49 rows  94 columns  271 non-zeroes
 --- Range statistics (absolute non-zero finite values)
 --- RHS       [min, max] : [ 5.000E+00, 3.000E+02] - Zero values observed as well
 --- Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 --- Matrix    [min, max] : [ 3.000E-02, 4.800E+00]
---- Executing CPLEX (Solvelink=2): elapsed 0:00:00.058
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.070
 
 IBM ILOG CPLEX   45.1.0 88bbff72 Oct 14, 2023          WEI x86 64bit/MS Window
 
@@ -112,17 +112,17 @@ Optimal solution found
 Objective:          939.450000
 
 --- Reading solution for model stochastic_soln
---- Executing after solve: elapsed 0:00:00.092
---- hw10-1.gms(146) 4 Mb
+--- Executing after solve: elapsed 0:00:00.105
+--- hw10-1.gms(147) 4 Mb
 --- Generating LP model stochastic_soln
---- hw10-1.gms(148) 4 Mb
+--- hw10-1.gms(149) 4 Mb
 --- LOOPS S = 1
 ---   22 rows  40 columns  118 non-zeroes
 --- Range statistics (absolute non-zero finite values)
 --- RHS       [min, max] : [ 5.000E+00, 3.000E+02] - Zero values observed as well
 --- Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 --- Matrix    [min, max] : [ 3.000E-02, 3.000E+00]
---- Executing CPLEX (Solvelink=2): elapsed 0:00:00.095
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.108
 
 IBM ILOG CPLEX   45.1.0 88bbff72 Oct 14, 2023          WEI x86 64bit/MS Window
 
@@ -155,17 +155,17 @@ Optimal solution found
 Objective:           79.087500
 
 --- Reading solution for model stochastic_soln
---- Executing after solve: elapsed 0:00:00.138
---- hw10-1.gms(146) 4 Mb
+--- Executing after solve: elapsed 0:00:00.140
+--- hw10-1.gms(147) 4 Mb
 --- Generating LP model stochastic_soln
---- hw10-1.gms(148) 4 Mb
+--- hw10-1.gms(149) 4 Mb
 --- LOOPS S = 2
 ---   22 rows  40 columns  118 non-zeroes
 --- Range statistics (absolute non-zero finite values)
 --- RHS       [min, max] : [ 5.000E+00, 3.000E+02] - Zero values observed as well
 --- Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 --- Matrix    [min, max] : [ 8.000E-02, 4.800E+00]
---- Executing CPLEX (Solvelink=2): elapsed 0:00:00.141
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.143
 
 IBM ILOG CPLEX   45.1.0 88bbff72 Oct 14, 2023          WEI x86 64bit/MS Window
 
@@ -198,17 +198,17 @@ Optimal solution found
 Objective:          284.900000
 
 --- Reading solution for model stochastic_soln
---- Executing after solve: elapsed 0:00:00.182
---- hw10-1.gms(146) 4 Mb
+--- Executing after solve: elapsed 0:00:00.175
+--- hw10-1.gms(147) 4 Mb
 --- Generating LP model stochastic_soln
---- hw10-1.gms(148) 4 Mb
+--- hw10-1.gms(149) 4 Mb
 --- LOOPS S = 3
 ---   22 rows  40 columns  118 non-zeroes
 --- Range statistics (absolute non-zero finite values)
 --- RHS       [min, max] : [ 5.000E+00, 3.000E+02] - Zero values observed as well
 --- Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 --- Matrix    [min, max] : [ 3.000E-02, 3.000E+00]
---- Executing CPLEX (Solvelink=2): elapsed 0:00:00.185
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.178
 
 IBM ILOG CPLEX   45.1.0 88bbff72 Oct 14, 2023          WEI x86 64bit/MS Window
 
@@ -246,17 +246,17 @@ Optimal solution found
 Objective:          107.500000
 
 --- Reading solution for model stochastic_soln
---- Executing after solve: elapsed 0:00:00.222
---- hw10-1.gms(146) 4 Mb
+--- Executing after solve: elapsed 0:00:00.210
+--- hw10-1.gms(147) 4 Mb
 --- Generating LP model stochastic_soln
---- hw10-1.gms(148) 4 Mb
+--- hw10-1.gms(149) 4 Mb
 --- LOOPS S = 4
 ---   22 rows  40 columns  118 non-zeroes
 --- Range statistics (absolute non-zero finite values)
 --- RHS       [min, max] : [ 5.000E+00, 3.000E+02] - Zero values observed as well
 --- Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 --- Matrix    [min, max] : [ 6.000E-02, 3.600E+00]
---- Executing CPLEX (Solvelink=2): elapsed 0:00:00.225
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.212
 
 IBM ILOG CPLEX   45.1.0 88bbff72 Oct 14, 2023          WEI x86 64bit/MS Window
 
@@ -291,16 +291,16 @@ Optimal solution found
 Objective:          285.000000
 
 --- Reading solution for model stochastic_soln
---- Executing after solve: elapsed 0:00:00.259
---- hw10-1.gms(154) 4 Mb
---- Generating LP model stochastic_soln
+--- Executing after solve: elapsed 0:00:00.248
 --- hw10-1.gms(155) 4 Mb
+--- Generating LP model stochastic_soln
+--- hw10-1.gms(156) 4 Mb
 ---   49 rows  94 columns  271 non-zeroes
 --- Range statistics (absolute non-zero finite values)
 --- RHS       [min, max] : [ 5.000E+00, 3.000E+02] - Zero values observed as well
 --- Bound     [min, max] : [ 6.833E+00, 1.700E+02] - Zero values observed as well
 --- Matrix    [min, max] : [ 3.000E-02, 4.800E+00]
---- Executing CPLEX (Solvelink=2): elapsed 0:00:00.263
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.252
 
 IBM ILOG CPLEX   45.1.0 88bbff72 Oct 14, 2023          WEI x86 64bit/MS Window
 
@@ -331,7 +331,7 @@ Optimal solution found
 Objective:          967.848333
 
 --- Reading solution for model stochastic_soln
---- Executing after solve: elapsed 0:00:00.295
---- hw10-1.gms(162) 4 Mb
+--- Executing after solve: elapsed 0:00:00.289
+--- hw10-1.gms(163) 4 Mb
 *** Status: Normal completion
---- Job hw10-1.gms Stop 12/12/23 17:26:52 elapsed 0:00:00.295
+--- Job hw10-1.gms Stop 12/12/23 17:27:20 elapsed 0:00:00.290
