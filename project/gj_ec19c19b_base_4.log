@@ -1,0 +1,62 @@
+--- Job gj_ec19c19b_base_4.gms Start 12/19/23 21:36:10 45.4.0 19dc3313 WEX-WEI x86 64bit/MS Windows
+--- Applying:
+    C:\GAMS\45\gmsprmNT.txt
+--- GAMS Parameters defined
+    LP CPLEX
+    MIP CPLEX
+    RMIP CPLEX
+    NLP CONOPT
+    MCP PATH
+    MPEC NLPEC
+    RMPEC NLPEC
+    CNS CONOPT
+    DNLP CONOPT
+    RMINLP CONOPT
+    MINLP DICOPT
+    QCP CONOPT
+    MIQCP SBB
+    RMIQCP CONOPT
+    EMP JAMS
+    Restart C:\Users\Rocke\OneDrive\Documents\classes\isye524\project\gj_ec19c19b_base_cp.g00
+    Input C:\Users\Rocke\OneDrive\Documents\classes\isye524\project\gj_ec19c19b_base_4.gms
+    Output C:\Users\Rocke\OneDrive\Documents\classes\isye524\project\gj_ec19c19b_base_4.lst
+    Save C:\Users\Rocke\OneDrive\Documents\classes\isye524\project\gj_ec19c19b_base_cpnew.g00
+    ScrDir C:\Users\Rocke\OneDrive\Documents\classes\isye524\project\225a\
+    SysDir C:\GAMS\45\
+    CurDir C:\Users\Rocke\OneDrive\Documents\classes\isye524\project\
+    LogOption 3
+    LogFile C:\Users\Rocke\OneDrive\Documents\classes\isye524\project\gj_ec19c19b_base_4.log
+    Trace C:\Users\Rocke\OneDrive\Documents\classes\isye524\project\gj_ec19c19b_base_4.trc
+    Reference C:\Users\Rocke\OneDrive\Documents\classes\isye524\project\gj_ec19c19b_base_4.ref
+    TraceOpt 3
+    GDX C:\Users\Rocke\OneDrive\Documents\classes\isye524\project\gj_ec19c19b_base_4_gdxout.gdx
+Licensee: Introduction to Optimization (CS/ISyE/ECE 524) G230906|0002AS-GEN
+          UW-Madison, CS Dept., Fall 2023, Prof. Ferris              DCE850
+          C:\Users\Rocke\OneDrive\Documents\GAMS\gamslice.txt
+          License Admin: Michael C. Ferris, ferris@cs.wisc.edu             
+          Course license for use within the course and related course work
+          The evaluation period of the license will expire on Feb 03, 2024
+Processor information: 1 socket(s), 4 core(s), and 8 thread(s) available
+GAMS 45.4.0   Copyright (C) 1987-2023 GAMS Development. All rights reserved
+--- Starting continued compilation
+--- Workfile was generated under GAMS version WEX454-454
+--- gj_ec19c19b_base_4.gms(1) 2 Mb
+--- GDXin=C:\Users\Rocke\OneDrive\Documents\classes\isye524\project\gj_ec19c19b_base_4_gdxin.gdx
+--- GDX File ($gdxIn) C:\Users\Rocke\OneDrive\Documents\classes\isye524\project\gj_ec19c19b_base_4_gdxin.gdx
+--- gj_ec19c19b_base_4.gms(30) 3 Mb 1 Error
+*** Error 157 in C:\Users\Rocke\OneDrive\Documents\classes\isye524\project\gj_ec19c19b_base_4.gms
+    No known set found in alias list
+--- gj_ec19c19b_base_4.gms(58) 3 Mb 3 Errors
+*** Error 140 in C:\Users\Rocke\OneDrive\Documents\classes\isye524\project\gj_ec19c19b_base_4.gms
+    Unknown symbol
+*** Error 171 in C:\Users\Rocke\OneDrive\Documents\classes\isye524\project\gj_ec19c19b_base_4.gms
+    Domain violation for set
+--- gj_ec19c19b_base_4.gms(65) 3 Mb 4 Errors
+*** Error 257 in C:\Users\Rocke\OneDrive\Documents\classes\isye524\project\gj_ec19c19b_base_4.gms
+    Solve statement not checked because of previous errors
+--- gj_ec19c19b_base_4.gms(67) 3 Mb
+--- RefFile C:\Users\Rocke\OneDrive\Documents\classes\isye524\project\gj_ec19c19b_base_4.ref
+--- GDX File C:\Users\Rocke\OneDrive\Documents\classes\isye524\project\gj_ec19c19b_base_4_gdxout.gdx
+--- gj_ec19c19b_base_4.gms(67) 3 Mb 4 Errors
+*** Status: Compilation error(s)
+--- Job gj_ec19c19b_base_4.gms Stop 12/19/23 21:36:10 elapsed 0:00:00.038

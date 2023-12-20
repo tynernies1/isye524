@@ -1,0 +1,98 @@
+GDXIN   C:\Users\Rocke\OneDrive\Documents\classes\isye524\project\gj_ec19c19b_base_5_gdxin.gdx
+   4  set classes(*) '';
+--- LOAD  classes = 1:classes
+   6  set semesters(*) '';
+--- LOAD  semesters = 2:semesters
+   8  set discipline(*) '';
+--- LOAD  discipline = 3:discipline
+  10  set musttake(*,*) '';
+--- LOAD  musttake = 4:musttake
+  12  parameter credits(*) '';
+--- LOAD  credits = 5:credits
+  14  scalar max_credits '';
+--- LOAD  max_credits = 6:max_credits
+  16  scalar min_credits '';
+--- LOAD  min_credits = 7:min_credits
+  18  free variable total_classes 'total classes';
+--- LOAD  total_classes = 8:total_classes
+  20  binary variable x(classes,semesters) 'if class c is taken in semester s';
+--- LOAD  x = 9:x
+  25  # set C "classes" / /;
+  26  # set S "semester" /s1*s8/;
+  27  # set R "requirements" /ie_math221,ie_math222, ie_math234, ie_math340, ie_phys_ema, ie_basic_science, ie_stat_311_309,
+  28  # ie_210_or_stats ,ie_cs220,ie_cs_choice, ie_191, ie_312, ie_313,ie_315,ie_320,ie_321, ie_323, ie_348, ie_349, ie_350, ie_450,
+  29  # ie_an_op, ie_diff_elective, ie_elective, ie_comm, ie_eng_comm, ie_econ, math_linalg, math_algebra, math_advanced, math_electives,
+  30  # cs_240, cs_252, cs_300, cs_354, cs_400, cs_calc, cs_math, cs_theory, cs_software, cs_app, cs_elective/;
+  31  alias(c, classes);
+  32  alias(s, semesters);
+  33  alias(m, musttake);
+  34   
+  35  # parameter credits(C); #number of credits for each class
+  36  # parameter max_cred(S) = 12;
+  37  # parameter min_cred(S) = 3;
+  38  # parameter req_credits(requirements) /ie_math221 5,ie_math222 4, ie_math234 4, ie_math340 3, ie_phys_ema 5, ie_basic_science 9, ie_stat_311_309 3,
+  39  # ie_210_or_stats 3, ie_cs220 4, ie_cs_choice 3, ie_191 2, ie_312 3, ie_313 3,ie_315 3,ie_320 3, ie_321 1, ie_323 3, ie_348 1, ie_349 3, ie_350 3, ie_450 3,
+  40  # ie_an_op 9, ie_diff_elective 3, ie_elective 6, ie_comm 6, ie_eng_comm 3, ie_econ 4, math_linalg 3, math_algebra 6, math_advanced 3, math_electives 9,
+  41  # cs_240 3, cs_252 3, cs_300 3, cs_354 3, cs_400 3, cs_calc 9, cs_math 6, cs_theory 3, cs_software 6, cs_app 3, cs_elective 6 /;
+  42  # table satisfy(C,R)
+  43   
+  44  # math_221       1               0.               1
+  45  # physics_207    0                1
+  46  # chemistry_103  0.                1 ;
+  47   
+  48   
+  49   
+  50  # set pred(i,j); #classes in i must be taken before class j
+  51   
+  52  # binary variable x(C, S); #1 if class is taken during that semester
+  53  # variable total_classes;
+  54   
+  55  equations
+  56      obj_equation, req_fulfill;
+  57   
+  58  obj_equation..
+  59      totclasses =e= sum((c,s), x(c, s));
+****               $140
+**** LINE     58 INPUT       C:\Users\Rocke\OneDrive\Documents\classes\isye524\project\gj_ec19c19b_base_5.gms
+**** 140  Unknown symbol
+  60   
+  61  # req_fulfill(m)..
+  62  #     sum((c, s), x(c, s)) =e= 1;
+  63   
+  64   
+  65  model triple_major /all/;
+  66  solve triple_major using lp minimize total_classes;
+****                                                    $257
+**** LINE     65 INPUT       C:\Users\Rocke\OneDrive\Documents\classes\isye524\project\gj_ec19c19b_base_5.gms
+**** 257  Solve statement not checked because of previous errors
+  67   
+  68  #then we do abroad example where only thing that changes is that during s6, no credits are taken
+
+**** 2 ERROR(S)   0 WARNING(S)
+GAMS 45.4.0  19dc3313 Nov 27, 2023          WEX-WEI x86 64bit/MS Windows - 12/19/23 21:37:01 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Include File Summary
+
+
+   SEQ   GLOBAL TYPE      PARENT   LOCAL  FILENAME
+
+     1        1 INPUT          0       0  C:\Users\Rocke\OneDrive\Documents\classes\isye524\project\gj_ec19c19b_base_5.gms
+     2        2 GDXIN          1       1  C:\Users\Rocke\OneDrive\Documents\classes\isye524\project\gj_ec19c19b_base_5_gdxin.gdx
+
+
+COMPILATION TIME     =        0.015 SECONDS      3 MB  45.4.0 19dc3313 WEX-WEI
+
+
+USER: Introduction to Optimization (CS/ISyE/ECE 524) G230906|0002AS-GEN
+      UW-Madison, CS Dept., Fall 2023, Prof. Ferris              DCE850
+      License for teaching and research at degree granting institutions
+
+
+**** FILE SUMMARY
+
+Restart    C:\Users\Rocke\OneDrive\Documents\classes\isye524\project\gj_ec19c19b_base_cp.g00
+Input      C:\Users\Rocke\OneDrive\Documents\classes\isye524\project\gj_ec19c19b_base_5.gms
+Output     C:\Users\Rocke\OneDrive\Documents\classes\isye524\project\gj_ec19c19b_base_5.lst
+Save       C:\Users\Rocke\OneDrive\Documents\classes\isye524\project\gj_ec19c19b_base_cpnew.g00
+
+**** USER ERROR(S) ENCOUNTERED
