@@ -1,5 +1,5 @@
 
---- Job hw10-2.gms Start 12/12/23 17:18:34 45.1.0 88bbff72 WEX-WEI x86 64bit/MS Windows
+--- Job hw10-2.gms Start 12/12/23 17:19:07 45.1.0 88bbff72 WEX-WEI x86 64bit/MS Windows
 --- Applying:
     C:\GAMS\45\gmsprmNT.txt
 --- GAMS Parameters defined
@@ -31,7 +31,7 @@ GAMS 45.1.0   Copyright (C) 1987-2023 GAMS Development. All rights reserved
 --- RHS       [min, max] : [ 1.000E+01, 2.000E+01] - Zero values observed as well
 --- Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 --- Matrix    [min, max] : [ 1.000E+00, 2.400E+03]
---- Executing CPLEX (Solvelink=2): elapsed 0:00:00.024
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.026
 
 IBM ILOG CPLEX   45.1.0 88bbff72 Oct 14, 2023          WEI x86 64bit/MS Window
 
@@ -52,17 +52,17 @@ CPXPARAM_MIP_Tolerances_AbsMIPGap                0
 Tried aggregator 1 time.
 LP Presolve eliminated 12 rows and 13 columns.
 All rows and columns eliminated.
-Presolve time = 0.02 sec. (0.01 ticks)
+Presolve time = 0.00 sec. (0.01 ticks)
 
 --- LP status (1): optimal.
---- Cplex Time: 0.02sec (det. 0.01 ticks)
+--- Cplex Time: 0.00sec (det. 0.01 ticks)
 
 
 Optimal solution found
 Objective:        40900.000000
 
 --- Reading solution for model multi_product
---- Executing after solve: elapsed 0:00:00.067
+--- Executing after solve: elapsed 0:00:00.060
 --- hw10-2.gms(94) 5 Mb
 --- Generating LP model multi_product_scen
 --- hw10-2.gms(119) 5 Mb
@@ -71,7 +71,7 @@ Objective:        40900.000000
 --- RHS       [min, max] : [ 5.000E+00, 2.500E+01] - Zero values observed as well
 --- Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 --- Matrix    [min, max] : [ 1.000E-02, 1.176E+03]
---- Executing CPLEX (Solvelink=2): elapsed 0:00:00.071
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.064
 
 IBM ILOG CPLEX   45.1.0 88bbff72 Oct 14, 2023          WEI x86 64bit/MS Window
 
@@ -106,9 +106,9 @@ Optimal solution found
 Objective:        46264.400000
 
 --- Reading solution for model multi_product_scen
---- Executing after solve: elapsed 0:00:00.103
+--- Executing after solve: elapsed 0:00:00.095
 --- hw10-2.gms(137) 6 Mb
---- Generating MIP model multi_product_scen
+--- Generating LP model multi_product_scen
 --- hw10-2.gms(143) 6 Mb
 --- LOOPS numScenarios = 100
 ---   1,201 rows  706 columns  4,706 non-zeroes
@@ -116,7 +116,7 @@ Objective:        46264.400000
 --- RHS       [min, max] : [ 3.000E+00, 2.900E+01] - Zero values observed as well
 --- Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 --- Matrix    [min, max] : [ 1.000E-04, 1.000E+01]
---- Executing CPLEX (Solvelink=2): elapsed 0:00:00.117
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.109
 
 IBM ILOG CPLEX   45.1.0 88bbff72 Oct 14, 2023          WEI x86 64bit/MS Window
 
@@ -164,9 +164,9 @@ Optimal solution found
 Objective:          385.138000
 
 --- Reading solution for model multi_product_scen
---- Executing after solve: elapsed 0:00:00.183
+--- Executing after solve: elapsed 0:00:00.173
 --- hw10-2.gms(137) 6 Mb
---- Generating MIP model multi_product_scen
+--- Generating LP model multi_product_scen
 --- hw10-2.gms(143) 7 Mb
 --- LOOPS numScenarios = 200
 ---   2,401 rows  1,406 columns  9,406 non-zeroes
@@ -174,7 +174,7 @@ Objective:          385.138000
 --- RHS       [min, max] : [ 2.000E+00, 3.600E+01] - Zero values observed as well
 --- Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 --- Matrix    [min, max] : [ 1.000E-04, 1.000E+01]
---- Executing CPLEX (Solvelink=2): elapsed 0:00:00.241
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.216
 
 IBM ILOG CPLEX   45.1.0 88bbff72 Oct 14, 2023          WEI x86 64bit/MS Window
 
@@ -209,16 +209,16 @@ Iteration:  1128   Dual objective     =           820.864000
 Iteration:  1205   Dual objective     =           782.059400
 
 --- LP status (1): optimal.
---- Cplex Time: 0.02sec (det. 14.63 ticks)
+--- Cplex Time: 0.00sec (det. 14.63 ticks)
 
 
 Optimal solution found
 Objective:          781.418480
 
 --- Reading solution for model multi_product_scen
---- Executing after solve: elapsed 0:00:00.356
+--- Executing after solve: elapsed 0:00:00.312
 --- hw10-2.gms(137) 7 Mb
---- Generating MIP model multi_product_scen
+--- Generating LP model multi_product_scen
 --- hw10-2.gms(143) 8 Mb
 --- LOOPS numScenarios = 400
 ---   4,801 rows  2,806 columns  18,806 non-zeroes
@@ -226,7 +226,7 @@ Objective:          781.418480
 --- RHS       [min, max] : [ 2.000E+00, 3.400E+01] - Zero values observed as well
 --- Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 --- Matrix    [min, max] : [ 1.000E-04, 1.000E+01]
---- Executing CPLEX (Solvelink=2): elapsed 0:00:00.412
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.366
 
 IBM ILOG CPLEX   45.1.0 88bbff72 Oct 14, 2023          WEI x86 64bit/MS Window
 
@@ -265,16 +265,16 @@ Iteration:  2305   Dual objective     =          1574.458960
 Iteration:  2393   Dual objective     =          1562.265100
 
 --- LP status (1): optimal.
---- Cplex Time: 0.01sec (det. 35.58 ticks)
+--- Cplex Time: 0.03sec (det. 35.58 ticks)
 
 
 Optimal solution found
 Objective:         1559.394600
 
 --- Reading solution for model multi_product_scen
---- Executing after solve: elapsed 0:00:00.509
+--- Executing after solve: elapsed 0:00:00.500
 --- hw10-2.gms(137) 8 Mb
---- Generating MIP model multi_product_scen
+--- Generating LP model multi_product_scen
 --- hw10-2.gms(143) 10 Mb
 --- LOOPS numScenarios = 800
 ---   9,601 rows  5,606 columns  37,606 non-zeroes
@@ -282,7 +282,7 @@ Objective:         1559.394600
 --- RHS       [min, max] : [ 1.000E+00, 4.100E+01] - Zero values observed as well
 --- Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 --- Matrix    [min, max] : [ 1.000E-04, 1.000E+01]
---- Executing CPLEX (Solvelink=2): elapsed 0:00:00.639
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.614
 
 IBM ILOG CPLEX   45.1.0 88bbff72 Oct 14, 2023          WEI x86 64bit/MS Window
 
@@ -304,7 +304,7 @@ CPXPARAM_MIP_Tolerances_AbsMIPGap                0
 Tried aggregator 1 time.
 LP Presolve eliminated 5600 rows and 1 columns.
 Reduced LP has 4000 rows, 5605 columns, and 15200 nonzeros.
-Presolve time = 0.01 sec. (13.32 ticks)
+Presolve time = 0.02 sec. (13.32 ticks)
 
 Iteration log . . .
 Iteration:     1   Dual infeasibility =             4.785400
@@ -334,9 +334,9 @@ Optimal solution found
 Objective:         3116.933200
 
 --- Reading solution for model multi_product_scen
---- Executing after solve: elapsed 0:00:00.858
+--- Executing after solve: elapsed 0:00:01.015
 --- hw10-2.gms(137) 10 Mb
---- Generating MIP model multi_product_scen
+--- Generating LP model multi_product_scen
 --- hw10-2.gms(143) 14 Mb
 --- LOOPS numScenarios = 1600
 ---   19,201 rows  11,206 columns  75,206 non-zeroes
@@ -344,7 +344,7 @@ Objective:         3116.933200
 --- RHS       [min, max] : [ 2.000E+00, 3.700E+01] - Zero values observed as well
 --- Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 --- Matrix    [min, max] : [ 1.000E-04, 1.600E+01]
---- Executing CPLEX (Solvelink=2): elapsed 0:00:01.219
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:01.333
 
 IBM ILOG CPLEX   45.1.0 88bbff72 Oct 14, 2023          WEI x86 64bit/MS Window
 
@@ -366,7 +366,7 @@ CPXPARAM_MIP_Tolerances_AbsMIPGap                0
 Tried aggregator 1 time.
 LP Presolve eliminated 11201 rows and 3 columns.
 Reduced LP has 7999 rows, 11203 columns, and 30393 nonzeros.
-Presolve time = 0.02 sec. (32.77 ticks)
+Presolve time = 0.03 sec. (32.77 ticks)
 
 Iteration log . . .
 Iteration:     1   Dual infeasibility =            11.460600
@@ -396,16 +396,17 @@ Iteration:  9511   Dual objective     =          6167.744400
 Iteration:  9667   Dual objective     =          6162.266600
 
 --- LP status (1): optimal.
---- Cplex Time: 0.23sec (det. 404.01 ticks)
+--- Cplex Time: 0.20sec (det. 404.01 ticks)
 
 
 Optimal solution found
 Objective:         6161.754600
 
 --- Reading solution for model multi_product_scen
---- Executing after solve: elapsed 0:00:01.669
+--- Executing after solve: elapsed 0:00:01.686
 --- hw10-2.gms(137) 14 Mb
---- Generating MIP model multi_product_scen
+--- Generating LP model multi_product_scen
+--- hw10-2.gms(109) 42 Mb  3 secs
 --- hw10-2.gms(115) 55 Mb  3 secs
 --- hw10-2.gms(143) 55 Mb
 --- LOOPS numScenarios = 10000
@@ -414,7 +415,7 @@ Objective:         6161.754600
 --- RHS       [min, max] : [ 1.000E+00, 3.700E+01] - Zero values observed as well
 --- Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 --- Matrix    [min, max] : [ 1.000E-04, 1.000E+02]
---- Executing CPLEX (Solvelink=2): elapsed 0:00:08.941
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:09.001
 
 IBM ILOG CPLEX   45.1.0 88bbff72 Oct 14, 2023          WEI x86 64bit/MS Window
 
@@ -436,7 +437,7 @@ CPXPARAM_MIP_Tolerances_AbsMIPGap                0
 Tried aggregator 1 time.
 LP Presolve eliminated 70001 rows and 3 columns.
 Reduced LP has 49999 rows, 70003 columns, and 189993 nonzeros.
-Presolve time = 0.22 sec. (605.48 ticks)
+Presolve time = 0.24 sec. (605.48 ticks)
 Symmetry aggregator did 114576 additional substitutions.
 
 Iteration log . . .
@@ -476,7 +477,7 @@ Optimal solution found
 Objective:        38661.209400
 
 --- Reading solution for model multi_product_scen
---- Executing after solve: elapsed 0:00:10.320
+--- Executing after solve: elapsed 0:00:10.066
 --- hw10-2.gms(148) 55 Mb
 *** Status: Normal completion
---- Job hw10-2.gms Stop 12/12/23 17:18:44 elapsed 0:00:10.321
+--- Job hw10-2.gms Stop 12/12/23 17:19:17 elapsed 0:00:10.067

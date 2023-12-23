@@ -1,4 +1,4 @@
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/20/23 00:30:16 Page 1
+GAMS 45.4.0  19dc3313 Nov 27, 2023          WEX-WEI x86 64bit/MS Windows - 12/22/23 10:13:36 Page 1
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
@@ -76,15 +76,15 @@ C o m p i l a t i o n
   71   
   72  critical(activity) = yes$(eeTime(activity) ge leTime(activity));
   73   
-  74  display critical;
+  74  display critical, t.l;
   75   
   76   
   77   
   78   
 
 
-COMPILATION TIME     =        0.000 SECONDS      3 MB  44.3.0 8b8fb1cb WEX-WEI
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/20/23 00:30:16 Page 2
+COMPILATION TIME     =        0.000 SECONDS      3 MB  45.4.0 19dc3313 WEX-WEI
+GAMS 45.4.0  19dc3313 Nov 27, 2023          WEX-WEI x86 64bit/MS Windows - 12/22/23 10:13:36 Page 2
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 E x e c u t i o n
 
@@ -100,7 +100,7 @@ F                                                                               
 H                                                                                             YES
 I                                                                                                         YES
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/20/23 00:30:16 Page 3
+GAMS 45.4.0  19dc3313 Nov 27, 2023          WEX-WEI x86 64bit/MS Windows - 12/22/23 10:13:36 Page 3
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Equation Listing    SOLVE cpm Using LP From line 44
 
@@ -126,7 +126,7 @@ endtime(C)..  tottime - t(C) =G= 6 ; (LHS = 0, INFES = 6 ****)
      
 REMAINING 7 ENTRIES SKIPPED
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/20/23 00:30:16 Page 4
+GAMS 45.4.0  19dc3313 Nov 27, 2023          WEX-WEI x86 64bit/MS Windows - 12/22/23 10:13:36 Page 4
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Column Listing      SOLVE cpm Using LP From line 44
 
@@ -171,7 +171,7 @@ t(C)
        -1       endtime(C)
 
 REMAINING 7 ENTRIES SKIPPED
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/20/23 00:30:16 Page 5
+GAMS 45.4.0  19dc3313 Nov 27, 2023          WEX-WEI x86 64bit/MS Windows - 12/22/23 10:13:36 Page 5
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Range Statistics    SOLVE cpm Using LP From line 44
 
@@ -182,7 +182,7 @@ RHS       [min, max] : [ 1.000E+00, 6.000E+00]
 Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 Matrix    [min, max] : [ 1.000E+00, 1.000E+00]
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/20/23 00:30:16 Page 6
+GAMS 45.4.0  19dc3313 Nov 27, 2023          WEX-WEI x86 64bit/MS Windows - 12/22/23 10:13:36 Page 6
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Model Statistics    SOLVE cpm Using LP From line 44
 
@@ -194,8 +194,8 @@ BLOCKS OF VARIABLES           2     SINGLE VARIABLES           11
 NON ZERO ELEMENTS            40
 
 
-GENERATION TIME      =        0.015 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/20/23 00:30:16 Page 7
+GENERATION TIME      =        0.016 SECONDS      4 MB  45.4.0 19dc3313 WEX-WEI
+GAMS 45.4.0  19dc3313 Nov 27, 2023          WEX-WEI x86 64bit/MS Windows - 12/22/23 10:13:36 Page 7
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Solution Report     SOLVE cpm Using LP From line 44
 
@@ -281,7 +281,7 @@ J          .            12.0000        +INF             .
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/20/23 00:30:16 Page 8
+GAMS 45.4.0  19dc3313 Nov 27, 2023          WEX-WEI x86 64bit/MS Windows - 12/22/23 10:13:36 Page 8
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 E x e c u t i o n
 
@@ -290,7 +290,7 @@ E x e c u t i o n
 
 A,    C,    G
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/20/23 00:30:16 Page 9
+GAMS 45.4.0  19dc3313 Nov 27, 2023          WEX-WEI x86 64bit/MS Windows - 12/22/23 10:13:36 Page 9
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Equation Listing    SOLVE eventtimes Using LP From line 66
 
@@ -321,7 +321,7 @@ endtime(C)..  tottime - t(C) =G= 6 ; (LHS = 11)
      
 REMAINING 7 ENTRIES SKIPPED
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/20/23 00:30:16 Page 10
+GAMS 45.4.0  19dc3313 Nov 27, 2023          WEX-WEI x86 64bit/MS Windows - 12/22/23 10:13:36 Page 10
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Column Listing      SOLVE eventtimes Using LP From line 66
 
@@ -376,7 +376,7 @@ obj
                 (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
         1       timeopt
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/20/23 00:30:16 Page 11
+GAMS 45.4.0  19dc3313 Nov 27, 2023          WEX-WEI x86 64bit/MS Windows - 12/22/23 10:13:36 Page 11
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Range Statistics    SOLVE eventtimes Using LP From line 66
 
@@ -387,7 +387,7 @@ RHS       [min, max] : [ 1.000E+00, 6.000E+00] - Zero values observed as well
 Bound     [min, max] : [ 1.400E+01, 1.400E+01] - Zero values observed as well
 Matrix    [min, max] : [ 1.000E+00, 1.000E+00]
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/20/23 00:30:16 Page 12
+GAMS 45.4.0  19dc3313 Nov 27, 2023          WEX-WEI x86 64bit/MS Windows - 12/22/23 10:13:36 Page 12
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Model Statistics    SOLVE eventtimes Using LP From line 66
 
@@ -399,8 +399,8 @@ BLOCKS OF VARIABLES           3     SINGLE VARIABLES           12
 NON ZERO ELEMENTS            51
 
 
-GENERATION TIME      =        0.000 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/20/23 00:30:16 Page 13
+GENERATION TIME      =        0.015 SECONDS      4 MB  45.4.0 19dc3313 WEX-WEI
+GAMS 45.4.0  19dc3313 Nov 27, 2023          WEX-WEI x86 64bit/MS Windows - 12/22/23 10:13:36 Page 13
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Solution Report     SOLVE eventtimes Using LP From line 66
 
@@ -494,7 +494,7 @@ J          .            12.0000        +INF             .
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/20/23 00:30:16 Page 14
+GAMS 45.4.0  19dc3313 Nov 27, 2023          WEX-WEI x86 64bit/MS Windows - 12/22/23 10:13:36 Page 14
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Equation Listing    SOLVE eventtimes Using LP From line 69
 
@@ -525,7 +525,7 @@ endtime(C)..  tottime - t(C) =G= 6 ; (LHS = 11)
      
 REMAINING 7 ENTRIES SKIPPED
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/20/23 00:30:16 Page 15
+GAMS 45.4.0  19dc3313 Nov 27, 2023          WEX-WEI x86 64bit/MS Windows - 12/22/23 10:13:36 Page 15
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Column Listing      SOLVE eventtimes Using LP From line 69
 
@@ -580,7 +580,7 @@ obj
                 (.LO, .L, .UP, .M = -INF, 80, +INF, 0)
         1       timeopt
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/20/23 00:30:16 Page 16
+GAMS 45.4.0  19dc3313 Nov 27, 2023          WEX-WEI x86 64bit/MS Windows - 12/22/23 10:13:36 Page 16
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Range Statistics    SOLVE eventtimes Using LP From line 69
 
@@ -591,7 +591,7 @@ RHS       [min, max] : [ 1.000E+00, 6.000E+00] - Zero values observed as well
 Bound     [min, max] : [ 1.400E+01, 1.400E+01] - Zero values observed as well
 Matrix    [min, max] : [ 1.000E+00, 1.000E+00]
 
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/20/23 00:30:16 Page 17
+GAMS 45.4.0  19dc3313 Nov 27, 2023          WEX-WEI x86 64bit/MS Windows - 12/22/23 10:13:36 Page 17
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Model Statistics    SOLVE eventtimes Using LP From line 69
 
@@ -603,8 +603,8 @@ BLOCKS OF VARIABLES           3     SINGLE VARIABLES           12
 NON ZERO ELEMENTS            51
 
 
-GENERATION TIME      =        0.015 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/20/23 00:30:16 Page 18
+GENERATION TIME      =        0.000 SECONDS      4 MB  45.4.0 19dc3313 WEX-WEI
+GAMS 45.4.0  19dc3313 Nov 27, 2023          WEX-WEI x86 64bit/MS Windows - 12/22/23 10:13:36 Page 18
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Solution Report     SOLVE eventtimes Using LP From line 69
 
@@ -698,7 +698,7 @@ J          .            11.5000        +INF             .
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 44.3.0  8b8fb1cb Sep 1, 2023           WEX-WEI x86 64bit/MS Windows - 10/20/23 00:30:16 Page 19
+GAMS 45.4.0  19dc3313 Nov 27, 2023          WEX-WEI x86 64bit/MS Windows - 12/22/23 10:13:36 Page 19
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 E x e c u t i o n
 
@@ -708,8 +708,13 @@ E x e c u t i o n
 A,    C,    G
 
 
+----     74 VARIABLE t.L  time activity starts
 
-EXECUTION TIME       =        0.250 SECONDS      4 MB  44.3.0 8b8fb1cb WEX-WEI
+B  3.000,    C  3.000,    D  9.000,    E  3.000,    F  5.000,    G  9.000,    H  9.000,    I 10.000,    J 11.500
+
+
+
+EXECUTION TIME       =        0.235 SECONDS      4 MB  45.4.0 19dc3313 WEX-WEI
 
 
 USER: Introduction to Optimization (CS/ISyE/ECE 524) G230906|0002AS-GEN
@@ -719,5 +724,5 @@ USER: Introduction to Optimization (CS/ISyE/ECE 524) G230906|0002AS-GEN
 
 **** FILE SUMMARY
 
-Input      C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw5\hw5-3.gms
-Output     C:\Users\Rocke\OneDrive\Documents\isye524\hw\hw5\hw5-3.lst
+Input      C:\Users\Rocke\OneDrive\Documents\classes\isye524\hw\hw5\hw5-3.gms
+Output     C:\Users\Rocke\OneDrive\Documents\classes\isye524\hw\hw5\hw5-3.lst

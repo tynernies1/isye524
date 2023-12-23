@@ -1,0 +1,584 @@
+B 3 C o m p i l a t i o n
+B 131 Include File Summary
+B 143 Equation Listing    SOLVE triple_major Using MIP From line 73
+D 146 obj_equation
+D 151 choice_eq
+D 162 req_fulfill
+D 173 link
+D 184 semester_min
+D 195 semester_max
+D 206 totcredits_req
+D 211 incidence
+D 222 cons_ie450
+D 227 cons_ie350
+D 232 cons_ie321
+D 243 cons_ie348
+D 254 cons_unique_discipline
+D 259 abroad_max
+D 264 abroad_min
+B 270 Column Listing      SOLVE triple_major Using MIP From line 73
+E 273 totclasses
+E 280 x
+E 314 y
+B 339 Range Statistics    SOLVE triple_major Using MIP From line 73
+B 350 Model Statistics    SOLVE triple_major Using MIP From line 73
+B 363 Solution Report     SOLVE triple_major Using MIP From line 73
+F 410 obj_equation
+F 412 choice_eq
+F 433 req_fulfill
+F 460 link
+F 678 semester_min
+F 691 semester_max
+F 706 totcredits_req
+F 708 incidence
+F 928 cons_ie450
+F 929 cons_ie350
+F 931 cons_ie321
+F 944 cons_ie348
+F 957 cons_unique_discipline
+F 964 abroad_max
+F 965 abroad_min
+G 969 totclasses
+G 971 x
+G 2821 y
+B 3045 E x e c u t i o n
+I 3045 x
+B 3100 Equation Listing    SOLVE triple_major Using MIP From line 92
+D 3103 obj_equation
+D 3110 choice_eq
+D 3121 req_fulfill
+D 3132 link
+D 3143 semester_min
+D 3154 semester_max
+D 3165 totcredits_req
+D 3170 incidence
+D 3181 cons_ie450
+D 3186 cons_ie350
+D 3191 cons_ie321
+D 3202 cons_ie348
+D 3213 cons_unique_discipline
+D 3218 abroad_max
+D 3223 abroad_min
+B 3229 Column Listing      SOLVE triple_major Using MIP From line 92
+E 3232 totclasses
+E 3239 x
+E 3273 y
+B 3298 Range Statistics    SOLVE triple_major Using MIP From line 92
+B 3309 Model Statistics    SOLVE triple_major Using MIP From line 92
+B 3327 Solution Report     SOLVE triple_major Using MIP From line 92
+B 3360 Equation Listing    SOLVE triple_major Using MIP From line 92
+D 3363 obj_equation
+D 3370 choice_eq
+D 3381 req_fulfill
+D 3392 link
+D 3403 semester_min
+D 3414 semester_max
+D 3425 totcredits_req
+D 3430 incidence
+D 3441 cons_ie450
+D 3446 cons_ie350
+D 3451 cons_ie321
+D 3462 cons_ie348
+D 3473 cons_unique_discipline
+D 3478 abroad_max
+D 3483 abroad_min
+B 3489 Column Listing      SOLVE triple_major Using MIP From line 92
+E 3492 totclasses
+E 3499 x
+E 3533 y
+B 3558 Range Statistics    SOLVE triple_major Using MIP From line 92
+B 3569 Model Statistics    SOLVE triple_major Using MIP From line 92
+B 3587 Solution Report     SOLVE triple_major Using MIP From line 92
+B 3620 Equation Listing    SOLVE triple_major Using MIP From line 92
+D 3623 obj_equation
+D 3630 choice_eq
+D 3641 req_fulfill
+D 3652 link
+D 3663 semester_min
+D 3674 semester_max
+D 3685 totcredits_req
+D 3690 incidence
+D 3701 cons_ie450
+D 3706 cons_ie350
+D 3711 cons_ie321
+D 3722 cons_ie348
+D 3733 cons_unique_discipline
+D 3738 abroad_max
+D 3743 abroad_min
+B 3749 Column Listing      SOLVE triple_major Using MIP From line 92
+E 3752 totclasses
+E 3759 x
+E 3793 y
+B 3818 Range Statistics    SOLVE triple_major Using MIP From line 92
+B 3829 Model Statistics    SOLVE triple_major Using MIP From line 92
+B 3847 Solution Report     SOLVE triple_major Using MIP From line 92
+B 3880 Equation Listing    SOLVE triple_major Using MIP From line 92
+D 3883 obj_equation
+D 3890 choice_eq
+D 3901 req_fulfill
+D 3912 link
+D 3923 semester_min
+D 3934 semester_max
+D 3945 totcredits_req
+D 3950 incidence
+D 3961 cons_ie450
+D 3966 cons_ie350
+D 3971 cons_ie321
+D 3982 cons_ie348
+D 3993 cons_unique_discipline
+D 3998 abroad_max
+D 4003 abroad_min
+B 4009 Column Listing      SOLVE triple_major Using MIP From line 92
+E 4012 totclasses
+E 4019 x
+E 4053 y
+B 4078 Range Statistics    SOLVE triple_major Using MIP From line 92
+B 4089 Model Statistics    SOLVE triple_major Using MIP From line 92
+B 4107 Solution Report     SOLVE triple_major Using MIP From line 92
+B 4140 Equation Listing    SOLVE triple_major Using MIP From line 92
+D 4143 obj_equation
+D 4150 choice_eq
+D 4161 req_fulfill
+D 4172 link
+D 4183 semester_min
+D 4194 semester_max
+D 4205 totcredits_req
+D 4210 incidence
+D 4221 cons_ie450
+D 4226 cons_ie350
+D 4231 cons_ie321
+D 4242 cons_ie348
+D 4253 cons_unique_discipline
+D 4258 abroad_max
+D 4263 abroad_min
+B 4269 Column Listing      SOLVE triple_major Using MIP From line 92
+E 4272 totclasses
+E 4279 x
+E 4313 y
+B 4338 Range Statistics    SOLVE triple_major Using MIP From line 92
+B 4349 Model Statistics    SOLVE triple_major Using MIP From line 92
+B 4367 Solution Report     SOLVE triple_major Using MIP From line 92
+B 4400 Equation Listing    SOLVE triple_major Using MIP From line 92
+D 4403 obj_equation
+D 4410 choice_eq
+D 4421 req_fulfill
+D 4432 link
+D 4443 semester_min
+D 4454 semester_max
+D 4465 totcredits_req
+D 4470 incidence
+D 4481 cons_ie450
+D 4486 cons_ie350
+D 4491 cons_ie321
+D 4502 cons_ie348
+D 4513 cons_unique_discipline
+D 4518 abroad_max
+D 4523 abroad_min
+B 4529 Column Listing      SOLVE triple_major Using MIP From line 92
+E 4532 totclasses
+E 4539 x
+E 4573 y
+B 4598 Range Statistics    SOLVE triple_major Using MIP From line 92
+B 4609 Model Statistics    SOLVE triple_major Using MIP From line 92
+B 4627 Solution Report     SOLVE triple_major Using MIP From line 92
+B 4660 Equation Listing    SOLVE triple_major Using MIP From line 92
+D 4663 obj_equation
+D 4670 choice_eq
+D 4681 req_fulfill
+D 4692 link
+D 4703 semester_min
+D 4714 semester_max
+D 4725 totcredits_req
+D 4730 incidence
+D 4741 cons_ie450
+D 4746 cons_ie350
+D 4751 cons_ie321
+D 4762 cons_ie348
+D 4773 cons_unique_discipline
+D 4778 abroad_max
+D 4783 abroad_min
+B 4789 Column Listing      SOLVE triple_major Using MIP From line 92
+E 4792 totclasses
+E 4799 x
+E 4833 y
+B 4858 Range Statistics    SOLVE triple_major Using MIP From line 92
+B 4869 Model Statistics    SOLVE triple_major Using MIP From line 92
+B 4887 Solution Report     SOLVE triple_major Using MIP From line 92
+B 4920 Equation Listing    SOLVE triple_major Using MIP From line 92
+D 4923 obj_equation
+D 4930 choice_eq
+D 4941 req_fulfill
+D 4952 link
+D 4963 semester_min
+D 4974 semester_max
+D 4985 totcredits_req
+D 4990 incidence
+D 5001 cons_ie450
+D 5006 cons_ie350
+D 5011 cons_ie321
+D 5022 cons_ie348
+D 5033 cons_unique_discipline
+D 5038 abroad_max
+D 5043 abroad_min
+B 5049 Column Listing      SOLVE triple_major Using MIP From line 92
+E 5052 totclasses
+E 5059 x
+E 5093 y
+B 5118 Range Statistics    SOLVE triple_major Using MIP From line 92
+B 5129 Model Statistics    SOLVE triple_major Using MIP From line 92
+B 5147 Solution Report     SOLVE triple_major Using MIP From line 92
+B 5180 Equation Listing    SOLVE triple_major Using MIP From line 92
+D 5183 obj_equation
+D 5190 choice_eq
+D 5201 req_fulfill
+D 5212 link
+D 5223 semester_min
+D 5234 semester_max
+D 5245 totcredits_req
+D 5250 incidence
+D 5261 cons_ie450
+D 5266 cons_ie350
+D 5271 cons_ie321
+D 5282 cons_ie348
+D 5293 cons_unique_discipline
+D 5298 abroad_max
+D 5303 abroad_min
+B 5309 Column Listing      SOLVE triple_major Using MIP From line 92
+E 5312 totclasses
+E 5319 x
+E 5353 y
+B 5378 Range Statistics    SOLVE triple_major Using MIP From line 92
+B 5389 Model Statistics    SOLVE triple_major Using MIP From line 92
+B 5407 Solution Report     SOLVE triple_major Using MIP From line 92
+B 5440 Equation Listing    SOLVE triple_major Using MIP From line 92
+D 5443 obj_equation
+D 5450 choice_eq
+D 5461 req_fulfill
+D 5472 link
+D 5483 semester_min
+D 5494 semester_max
+D 5505 totcredits_req
+D 5510 incidence
+D 5521 cons_ie450
+D 5526 cons_ie350
+D 5531 cons_ie321
+D 5542 cons_ie348
+D 5553 cons_unique_discipline
+D 5558 abroad_max
+D 5563 abroad_min
+B 5569 Column Listing      SOLVE triple_major Using MIP From line 92
+E 5572 totclasses
+E 5579 x
+E 5613 y
+B 5638 Range Statistics    SOLVE triple_major Using MIP From line 92
+B 5649 Model Statistics    SOLVE triple_major Using MIP From line 92
+B 5667 Solution Report     SOLVE triple_major Using MIP From line 92
+F 5714 obj_equation
+F 5716 choice_eq
+F 5737 req_fulfill
+F 5764 link
+F 5982 semester_min
+F 5996 semester_max
+F 6012 totcredits_req
+F 6014 incidence
+F 6234 cons_ie450
+F 6235 cons_ie350
+F 6237 cons_ie321
+F 6251 cons_ie348
+F 6265 cons_unique_discipline
+F 6272 abroad_max
+F 6273 abroad_min
+G 6277 totclasses
+G 6279 x
+G 8201 y
+B 8425 Equation Listing    SOLVE triple_major Using MIP From line 92
+D 8428 obj_equation
+D 8435 choice_eq
+D 8446 req_fulfill
+D 8457 link
+D 8468 semester_min
+D 8479 semester_max
+D 8490 totcredits_req
+D 8495 incidence
+D 8506 cons_ie450
+D 8511 cons_ie350
+D 8516 cons_ie321
+D 8527 cons_ie348
+D 8538 cons_unique_discipline
+D 8543 abroad_max
+D 8548 abroad_min
+B 8554 Column Listing      SOLVE triple_major Using MIP From line 92
+E 8557 totclasses
+E 8564 x
+E 8598 y
+B 8623 Range Statistics    SOLVE triple_major Using MIP From line 92
+B 8634 Model Statistics    SOLVE triple_major Using MIP From line 92
+B 8652 Solution Report     SOLVE triple_major Using MIP From line 92
+F 8699 obj_equation
+F 8701 choice_eq
+F 8722 req_fulfill
+F 8749 link
+F 8967 semester_min
+F 8981 semester_max
+F 8997 totcredits_req
+F 8999 incidence
+F 9219 cons_ie450
+F 9220 cons_ie350
+F 9222 cons_ie321
+F 9236 cons_ie348
+F 9250 cons_unique_discipline
+F 9257 abroad_max
+F 9258 abroad_min
+G 9262 totclasses
+G 9264 x
+G 11186 y
+B 11410 Equation Listing    SOLVE triple_major Using MIP From line 92
+D 11413 obj_equation
+D 11420 choice_eq
+D 11431 req_fulfill
+D 11442 link
+D 11453 semester_min
+D 11464 semester_max
+D 11475 totcredits_req
+D 11480 incidence
+D 11491 cons_ie450
+D 11496 cons_ie350
+D 11501 cons_ie321
+D 11512 cons_ie348
+D 11523 cons_unique_discipline
+D 11528 abroad_max
+D 11533 abroad_min
+B 11539 Column Listing      SOLVE triple_major Using MIP From line 92
+E 11542 totclasses
+E 11549 x
+E 11583 y
+B 11608 Range Statistics    SOLVE triple_major Using MIP From line 92
+B 11619 Model Statistics    SOLVE triple_major Using MIP From line 92
+B 11637 Solution Report     SOLVE triple_major Using MIP From line 92
+F 11684 obj_equation
+F 11686 choice_eq
+F 11707 req_fulfill
+F 11734 link
+F 11952 semester_min
+F 11966 semester_max
+F 11982 totcredits_req
+F 11984 incidence
+F 12204 cons_ie450
+F 12205 cons_ie350
+F 12207 cons_ie321
+F 12221 cons_ie348
+F 12235 cons_unique_discipline
+F 12242 abroad_max
+F 12243 abroad_min
+G 12247 totclasses
+G 12249 x
+G 14171 y
+B 14395 Equation Listing    SOLVE triple_major Using MIP From line 92
+D 14398 obj_equation
+D 14405 choice_eq
+D 14416 req_fulfill
+D 14427 link
+D 14438 semester_min
+D 14449 semester_max
+D 14460 totcredits_req
+D 14465 incidence
+D 14476 cons_ie450
+D 14481 cons_ie350
+D 14486 cons_ie321
+D 14497 cons_ie348
+D 14508 cons_unique_discipline
+D 14513 abroad_max
+D 14518 abroad_min
+B 14524 Column Listing      SOLVE triple_major Using MIP From line 92
+E 14527 totclasses
+E 14534 x
+E 14568 y
+B 14593 Range Statistics    SOLVE triple_major Using MIP From line 92
+B 14604 Model Statistics    SOLVE triple_major Using MIP From line 92
+B 14622 Solution Report     SOLVE triple_major Using MIP From line 92
+F 14669 obj_equation
+F 14671 choice_eq
+F 14692 req_fulfill
+F 14719 link
+F 14937 semester_min
+F 14951 semester_max
+F 14967 totcredits_req
+F 14969 incidence
+F 15189 cons_ie450
+F 15190 cons_ie350
+F 15192 cons_ie321
+F 15206 cons_ie348
+F 15220 cons_unique_discipline
+F 15227 abroad_max
+F 15228 abroad_min
+G 15232 totclasses
+G 15234 x
+G 17156 y
+B 17380 Equation Listing    SOLVE triple_major Using MIP From line 92
+D 17383 obj_equation
+D 17390 choice_eq
+D 17401 req_fulfill
+D 17412 link
+D 17423 semester_min
+D 17434 semester_max
+D 17445 totcredits_req
+D 17450 incidence
+D 17461 cons_ie450
+D 17466 cons_ie350
+D 17471 cons_ie321
+D 17482 cons_ie348
+D 17493 cons_unique_discipline
+D 17498 abroad_max
+D 17503 abroad_min
+B 17509 Column Listing      SOLVE triple_major Using MIP From line 92
+E 17512 totclasses
+E 17519 x
+E 17553 y
+B 17578 Range Statistics    SOLVE triple_major Using MIP From line 92
+B 17589 Model Statistics    SOLVE triple_major Using MIP From line 92
+B 17607 Solution Report     SOLVE triple_major Using MIP From line 92
+F 17654 obj_equation
+F 17656 choice_eq
+F 17677 req_fulfill
+F 17704 link
+F 17922 semester_min
+F 17936 semester_max
+F 17952 totcredits_req
+F 17954 incidence
+F 18174 cons_ie450
+F 18175 cons_ie350
+F 18177 cons_ie321
+F 18191 cons_ie348
+F 18205 cons_unique_discipline
+F 18212 abroad_max
+F 18213 abroad_min
+G 18217 totclasses
+G 18219 x
+G 20141 y
+B 20365 Equation Listing    SOLVE triple_major Using MIP From line 92
+D 20368 obj_equation
+D 20375 choice_eq
+D 20386 req_fulfill
+D 20397 link
+D 20408 semester_min
+D 20419 semester_max
+D 20430 totcredits_req
+D 20435 incidence
+D 20446 cons_ie450
+D 20451 cons_ie350
+D 20456 cons_ie321
+D 20467 cons_ie348
+D 20478 cons_unique_discipline
+D 20483 abroad_max
+D 20488 abroad_min
+B 20494 Column Listing      SOLVE triple_major Using MIP From line 92
+E 20497 totclasses
+E 20504 x
+E 20538 y
+B 20563 Range Statistics    SOLVE triple_major Using MIP From line 92
+B 20574 Model Statistics    SOLVE triple_major Using MIP From line 92
+B 20592 Solution Report     SOLVE triple_major Using MIP From line 92
+F 20639 obj_equation
+F 20641 choice_eq
+F 20662 req_fulfill
+F 20689 link
+F 20907 semester_min
+F 20921 semester_max
+F 20937 totcredits_req
+F 20939 incidence
+F 21159 cons_ie450
+F 21160 cons_ie350
+F 21162 cons_ie321
+F 21176 cons_ie348
+F 21190 cons_unique_discipline
+F 21197 abroad_max
+F 21198 abroad_min
+G 21202 totclasses
+G 21204 x
+G 23126 y
+B 23350 Equation Listing    SOLVE triple_major Using MIP From line 92
+D 23353 obj_equation
+D 23360 choice_eq
+D 23371 req_fulfill
+D 23382 link
+D 23393 semester_min
+D 23404 semester_max
+D 23415 totcredits_req
+D 23420 incidence
+D 23431 cons_ie450
+D 23436 cons_ie350
+D 23441 cons_ie321
+D 23452 cons_ie348
+D 23463 cons_unique_discipline
+D 23468 abroad_max
+D 23473 abroad_min
+B 23479 Column Listing      SOLVE triple_major Using MIP From line 92
+E 23482 totclasses
+E 23489 x
+E 23523 y
+B 23548 Range Statistics    SOLVE triple_major Using MIP From line 92
+B 23559 Model Statistics    SOLVE triple_major Using MIP From line 92
+B 23577 Solution Report     SOLVE triple_major Using MIP From line 92
+F 23624 obj_equation
+F 23626 choice_eq
+F 23647 req_fulfill
+F 23674 link
+F 23892 semester_min
+F 23906 semester_max
+F 23922 totcredits_req
+F 23924 incidence
+F 24144 cons_ie450
+F 24145 cons_ie350
+F 24147 cons_ie321
+F 24161 cons_ie348
+F 24175 cons_unique_discipline
+F 24182 abroad_max
+F 24183 abroad_min
+G 24187 totclasses
+G 24189 x
+G 26111 y
+B 26335 Equation Listing    SOLVE triple_major_abroad Using MIP From line 106
+D 26338 obj_equation
+D 26345 choice_eq
+D 26356 req_fulfill
+D 26367 link
+D 26378 semester_min
+D 26389 semester_max
+D 26400 totcredits_req
+D 26405 incidence
+D 26416 cons_ie450
+D 26421 cons_ie350
+D 26426 cons_ie321
+D 26437 cons_ie348
+D 26448 cons_unique_discipline
+D 26453 abroad_max
+D 26458 abroad_min
+D 26463 abroad_max_opt
+B 26469 Column Listing      SOLVE triple_major_abroad Using MIP From line 106
+E 26472 totclasses
+E 26479 x
+E 26513 y
+B 26538 Range Statistics    SOLVE triple_major_abroad Using MIP From line 106
+B 26549 Model Statistics    SOLVE triple_major_abroad Using MIP From line 106
+B 26562 Solution Report     SOLVE triple_major_abroad Using MIP From line 106
+F 26609 obj_equation
+F 26611 choice_eq
+F 26632 req_fulfill
+F 26659 link
+F 26877 semester_min
+F 26891 semester_max
+F 26907 totcredits_req
+F 26909 incidence
+F 27129 cons_ie450
+F 27130 cons_ie350
+F 27132 cons_ie321
+F 27146 cons_ie348
+F 27160 cons_unique_discipline
+F 27167 abroad_max
+F 27168 abroad_min
+F 27169 abroad_max_opt
+G 27173 totclasses
+G 27175 x
+G 29097 y
+B 29321 E x e c u t i o n
+I 29321 x

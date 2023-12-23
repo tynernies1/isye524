@@ -1,17 +1,17 @@
 {
-    "file": "hw5-1.gms",
-    "name": "hw5-1",
+    "file": "test.gms",
+    "name": "test",
     "nodes": [
         {
             "codecMib": 106,
-            "file": "hw5-1.gms",
-            "name": "hw5-1.gms",
+            "file": "test.gms",
+            "name": "test.gms",
             "type": "gms"
         },
         {
             "codecMib": 106,
-            "file": "hw5-1.lst",
-            "name": "hw5-1.lst",
+            "file": "test.lst",
+            "name": "test.lst",
             "type": "lst"
         }
     ],

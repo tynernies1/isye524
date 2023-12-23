@@ -70,17 +70,3 @@ display dualobj.l, pi.l;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
- 

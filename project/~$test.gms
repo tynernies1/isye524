@@ -72,8 +72,6 @@ abroad_min..
 model triple_major /all/;
 solve triple_major using mip minimize totclasses;
 
-display x.l;
-
 set possible_credits_taken / 3*18 /;
 
 parameter classes_sem(s, *), credits_sem(s, *), plans(c, s, *);
@@ -104,8 +102,6 @@ abroad_max_opt..
 
 model triple_major_abroad / all /;
 solve triple_major_abroad using mip minimize totclasses;
-
-display x.l;
 
 classes_sem(s, 'abroad') = sum(c, x.l(c,s));
 credits_sem(s, 'abroad') = sum(c, cr(c)*x.l(c,s));

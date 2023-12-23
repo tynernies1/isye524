@@ -71,7 +71,7 @@ eeTime(activity) = t.l(activity);
 
 critical(activity) = yes$(eeTime(activity) ge leTime(activity));
 
-display critical;
+display critical, t.l;
 
 
 
